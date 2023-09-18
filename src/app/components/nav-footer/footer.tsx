@@ -4,18 +4,18 @@ export default function Footer() {
     return (
         <div className="flex flex-col bg-footer-gray py-2">
             <div className="flex flex-row justify-between px-10 tb:px-16 py-3 border-b-2 text-sm tb:text-base">
-                <div className="flex-center">
-                    <Image src="/icons/instagram.svg" width={16} height={16} alt="instagram" />
-                    <a href="." className="ms-2">
-                        인스타그램
-                    </a>
-                </div>
-                <div className="flex-center">
-                    <Image src="/icons/approval.svg" width={20} height={20} alt="instagram" />
-                    <a href="." className="ms-2">
-                        개인통관부호 발급
-                    </a>
-                </div>
+                <a href={process.env.INSTARGRAM_URL} className="ms-2">
+                    <div className="flex-center">
+                        <Image src="/icons/instagram.svg" width={16} height={16} alt="instagram" />
+                        <div className="ms-2">인스타그램</div>
+                    </div>
+                </a>
+                <a href={process.env.CUSTOM_ID_URL}>
+                    <div className="flex-center">
+                        <Image src="/icons/approval.svg" width={20} height={20} alt="instagram" />
+                        <div className="ms-2">개인통관부호 발급</div>
+                    </div>
+                </a>
             </div>
 
             <div className="flex flex-row justify-between px-5 tb:px-12 py-3 text-sm tb:text-base">

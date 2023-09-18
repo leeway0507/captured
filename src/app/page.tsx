@@ -1,10 +1,7 @@
 "use client";
-import Image from "next/image";
-import Navigation from "./components/navbar";
-import Footer from "./components/footer";
+import NavFooter from "./components/nav-footer/nav-footer";
 import EmblaCarousel from "./carousel/EmblaCarousel";
 import BrandList from "./components/main/brand-list";
-import SideBar from "./components/navbar/left-side-bar";
 
 export default function Home() {
     const thumbnailInfos = [
@@ -17,13 +14,11 @@ export default function Home() {
     ];
 
     return (
-        <main className="flex flex-col">
-            <Navigation />
+        <NavFooter>
             <EmblaCarousel thumbnailInfos={thumbnailInfos} />
             <div className="p-4"></div>
             <BrandList />
             <div className="p-5"></div>
-            <Footer />
-        </main>
+        </NavFooter>
     );
 }
