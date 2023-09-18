@@ -1,10 +1,11 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function BrandList() {
     return (
-        <div>
+        <div className="flex flex-col w-full">
             <div className="flex flex-row ">
-                <a href="." className="brand-box bg-slate-900">
+                <Link href="." className="brand-box bg-slate-900">
                     <Image
                         src="/brands/adidas-original-logo.png"
                         alt="test-img"
@@ -12,8 +13,8 @@ export default function BrandList() {
                         height={100}
                         className="img-hover w-full h-full"
                     />
-                </a>
-                <a href="." className="brand-box">
+                </Link>
+                <Link href="." className="brand-box">
                     <Image
                         src="/brands/arcteryx-logo.png"
                         width={100}
@@ -21,8 +22,8 @@ export default function BrandList() {
                         alt="Arcteryx-logo"
                         className="img-hover w-full h-full"
                     />
-                </a>
-                <a href="." className="brand-box bg-slate-900">
+                </Link>
+                <Link href="." className="brand-box bg-slate-900">
                     <Image
                         src="/brands/adidas-original-logo.png"
                         alt="test-img"
@@ -30,8 +31,8 @@ export default function BrandList() {
                         height={100}
                         className="img-hover w-full h-full"
                     />
-                </a>
-                <a href="." className="brand-box">
+                </Link>
+                <Link href="." className="brand-box">
                     <Image
                         src="/brands/arcteryx-logo.png"
                         width={100}
@@ -39,8 +40,8 @@ export default function BrandList() {
                         alt="Arcteryx-logo"
                         className="img-hover w-full h-full"
                     />
-                </a>
-                <a href="." className="brand-box bg-slate-900">
+                </Link>
+                <Link href="." className="brand-box bg-slate-900">
                     <Image
                         src="/brands/adidas-original-logo.png"
                         alt="test-img"
@@ -48,10 +49,10 @@ export default function BrandList() {
                         height={100}
                         className="img-hover w-full h-full"
                     />
-                </a>
+                </Link>
             </div>
-            <div className="flex flex-row">
-                <a href="." className="brand-box">
+            <div className="flex flex-row w-full">
+                <Link href="." className="brand-box">
                     <Image
                         src="/brands/arcteryx-logo.png"
                         width={100}
@@ -59,8 +60,8 @@ export default function BrandList() {
                         alt="Arcteryx-logo"
                         className="img-hover w-full h-full"
                     />
-                </a>
-                <a href="." className="brand-box bg-slate-900">
+                </Link>
+                <Link href="." className="brand-box bg-slate-900">
                     <Image
                         src="/brands/adidas-original-logo.png"
                         alt="test-img"
@@ -68,8 +69,8 @@ export default function BrandList() {
                         height={100}
                         className="img-hover w-full h-full"
                     />
-                </a>
-                <a href="." className="brand-box">
+                </Link>
+                <Link href="." className="brand-box">
                     <Image
                         src="/brands/arcteryx-logo.png"
                         width={100}
@@ -77,8 +78,8 @@ export default function BrandList() {
                         alt="Arcteryx-logo"
                         className="img-hover w-full h-full"
                     />
-                </a>
-                <a href="." className="brand-box bg-slate-900">
+                </Link>
+                <Link href="." className="brand-box bg-slate-900">
                     <Image
                         src="/brands/adidas-original-logo.png"
                         alt="test-img"
@@ -86,8 +87,8 @@ export default function BrandList() {
                         height={100}
                         className="img-hover w-full h-full"
                     />
-                </a>
-                <a href="." className="brand-box">
+                </Link>
+                <Link href="." className="brand-box">
                     <Image
                         src="/brands/arcteryx-logo.png"
                         width={100}
@@ -95,11 +96,13 @@ export default function BrandList() {
                         alt="Arcteryx-logo"
                         className="img-hover w-full h-full"
                     />
-                </a>
+                </Link>
             </div>
-            <a href="." className="mt-1 me-2 flex justify-end blue-black text-xs tb:text-base hover:text-main-black">
+            <Link
+                href="."
+                className="mt-1 me-2 flex justify-end text-deep-gray text-xs tb:text-base hover:text-sub-black">
                 브랜드 더보기
-            </a>
+            </Link>
         </div>
     );
 }

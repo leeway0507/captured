@@ -10,7 +10,7 @@ const config: Config = {
   theme: {
     extend: {
       screens: {
-        'tb': '640px',
+        'tb': '600px',
       },
       colors: {
         'main-black': '#323232',
