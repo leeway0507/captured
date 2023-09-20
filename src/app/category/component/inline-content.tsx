@@ -9,7 +9,7 @@ import {
 } from "../type";
 
 // css
-const itemBoxClass = "mondaL flex-center text-xs-sm max-w-[200px] min-h-[30px] border-2 px-2 me-2 mb-2";
+const itemBoxClass = "mondaL flex-center text-xs max-w-[200px] min-h-[30px] border-2 px-2 me-2 mb-2";
 const checkedItem = "bg-main-black border-main-black cursor-pointer text-light-gray active:text-main-black shadow-md";
 const notCheckedItem = "border-sub-black cursor-pointer text-sub-black active:text-main-black shadow-md";
 const notSelctableItem = "border-deep-gray cursor-not-allowed line-through decoration-[2px] text-blue-black shadow-md";

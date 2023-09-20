@@ -34,9 +34,7 @@ export default function MobileMain() {
                     )}
                 </div>
                 <div className="py-4">
-                    <div className="rounded my-4 flex-center p-3 bg-main-black text-white text-xl-2xl tracking-widest active:text-main-black active:bg-light-gray">
-                        장바구니 담기
-                    </div>
+                    <div className="black-bar my-4 p-3 text-xl tracking-widest ">장바구니 담기</div>
                 </div>
                 <div>
                     <AccordionComponent

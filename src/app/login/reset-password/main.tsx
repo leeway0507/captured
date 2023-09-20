@@ -2,7 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import CustomInput from "../../components/custom-input/cusotm-input";
+import CustomInput from "../component/cusotm-input";
 import {
     checkEmail,
     checkName,
@@ -18,15 +18,17 @@ const oauthclickEffect =
 
 const accountFeatures = "flex-center my-1 basis-1/3 text-deep-gray hover:text-main-black cursor-pointer ";
 
-export default function CreateAccount() {
+export default function ResetPassword() {
     const [email, setEmail] = useState("");
     const [password1, setPassword1] = useState("");
     const [password2, setPassword2] = useState("");
     const [name, setName] = useState("");
 
+    const [isEmailValid, setIsEmailValid] = useState(false);
+
     return (
         <div className="flex flex-col text-main-black px-5 max-w-[600px] justify-between py-12 m-auto">
-            <div className="flex flex-col py-2 justify-between gap-4">
+            <div className={`flex flex-col py-2 justify-between gap-4 ${isEmailValid && "hidden"}`}>
                 <div>
                     <CustomInput
                         label="이메일 주소"
@@ -51,6 +53,18 @@ export default function CreateAccount() {
                         checkPolicy={checkName}
                     />
                 </div>
+                <div
+                    className="black-bar-xl"
+                    onClick={() => {
+                        setIsEmailValid(true);
+                    }}>
+                    비밀번호 찾기
+                </div>
+            </div>
+
+            {/*  */}
+
+            <div className={`flex flex-col py-2 justify-between gap-4 ${isEmailValid ? "block" : "hidden"}`}>
                 <div>
                     <CustomInput
                         label="비밀번호 입력"
@@ -73,8 +87,8 @@ export default function CreateAccount() {
                         checkPolicy={(value) => checkPasswordAgain(password1, value)}
                     />
                 </div>
+                <div className="black-bar-xl">변경하기</div>
             </div>
-            <div className="black-bar-xl">가입하기</div>
         </div>
     );
 }

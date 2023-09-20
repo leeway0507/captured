@@ -9,13 +9,13 @@ export default function Home() {
             src: "/test.png",
             brand: "brand",
             productName: "productName",
-            href: "/product",
+            href: "/mypage",
         },
         {
             src: "/test.png",
             brand: "brand",
             productName: "productName",
-            href: "/product",
+            href: "/mypage",
         },
     ];
 
