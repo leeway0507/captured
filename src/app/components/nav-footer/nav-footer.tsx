@@ -11,10 +11,10 @@ interface NavFooterProps {
 export default function NavFooter({ children }: NavFooterProps) {
     const { navOpen, setNavOpen } = useShoppingCart();
     return (
-        <main className="container">
+        <main className="custom-container">
             <NavigationPc />
             <NavigationMobile />
-            <div className="grow">{children}</div>
+            <div className="grow md:px-5">{children}</div>
             <Footer />
             <Nav isOpen={navOpen} setIsOpen={setNavOpen} />
         </main>

@@ -7,7 +7,7 @@ type ProductCardArray = {
 
 export default function ProductCardSimpleArray({ ProductCardArray }: ProductCardArray) {
     return ProductCardArray.map((p: cartProductCardProps, i: number) => {
-        const productImgUrl = "/product-img/" + `${p.brand} ${p.productName} ${p.productId}.png`;
+        const productImgUrl = `/product/${p.brand}/${p.productName} ${p.productId}/main.png`;
         return <ProductCardSimple key={i} productImgUrl={productImgUrl} {...p} />;
     });
 }

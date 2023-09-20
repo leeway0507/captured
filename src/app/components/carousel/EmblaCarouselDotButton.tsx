@@ -1,24 +1,23 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, ReactNode } from "react";
 import useEmblaCarousel, { EmblaCarouselType, EmblaOptionsType } from "embla-carousel-react";
 import { DotButton } from "./EmblaDot";
-import { Thumbnail } from "./thumbnail";
 import Autoplay from "embla-carousel-autoplay";
+import "./carousel.css";
 
-type ThumbnailInfo = {
-    src: string;
-    brand: string;
-    productName: string;
-    href: string;
-};
+interface EmblaCarouselProps {
+    autoPlay: boolean;
+    children: ReactNode;
+}
 
-type PropType = {
-    thumbnailInfos: ThumbnailInfo[];
-};
+const EmblaCarousel = ({ autoPlay, children }: EmblaCarouselProps) => {
+    const autoplayOptions = {
+        delay: 4000,
+        playOnInit: autoPlay,
+    };
+    const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false }, [Autoplay(autoplayOptions)]);
 
-const EmblaCarousel: React.FC<PropType> = ({ thumbnailInfos }) => {
-    const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false }, [Autoplay()]);
     const [selectedIndex, setSelectedIndex] = useState(0);
     const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
 
@@ -46,16 +45,7 @@ const EmblaCarousel: React.FC<PropType> = ({ thumbnailInfos }) => {
         <div className="flex flex-col">
             <div className="embla">
                 <div className="embla__viewport" ref={emblaRef}>
-                    <div className="embla__container">
-                        {thumbnailInfos.map((thumbnailInfo: ThumbnailInfo, index: number) => {
-                            const { src, brand, productName, href } = thumbnailInfo;
-                            return (
-                                <div className="embla__slide" key={index}>
-                                    <Thumbnail src={src} brand={brand} productName={productName} href={href} />
-                                </div>
-                            );
-                        })}
-                    </div>
+                    <div className="embla__container">{children}</div>
                 </div>
             </div>
             <div className="embla__dots">

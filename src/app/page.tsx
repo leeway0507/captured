@@ -1,6 +1,6 @@
 "use client";
 import NavFooter from "./components/nav-footer/nav-footer";
-import EmblaCarousel from "./carousel/EmblaCarousel";
+import Banner from "./components/main/main-banner";
 import BrandList from "./components/main/brand-list";
 
 export default function Home() {
@@ -9,13 +9,19 @@ export default function Home() {
             src: "/test.png",
             brand: "brand",
             productName: "productName",
-            href: "href",
+            href: "/product",
+        },
+        {
+            src: "/test.png",
+            brand: "brand",
+            productName: "productName",
+            href: "/product",
         },
     ];
 
     return (
         <NavFooter>
-            <EmblaCarousel thumbnailInfos={thumbnailInfos} />
+            <Banner thumbnailInfos={thumbnailInfos} />
             <div className="p-4"></div>
             <BrandList />
             <div className="p-5"></div>
