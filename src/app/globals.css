@@ -3,6 +3,12 @@
 @tailwind utilities;
 
 @layer components {
+    .black-bar {
+        @apply bg-main-black flex-center text-white py-2 rounded active:text-main-black active:bg-light-gray cursor-pointer;
+    }
+    .black-bar-xl {
+        @apply black-bar tracking-[0.3rem] text-xl;
+    }
     .custom-container {
         @apply flex flex-col justify-between relative m-auto;
     }

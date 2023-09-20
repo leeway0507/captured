@@ -61,9 +61,7 @@ export default function ProductCheckOut({ ProductCardArray }: ProductCardArray) 
                     <div>{numToKorWon(totalPrice)}</div>
                 </div>
             </div>
-            <div className="m-3 bg-black active:bg-white text-xl py-2 flex-center">
-                <div className="text-light-gray active:text-black tracking-[0.2em]">주문하기</div>
-            </div>
+            <div className="black-bar m-3 text-xl tracking-[0.2em]">주문하기</div>
         </div>
     );
 }
