@@ -1,9 +1,15 @@
 "use client";
 import { useState } from "react";
-import { ItemBoxSelectedProps, ItemBoxShowAllProps, ItemBoxShowAllObjectProps } from "../type";
+import {
+    ItemBoxSelectedProps,
+    ItemBoxShowAllProps,
+    ItemBoxShowAllObjectProps,
+    SizeObject,
+    InlineContentShowAllProps,
+} from "../type";
 
 // css
-const itemBoxClass = "mondaL flex-center text-xs-sm min-w-[60px] h-[30px] border-2 me-1 mb-1";
+const itemBoxClass = "mondaL flex-center text-xs-sm max-w-[200px] min-h-[30px] border-2 px-2 me-2 mb-2";
 const checkedItem = "bg-main-black border-main-black cursor-pointer text-light-gray active:text-main-black shadow-md";
 const notCheckedItem = "border-sub-black cursor-pointer text-sub-black active:text-main-black shadow-md";
 const notSelctableItem = "border-deep-gray cursor-not-allowed line-through decoration-[2px] text-blue-black shadow-md";
@@ -52,7 +58,7 @@ export const InlineContentShowSelected = (
 
     return (
         <div className="w-full">
-            <div className="flex flex-wrap mx-8 my-4">
+            <div className="flex flex-wrap">
                 {itemBoxSelectedArray.map((content, idx) => {
                     return (
                         <div key={idx}>
@@ -80,10 +86,8 @@ const ItemBoxShowAll = ({ type, size, checked, setChecked, exist }: ItemBoxShowA
     );
 };
 
-export const InlineContentShowAll = (
-    contentList: Array<{ sizeType: string; size: Array<string> }>,
-    setContentList: React.Dispatch<{ sizeType: string; size: Array<string> }[]>
-) => {
+export const InlineContentShowAll = ({ contentList, setContentList, showTitle = true }: InlineContentShowAllProps) => {
+    //
     // load default size from env
     const envString = process.env.NEXT_PUBLIC_DEFAULT_SIZE;
     const defaultType = JSON.parse(envString || "{}");
@@ -155,8 +159,8 @@ export const InlineContentShowAll = (
         <div className="w-full">
             {itemBoxShowAllArray.map((obj, idx) => {
                 return (
-                    <div className="px-4 py-4" key={idx}>
-                        <div className="text-lg-xl text-sub-black pb-2">{obj["sizeType"]}</div>
+                    <div key={idx}>
+                        {showTitle && <div className="text-lg-xl text-sub-black pb-2">{obj["sizeType"]}</div>}
                         <div key={idx} className="flex flex-wrap pb-5">
                             {obj["sizeArray"].map((sizeObj, idx) => {
                                 return (

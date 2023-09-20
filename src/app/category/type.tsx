@@ -40,3 +40,14 @@ export interface ItemBoxShowAllObjectProps {
         exist: boolean;
     }>;
 }
+
+export interface SizeObject {
+    sizeType: string;
+    size: string[];
+}
+
+export interface InlineContentShowAllProps {
+    contentList: SizeObject[];
+    setContentList: React.Dispatch<React.SetStateAction<SizeObject[]>>;
+    showTitle: boolean;
+}
