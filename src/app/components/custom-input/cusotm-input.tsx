@@ -1,5 +1,4 @@
-import { type } from "os";
-import { useState } from "react";
+import "./custom-input.css";
 
 type customInputProps = {
     label: string;
@@ -23,23 +22,21 @@ export default function CustomInput({
     checkPolicy,
 }: customInputProps) {
     return (
-        <>
-            <label htmlFor="password2" className="text-lg">
-                {label}
-            </label>
+        <div className="relative my-2">
             <input
                 type={type}
-                className={`mt-0 block w-full px-0.5 border-0 border-b border-gray-200 focus:ring-0 focus:border-main-black ${
-                    !checkPolicy(value) && "focus:border-orange-600"
-                }`}
+                className={`peer custom-input-class ${!checkPolicy(value) && "border-orange-600"}`}
                 onChange={(e) => {
                     setValue(e.target.value);
                 }}
                 value={value}
                 id={id}
-                placeholder={placeholder ?? ""}
+                placeholder={placeholder ?? "empty"}
             />
-            <div className={`text-sm pt-1  ${checkPolicy(value) ? "text-white" : "text-orange-600"}`}>{info}</div>
-        </>
+            <label htmlFor={id} className="custom-label-class">
+                {label}
+            </label>
+            <div className={`text-xs  ${checkPolicy(value) ? "text-white" : "text-orange-600"}`}>{info}</div>
+        </div>
     );
 }

@@ -1,4 +1,4 @@
-import ProductSpecificInfo from "@/app/product/component/product-specific-info";
+import PersonalInfoForm from "@/app/mypage/component/personal-info-form";
 
 export default function Page() {
     const test = {
@@ -14,7 +14,7 @@ export default function Page() {
     };
     return (
         <div className="w-full flex flex-col" style={{ justifyContent: "center", display: "flex" }}>
-            <ProductSpecificInfo {...test} />
+            <PersonalInfoForm />
         </div>
     );
 }
