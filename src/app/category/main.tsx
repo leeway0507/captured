@@ -2,10 +2,10 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import type { catProductCardProps } from "../cat/type";
+import type { catProductCardProps } from "./type";
 import { useShoppingCart } from "../shopping-cart-context";
 import ProductCard from "./component/product-card";
-import Accordion from "./component/accordion";
+import Accordion from "./component/filter";
 import SortItem from "./component/sort-dropdown";
 
 export default function Category() {

@@ -25,7 +25,7 @@ export default function ProductCheckOut({ ProductCardArray }: ProductCardArray) 
     }
 
     return (
-        <div className="flex flex-col text-lg-xl border-sub-black pt-6 justify-between">
+        <div className="flex flex-col border-sub-black pt-6 justify-between">
             <div className="flex flex-col px-2">
                 <div className="flex justify-between pb-1">
                     <div>주문금액</div>
@@ -39,7 +39,7 @@ export default function ProductCheckOut({ ProductCardArray }: ProductCardArray) 
                     </div>
 
                     {intlShippingFee > 0 ? (
-                        <div className="flex justify-between text-base-lg text-blue-black ps-1">
+                        <div className="flex justify-between text-sm text-blue-black ps-1">
                             <div>해외배송</div>
                             <div>{numToKorWon(intlShippingFee)}</div>
                         </div>
@@ -47,7 +47,7 @@ export default function ProductCheckOut({ ProductCardArray }: ProductCardArray) 
                         ""
                     )}
                     {domesticShippingFee > 0 ? (
-                        <div className="flex justify-between text-base-lg text-blue-black ps-1 ">
+                        <div className="flex justify-between text-sm text-blue-black ps-1 ">
                             <div>국내배송</div>
                             <div>{numToKorWon(domesticShippingFee)}</div>
                         </div>
@@ -56,12 +56,12 @@ export default function ProductCheckOut({ ProductCardArray }: ProductCardArray) 
                     )}
                 </div>
 
-                <div className="flex justify-between text-xl-2xl py-1 pb-">
+                <div className="flex justify-between text-xl py-2 pb-">
                     <div>최종결제금액</div>
                     <div>{numToKorWon(totalPrice)}</div>
                 </div>
             </div>
-            <div className="m-5 bg-black active:bg-white text-xl py-2 flex-center">
+            <div className="m-3 bg-black active:bg-white text-xl py-2 flex-center">
                 <div className="text-light-gray active:text-black tracking-[0.2em]">주문하기</div>
             </div>
         </div>

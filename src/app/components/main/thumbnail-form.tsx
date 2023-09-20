@@ -7,7 +7,7 @@ type PropType = {
     href: string;
 };
 
-export const Thumbnail: React.FC<PropType> = ({ src, brand, productName, href }) => {
+export default function Thumbnail({ src, brand, productName, href }: PropType) {
     if (href == undefined) {
         throw new Error("href is undefined");
     }
@@ -29,11 +29,11 @@ export const Thumbnail: React.FC<PropType> = ({ src, brand, productName, href })
             />
             <div className="flex flex-col px-8 tb:px-16">
                 <div className="py-5"></div>
-                <div className="text-xl tb:text-2xl">{brand}</div>
-                <div className="text-lg tb:text-xl">{productName}</div>
+                <div className="text-xl-2xl">{brand}</div>
+                <div className="text-lg-xl">{productName}</div>
                 <div className="py-1"></div>
                 <a href={href}>
-                    <div className="flex justify-center text-2xl border-2 main-black-border w-full py-2 hover:bg-main-black hover:text-light-gray hover:border-blue-black">
+                    <div className="flex-center text-xl-2xl border-2 main-black-border w-full py-2 hover:bg-main-black hover:text-light-gray hover:border-blue-black">
                         Shop Now
                     </div>
                 </a>
@@ -41,4 +41,4 @@ export const Thumbnail: React.FC<PropType> = ({ src, brand, productName, href })
             </div>
         </div>
     );
-};
+}

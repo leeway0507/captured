@@ -14,7 +14,9 @@ export default function NavigationPc() {
 
     return (
         <>
-            <header className="px-10 pb-5 hidden tb:block relative sticky bg-white left-0 top-0 flex flex-row justify-between shadow-sm shadow-gray-200 z-50 w-100">
+            <header
+                className="border-x-none h-[150px] px-10 pb-5 hidden tb:block relative sticky bg-white left-0 top-0 flex flex-row justify-between border-b border-light-gray z-50 w-100"
+                style={{ boxShadow: "0px 0.5px 2px var(--deep-gray)" }}>
                 <div className="flex w-full py-5">
                     <div className="flex-left basis-3/12">
                         <input
@@ -48,7 +50,7 @@ export default function NavigationPc() {
                         </Link>
                     </div>
                 </div>
-                <div className="flex justify-between text-xs-sm">
+                <div className="flex justify-between text-sm-base">
                     <Link href="/cat/all" className="py-2 grow rounded-md flex-center active:bg-light-gray">
                         <div className="mx-2">LATEST</div>
                     </Link>

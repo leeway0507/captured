@@ -1,43 +1,19 @@
 "use client";
 import { useShoppingCart } from "../shopping-cart-context";
-import ProductCardSimpleArray from "./component/cart-product-array";
-import ProductCheckOut from "./component/product-check-out";
+import MobileMain from "./main-mobile";
+import MobilePc from "./main-pc";
 
 export default function Cart() {
-    const { mockDB, cartItems } = useShoppingCart();
-
-    // filter productinfo and append quantity to mockDB
-    const itemInfos = mockDB.filter((item) => {
-        return cartItems.find((cartItem) => cartItem.id === item.id) != null;
-    });
-
-    itemInfos.forEach((item: any) => {
-        const cartItem = cartItems.find((cartItem) => cartItem.id === item.id);
-        if (cartItem !== undefined) {
-            item.quantity = cartItem.quantity;
-        }
-    });
-
     return (
         <>
-            <div className="flex flex-row w-full">
-                <div className="flex flex-col justify-between w-full">
-                    <div className="flex-center flex-col py-10">
-                        <div className="flex-center w-full">
-                            <div className="flex-center text-3xl text-sub-black tracking-[.25em] tb:tracking-[.4em] ">
-                                BASKET
-                            </div>
-                        </div>
-                    </div>
-                    <div className="overflow-y-auto">
-                        <ProductCardSimpleArray ProductCardArray={itemInfos} />
-                    </div>
-                    <div className="p-1">
-                        <ProductCheckOut ProductCardArray={itemInfos} />
-                    </div>
-                    <div className="mb-5"></div>
+            <>
+                <div className="tb:hidden">
+                    <MobileMain />
                 </div>
-            </div>
+                <div className="hidden tb:block">
+                    <MobilePc />
+                </div>
+            </>
         </>
     );
 }

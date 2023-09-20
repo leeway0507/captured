@@ -4,12 +4,12 @@ import Link from "next/link";
 import type { catProductCardProps } from "../type";
 
 export default function ProductCard({ id, brand, productName, productId, price, intl }: catProductCardProps) {
-    const productImgUrl = "/product-img/" + `${brand} ${productName} ${productId}.png`;
+    const productImgUrl = `/product/${brand}/${productName} ${productId}/main.png`;
     return (
         <Link href="." className="mondaL text-sub-black text-xs font-light pb-6" key={id}>
             <div className="flex flex-col">
                 <div>
-                    <Image src={productImgUrl} width={300} height={300} alt={productId} />
+                    <Image src={productImgUrl} width={1000} height={1000} alt={productId} className="rounded-md" />
                 </div>
                 <div className="flex flex-col text-sub-black">
                     <div className="flex justify-between">

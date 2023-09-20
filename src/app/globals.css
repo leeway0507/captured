@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 @layer components {
-    .container {
-        @apply flex flex-col justify-between relative h-screen;
+    .custom-container {
+        @apply flex flex-col justify-between relative m-auto;
     }
     .flex-center {
         @apply flex items-center justify-center;
@@ -68,10 +68,10 @@
 }
 
 body {
-    max-width: 768px;
+    max-width: 1024px;
     height: 100%;
     margin: 0 auto;
-    border: 1px solid var(--light-gray);
+    border: 1px, solid var(--light-gray);
     color: var(--main-black);
     position: relative;
 }
@@ -97,69 +97,6 @@ body {
 
 /* embla */
 /* embla */
-
-.embla {
-    --slide-spacing: 1rem;
-    --slide-size: 100%;
-    --slide-height: rem;
-}
-.embla__viewport {
-    overflow: hidden;
-}
-.embla__container {
-    backface-visibility: hidden;
-    display: flex;
-    touch-action: pan-y;
-    margin-left: calc(var(--slide-spacing) * -1);
-}
-.embla__slide {
-    flex: 0 0 var(--slide-size);
-    min-width: 0;
-    /* padding-left: var(--slide-spacing); */
-    position: relative;
-}
-.embla__slide__img {
-    display: block;
-    width: 100%;
-    object-fit: cover;
-}
-
-.embla__dot {
-    -webkit-appearance: none;
-    background-color: transparent;
-    touch-action: manipulation;
-    display: inline-flex;
-    text-decoration: none;
-    cursor: pointer;
-    border: 0;
-    padding: 0;
-    margin: 0;
-}
-.embla__dots {
-    z-index: 1;
-    bottom: 1.6rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.embla__dot {
-    width: 2.4rem;
-    height: 2.4rem;
-    display: flex;
-    align-items: center;
-    margin-right: 0.75rem;
-    margin-left: 0.75rem;
-}
-.embla__dot:after {
-    background: var(--deep-gray);
-    border-radius: 0.2rem;
-    width: 100%;
-    height: 0.3rem;
-    content: "";
-}
-.embla__dot--selected:after {
-    background-color: var(--main-black);
-}
 
 .brand-box:hover {
     opacity: 1;
