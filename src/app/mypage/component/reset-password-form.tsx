@@ -1,14 +1,22 @@
 import CustomInput from "@/app/components/custom-input/cusotm-input";
 import { checkPasswordPolicy, checkPasswordAgain } from "@/app/components/custom-input/check-policy";
 import { useState } from "react";
+import { useMyPage } from "../mypage-provider";
 
-export default function PersonalInfoForm() {
-    const email = "wanted@captured.co.kr";
-    const name = "김철수";
+export default function ResetPasswordFrom() {
+    const { userInfo } = useMyPage();
+    const { email, name } = userInfo;
     const [password1, setPassword1] = useState("");
     const [password2, setPassword2] = useState("");
+
+    //api-call - 비밀번호 변경
+    //status : 제작필요
+    //type : GET
+    //url : /api/auth/rest-password
+    //function : reset-password() => response(200)
+
     return (
-        <div className="flex flex-col my-8 text-sm max-w-[500px] mx-auto">
+        <div className="flex flex-col my-8 text-sm max-h-[600px] max-w-[500px] mx-auto">
             <div className="flex flex-col justify-between gap-4">
                 <div className="flex flex-col">
                     <label htmlFor="email">이메일 주소</label>
@@ -18,7 +26,6 @@ export default function PersonalInfoForm() {
                     <label htmlFor="name">성 명</label>
                     <input type="text" value={name} disabled className="custom-input-disabled" />
                 </div>
-                {/* <div className="pt-5 text-lg">비밀번호 변경</div> */}
                 <div className="flex justify-between gap-4 ">
                     <div className="flex flex-col text-sm">
                         <CustomInput
@@ -43,6 +50,7 @@ export default function PersonalInfoForm() {
                         />
                     </div>
                 </div>
+                <div className="black-bar tracking-[0.2em]">변경하기</div>
             </div>
         </div>
     );

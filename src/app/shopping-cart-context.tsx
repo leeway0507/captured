@@ -1,16 +1,9 @@
 "use client";
+
 import { createContext, useContext, useState } from "react";
-import Nav from "./components/nav-footer/nav-side-bar";
+import { cartItemProps, productCardProps } from "./type";
 
-type ShoppingCartProviderProps = {
-    children: React.ReactNode;
-};
-type cartItem = {
-    id: number;
-    quantity: number;
-};
-
-type ShoppingCartContext = {
+interface ShoppingCartContext {
     getItemquantity: (id: number) => number;
     increaseCartQuantity: (id: number) => void;
     decreaseCartQuantity: (id: number) => void;
@@ -22,9 +15,9 @@ type ShoppingCartContext = {
     navOpen: boolean;
     bgFreeze: string | undefined;
     cartQuantity: number;
-    cartItems: cartItem[];
-    mockDB: any;
-};
+    cartItems: cartItemProps[];
+    mockDB: productCardProps[];
+}
 
 export const ShoppingCartContext = createContext({} as ShoppingCartContext);
 
@@ -32,8 +25,8 @@ export function useShoppingCart() {
     return useContext(ShoppingCartContext);
 }
 
-export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
-    const [cartItems, setCartItems] = useState<cartItem[]>([
+export function ShoppingCartProvider({ children }: { children: React.ReactNode }) {
+    const [cartItems, setCartItems] = useState<cartItemProps[]>([
         { id: 1, quantity: 5 },
         { id: 2, quantity: 4 },
         { id: 3, quantity: 3 },
@@ -96,7 +89,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
         });
     };
 
-    const mockDB = [
+    const mockDB: productCardProps[] = [
         {
             id: 1,
             brand: "adidas originals",

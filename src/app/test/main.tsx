@@ -1,20 +1,30 @@
-import PersonalInfoForm from "@/app/mypage/component/personal-info-form";
+import React from "react";
 
 export default function Page() {
-    const test = {
-        id: 4,
-        productImgUrl: "/images/product/4.jpg",
-        brand: "adidas originals",
-        productName: "handball spezial black",
-        productId: "db3021",
-        size: "275",
-        price: 140000,
-        shippingFee: 3000,
-        intl: false,
+    interface dict {
+        a: string;
+        b: string;
+    }
+
+    const dict = { a: "hello", b: "world" };
+
+    interface testProps {
+        dict: dict;
+    }
+
+    const Test = (props: testProps) => {
+        return (
+            <div>
+                {Object.entries(props.dict).map(([key, value]) => {
+                    return (
+                        <div key={key}>
+                            {key} : {value}
+                        </div>
+                    );
+                })}
+            </div>
+        );
     };
-    return (
-        <div className="w-full flex flex-col" style={{ justifyContent: "center", display: "flex" }}>
-            <PersonalInfoForm />
-        </div>
-    );
+
+    return <Test dict={dict} />;
 }

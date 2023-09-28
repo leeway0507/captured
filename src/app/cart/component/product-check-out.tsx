@@ -1,4 +1,4 @@
-import type { cartProductCardProps } from "../type";
+import { cartProductCardProps } from "../../type";
 
 type ProductCardArray = {
     ProductCardArray: cartProductCardProps[];

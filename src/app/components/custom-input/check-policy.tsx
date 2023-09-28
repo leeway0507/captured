@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 export const checkPasswordPolicy = (password: string) => {
     if (password.length === 0) {
         return true;
@@ -51,4 +53,37 @@ export const checkName = (name: string) => {
         return true;
     }
     return false;
+};
+
+export const checkEnName = (name: string) => {
+    if (name.length === 0) {
+        return true;
+    }
+    const regex = /^[a-zA-Z\s]+$/;
+    return regex.test(name);
+};
+
+export const checkPhone = (phone: string) => {
+    if (phone.length === 0) {
+        return true;
+    }
+    const regex = /^\d{3}-\d{3,4}-\d{4}$/;
+    return regex.test(phone);
+};
+
+export const phoneNumberAutoFormat = (phoneNumber: string): string => {
+    const number = phoneNumber.trim().replace(/[^0-9]/g, "");
+
+    if (number.length < 4) return number;
+    if (number.length < 7) return number.replace(/(\d{3})(\d{1})/, "$1-$2");
+    if (number.length < 11) return number.replace(/(\d{3})(\d{3})(\d{1})/, "$1-$2-$3");
+    return number.replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3");
+};
+
+export const checkCustomId = (customId: string) => {
+    if (customId.length === 0) {
+        return true;
+    }
+    const regex = /^[a-zA-Z]{1}\d{9}$/;
+    return regex.test(customId);
 };

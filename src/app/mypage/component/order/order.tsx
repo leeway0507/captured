@@ -1,11 +1,7 @@
 "use client";
 
-import SeeMoreOrders from "./see-more-orders";
+import SeeMoreOrders from "./order-table";
 import { useState } from "react";
-
-//css
-const header = "border-main-black text-center basis-1/4";
-const item = "flex justify-evenly  text-center py-2 active:text-deep-gray cursor-pointer";
 
 export default function OrderList({ fontSize }: { fontSize: string }) {
     const availableFontSize = ["xs", "sm", "md", "lg", "xl", "2xl", "3xl", "4xl", "5xl", "6xl", "7xl", "8xl", "9xl"];

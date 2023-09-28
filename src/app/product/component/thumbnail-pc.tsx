@@ -4,7 +4,7 @@ import Image from "next/image";
 interface ThumbnailProps {
     brand: string;
     productName: string;
-    productId: number;
+    productId: string;
 }
 
 export default function Thumbnail({ brand, productName, productId }: ThumbnailProps) {

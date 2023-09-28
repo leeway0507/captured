@@ -10,12 +10,12 @@ export default function NavigationPc() {
 
     useEffect(() => {
         setNavOpen(false);
-    }, []);
+    }, [setNavOpen]);
 
     return (
         <>
             <header
-                className="border-x-none h-[150px] px-10 pb-5 hidden tb:block relative sticky bg-white left-0 top-0 flex flex-row justify-between border-b border-light-gray z-50 w-100"
+                className="border-x-none h-[150px] px-10 pb-5 hidden tb:block relative sticky bg-white top-0 flex flex-row justify-between border-b border-light-gray z-50"
                 style={{ boxShadow: "0px 0.5px 2px var(--deep-gray)" }}>
                 <div className="flex w-full py-5">
                     <div className="flex-left basis-3/12">

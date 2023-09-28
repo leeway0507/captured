@@ -1,4 +1,5 @@
 import "./custom-input.css";
+import React from "react";
 
 type customInputProps = {
     label: string;
@@ -8,10 +9,11 @@ type customInputProps = {
     id: string;
     placeholder?: string | undefined;
     info: string;
-    checkPolicy: (value: string) => boolean;
+    checkPolicy: (value: string) => boolean | undefined;
+    maxLength?: number;
 };
 
-export default function CustomInput({
+const CustomInput: React.FC<customInputProps> = ({
     label,
     type,
     placeholder = undefined,
@@ -20,7 +22,8 @@ export default function CustomInput({
     setValue,
     id,
     checkPolicy,
-}: customInputProps) {
+    ...props
+}) => {
     return (
         <div className="relative my-2">
             <input
@@ -32,6 +35,7 @@ export default function CustomInput({
                 value={value}
                 id={id}
                 placeholder={placeholder ?? "empty"}
+                {...props}
             />
             <label htmlFor={id} className="custom-label-class">
                 {label}
@@ -39,4 +43,6 @@ export default function CustomInput({
             <div className={`text-xs  ${checkPolicy(value) ? "text-white" : "text-orange-600"}`}>{info}</div>
         </div>
     );
-}
+};
+
+export default CustomInput;
