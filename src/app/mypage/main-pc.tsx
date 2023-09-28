@@ -1,42 +1,120 @@
-"use client";
-import { useShoppingCart } from "../shopping-cart-context";
-import ProductCardSimpleArray from "../cart/component/cart-product-array";
-import ProductCheckOut from "../cart/component/product-check-out";
+import { Tab } from "@headlessui/react";
+import Order from "./component/order/order";
+import ResetPasswordFrom from "./component/reset-password-form";
+import AddressInfoFrom from "./component/address-info-form";
+import YesNoModal from "../components/modal/yes-no-modal";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useMyPage } from "./mypage-provider";
+import { useState, useEffect } from "react";
 
-export default function MobilePc() {
-    const { mockDB, cartItems } = useShoppingCart();
+function classNames(...classes: any[]) {
+    return classes.filter(Boolean).join(" ");
+}
 
-    // filter productinfo and append quantity to mockDB
-    const itemInfos = mockDB.filter((item) => {
-        return cartItems.find((cartItem) => cartItem.id === item.id) != null;
-    });
+//api-call - 로그아웃
+//status : 제작필요
+//type : GET
+//url : /api/auth/logout
+//function : logout(?) => response[200]
 
-    itemInfos.forEach((item: any) => {
-        const cartItem = cartItems.find((cartItem) => cartItem.id === item.id);
-        if (cartItem !== undefined) {
-            item.quantity = cartItem.quantity;
+export default function MainPc() {
+    const router = useRouter();
+    const searchParams = useSearchParams();
+
+    const [selectedIndex, setSelectedIndex] = useState(0);
+
+    const pageIdx = searchParams?.get("pageindex");
+    useEffect(() => {
+        if (pageIdx) {
+            setSelectedIndex(parseInt(pageIdx));
         }
-    });
+    }, [pageIdx]);
 
     return (
-        <div className="flex-col w-full">
-            <div className="flex-center flex-col py-10">
-                <div className="flex-center w-full">
-                    <div className="flex-center text-3xl text-sub-black tracking-[.25em] tb:tracking-[.4em] ">
-                        BASKET
-                    </div>
-                </div>
-            </div>
-            <div className="flex relative mb-10 h-full">
-                <div className="basis-7/12 pe-1 me-1 border-e overflow-auto">
-                    <ProductCardSimpleArray ProductCardArray={itemInfos} />
-                </div>
-                <div className="basis-5/12 relative ">
-                    <div className="sticky top-[150px]">
-                        <ProductCheckOut ProductCardArray={itemInfos} />
-                    </div>
-                </div>
-            </div>
+        <div className="flex">
+            <Tab.Group vertical selectedIndex={selectedIndex} onChange={setSelectedIndex}>
+                <Tab.List className="basis-1/3 border-e">
+                    <Tab.List className={"flex flex-col  text-xl sticky top-[150px]"}>
+                        <Tab
+                            onClick={() => router.push("/mypage?pageindex=0")}
+                            key="order"
+                            className={({ selected }) =>
+                                classNames(
+                                    "py-4 tracking-[0.1em] cursor-pointer focus:outline-none",
+                                    selected ? "bg-main-black text-white" : ""
+                                )
+                            }>
+                            주문배송
+                        </Tab>
+                        <Tab
+                            onClick={() => router.push("/mypage?pageindex=1")}
+                            key="resetPassword"
+                            className={({ selected }) =>
+                                classNames(
+                                    "py-4 tracking-[0.1em] cursor-pointer focus:outline-none",
+                                    selected ? "bg-main-black text-white" : ""
+                                )
+                            }>
+                            비밀번호 변경
+                        </Tab>
+                        <Tab
+                            onClick={() => router.push("/mypage?pageindex=2")}
+                            key="setAddress"
+                            className={({ selected }) =>
+                                classNames(
+                                    "py-4 tracking-[0.1em] cursor-pointer focus:outline-none",
+                                    selected ? "bg-main-black text-white" : ""
+                                )
+                            }>
+                            주소 추가 및 변경
+                        </Tab>
+                        <YesNoModal
+                            toggleName={
+                                <Tab
+                                    className={({ selected }) =>
+                                        classNames(
+                                            "py-4 w-full tracking-[0.1em] cursor-pointer focus:outline-none active:bg-main-black active:text-white",
+                                            selected ? "bg-main-black text-white" : ""
+                                        )
+                                    }>
+                                    로그아웃
+                                </Tab>
+                            }
+                            title="로그아웃"
+                            content="로그아웃 하시겠습니까?"
+                            trueCallback={() => {
+                                router.push("/");
+                            }}
+                        />
+                    </Tab.List>
+                </Tab.List>
+                <Tab.Panels className="flex flex-col basis-2/3 ps-4 my-4">
+                    <Tab.Panel key="order" className="grow">
+                        <div className="text-2xl flex-center sticky top-[147px] h-[100px] bg-white z-30">주문배송</div>
+                        <Order fontSize="sm" />
+                    </Tab.Panel>
+                    <Tab.Panel key="resetPassword" className="grow">
+                        <div className="text-2xl flex-center sticky top-[147px] h-[100px] bg-white z-30">
+                            비밀번호 변경
+                        </div>
+                        <div className="py-2">
+                            <ResetPasswordFrom />
+                        </div>
+                    </Tab.Panel>
+                    <Tab.Panel key="setAddress" className="grow">
+                        <div className="text-2xl flex-center sticky top-[147px] h-[100px] bg-white z-30">
+                            주소 추가 및 변경
+                        </div>
+                        <div className="py-2">
+                            <AddressInfoFrom />
+                        </div>
+                    </Tab.Panel>
+
+                    <Tab.Panel key="logout" className="grow">
+                        <div>logout</div>
+                    </Tab.Panel>
+                </Tab.Panels>
+            </Tab.Group>
         </div>
     );
 }

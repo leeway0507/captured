@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { productCardProps } from "@/app/type";
-import YesNoModal from "@/app/components/modal/yes-no-modal";
+import YesNoModalWithoutBtn from "@/app/components/modal/yes-no-without-btn-modal";
 import { useShoppingCart } from "@/app/shopping-cart-context";
 
 interface popUpRemoveModalProps extends productCardProps {
@@ -37,8 +37,9 @@ export default function PopUpRemoveModal(props: popUpRemoveModalProps) {
     );
 
     return (
-        <YesNoModal
-            toggleName={toggleName}
+        <YesNoModalWithoutBtn
+            isOpen={openModal}
+            setIsOpen={setOpenModal}
             content={content}
             title={title}
             trueCallback={() => {

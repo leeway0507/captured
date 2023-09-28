@@ -2,6 +2,7 @@
 import { useShoppingCart } from "../shopping-cart-context";
 import ProductCardSimpleArray from "./component/cart-product-array";
 import ProductCheckOut from "./component/product-check-out";
+import { cartProductCardProps, mockDBprops } from "../type";
 
 export default function MobileMain() {
     const { mockDB, cartItems } = useShoppingCart();
@@ -11,12 +12,16 @@ export default function MobileMain() {
         return cartItems.find((cartItem) => cartItem.id === item.id) != null;
     });
 
-    itemInfos.forEach((item: any) => {
-        const cartItem = cartItems.find((cartItem) => cartItem.id === item.id);
-        if (cartItem !== undefined) {
-            item.quantity = cartItem.quantity;
-        }
-    });
+    const cartProductCard: cartProductCardProps[] = itemInfos
+        .map((item: mockDBprops) => {
+            const cartItem = cartItems.find((cartItem) => cartItem.id === item.id);
+            if (cartItem !== undefined) {
+                return { ...item, quantity: cartItem.quantity };
+            }
+            // Return null for items that don't have corresponding cart items
+            return null;
+        })
+        .filter((item): item is cartProductCardProps => item !== null);
 
     return (
         <>
@@ -31,10 +36,10 @@ export default function MobileMain() {
                     </div>
                     <div>
                         <div>
-                            <ProductCardSimpleArray ProductCardArray={itemInfos} />
+                            <ProductCardSimpleArray ProductCardArray={cartProductCard} />
                         </div>
                         <div>
-                            <ProductCheckOut ProductCardArray={itemInfos} />
+                            <ProductCheckOut ProductCardArray={cartProductCard} />
                         </div>
                         <div className="mb-5"></div>
                     </div>

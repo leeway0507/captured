@@ -1,5 +1,5 @@
 import { ProductCardSimple } from "./product-card-simple";
-import type { cartProductCardProps } from "../type";
+import { cartProductCardProps } from "../../type";
 
 type ProductCardArray = {
     ProductCardArray: cartProductCardProps[];
