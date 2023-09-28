@@ -7,13 +7,18 @@ import ProductCardSimpleArray from "../../cart/component/cart-product-array";
 import ProductCheckOut from "../../cart/component/product-check-out";
 import Image from "next/image";
 
-export default function Cart({ isOpen, setIsOpen, openToggle }) {
-    const barRef = useRef(null);
+interface CartProps {
+    isOpen: boolean;
+    setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+    openToggle: () => void;
+}
 
+export default function Cart({ isOpen, setIsOpen, openToggle }: CartProps) {
+    const barRef = useRef(null);
     const { bgFreeze } = useShoppingCart();
 
     useEffect(() => {
-        const handler = (event) => {
+        const handler = (event: { target: any }) => {
             if (!barRef.current.contains(event.target) && bgFreeze === undefined) {
                 setIsOpen(false);
             }
@@ -27,7 +32,7 @@ export default function Cart({ isOpen, setIsOpen, openToggle }) {
     const { mockDB, cartItems } = useShoppingCart();
 
     // filter productinfo and append quantity to mockDB
-    const itemInfos = mockDB.filter((item) => {
+    const itemInfos = mockDB.filter((item: { id: number }) => {
         return cartItems.find((cartItem) => cartItem.id === item.id) != null;
     });
 

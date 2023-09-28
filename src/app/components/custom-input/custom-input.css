@@ -6,11 +6,11 @@
     }
 
     .custom-input-class {
-        @apply mt-0 h-10 block w-full px-0.5 border-0 border-b border-gray-200 focus:ring-0 focus:border-main-black placeholder-transparent;
+        @apply mt-0 h-10 block w-full px-0.5 border-0 border-b border-gray-200 text-sm focus:ring-0 focus:border-main-black placeholder-transparent focus:placeholder:text-sm;
     }
     .custom-label-class {
-        @apply absolute -top-4 left-0 text-lg text-sub-black peer-placeholder-shown:text-base peer-placeholder-shown:text-deep-gray peer-placeholder-shown:text-base peer-placeholder-shown:top-2 transition-all
-        peer-focus:-top-4 peer-focus:text-lg peer-focus:text-sub-black;
+        @apply absolute -top-4 left-0 text-sm text-sub-black peer-placeholder-shown:text-sm peer-placeholder-shown:text-deep-gray peer-placeholder-shown:top-2 transition-all
+        peer-focus:-top-4 peer-focus:text-sm peer-focus:text-sub-black;
     }
     .custom-input-disabled {
         @apply mt-1 block w-full px-3 py-2 bg-white border border-light-gray rounded-md text-sm shadow-sm     

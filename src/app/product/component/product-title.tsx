@@ -1,5 +1,4 @@
 import type { catProductCardProps } from "../type";
-import Image from "next/image";
 
 export default function ProductInfo(props: catProductCardProps) {
     return (

@@ -2,7 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import CustomInput from "../component/cusotm-input";
+import CustomInput from "@/app/components/custom-input/cusotm-input";
 import {
     checkEmail,
     checkName,

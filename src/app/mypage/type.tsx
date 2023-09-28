@@ -1,35 +1,34 @@
-export type cartProductCardProps = {
-    id: number;
-    brand: string;
-    productName: string;
-    productId: string;
-    size: string;
-    quantity: number;
-    price: number;
-    shippingFee: number;
-    intl: boolean;
-};
+import { productCardProps } from "@/app/type";
+export interface addressFormProps {
+    addressId: string;
+    krName: string;
+    enName: string;
+    customId: string;
+    phone: string;
+    krAddress: string;
+    enAddress: string;
+    krAddressRest: string;
+    enAddressRest: string;
+}
 
-export type cartProductCardSimpleProps = {
-    id: number;
-    productImgUrl: string;
-    brand: string;
-    productName: string;
-    productId: string;
-    size: string;
-    quantity: number;
-    price: number;
-    intl: boolean;
-};
+export interface targetDetailProps {
+    orderId: string;
+    deliveryNumber: string;
+    deliveryCompany: string;
+    orderNumber: string;
+    orderDate: string;
+    orderStatus: string;
+    orderPrice: string;
+    orderAddress: addressFormProps;
+    orderItemList: productCardProps[];
+}
 
-export type popUpRemoveModalProps = {
-    id: number;
-    productImgUrl: string;
-    brand: string;
-    productName: string;
-    productId: string;
-    size: string;
-    intl: boolean;
-    openModal: string | undefined;
-    setOpenModal: React.Dispatch<React.SetStateAction<string | undefined>>;
-};
+export interface orderRowProps {
+    orderId: string;
+    orderNumber: string;
+    orderDate: string;
+    orderStatus: string;
+    orderPrice: string;
+    deliveryNumber: string;
+    deliveryCompany: string;
+}

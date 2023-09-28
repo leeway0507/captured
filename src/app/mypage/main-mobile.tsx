@@ -1,7 +1,9 @@
 "use client";
 import { useShoppingCart } from "../shopping-cart-context";
-import OrderList from "./component/order-list";
-import AccordionMobile from "./component/accordion-mobile";
+import Order from "./component/order/order";
+import AccordionComponent from "@/app/components/accordion/accordion";
+import ResetPasswordFrom from "./component/reset-password-form";
+import AddressInfoFrom from "./component/address-info-form";
 
 export default function MobileMain() {
     const { mockDB, cartItems } = useShoppingCart();
@@ -26,8 +28,19 @@ export default function MobileMain() {
                         <div className="flex-center text-3xl text-sub-black tracking-[.25em] tb:tracking-[.4em]">
                             주문배송
                         </div>
-                        <OrderList fontSize="xs" />
-                        <AccordionMobile />
+                        <Order fontSize="xs" />
+                        <div className="basis-full">
+                            <AccordionComponent
+                                title="비밀번호 변경"
+                                content={ResetPasswordFrom()}
+                                cat="AddRemoveAddress"
+                            />
+                            <AccordionComponent
+                                title="주소지 추가 및 변경"
+                                content={AddressInfoFrom()}
+                                cat="changePersonalInfo"
+                            />
+                        </div>
                     </div>
                 </div>
             </div>
