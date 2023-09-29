@@ -1,8 +1,6 @@
-import OrderProducts from "@/app/order/component/product-card-array";
+import OrderDetailProductCardArray from "./order-product-card-array";
 import { phoneNumberAutoFormat } from "@/app/components/custom-input/check-policy";
-import Link from "next/link";
-import { productCardProps } from "@/app/type";
-import { addressFormProps, targetDetailProps } from "../../type";
+import { addressFormProps, OrderDetailProps, orderDetailProductCardProps } from "../../type";
 
 const Address = ({
     addressId,
@@ -47,36 +45,30 @@ const Address = ({
     );
 };
 
-const detailOrder = (targetDetail: targetDetailProps) => {
+const detailOrder = (targetDetail: OrderDetailProps) => {
     const { orderItemList, orderAddress, ...productInfo } = targetDetail;
     return (
         <div className="flex flex-col">
             <div className="flex flex-col pb-2 px-5">
-                <div className="flex-left text-2xl mb-8 border-b sticky border-main-black top-[247px] h-[50px] bg-white">
+                <div className="flex-left text-2xl mb-8 border-b border-main-black w-full tb:top-[147px] tb:h-[80px] tb:sticky bg-white z-20">
                     주문 정보
                 </div>
                 <div className="flex justify-between mb-4 ">
                     <div className="flex flex-col gap-2">
                         <div className="">주문번호</div>
                         <div className="">결제일</div>
-                        <div className="">배송사</div>
                     </div>
                     <div className="flex flex-col gap-2">
                         <div>{productInfo.orderId}</div>
                         <div>{productInfo.orderDate}</div>
-                        <div>{productInfo.deliveryCompany}</div>
                     </div>
                     <div className="flex flex-col gap-2">
                         <div className="">결제금액</div>
                         <div className="">주문상태</div>
-                        <div className="">운송장번호</div>
                     </div>
                     <div className="flex flex-col gap-2 ">
                         <div>{productInfo.orderPrice}</div>
                         <div>{productInfo.orderStatus}</div>
-                        <Link href={"/"} className="hover:text-blue-400 underline">
-                            {productInfo.deliveryNumber}
-                        </Link>
                     </div>
                 </div>
                 <div className="flex flex-col pb-8">
@@ -84,12 +76,14 @@ const detailOrder = (targetDetail: targetDetailProps) => {
                     <Address {...orderAddress} />
                 </div>
             </div>
-            <div className="flex-left text-2xl mx-5 mb-8 border-b sticky border-main-black top-[247px] h-[50px] bg-white">
-                주문 내역
+            <div className="flex flex-col pb-2 px-5">
+                <div className="flex-left text-2xl mb-8 border-b border-main-black w-full tb:top-[147px] tb:h-[80px] tb:sticky bg-white z-20">
+                    주문 내역
+                </div>
+                {orderItemList.map((item: orderDetailProductCardProps, idx) => (
+                    <div key={idx}>{OrderDetailProductCardArray([item])}</div>
+                ))}
             </div>
-            {orderItemList.map((item: productCardProps, idx) => (
-                <div key={idx}>{OrderProducts([item])}</div>
-            ))}
         </div>
     );
 };

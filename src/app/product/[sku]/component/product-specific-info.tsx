@@ -1,11 +1,11 @@
-import type { catProductCardProps } from "../type";
+import { productCardProps } from "@/app/type";
 
 //css
 const row = "flex-left py-1";
 const column1 = "basis-1/3 px-4";
 const column2 = "basis-2/3 px-4";
 
-export default function ProductSpecificInfo(props: catProductCardProps) {
+export default function ProductSpecificInfo(props: productCardProps) {
     return (
         <div className="flex flex-col w-full text-sm-base">
             <div className={`${row} bg-light-gray`}>

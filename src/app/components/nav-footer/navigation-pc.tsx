@@ -51,19 +51,19 @@ export default function NavigationPc() {
                     </div>
                 </div>
                 <div className="flex justify-between text-sm-base">
-                    <Link href="/cat/all" className="py-2 grow rounded-md flex-center active:bg-light-gray">
+                    <Link href="/category/latest" className="py-2 grow rounded-md flex-center active:bg-light-gray">
                         <div className="mx-2">LATEST</div>
                     </Link>
                     <Link href="/brands" className="py-2 grow rounded-md flex-center active:bg-light-gray">
                         <div className="mx-2">BRANDS</div>
                     </Link>
-                    <Link href="/cat/shoes" className="py-2 grow rounded-md flex-center active:bg-light-gray">
+                    <Link href="/category/shoes" className="py-2 grow rounded-md flex-center active:bg-light-gray">
                         <div className="mx-2">SHOES</div>
                     </Link>
-                    <Link href="/cat/clothing" className="py-2 grow rounded-md flex-center active:bg-light-gray">
+                    <Link href="/category/clothing" className="py-2 grow rounded-md flex-center active:bg-light-gray">
                         <div className="mx-2">CLOTHING</div>
                     </Link>
-                    <Link href="/cat/accessory" className="py-2 grow rounded-md flex-center active:bg-light-gray">
+                    <Link href="/category/accessory" className="py-2 grow rounded-md flex-center active:bg-light-gray">
                         <div className="mx-2">ACCESSORY</div>
                     </Link>
                 </div>

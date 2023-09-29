@@ -90,11 +90,11 @@ export default function MainPc() {
                 </Tab.List>
                 <Tab.Panels className="flex flex-col basis-2/3 ps-4 my-4">
                     <Tab.Panel key="order" className="grow">
-                        <div className="text-2xl flex-center sticky top-[147px] h-[100px] bg-white z-30">주문배송</div>
+                        <div className="text-3xl flex-center h-[100px] bg-white z-30 tracking-[0.2rem]">주문배송</div>
                         <Order fontSize="sm" />
                     </Tab.Panel>
                     <Tab.Panel key="resetPassword" className="grow">
-                        <div className="text-2xl flex-center sticky top-[147px] h-[100px] bg-white z-30">
+                        <div className="text-3xl flex-center h-[100px] bg-white z-30 tracking-[0.2rem]">
                             비밀번호 변경
                         </div>
                         <div className="py-2">
@@ -102,14 +102,13 @@ export default function MainPc() {
                         </div>
                     </Tab.Panel>
                     <Tab.Panel key="setAddress" className="grow">
-                        <div className="text-2xl flex-center sticky top-[147px] h-[100px] bg-white z-30">
+                        <div className="text-3xl flex-center h-[100px] bg-white z-30 tracking-[0.2rem]">
                             주소 추가 및 변경
                         </div>
                         <div className="py-2">
                             <AddressInfoFrom />
                         </div>
                     </Tab.Panel>
-
                     <Tab.Panel key="logout" className="grow">
                         <div>logout</div>
                     </Tab.Panel>

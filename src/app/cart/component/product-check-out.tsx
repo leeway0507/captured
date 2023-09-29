@@ -1,19 +1,15 @@
 import { cartProductCardProps } from "../../type";
 
-type ProductCardArray = {
-    ProductCardArray: cartProductCardProps[];
-};
-
-export default function ProductCheckOut({ ProductCardArray }: ProductCardArray) {
-    const orderPrice = ProductCardArray.reduce((result, item) => {
+export default function ProductCheckOut({ arr }: { arr: cartProductCardProps[] }) {
+    const orderPrice = arr.reduce((result, item) => {
         return result + item.price * item.quantity;
     }, 0);
 
-    const domesticShippingFee = ProductCardArray.reduce((result, item) => {
+    const domesticShippingFee = arr.reduce((result, item) => {
         return result + (item.intl ? 0 : item.shippingFee * item.quantity);
     }, 0);
 
-    const intlShippingFee = ProductCardArray.reduce((result, item) => {
+    const intlShippingFee = arr.reduce((result, item) => {
         return result + (item.intl ? item.shippingFee * item.quantity : 0);
     }, 0);
 
@@ -61,7 +57,6 @@ export default function ProductCheckOut({ ProductCardArray }: ProductCardArray) 
                     <div>{numToKorWon(totalPrice)}</div>
                 </div>
             </div>
-            <div className="black-bar m-3 text-xl tracking-[0.2em]">주문하기</div>
         </div>
     );
 }
