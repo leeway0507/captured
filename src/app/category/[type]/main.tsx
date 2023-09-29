@@ -2,13 +2,14 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import type { catProductCardProps } from "./type";
-import { useShoppingCart } from "../shopping-cart-context";
+import { useShoppingCart } from "@/app/shopping-cart-context";
 import ProductCard from "./component/product-card";
 import Accordion from "./component/filter";
 import SortItem from "./component/sort-dropdown";
+import { useParams } from "next/navigation";
 
 export default function Category() {
+    const { type } = useParams();
     const { mockDB } = useShoppingCart();
 
     const [openFilter, setOpenFilter] = useState<boolean>(false);
@@ -37,14 +38,16 @@ export default function Category() {
         <div className="flex flex-col justify-between w-full">
             <div className="flex-center flex-col py-10">
                 <div className="flex-center w-full">
-                    <div className="flex-center text-3xl text-sub-black capitalize">adidas originals</div>
+                    <div className="flex-center text-3xl text-sub-black uppercase">
+                        {Array.isArray(type) ? type[0].replace("-", " ") : type.replace("-", " ")}
+                    </div>
                 </div>
             </div>
             <div className="flex-center flex-col py-5 w-full px-3 relative cursor-pointer">
                 <FilterHeader />
                 <Accordion isOpen={openFilter} setIsOpen={setOpenFilter} />
                 <div className={`grid grid-cols-2 tb:grid-cols-3 gap-1 ${openFilter ? "hidden" : "block"}`}>
-                    {mockDB.map((props: catProductCardProps) => {
+                    {mockDB.map((props) => {
                         return ProductCard({ ...props });
                     })}
                 </div>

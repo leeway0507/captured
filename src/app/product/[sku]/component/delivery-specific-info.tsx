@@ -1,7 +1,6 @@
-import type { catProductCardProps } from "../type";
-import Image from "next/image";
+import type { productCardProps } from "@/app/type";
 
-export default function ProductInfo(props: catProductCardProps) {
+export default function ProductInfo(props: productCardProps) {
     return (
         <div className="flex flex-col text-blue-black">
             <div className="flex-left justify-between text-sub-black">

@@ -1,9 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import type { catProductCardProps } from "../type";
+import type { productCardProps } from "@/app/type";
 
-export default function ProductCard({ id, brand, productName, productId, price, intl }: catProductCardProps) {
+export default function ProductCard({ id, brand, productName, productId, price, intl }: productCardProps) {
     const productImgUrl = `/product/${brand}/${productName} ${productId}/main.png`;
     return (
         <Link href="." className="mondaL text-sub-black text-xs font-light pb-6" key={id}>

@@ -1,13 +1,25 @@
-import { ProductCardSimple } from "./product-card-simple";
+import CartProductCardForm from "@/app/components/product-card/cart-product-card-form";
 import { cartProductCardProps } from "../../type";
+import PopUpRemoveModal from "./cart-remove-modal";
+import { useState } from "react";
 
-type ProductCardArray = {
-    ProductCardArray: cartProductCardProps[];
-};
+export default function CartProductCardArr({ arr }: { arr: cartProductCardProps[] }) {
+    const [openModal, setOpenModal] = useState<boolean>(false);
 
-export default function ProductCardSimpleArray({ ProductCardArray }: ProductCardArray) {
-    return ProductCardArray.map((p: cartProductCardProps, i: number) => {
-        const productImgUrl = `/product/${p.brand}/${p.productName} ${p.productId}/main.png`;
-        return <ProductCardSimple key={i} productImgUrl={productImgUrl} {...p} />;
+    return arr.map((item: cartProductCardProps, idx: number) => {
+        const productImgUrl = `/product/${item.brand}/${item.productName} ${item.productId}/main.png`;
+        return (
+            <div key={idx} className="relative">
+                <div className="absolute top-0 right-0 mt-10 me-3  text-sm underline">
+                    <PopUpRemoveModal
+                        {...item}
+                        productImgUrl={productImgUrl}
+                        openModal={openModal}
+                        setOpenModal={setOpenModal}
+                    />
+                </div>
+                <CartProductCardForm {...item} countEnable />
+            </div>
+        );
     });
 }

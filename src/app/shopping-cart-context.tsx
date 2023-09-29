@@ -1,13 +1,13 @@
 "use client";
 
-import { createContext, useContext, useState } from "react";
+import { createContext, use, useContext, useState } from "react";
 import { cartItemProps, productCardProps } from "./type";
-
+import { useEffect } from "react";
 interface ShoppingCartContext {
-    getItemquantity: (id: number) => number;
-    increaseCartQuantity: (id: number) => void;
-    decreaseCartQuantity: (id: number) => void;
-    removeFromCart: (id: number) => void;
+    getItemquantity: (id: number, size: string) => number;
+    increaseCartQuantity: (id: number, size: string) => void;
+    decreaseCartQuantity: (id: number, size: string) => void;
+    removeFromCart: (id: number, size: string) => void;
     setBgFreeze: (value: string | undefined) => void;
     setNavOpen: (value: boolean) => void;
     setSearch: (value: string) => void;
@@ -26,18 +26,16 @@ export function useShoppingCart() {
 }
 
 export function ShoppingCartProvider({ children }: { children: React.ReactNode }) {
-    const [cartItems, setCartItems] = useState<cartItemProps[]>([
-        { id: 1, quantity: 5 },
-        { id: 2, quantity: 4 },
-        { id: 3, quantity: 3 },
-        { id: 4, quantity: 2 },
-        { id: 5, quantity: 1 },
-        { id: 6, quantity: 1 },
-        { id: 7, quantity: 1 },
-        { id: 8, quantity: 1 },
-        { id: 9, quantity: 1 },
-        { id: 10, quantity: 1 },
-    ]);
+    useEffect(() => {
+        const storageCartItems = JSON.parse(localStorage.getItem("cartItems") || "[]");
+        setCartItems(storageCartItems);
+    }, []);
+
+    const [cartItems, setCartItems] = useState<cartItemProps[]>([]);
+
+    useEffect(() => {
+        localStorage.setItem("cartItems", JSON.stringify(cartItems));
+    }, [cartItems]);
 
     const [search, setSearch] = useState("");
 
@@ -47,17 +45,17 @@ export function ShoppingCartProvider({ children }: { children: React.ReactNode }
 
     const cartQuantity = cartItems.reduce((quantity, item) => item.quantity + quantity, 0);
 
-    const getItemquantity = (id: number) => {
-        return cartItems.find((item) => item.id === id)?.quantity || 0;
+    const getItemquantity = (id: number, size: string) => {
+        return cartItems.find((item) => item.id === id && item.size === size)?.quantity || 0;
     };
 
-    const increaseCartQuantity = (id: number) => {
+    const increaseCartQuantity = (id: number, size: string) => {
         setCartItems((currItems) => {
-            if (currItems.find((item) => item.id === id) == null) {
-                return [...currItems, { id: id, quantity: 1 }];
+            if (currItems.find((item) => item.id === id && item.size === size) == null) {
+                return [...currItems, { id: id, size: size, quantity: 1 }];
             } else {
                 return currItems.map((item) => {
-                    if (item.id === id) {
+                    if (item.id === id && item.size === size) {
                         return { ...item, quantity: item.quantity + 1 };
                     } else {
                         return item;
@@ -67,13 +65,13 @@ export function ShoppingCartProvider({ children }: { children: React.ReactNode }
         });
     };
 
-    const decreaseCartQuantity = (id: number) => {
+    const decreaseCartQuantity = (id: number, size: string) => {
         setCartItems((currItems) => {
-            if (currItems.find((item) => item.id === id)?.quantity === 1) {
-                return currItems.filter((item) => item.id !== id);
+            if (currItems.find((item) => item.id === id && item.size === size)?.quantity === 1) {
+                return currItems.filter((item) => !(item.id === id && item.size === size));
             } else {
                 return currItems.map((item) => {
-                    if (item.id === id) {
+                    if (item.id === id && item.size === size) {
                         return { ...item, quantity: item.quantity - 1 };
                     } else {
                         return item;
@@ -83,9 +81,9 @@ export function ShoppingCartProvider({ children }: { children: React.ReactNode }
         });
     };
 
-    const removeFromCart = (id: number) => {
+    const removeFromCart = (id: number, size: string) => {
         setCartItems((currItems) => {
-            return currItems.filter((item) => item.id !== id);
+            return currItems.filter((item) => !(item.id === id && item.size === size));
         });
     };
 
@@ -95,7 +93,6 @@ export function ShoppingCartProvider({ children }: { children: React.ReactNode }
             brand: "adidas originals",
             productName: "handball spezial black",
             productId: "db3021",
-            size: "275",
             price: 110000,
             shippingFee: 19000,
             intl: true,
@@ -105,7 +102,6 @@ export function ShoppingCartProvider({ children }: { children: React.ReactNode }
             brand: "adidas originals",
             productName: "handball spezial black",
             productId: "db3021",
-            size: "275",
             price: 120000,
             shippingFee: 19000,
             intl: true,
@@ -115,7 +111,6 @@ export function ShoppingCartProvider({ children }: { children: React.ReactNode }
             brand: "adidas originals",
             productName: "handball spezial black",
             productId: "db3021",
-            size: "275",
             price: 130000,
             shippingFee: 19000,
             intl: true,
@@ -125,7 +120,6 @@ export function ShoppingCartProvider({ children }: { children: React.ReactNode }
             brand: "adidas originals",
             productName: "handball spezial black",
             productId: "db3021",
-            size: "275",
             price: 140000,
             shippingFee: 3000,
             intl: false,
@@ -135,7 +129,6 @@ export function ShoppingCartProvider({ children }: { children: React.ReactNode }
             brand: "adidas originals",
             productName: "handball spezial black",
             productId: "db3021",
-            size: "275",
             price: 150000,
             shippingFee: 19000,
             intl: true,
@@ -145,7 +138,6 @@ export function ShoppingCartProvider({ children }: { children: React.ReactNode }
             brand: "adidas originals",
             productName: "handball spezial black",
             productId: "db3021",
-            size: "275",
             price: 150000,
             shippingFee: 19000,
             intl: true,
@@ -155,7 +147,6 @@ export function ShoppingCartProvider({ children }: { children: React.ReactNode }
             brand: "adidas originals",
             productName: "handball spezial black",
             productId: "db3021",
-            size: "275",
             price: 150000,
             shippingFee: 19000,
             intl: true,
@@ -165,7 +156,6 @@ export function ShoppingCartProvider({ children }: { children: React.ReactNode }
             brand: "adidas originals",
             productName: "handball spezial black",
             productId: "db3021",
-            size: "275",
             price: 150000,
             shippingFee: 19000,
             intl: true,
@@ -175,7 +165,6 @@ export function ShoppingCartProvider({ children }: { children: React.ReactNode }
             brand: "adidas originals",
             productName: "handball spezial black",
             productId: "db3021",
-            size: "275",
             price: 150000,
             shippingFee: 19000,
             intl: true,
@@ -185,7 +174,6 @@ export function ShoppingCartProvider({ children }: { children: React.ReactNode }
             brand: "adidas originals",
             productName: "handball spezial black",
             productId: "db3021",
-            size: "275",
             price: 150000,
             shippingFee: 19000,
             intl: true,

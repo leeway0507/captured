@@ -1,7 +1,9 @@
 "use client";
 
 import "./filter.css";
-import { InlineContentShowAll, InlineContentShowSelected } from "./inline-content";
+import OptionArrayShowAll from "@/app/category/[type]/component/options-array-show-all";
+import OptionArraySelected from "@/app/category/[type]/component/options-array-selected";
+
 import type { SizeObject } from "../type";
 import { useState } from "react";
 import AccordionComponent from "@/app/components/accordion/accordion";
@@ -31,27 +33,15 @@ export default function Accordion({ isOpen, setIsOpen }: FilterDropdownProps) {
     return (
         <>
             <div className={`w-full ${isOpen ? "block" : "hidden"}`}>
-                <AccordionComponent
-                    title="카테고리"
-                    content={InlineContentShowSelected(brand, setBrand)}
-                    cat="category"
-                />
-                <AccordionComponent
-                    title="브랜드"
-                    content={InlineContentShowSelected(category, setCategory)}
-                    cat="brand"
-                />
+                <AccordionComponent title="카테고리" content={OptionArraySelected(brand, setBrand)} cat="category" />
+                <AccordionComponent title="브랜드" content={OptionArraySelected(category, setCategory)} cat="brand" />
                 <AccordionComponent
                     title="사이즈"
-                    content={InlineContentShowAll({ contentList: size, setContentList: setSize, showTitle: false })}
+                    content={OptionArrayShowAll({ contentList: size, setContentList: setSize, showTitle: false })}
                     cat="size"
                 />
-                <AccordionComponent
-                    title="배송"
-                    content={InlineContentShowSelected(shipping, setShipping)}
-                    cat="delivery"
-                />
-                <AccordionComponent title="가격" content={InlineContentShowSelected(price, setPrice)} cat="price" />
+                <AccordionComponent title="배송" content={OptionArraySelected(shipping, setShipping)} cat="delivery" />
+                <AccordionComponent title="가격" content={OptionArraySelected(price, setPrice)} cat="price" />
 
                 <div
                     className="text-light-gray flex-center p-4 bg-main-black text-lg-xl tracking-widest"

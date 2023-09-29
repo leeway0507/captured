@@ -7,23 +7,25 @@ export default function Home() {
     const thumbnailInfos = [
         {
             src: "/test.png",
-            brand: "brand",
-            productName: "productName",
+            brand: "Adidas Originals",
+            productName: "Handball Spezial Black",
             href: "/mypage",
         },
-        {
-            src: "/test.png",
-            brand: "brand",
-            productName: "productName",
-            href: "/mypage",
-        },
+        // {
+        //     src: "/test.png",
+        //     brand: "Adidas Originals",
+        //     productName: "Spezail Core Black",
+        //     href: "/mypage",
+        // },
     ];
 
     return (
         <NavFooter>
             <Banner thumbnailInfos={thumbnailInfos} />
             <div className="p-4"></div>
-            <BrandList />
+            <div className="mx-2">
+                <BrandList />
+            </div>
             <div className="p-5"></div>
         </NavFooter>
     );

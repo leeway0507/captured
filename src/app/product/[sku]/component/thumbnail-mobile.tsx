@@ -1,4 +1,4 @@
-import CarouselProgressBar from "../../components/carousel/EmblaCarouselProgressBar";
+import CarouselProgressBar from "../../../components/carousel/EmblaCarouselProgressBar";
 import Image from "next/image";
 
 interface ThumbnailProps {
@@ -10,18 +10,18 @@ interface ThumbnailProps {
 export default function Thumbnail({ brand, productName, productId }: ThumbnailProps) {
     const imageNameArray = ["main", "sub-1", "sub-2", "sub-3", "sub-4"];
     return (
-        <div className="h-full overflow-auto pt-4 pe-5">
+        <CarouselProgressBar>
             {imageNameArray.map((imageName) => (
-                <div key={imageName}>
+                <div key={imageName} className="embla__slide">
                     <Image
                         src={`/product/${brand}/${productName} ${productId}/${imageName}.png`}
                         alt={`${productName} ${productId}`}
                         width={800}
                         height={800}
-                        className="rounded-md mb-2"
+                        className="embla__slide__img"
                     />
                 </div>
             ))}
-        </div>
+        </CarouselProgressBar>
     );
 }
