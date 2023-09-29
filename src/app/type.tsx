@@ -4,7 +4,6 @@ export interface productCardProps {
     brand: string;
     productName: string;
     productId: string;
-    size: string;
     price: number;
     shippingFee: number;
     intl: boolean;
@@ -12,9 +11,11 @@ export interface productCardProps {
 
 export interface cartProductCardProps extends productCardProps {
     quantity: number;
+    size: string;
 }
 
 export interface cartItemProps {
     id: number;
     quantity: number;
+    size: string;
 }

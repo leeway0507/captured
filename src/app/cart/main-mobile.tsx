@@ -1,28 +1,9 @@
 "use client";
-import { useShoppingCart } from "../shopping-cart-context";
-import ProductCardSimpleArray from "./component/cart-product-array";
+import CartProductCardArr from "./component/cart-product-array";
 import ProductCheckOut from "./component/product-check-out";
-import { cartProductCardProps, mockDBprops } from "../type";
+import { cartProductCardProps } from "../type";
 
-export default function MobileMain() {
-    const { mockDB, cartItems } = useShoppingCart();
-
-    // filter productinfo and append quantity to mockDB
-    const itemInfos = mockDB.filter((item) => {
-        return cartItems.find((cartItem) => cartItem.id === item.id) != null;
-    });
-
-    const cartProductCard: cartProductCardProps[] = itemInfos
-        .map((item: mockDBprops) => {
-            const cartItem = cartItems.find((cartItem) => cartItem.id === item.id);
-            if (cartItem !== undefined) {
-                return { ...item, quantity: cartItem.quantity };
-            }
-            // Return null for items that don't have corresponding cart items
-            return null;
-        })
-        .filter((item): item is cartProductCardProps => item !== null);
-
+export default function MainMobile({ arr }: { arr: cartProductCardProps[] }) {
     return (
         <>
             <div className="flex flex-row w-full">
@@ -36,11 +17,12 @@ export default function MobileMain() {
                     </div>
                     <div>
                         <div>
-                            <ProductCardSimpleArray ProductCardArray={cartProductCard} />
+                            <CartProductCardArr arr={arr} />
                         </div>
                         <div>
-                            <ProductCheckOut ProductCardArray={cartProductCard} />
+                            <ProductCheckOut arr={arr} />
                         </div>
+                        <div className="black-bar m-3 text-xl tracking-[0.2em]">주문하기</div>
                         <div className="mb-5"></div>
                     </div>
                 </div>

@@ -1,9 +1,9 @@
-import { productCardProps } from "@/app/type";
-import ProductCard from "./product-card";
+import { cartProductCardProps } from "@/app/type";
+import CartproductCardForm from "@/app/components/product-card/cart-product-card-form";
 
-const OrderProducts = (cart: productCardProps[]) => {
-    return cart.map((item: productCardProps, idx: number) => {
-        return ProductCard({ ...item });
+const OrderProducts = (cart: cartProductCardProps[]) => {
+    return cart.map((item: cartProductCardProps, idx: number) => {
+        return CartproductCardForm({ ...item });
     });
 };
 

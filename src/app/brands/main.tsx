@@ -19,9 +19,9 @@ export default function Brands() {
     const brandsComponent = (brandName: string) => {
         const brandNameBar = brandName.replace(" ", "-");
         return (
-            <Link href={`cat/${brandNameBar}`} className="flex w-full px-2 brand-box">
+            <Link href={`category/${brandNameBar}`} className="flex w-full px-2 brand-box ">
                 <div className="basis-3/5 flex-left grow text-2xl-3xl capitalize ps-3">{brandName}</div>
-                <div className="flex-right relative  ">
+                <div className="flex-right relative ">
                     <div className="absolute triangle-right top-0 left-0" />
                     <div className="grow w-[20px] h-full bg-main-black"></div>
                     <Image
@@ -45,7 +45,7 @@ export default function Brands() {
                     </div>
                 </div>
             </div>
-            <div className="flex-center flex-col py-5 w-full">
+            <div className="flex-center flex-col p-5 w-full">
                 {brandsArray.map((brandName) => {
                     return brandsComponent(brandName);
                 })}

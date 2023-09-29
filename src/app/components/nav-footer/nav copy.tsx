@@ -50,19 +50,19 @@ export default function Nav({ isOpen, setIsOpen }) {
                                 />
                             </div>
                             <div className="flex flex-col basis-5/12 justify-between py-6 text-lg-xl">
-                                <a href="." className="ps-6 basis-1/5 flex-left hover:bg-light-gray">
+                                <a href="/category/latest" className="ps-6 basis-1/5 flex-left hover:bg-light-gray">
                                     LATEST
                                 </a>
-                                <a href="." className="ps-6 basis-1/5 flex-left hover:bg-light-gray">
+                                <a href="/brands" className="ps-6 basis-1/5 flex-left hover:bg-light-gray">
                                     BRANDS
                                 </a>
-                                <a href="." className="ps-6 basis-1/5 flex-left hover:bg-light-gray">
+                                <a href="/category/shoes" className="ps-6 basis-1/5 flex-left hover:bg-light-gray">
                                     SHOES
                                 </a>
-                                <a href="." className="ps-6 basis-1/5 flex-left hover:bg-light-gray">
+                                <a href="/category/clothing" className="ps-6 basis-1/5 flex-left hover:bg-light-gray">
                                     CLOTHING
                                 </a>
-                                <a href="." className="ps-6 basis-1/5 flex-left hover:bg-light-gray">
+                                <a href="/category/accessory" className="ps-6 basis-1/5 flex-left hover:bg-light-gray">
                                     ACCESSORY
                                 </a>
                             </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import SeeMoreOrders from "./order-table";
+import OrderTable from "./order-table";
 import { useState } from "react";
 
 export default function OrderList({ fontSize }: { fontSize: string }) {
@@ -14,7 +14,7 @@ export default function OrderList({ fontSize }: { fontSize: string }) {
     return (
         <>
             <div className={`flex flex-col gap-2 w-full mondaL ${"text-" + fontSize}`}>
-                <SeeMoreOrders showInitalRows={3} seeMore={seeMore} setSeeMore={setSeeMore} />
+                <OrderTable showInitalRows={3} seeMore={seeMore} setSeeMore={setSeeMore} />
             </div>
         </>
     );

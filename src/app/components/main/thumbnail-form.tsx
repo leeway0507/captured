@@ -13,31 +13,20 @@ export default function Thumbnail({ src, brand, productName, href }: PropType) {
     }
 
     return (
-        <div className="bg-gray-100 flex flex-col w-full py-5 px-3">
-            <div className="py-7"></div>
-            <Image
-                src={src}
-                alt="test-img"
-                sizes="100vw"
-                style={{
-                    margin: "0 auto",
-                    width: "75%",
-                    height: "auto",
-                }}
-                width={500}
-                height={300}
-            />
-            <div className="flex flex-col px-8 tb:px-16">
-                <div className="py-5"></div>
-                <div className="text-xl-2xl">{brand}</div>
-                <div className="text-lg-xl">{productName}</div>
-                <div className="py-1"></div>
-                <a href={href}>
-                    <div className="flex-center text-xl-2xl border-2 main-black-border w-full py-2 hover:bg-main-black hover:text-light-gray hover:border-blue-black">
-                        Shop Now
+        <div className="bg-gray-50 flex-center flex-col">
+            <div className="square max-w-[75%] tb:max-w-[50%] mb-4">
+                <div className="inner flex-right flex-col">
+                    <Image src={src} alt={productName} className="mb-4" width={1000} height={1000} />
+                    <div className="w-full">
+                        <div className="flex-left text-lg ">{brand}</div>
+                        <div className="flex-left text-xl mb-2">{productName}</div>
+                        <a href={href}>
+                            <div className="flex-center text-xl rounded border-2 main-black-border shadow-lg py-2 hover:bg-main-black hover:text-light-gray hover:border-blue-black hover:shadow-2xl">
+                                Shop Now
+                            </div>
+                        </a>
                     </div>
-                </a>
-                <div className="py-1"></div>
+                </div>
             </div>
         </div>
     );

@@ -6,7 +6,7 @@ import { useShoppingCart } from "../../shopping-cart-context";
 import { cartProductCardProps } from "../../type";
 import Link from "next/link";
 
-export function ProductCardSimple(props: cartProductCardProps) {
+export default function CartProductCardForm(props: cartProductCardProps) {
     const { id, brand, productName, productId, size, quantity, price, intl } = props;
     const { increaseCartQuantity, decreaseCartQuantity, getItemquantity } = useShoppingCart();
     const [openModal, setOpenModal] = useState<boolean>(false);
@@ -69,7 +69,7 @@ export function ProductCardSimple(props: cartProductCardProps) {
                             />
                         </button>
                         <div>{quantity}</div>
-                        <button type="button" className="px-3" onClick={() => increaseCartQuantity(id)}>
+                        <button type="button" className="px-3" onClick={() => increaseCartQuantity(id, size)}>
                             <Image src="/icons/add.svg" width={18} height={18} alt="add" className="click-effect" />
                         </button>
                     </div>

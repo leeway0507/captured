@@ -1,12 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
+import { productCardProps } from "@/app/type";
 
-import type { catProductCardProps } from "../type";
+export default function ProductCard(props: productCardProps) {
+    const { id, brand, productName, price, productId } = props;
 
-export default function ProductCard({ id, brand, productName, productId, price, intl }: catProductCardProps) {
     const productImgUrl = `/product/${brand}/${productName} ${productId}/main.png`;
     return (
-        <Link href="." className="mondaL text-sub-black text-xs font-light pb-6" key={id}>
+        <Link href={`/product/${id}`} className="mondaL text-sub-black text-xs font-light pb-6" key={id}>
             <div className="flex flex-col">
                 <div>
                     <Image src={productImgUrl} width={1000} height={1000} alt={productId} className="rounded-md" />
@@ -16,10 +17,9 @@ export default function ProductCard({ id, brand, productName, productId, price, 
                         {/* <div className="uppercase text-sub-black">{brand}</div> */}
                     </div>
                     <div>{`${brand} ${productName} | ${productId.toUpperCase()}`}</div>
-                    {/* <div className=" text-blue-black"> {productId.toUpperCase()} </div> */}
                     <div className="py-2 font-bold">
                         {" "}
-                        <div className="inline-block font-bold">국내배송상품</div> | ₩ {price.toLocaleString()}
+                        <div className="inline-block font-bold">국내배송</div> | ₩ {price.toLocaleString()}
                     </div>
                 </div>
             </div>

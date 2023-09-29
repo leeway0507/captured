@@ -52,19 +52,23 @@ export default function NavMobile({ isOpen, setIsOpen }) {
                                 />
                             </div>
                             <div className="flex flex-col basis-5/12 justify-between py-6 text-lg-xl">
-                                <Link href="/cat/all" className="ps-6 basis-1/5 flex-left hover:bg-light-gray">
+                                <Link href="/category/latest" className="ps-6 basis-1/5 flex-left hover:bg-light-gray">
                                     LATEST
                                 </Link>
                                 <Link href="/brands" className="ps-6 basis-1/5 flex-left hover:bg-light-gray">
                                     BRANDS
                                 </Link>
-                                <Link href="/cat/shoes" className="ps-6 basis-1/5 flex-left hover:bg-light-gray">
+                                <Link href="/category/shoes" className="ps-6 basis-1/5 flex-left hover:bg-light-gray">
                                     SHOES
                                 </Link>
-                                <Link href="/cat/clothing" className="ps-6 basis-1/5 flex-left hover:bg-light-gray">
+                                <Link
+                                    href="/category/clothing"
+                                    className="ps-6 basis-1/5 flex-left hover:bg-light-gray">
                                     CLOTHING
                                 </Link>
-                                <Link href="/cat/accessory" className="ps-6 basis-1/5 flex-left hover:bg-light-gray">
+                                <Link
+                                    href="/category/accessory"
+                                    className="ps-6 basis-1/5 flex-left hover:bg-light-gray">
                                     ACCESSORY
                                 </Link>
                             </div>

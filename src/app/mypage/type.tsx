@@ -1,4 +1,5 @@
-import { productCardProps } from "@/app/type";
+import { cartProductCardProps } from "@/app/type";
+
 export interface addressFormProps {
     addressId: string;
     krName: string;
@@ -11,24 +12,19 @@ export interface addressFormProps {
     enAddressRest: string;
 }
 
-export interface targetDetailProps {
-    orderId: string;
+export interface orderDetailProductCardProps extends cartProductCardProps {
     deliveryNumber: string;
     deliveryCompany: string;
-    orderNumber: string;
-    orderDate: string;
-    orderStatus: string;
-    orderPrice: string;
+}
+export interface OrderDetailProps extends orderHistoryProps {
     orderAddress: addressFormProps;
-    orderItemList: productCardProps[];
+    orderItemList: orderDetailProductCardProps[];
 }
 
-export interface orderRowProps {
+export interface orderHistoryProps {
     orderId: string;
     orderNumber: string;
     orderDate: string;
     orderStatus: string;
     orderPrice: string;
-    deliveryNumber: string;
-    deliveryCompany: string;
 }
