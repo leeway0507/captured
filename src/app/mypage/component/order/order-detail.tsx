@@ -1,6 +1,8 @@
 import OrderDetailProductCardArray from "./order-product-card-array";
 import { phoneNumberAutoFormat } from "@/app/components/custom-input/check-policy";
 import { addressFormProps, OrderDetailProps, orderDetailProductCardProps } from "../../type";
+import ProductCheckOut from "@/app/cart/component/product-check-out";
+import { useRouter } from "next/navigation";
 
 const Address = ({
     addressId,
@@ -45,13 +47,14 @@ const Address = ({
     );
 };
 
-const detailOrder = (targetDetail: OrderDetailProps) => {
+const DetailOrder = (targetDetail: OrderDetailProps) => {
     const { orderItemList, orderAddress, ...productInfo } = targetDetail;
+    const router = useRouter();
     return (
-        <div className="flex flex-col">
-            <div className="flex flex-col pb-2 px-5">
+        <div className="flex flex-col px-3">
+            <div className="flex flex-col pb-2 ">
                 <div className="flex-left text-2xl mb-8 border-b border-main-black w-full tb:top-[147px] tb:h-[80px] tb:sticky bg-white z-20">
-                    주문 정보
+                    상세 주문 정보
                 </div>
                 <div className="flex justify-between mb-4 ">
                     <div className="flex flex-col gap-2">
@@ -76,16 +79,20 @@ const detailOrder = (targetDetail: OrderDetailProps) => {
                     <Address {...orderAddress} />
                 </div>
             </div>
-            <div className="flex flex-col pb-2 px-5">
+            <div className="flex flex-col pb-2 ">
                 <div className="flex-left text-2xl mb-8 border-b border-main-black w-full tb:top-[147px] tb:h-[80px] tb:sticky bg-white z-20">
-                    주문 내역
+                    상세 주문 내역
                 </div>
                 {orderItemList.map((item: orderDetailProductCardProps, idx) => (
                     <div key={idx}>{OrderDetailProductCardArray([item])}</div>
                 ))}
             </div>
+            <ProductCheckOut arr={targetDetail.orderItemList} />
+            <div className="black-bar-xl" onClick={() => router.back()}>
+                확인
+            </div>
         </div>
     );
 };
 
-export default detailOrder;
+export default DetailOrder;

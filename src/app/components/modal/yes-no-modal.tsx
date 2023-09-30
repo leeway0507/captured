@@ -28,12 +28,12 @@ export default function YesNoModal(props: modalProps) {
 
     const modalButton = (
         <>
-            <button type="button" className="black-bar px-6 py-2" onClick={clickYes}>
+            <button type="button" className="black-bar-modal px-6" onClick={clickYes}>
                 예
             </button>
             <button
                 type="button"
-                className="bg-light-gray px-4 py-2 active:text-deep-gray active:bg-gray-200"
+                className=" bg-light-gray text-main-black px-4 active:text-deep-gray active:bg-gray-200"
                 onClick={closeModal}>
                 아니오
             </button>

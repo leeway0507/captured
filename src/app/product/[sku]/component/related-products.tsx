@@ -8,7 +8,7 @@ export default function RelatedProducts({ arr }: { arr: productCardProps[] }) {
 
     return (
         <>
-            <div className="text-xl pb-2">연관상품</div>
+            <div className="text-xl pb-2">최근 본 상품</div>
             <div className="flex justify-between overflow-hidden">
                 <EmblaCarouselMultiProducts>
                     {producInfos.map((props: productCardProps, idx: number) => {

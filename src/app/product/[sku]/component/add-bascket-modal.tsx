@@ -1,6 +1,6 @@
 import BaseModal from "@/app/components/modal/base-modal";
 import { useRouter } from "next/navigation";
-import { CardContent } from "@/app/cart/component/cart-product-remove-content";
+import { ProductCardModal } from "@/app/components/product-card/product-card-modal-form";
 import { popUpRemoveModalProps } from "@/app/cart/type";
 
 export default function AddBascketModal(props: popUpRemoveModalProps) {
@@ -8,7 +8,7 @@ export default function AddBascketModal(props: popUpRemoveModalProps) {
     const router = useRouter();
 
     const title = "장바구니에 추가되었습니다.";
-    const content = <CardContent {...props} />;
+    const content = <ProductCardModal {...props} />;
 
     function closeModal() {
         setOpenModal(false);
@@ -20,7 +20,7 @@ export default function AddBascketModal(props: popUpRemoveModalProps) {
     }
     const modalButton = (
         <>
-            <button type="button" className="black-bar px-6 py-2" onClick={clickYes}>
+            <button type="button" className="black-bar-modal px-6 py-2" onClick={clickYes}>
                 장바구니로 이동
             </button>
             <button

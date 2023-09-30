@@ -12,10 +12,7 @@ export interface addressFormProps {
     enAddressRest: string;
 }
 
-export interface orderDetailProductCardProps extends cartProductCardProps {
-    deliveryNumber: string;
-    deliveryCompany: string;
-}
+export interface orderDetailProductCardProps extends cartProductCardProps, orderRowProps {}
 export interface OrderDetailProps extends orderHistoryProps {
     orderAddress: addressFormProps;
     orderItemList: orderDetailProductCardProps[];
@@ -27,4 +24,14 @@ export interface orderHistoryProps {
     orderDate: string;
     orderStatus: string;
     orderPrice: string;
+}
+
+export interface orderRowProps {
+    orderNum: number;
+    order_id: string;
+    sku: number;
+    size: string;
+    quantity: number;
+    deliveryNumber: string;
+    deliveryCompany: string;
 }

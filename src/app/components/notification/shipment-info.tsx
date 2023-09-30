@@ -1,10 +1,11 @@
 import Image from "next/image";
 
 interface IntlShipmentProps {
+    title: string;
     content: string;
 }
 
-export function IntlShipment({ content }: IntlShipmentProps) {
+export function IntlShipment({ title, content }: IntlShipmentProps) {
     return (
         <div className="bg-light-gray text-sub-black tracking-tightest rounded	">
             <div className="flex">
@@ -12,9 +13,9 @@ export function IntlShipment({ content }: IntlShipmentProps) {
                     <Image src="/icons/intl-shipment.svg" width={32} height={32} alt="intl-shipment" />
                 </div>
                 <div className="basis-3/4">
-                    <div className="flex flex-col px-2 my-3 pt-2 pb-5 border-s-2 border-sub-black">
-                        <div className="mx-1 text-xl my-1">해외배송 상품</div>
-                        <p className="mx-1 text-sm text-justify pe-2 tracking-tight	">{content}</p>
+                    <div className="flex flex-col px-2 my-3 py-2 border-s-2 border-sub-black">
+                        <div className="mx-1 text-lg my-1">{title}</div>
+                        <p className="mx-1 text-xs text-justify pe-2 tracking-tight	">{content}</p>
                     </div>
                 </div>
             </div>

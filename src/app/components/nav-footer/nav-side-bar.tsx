@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useShoppingCart } from "../../shopping-cart-context";
 
 export default function NavMobile({ isOpen, setIsOpen }) {
+    const sessionLogin = false;
     const barRef = useRef(null);
     const { setSearch } = useShoppingCart();
 
@@ -34,12 +35,12 @@ export default function NavMobile({ isOpen, setIsOpen }) {
     return (
         <>
             <div
-                className={`mondaL fixed bottom-0 left-0 z-40 w-full h-[90%] ${
+                className={`mondaL fixed top-0 left-0 z-40 w-full h-[150px] ${
                     isOpen ? "side-bar-visible" : "side-bar-hidden"
                 }`}>
                 <div className="fixed w-screen h-full top-0 left-0 bg-main-black opacity-50"></div>
                 <div className="fixed z-50 flex flex-row text-sub-black w-screen h-screen">
-                    <div className="flex flex-col basis-9/12 tb:basis-7/12 bg-white " ref={barRef}>
+                    <div className="flex flex-col w-[80%] max-w-[400px] bg-white " ref={barRef}>
                         <div className="flex flex-col h-full text-base-lg">
                             <div className="bg-light-gray flex-center py-4">
                                 <input
@@ -74,8 +75,12 @@ export default function NavMobile({ isOpen, setIsOpen }) {
                             </div>
                             <div className="bg-light-gray flex-center justify-between px-3 text-sm-base basis-1/12">
                                 <Link href="/mypage">마이페이지</Link>
-                                <Link href="/login">로그인/회원가입</Link>
-                                <Link href="/logout">로그아웃</Link>
+
+                                {sessionLogin ? (
+                                    <Link href="/login">로그인/회원가입</Link>
+                                ) : (
+                                    <Link href="/logout">로그아웃</Link>
+                                )}
                             </div>
 
                             <div className="flex flex-col py-3 justify-between px-2 border-b-2">

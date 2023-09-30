@@ -3,8 +3,9 @@ import Link from "next/link";
 
 import type { productCardProps } from "@/app/type";
 
-export default function ProductCard({ id, brand, productName, productId, price, intl }: productCardProps) {
-    const productImgUrl = `/product/${brand}/${productName} ${productId}/main.png`;
+export default function ProductCard(props: productCardProps) {
+    const { id, brand, productName, price, productId, imgType } = props;
+    const productImgUrl = `/product/${brand}/${productName} ${productId}/main.${imgType}}`;
     return (
         <Link href="." className="mondaL text-sub-black text-xs font-light pb-6" key={id}>
             <div className="flex flex-col">

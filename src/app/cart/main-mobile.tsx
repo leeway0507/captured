@@ -2,9 +2,15 @@
 import CartProductCardArr from "./component/cart-product-array";
 import ProductCheckOut from "./component/product-check-out";
 import { cartProductCardProps } from "../type";
+import { useShoppingCart } from "../shopping-cart-context";
+import CartEmptyGuide from "./component/cart-empty-guide";
+import Link from "next/link";
 
 export default function MainMobile({ arr }: { arr: cartProductCardProps[] }) {
-    return (
+    const { cartQuantity } = useShoppingCart();
+    return cartQuantity === 0 ? (
+        <CartEmptyGuide fontSize="2xl" />
+    ) : (
         <>
             <div className="flex flex-row w-full">
                 <div className="flex flex-col justify-between w-full">
@@ -15,14 +21,16 @@ export default function MainMobile({ arr }: { arr: cartProductCardProps[] }) {
                             </div>
                         </div>
                     </div>
-                    <div>
+                    <div className="mx-4">
                         <div>
                             <CartProductCardArr arr={arr} />
                         </div>
                         <div>
                             <ProductCheckOut arr={arr} />
                         </div>
-                        <div className="black-bar m-3 text-xl tracking-[0.2em]">주문하기</div>
+                        <Link href="/order" className="black-bar-xl m-3 tracking-[0.2em]">
+                            주문하기
+                        </Link>
                         <div className="mb-5"></div>
                     </div>
                 </div>
