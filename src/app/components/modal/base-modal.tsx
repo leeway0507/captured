@@ -40,10 +40,10 @@ const BaseModal = (props: baseModalProps) => {
                                     {title}
                                 </Dialog.Title>
                                 <div className="mt-2">
-                                    <div className="text-sm text-gray-500">{content}</div>
+                                    <div className="text-sm text-gray-500 pb-4">{content}</div>
                                 </div>
 
-                                <div className="mt-6 flex gap-3">{button}</div>
+                                <div className="flex gap-3">{button}</div>
                             </Dialog.Panel>
                         </Transition.Child>
                     </div>

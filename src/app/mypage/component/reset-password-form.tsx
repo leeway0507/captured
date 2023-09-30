@@ -27,7 +27,7 @@ export default function ResetPasswordFrom() {
                     <input type="text" value={name} disabled className="custom-input-disabled" />
                 </div>
                 <div className="flex justify-between gap-4 ">
-                    <div className="flex flex-col text-sm">
+                    <div className="flex flex-col basis-1/2">
                         <CustomInput
                             label="비밀번호"
                             type="password"
@@ -38,7 +38,7 @@ export default function ResetPasswordFrom() {
                             checkPolicy={checkPasswordPolicy}
                         />
                     </div>
-                    <div className="flex flex-col">
+                    <div className="flex flex-col basis-1/2">
                         <CustomInput
                             label="비밀번호 확인"
                             type="password"

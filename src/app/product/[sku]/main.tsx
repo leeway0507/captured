@@ -22,7 +22,7 @@ export default function Product() {
             <div className="tb:hidden">
                 <MainMobile {...product} />
             </div>
-            <div className="hidden tb:block">
+            <div className="hidden tb:block px-5">
                 <MainPc {...product} />
             </div>
         </>

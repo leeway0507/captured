@@ -4,7 +4,7 @@
     position: relative;
 }
 .embla__viewport {
-    overflow: hidden;
+    overflow: scroll;
 }
 .embla__container {
     backface-visibility: hidden;
@@ -70,7 +70,7 @@
     border-radius: 0.2rem;
     left: 0;
     right: 0;
-    bottom: 5%;
+    bottom: 7%;
     margin-left: auto;
     margin-right: auto;
     pointer-events: none;
@@ -90,7 +90,7 @@
 
 .embla-multi {
     --slide-spacing: 1rem;
-    --slide-size: 25%;
+    --slide-size: 50%;
     position: relative;
 }
 

@@ -1,14 +1,14 @@
 "use client";
 
 import { createContext, useContext, useState } from "react";
-import { addressFormProps, orderRowProps } from "./type";
-import { mockAddressArrayAPI, mockOrderRowAPI } from "./component/mock-apis";
+import { addressFormProps, orderHistoryProps } from "./type";
+import { mockAddressArrayAPI, mockOrderHistoryAPI } from "./component/mock-apis";
 import * as api from "./apis";
 
 interface MyPageContext {
     userInfo: { userId: number; email: string; name: string };
     addressArray: addressFormProps[];
-    orderArray: orderRowProps[];
+    orderArray: orderHistoryProps[];
 }
 
 export const MyPageContext = createContext({} as MyPageContext);
@@ -25,7 +25,7 @@ export function MyPageProvider({ children }: { children: React.ReactNode }) {
     const addressArray = mockAddressArrayAPI;
 
     // api.getUserOrderArray
-    const orderArray = mockOrderRowAPI;
+    const orderArray = mockOrderHistoryAPI;
 
     return (
         <MyPageContext.Provider

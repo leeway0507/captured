@@ -35,11 +35,13 @@ export default function Category() {
     }
 
     return (
-        <div className="flex flex-col justify-between w-full">
+        <div className="flex flex-col justify-between w-full px-5">
             <div className="flex-center flex-col py-10">
                 <div className="flex-center w-full">
                     <div className="flex-center text-3xl text-sub-black uppercase">
-                        {Array.isArray(type) ? type[0].replace("-", " ") : type.replace("-", " ")}
+                        {Array.isArray(type)
+                            ? type[0].replace("-", " ").replace("%20", " ")
+                            : type.replace("-", " ").replace("%20", " ")}
                     </div>
                 </div>
             </div>

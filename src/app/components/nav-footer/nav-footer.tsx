@@ -14,7 +14,7 @@ export default function NavFooter({ children }: NavFooterProps) {
         <main className="custom-container">
             <NavigationPc />
             <NavigationMobile />
-            <div className="grow md:px-5">{children}</div>
+            <div className="grow">{children}</div>
             <Footer />
             <Nav isOpen={navOpen} setIsOpen={setNavOpen} />
         </main>

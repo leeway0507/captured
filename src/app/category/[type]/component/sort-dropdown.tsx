@@ -17,7 +17,7 @@ export default function SortItem() {
     };
 
     return (
-        <div className="mondaL relative w-[150px] cursor-pointer">
+        <div className="mondaL relative w-[150px] cursor-pointer z-50">
             <div onClick={openToggle} className="ps-2">
                 <div className="flex-right  tracking-wide">
                     {selected}

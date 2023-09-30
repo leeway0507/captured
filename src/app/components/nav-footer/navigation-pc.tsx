@@ -15,8 +15,8 @@ export default function NavigationPc() {
     return (
         <>
             <header
-                className="border-x-none h-[150px] px-10 pb-5 hidden tb:block relative sticky bg-white top-0 flex flex-row justify-between border-b border-light-gray z-50"
-                style={{ boxShadow: "0px 0.5px 2px var(--deep-gray)" }}>
+                className="border-x-none h-[150px] px-10 pb-5 hidden tb:block sticky top-0 flex justify-between border-b border-light-gray z-50 bg-white  "
+                style={{ boxShadow: "0px 2px 0px var(--deep-gray)" }}>
                 <div className="flex w-full py-5">
                     <div className="flex-left basis-3/12">
                         <input
