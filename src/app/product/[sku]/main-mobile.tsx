@@ -13,6 +13,8 @@ import { useShoppingCart } from "@/app/shopping-cart-context";
 import AddBascketModal from "./component/add-bascket-modal";
 
 export default function MobileMain(product: productCardProps) {
+    const { brand, productName, productId, sku, imgType } = product;
+
     //api-call - 신발 재고 정보
     //status : 제작필요
     //type : GET
@@ -20,8 +22,8 @@ export default function MobileMain(product: productCardProps) {
     //function : get_size_info(sku:int) => {sizeType:string, size:string[]}
     const { sizeType, availableSize } = { sizeType: "신발", availableSize: ["230", "245", "250"] };
 
-    const relatedProductsArray: productCardProps[] = [product, product];
-    const productImgUrl = `/product/${product.brand}/${product.productName} ${product.productId}/main.png`;
+    const relatedProductsArray: productCardProps[] = [product, product, product, product, product, product];
+    const productImgUrl = `/product/${brand}/${productName} ${productId}/main.${imgType}`;
     const [selectedItem, setSelectedItem] = useState<string>(availableSize[0]);
     const [openModal, setOpenModal] = useState(false);
 
@@ -29,7 +31,7 @@ export default function MobileMain(product: productCardProps) {
 
     function AddBascketToggle() {
         setOpenModal(true);
-        increaseCartQuantity(product.id, selectedItem);
+        increaseCartQuantity(sku, selectedItem);
     }
 
     return (
@@ -48,6 +50,7 @@ export default function MobileMain(product: productCardProps) {
                 <div>
                     {product.intl ? (
                         <IntlShipment
+                            title="해외배송 상품"
                             content="해당 제품은 해외 구매대행 상품입니다. 
                         상품 구입을 위해 고유 통관부호가 필요하며 5 ~ 15일의 배송기간이 소요 됩니다."
                         />

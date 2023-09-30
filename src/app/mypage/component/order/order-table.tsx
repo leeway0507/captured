@@ -114,10 +114,6 @@ export default function OrderTable({ showInitalRows, seeMore, setSeeMore }: Orde
             </div>
             <div className={`${!openDetail && "hidden"}`}>
                 <div className="">{detailOrder(targetDetail)}</div>
-                <ProductCheckOut arr={targetDetail.orderItemList} />
-                <div className="my-8 mx-16 black-bar-xl" onClick={closeDetailToggle}>
-                    확인
-                </div>
             </div>
         </div>
     );

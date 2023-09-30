@@ -11,7 +11,7 @@ import { addressFormProps } from "../type";
 import { useRouter } from "next/navigation";
 import YesNoModal from "@/app/components/modal/yes-no-modal";
 import AlertModalWithoutBtn from "@/app/components/modal/alert-modal-without-btn";
-import YesNoModalWithoutBtn from "@/app/components/modal/yes-no-without-btn-modal";
+import YesNoModalWithoutBtn from "@/app/components/modal/yes-no-modal-without-btn";
 import * as api from "./apis";
 
 const AddAddress = ({
@@ -78,7 +78,8 @@ const AddAddress = ({
             isOpen: openSuccessModal,
             setIsOpen: setOpenSuccessModal,
             trueCallback: () => {
-                router.push("/mypage/?pageindex=2");
+                // router.push("/mypage/?pageindex=2");
+                router.back();
             },
             checkColor: "green",
         });

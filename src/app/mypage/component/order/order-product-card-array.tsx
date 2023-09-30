@@ -5,8 +5,8 @@ import Link from "next/link";
 const OrderDetailProductCardArray = (props: orderDetailProductCardProps[]) => {
     return props.map((item: orderDetailProductCardProps, idx: number) => {
         return (
-            <div key={idx} className="relative">
-                <div className="absolute top-0 right-0 mt-4 me-3  text-sm underline">
+            <div key={idx} className="relative my-4">
+                <div className="absolute -top-2 right-0  text-xs underline ">
                     {item.deliveryNumber == "-" ? (
                         <div>배송 준비 중</div>
                     ) : (
@@ -15,7 +15,9 @@ const OrderDetailProductCardArray = (props: orderDetailProductCardProps[]) => {
                         </Link>
                     )}
                 </div>
-                <CartProductCardForm {...item} countEnable={false} />
+                <div className="my-4 border-b border-deep-gray">
+                    <CartProductCardForm {...item} countEnable={false} />
+                </div>
             </div>
         );
     });

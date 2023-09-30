@@ -1,12 +1,12 @@
-import React from "react";
 export interface productCardProps {
-    id: number;
+    sku: number;
     brand: string;
     productName: string;
     productId: string;
     price: number;
     shippingFee: number;
     intl: boolean;
+    imgType: string;
 }
 
 export interface cartProductCardProps extends productCardProps {

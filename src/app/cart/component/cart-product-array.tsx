@@ -7,10 +7,11 @@ export default function CartProductCardArr({ arr }: { arr: cartProductCardProps[
     const [openModal, setOpenModal] = useState<boolean>(false);
 
     return arr.map((item: cartProductCardProps, idx: number) => {
-        const productImgUrl = `/product/${item.brand}/${item.productName} ${item.productId}/main.png`;
+        const { brand, productName, productId, imgType } = item;
+        const productImgUrl = `/product/${brand}/${productName} ${productId}/main.${imgType}`;
         return (
-            <div key={idx} className="relative">
-                <div className="absolute top-0 right-0 mt-10 me-3  text-sm underline">
+            <div key={idx} className="relative mb-5">
+                <div className="absolute top-5 right-0  text-sm underline">
                     <PopUpRemoveModal
                         {...item}
                         productImgUrl={productImgUrl}

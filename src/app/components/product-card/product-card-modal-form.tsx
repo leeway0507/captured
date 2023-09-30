@@ -1,12 +1,13 @@
 import Image from "next/image";
-import { popUpRemoveModalProps } from "../type";
+import { cartProductCardProps } from "@/app/type";
 
-export const CardContent = (props: popUpRemoveModalProps) => {
-    const { brand, productImgUrl, productName, productId, size, intl, ...rest } = props;
+export const ProductCardModal = (props: cartProductCardProps) => {
+    const { brand, productName, productId, size, intl, ...rest } = props;
+    const productImgUrl = `/product/${brand}/${productName} ${productId}/thumbnail.png`;
     return (
         <div className="flex flex-col py-2">
             <div className="flex text-sm">
-                <div className="flex-center flex-col basis-2/6">
+                <div className="flex-center flex-col basis-1/2">
                     <Image src={productImgUrl} width={200} height={200} alt={productId} />
                 </div>
                 <div className="basis-4/6">

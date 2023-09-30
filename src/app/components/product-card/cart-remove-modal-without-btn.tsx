@@ -10,7 +10,7 @@ export interface popUpRemoveModalProps extends cartProductCardProps {
 }
 
 export default function PopUpRemoveModal(props: popUpRemoveModalProps) {
-    const { id, size, openModal, setOpenModal, ...rest } = props;
+    const { sku, size, openModal, setOpenModal, ...rest } = props;
     const title = "아래와 일치하는 상품을 제거합니다.";
     const { removeFromCart } = useShoppingCart();
 
@@ -21,7 +21,7 @@ export default function PopUpRemoveModal(props: popUpRemoveModalProps) {
             content={CardContent(props)}
             title={title}
             trueCallback={() => {
-                removeFromCart(id, size);
+                removeFromCart(sku, size);
             }}
         />
     );

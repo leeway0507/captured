@@ -10,37 +10,39 @@ interface cartProductCardFormProps extends cartProductCardProps {
 }
 
 export default function CartProductCardForm(props: cartProductCardFormProps) {
-    const { id, brand, productName, productId, size, price, quantity, intl, countEnable } = props;
+    const { sku, brand, productName, productId, size, price, quantity, intl, imgType, countEnable } = props;
     const { increaseCartQuantity, decreaseCartQuantity, getItemquantity } = useShoppingCart();
     const [openModal, setOpenModal] = useState<boolean>(false);
 
     const totalPrice = price * quantity;
-    const productImgUrl = `/product/${brand}/${productName} ${productId}/main.png`;
+    const productImgUrl = `/product/${brand}/${productName} ${productId}/thumbnail.png`;
 
-    function askRemoveItemBeforeLastQuantity(id: number, size: string) {
-        if (getItemquantity(id, size) === 1) {
+    function askRemoveItemBeforeLastQuantity(sku: number, size: string) {
+        if (getItemquantity(sku, size) === 1) {
             setOpenModal(true);
         } else {
-            decreaseCartQuantity(id, size);
+            decreaseCartQuantity(sku, size);
         }
     }
 
     return (
-        <div className="text-sub-black py-8 px-3 text-base border-b border-deep-gray" key={id}>
-            <div className="flex-center flex-col pt-2">
+        <div className="text-sub-black text-sm-base pb-2 border-b border-deep-gray" key={sku}>
+            <div className="flex-center flex-col">
                 <div className="flex mb-1 w-full">
-                    <div className="flex-center flex-col max-w-[120px]">
-                        <Image src={productImgUrl} width={200} height={200} alt={productId} />
+                    <div className="flex-center flex-col max-w-[120px] tb:max-w-[150px]">
+                        <Link href={`product/${sku}`} className="text-blue-black hover:opacity-50 active:opacity-100">
+                            <Image src={productImgUrl} width={500} height={500} alt={productId} />
+                        </Link>
                     </div>
-                    <div className="grow">
+                    <div className="m-auto grow">
                         <div className="flex flex-col ps-2 text-blue-black">
                             <div>
-                                <Link href={`category/${brand}`} className="text-sub-black text-base link-animation">
+                                <Link href={`category/${brand}`} className="text-sub-black text-sm-base link-animation">
                                     {brand.toUpperCase()}
                                 </Link>
                             </div>
                             <div>
-                                <Link href={`product/${id}`} className="text-blue-black link-animation">
+                                <Link href={`product/${sku}`} className="text-blue-black link-animation">
                                     {productName}
                                 </Link>
                             </div>
@@ -59,7 +61,7 @@ export default function CartProductCardForm(props: cartProductCardFormProps) {
                                 <button
                                     type="button"
                                     className="px-3"
-                                    onClick={() => askRemoveItemBeforeLastQuantity(id, size)}>
+                                    onClick={() => askRemoveItemBeforeLastQuantity(sku, size)}>
                                     <Image
                                         src="/icons/remove.svg"
                                         width={18}
@@ -69,7 +71,7 @@ export default function CartProductCardForm(props: cartProductCardFormProps) {
                                     />
                                 </button>
                                 <div>{quantity}</div>
-                                <button type="button" className="px-3" onClick={() => increaseCartQuantity(id, size)}>
+                                <button type="button" className="px-3" onClick={() => increaseCartQuantity(sku, size)}>
                                     <Image
                                         src="/icons/add.svg"
                                         width={18}

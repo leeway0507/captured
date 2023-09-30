@@ -7,10 +7,13 @@
         @apply cursor-pointer hover:text-deep-gray active:text-deep-gray;
     }
     .black-bar {
-        @apply bg-main-black flex-center text-white py-2 rounded active:text-main-black active:bg-light-gray cursor-pointer;
+        @apply bg-main-black flex-center text-white py-3 rounded-lg active:text-main-black active:bg-light-gray cursor-pointer text-sm m-4;
+    }
+    .black-bar-modal {
+        @apply bg-main-black flex-center text-white py-3 rounded-lg active:text-main-black active:bg-light-gray cursor-pointer text-sm;
     }
     .black-bar-xl {
-        @apply black-bar tracking-[0.3rem] text-xl;
+        @apply black-bar tracking-[0.3rem] text-base;
     }
     .custom-container {
         @apply flex flex-col justify-between relative m-auto h-full;

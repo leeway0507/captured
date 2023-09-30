@@ -3,7 +3,7 @@ import { useShoppingCart } from "../shopping-cart-context";
 import Order from "./component/order/order";
 import AccordionComponent from "@/app/components/accordion/accordion";
 import ResetPasswordFrom from "./component/reset-password-form";
-import AddressInfoFrom from "./component/address-info-form";
+import AddressInfoFrom from "./component/address-info";
 
 export default function MobileMain() {
     const { mockDB, cartItems } = useShoppingCart();
