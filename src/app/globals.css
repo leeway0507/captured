@@ -4,10 +4,10 @@
 
 @layer components {
     .link-animation {
-        @apply cursor-pointer hover:text-deep-gray active:text-deep-gray;
+        @apply cursor-pointer hover:opacity-70 active:text-deep-gray;
     }
     .black-bar {
-        @apply bg-main-black flex-center text-white py-3 rounded-lg active:text-main-black active:bg-light-gray cursor-pointer text-sm m-4;
+        @apply bg-main-black flex-center text-white py-3 rounded-lg active:text-main-black active:bg-light-gray cursor-pointer text-sm;
     }
     .black-bar-modal {
         @apply bg-main-black flex-center text-white py-3 rounded-lg active:text-main-black active:bg-light-gray cursor-pointer text-sm;

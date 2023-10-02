@@ -17,14 +17,15 @@ export default function YesNoModalWithoutBtn({ title, content, trueCallback, isO
         trueCallback();
         setIsOpen(false);
     }
+
     const modalButton = (
         <>
-            <button type="button" className="black-bar px-6 py-2" onClick={clickYes}>
+            <button type="button" className="black-bar-modal px-6 py-2" onClick={clickYes}>
                 예
             </button>
             <button
                 type="button"
-                className="bg-light-gray px-4 py-2 active:text-deep-gray active:bg-gray-200"
+                className="bg-light-gray px-4 py-2 active:text-deep-gray active:bg-gray-200 rounded-lg"
                 onClick={closeModal}>
                 아니오
             </button>

@@ -1,7 +1,7 @@
-"use client";
 import { useShoppingCart } from "../../shopping-cart-context";
 import Image from "next/image";
 import Link from "next/link";
+import PageLoading from "../loading/page-loading";
 
 export default function NavigationMobile() {
     const { navOpen, setNavOpen } = useShoppingCart();
@@ -13,7 +13,7 @@ export default function NavigationMobile() {
 
     return (
         <>
-            <header className="tb:hidden sticky bg-white h-[10%] left-0 top-0 flex flex-row p-4 justify-between shadow-sm shadow-gray-200 z-50 w-100">
+            <header className="sticky bg-white h-[100px] left-0 top-0 flex flex-row p-4 justify-between shadow-sm shadow-gray-200 z-50 w-100">
                 <div className="flex-left basis-2/12">
                     {navOpen ? (
                         <Image src="/icons/close.svg" alt="close" width={24} height={24} />
@@ -24,13 +24,13 @@ export default function NavigationMobile() {
                     )}
                 </div>
 
-                <div className="flex justify-center basis-8/12">
+                <div className="flex-center basis-8/12">
                     <Link href="/">
                         <Image src="/icons/main-logo.svg" alt="main logo" width={160} height={36} />
                     </Link>
                 </div>
                 <div className="flex-right basis-2/12">
-                    <Link href="/cart" className="w-full h-full flex-right">
+                    <Link href="/cart" className="w-full h-full flex-right link-animation">
                         <Image
                             src="/icons/shopping-cart.svg"
                             alt="shopping cart"
