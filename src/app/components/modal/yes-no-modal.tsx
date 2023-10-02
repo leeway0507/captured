@@ -1,5 +1,6 @@
 import { Fragment, useState } from "react";
 import BaseModal from "./base-modal";
+import YesNoModalWithoutBtn from "./yes-no-modal-without-btn";
 
 interface modalProps {
     toggleName: JSX.Element;
@@ -14,31 +15,9 @@ export default function YesNoModal(props: modalProps) {
 
     let [isOpen, setIsOpen] = useState(false);
 
-    function closeModal() {
-        setIsOpen(false);
-    }
-
     function openModal() {
         setIsOpen(true);
     }
-    function clickYes() {
-        trueCallback();
-        setIsOpen(false);
-    }
-
-    const modalButton = (
-        <>
-            <button type="button" className="black-bar-modal px-6" onClick={clickYes}>
-                예
-            </button>
-            <button
-                type="button"
-                className=" bg-light-gray text-main-black px-4 active:text-deep-gray active:bg-gray-200"
-                onClick={closeModal}>
-                아니오
-            </button>
-        </>
-    );
 
     return (
         <>
@@ -47,7 +26,13 @@ export default function YesNoModal(props: modalProps) {
                     {toggleName}
                 </div>
             </>
-            <BaseModal title={title} content={content} closeModal={closeModal} isOpen={isOpen} button={modalButton} />
+            <YesNoModalWithoutBtn
+                title={title}
+                content={content}
+                isOpen={isOpen}
+                setIsOpen={setIsOpen}
+                trueCallback={trueCallback}
+            />
         </>
     );
 }

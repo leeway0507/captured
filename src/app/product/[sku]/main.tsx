@@ -8,7 +8,7 @@ import { useParams } from "next/navigation";
 import assert from "assert";
 
 export default function Product() {
-    const { mockDB } = useShoppingCart();
+    const { mockDB, isMobile } = useShoppingCart();
     const { sku } = useParams();
     assert(typeof sku === "string", "sku must be a string");
 
@@ -19,12 +19,13 @@ export default function Product() {
 
     return (
         <>
-            <div className="tb:hidden">
+            {isMobile ? (
                 <MainMobile {...product} />
-            </div>
-            <div className="hidden tb:block px-5">
-                <MainPc {...product} />
-            </div>
+            ) : (
+                <div className="px-5">
+                    <MainPc {...product} />
+                </div>
+            )}
         </>
     );
 }

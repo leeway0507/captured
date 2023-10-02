@@ -3,15 +3,15 @@ import React, { useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useShoppingCart } from "../../shopping-cart-context";
+import SignInOutButton from "./component/sign-btn";
 
-export default function NavMobile({ isOpen, setIsOpen }) {
-    const sessionLogin = false;
-    const barRef = useRef(null);
+export default function NavMobile({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: (v: boolean) => void }) {
+    const barRef = useRef<HTMLDivElement>(null);
     const { setSearch } = useShoppingCart();
 
     useEffect(() => {
-        const handler = (event) => {
-            if (!barRef.current.contains(event.target)) {
+        const handler = (event: MouseEvent) => {
+            if (barRef.current && !barRef.current.contains(event.target as Node)) {
                 setIsOpen(false);
             }
         };
@@ -30,8 +30,11 @@ export default function NavMobile({ isOpen, setIsOpen }) {
         };
     }, [isOpen]);
 
-    // "API : search query"
+    const closeNavToggle = () => {
+        setIsOpen(false);
+    };
 
+    // "API : search query"
     return (
         <>
             <div
@@ -53,34 +56,43 @@ export default function NavMobile({ isOpen, setIsOpen }) {
                                 />
                             </div>
                             <div className="flex flex-col basis-5/12 justify-between py-6 text-lg-xl">
-                                <Link href="/category/latest" className="ps-6 basis-1/5 flex-left hover:bg-light-gray">
+                                <Link
+                                    href="/category/latest"
+                                    className="ps-6 basis-1/5 flex-left hover:bg-light-gray"
+                                    onClick={closeNavToggle}>
                                     LATEST
                                 </Link>
-                                <Link href="/brands" className="ps-6 basis-1/5 flex-left hover:bg-light-gray">
+                                <Link
+                                    href="/brands"
+                                    className="ps-6 basis-1/5 flex-left hover:bg-light-gray"
+                                    onClick={closeNavToggle}>
                                     BRANDS
                                 </Link>
-                                <Link href="/category/shoes" className="ps-6 basis-1/5 flex-left hover:bg-light-gray">
+                                <Link
+                                    href="/category/shoes"
+                                    className="ps-6 basis-1/5 flex-left hover:bg-light-gray"
+                                    onClick={closeNavToggle}>
                                     SHOES
                                 </Link>
                                 <Link
                                     href="/category/clothing"
-                                    className="ps-6 basis-1/5 flex-left hover:bg-light-gray">
+                                    className="ps-6 basis-1/5 flex-left hover:bg-light-gray"
+                                    onClick={closeNavToggle}>
                                     CLOTHING
                                 </Link>
                                 <Link
                                     href="/category/accessory"
-                                    className="ps-6 basis-1/5 flex-left hover:bg-light-gray">
+                                    className="ps-6 basis-1/5 flex-left hover:bg-light-gray"
+                                    onClick={closeNavToggle}>
                                     ACCESSORY
                                 </Link>
                             </div>
-                            <div className="bg-light-gray flex-center justify-between px-3 text-sm-base basis-1/12">
-                                <Link href="/mypage">마이페이지</Link>
+                            <div className="bg-light-gray flex-center justify-between px-6 text-sm-base basis-1/12">
+                                <Link href="/mypage" onClick={closeNavToggle}>
+                                    마이페이지
+                                </Link>
 
-                                {sessionLogin ? (
-                                    <Link href="/login">로그인/회원가입</Link>
-                                ) : (
-                                    <Link href="/logout">로그아웃</Link>
-                                )}
+                                <SignInOutButton />
                             </div>
 
                             <div className="flex flex-col py-3 justify-between px-2 border-b-2">

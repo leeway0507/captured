@@ -6,11 +6,11 @@ export const ProductCardModal = (props: cartProductCardProps) => {
     const productImgUrl = `/product/${brand}/${productName} ${productId}/thumbnail.png`;
     return (
         <div className="flex flex-col py-2">
-            <div className="flex text-sm">
-                <div className="flex-center flex-col basis-1/2">
-                    <Image src={productImgUrl} width={200} height={200} alt={productId} />
+            <div className="flex text-xs">
+                <div className="flex-center flex-col basis-1/3">
+                    <Image src={productImgUrl} width={150} height={150} alt={productId} />
                 </div>
-                <div className="basis-4/6">
+                <div className="basis-2/3">
                     <div className="flex flex-col ps-2 my-2 text-blue-black w-full ">
                         <div className="uppercase text-sub-black me-auto">{brand}</div>
                         <div className="me-auto">{productName}</div>
