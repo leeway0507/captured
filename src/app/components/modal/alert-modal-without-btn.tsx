@@ -10,7 +10,7 @@ interface alertModalProps {
     trueCallback?: () => void;
 }
 
-export default function AlertModal(props: alertModalProps) {
+export default function AlertModalWithoutBtn(props: alertModalProps) {
     const { title, content, checkColor, isOpen, setIsOpen, trueCallback } = props;
 
     function closeModal() {

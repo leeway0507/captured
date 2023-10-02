@@ -1,6 +1,5 @@
 "use client";
-import Image from "next/image";
-import Link from "next/link";
+
 import { useState } from "react";
 import CustomInput from "@/app/components/custom-input/cusotm-input";
 import {
@@ -8,15 +7,7 @@ import {
     checkName,
     checkPasswordPolicy,
     checkPasswordAgain,
-} from "../../components/custom-input/check-policy";
-
-//css
-const oauthClass = "flex-center relative rounded-lg text-sm py-2 border my-2";
-const oauthImageClass = "absolute left-4";
-const oauthclickEffect =
-    "cursor-pointer active:bg-gray-100 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500";
-
-const accountFeatures = "flex-center my-1 basis-1/3 text-deep-gray hover:text-main-black cursor-pointer ";
+} from "@/app/components/custom-input/check-policy";
 
 export default function ResetPassword() {
     const [email, setEmail] = useState("");

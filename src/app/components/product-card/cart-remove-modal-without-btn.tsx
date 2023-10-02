@@ -1,7 +1,7 @@
 import { cartProductCardProps } from "@/app/type";
 import YesNoModalWithoutBtn from "@/app/components/modal/yes-no-modal-without-btn";
 import { useShoppingCart } from "@/app/shopping-cart-context";
-import { CardContent } from "./cart-product-remove-content";
+import { ProductCardModal } from "./product-card-modal-form";
 
 export interface popUpRemoveModalProps extends cartProductCardProps {
     productImgUrl: string;
@@ -18,7 +18,7 @@ export default function PopUpRemoveModal(props: popUpRemoveModalProps) {
         <YesNoModalWithoutBtn
             isOpen={openModal}
             setIsOpen={setOpenModal}
-            content={CardContent(props)}
+            content={ProductCardModal(props)}
             title={title}
             trueCallback={() => {
                 removeFromCart(sku, size);

@@ -40,7 +40,7 @@ export default function MainPc(product: productCardProps) {
                     <Thumbnail {...product} />
                 </div>
                 <div className="flex flex-col justify-between ">
-                    <div className="py-4 sticky top-[150px] w-[380px]">
+                    <div className="py-4 sticky top-[200px] w-[380px]">
                         <ProductInfo {...product} />
                         <div className="pt-4 ">
                             <ProductSizeTable

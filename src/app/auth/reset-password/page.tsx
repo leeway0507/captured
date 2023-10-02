@@ -1,13 +1,13 @@
 "use client";
 import NavFooter from "@/app/components/nav-footer/nav-footer";
-import Main from "./main";
+import CreateAccount from "./main";
 
 export default function Page() {
     return (
         <>
-            {/* <NavFooter> */}
-            <Main />
-            {/* </NavFooter> */}
+            <NavFooter>
+                <CreateAccount />
+            </NavFooter>
         </>
     );
 }

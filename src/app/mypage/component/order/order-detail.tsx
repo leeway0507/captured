@@ -53,7 +53,7 @@ const DetailOrder = (targetDetail: OrderDetailProps) => {
     return (
         <div className="flex flex-col px-3">
             <div className="flex flex-col pb-2 ">
-                <div className="flex-left text-2xl mb-8 border-b border-main-black w-full tb:top-[147px] tb:h-[80px] tb:sticky bg-white z-20">
+                <div className="flex-left text-2xl mb-8 border-b border-main-black w-full tb:top-[197px] tb:h-[80px] tb:sticky bg-white z-20">
                     상세 주문 정보
                 </div>
                 <div className="flex justify-between mb-4 ">
@@ -80,7 +80,7 @@ const DetailOrder = (targetDetail: OrderDetailProps) => {
                 </div>
             </div>
             <div className="flex flex-col pb-2 ">
-                <div className="flex-left text-2xl mb-8 border-b border-main-black w-full tb:top-[147px] tb:h-[80px] tb:sticky bg-white z-20">
+                <div className="flex-left text-2xl mb-8 border-b border-main-black w-full tb:top-[197px] tb:h-[80px] tb:sticky bg-white z-20">
                     상세 주문 내역
                 </div>
                 {orderItemList.map((item: orderDetailProductCardProps, idx) => (

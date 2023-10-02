@@ -1,9 +1,10 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
-import CustomInput from "../components/custom-input/cusotm-input";
-import { checkEmail } from "../components/custom-input/check-policy";
+import { ChangeEvent, useState } from "react";
+import CustomInput from "../../components/custom-input/cusotm-input";
+import { checkEmail } from "../../components/custom-input/check-policy";
+import { signIn } from "next-auth/react";
 
 const oauthClass = "flex-center relative rounded-lg text-sm py-2 border my-2";
 const oauthImageClass = "absolute left-4";
@@ -12,9 +13,23 @@ const oauthclickEffect =
 
 const accountFeatures = "flex-center my-1 basis-1/2 text-deep-gray hover:text-main-black cursor-pointer ";
 
-export default function Login() {
+export default function SignIn() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const handleSubmit = async () => {
+        await signIn("credentials", {
+            email: email,
+            password: password,
+            redirect: true,
+            callbackUrl: "/",
+        });
+    };
+
+    const handleOnKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === "Enter") {
+            handleSubmit();
+        }
+    };
 
     return (
         <div className="flex flex-col text-main-black px-5 max-w-[600px] h-full justify-between py-16 m-auto">
@@ -41,13 +56,16 @@ export default function Login() {
                         }}
                         value={password}
                         placeholder="empty"
+                        onKeyDown={handleOnKeyPress}
                     />
                     <label htmlFor="password" className="custom-label-class">
                         비밀번호
                     </label>
                 </div>
                 <div>
-                    <div className="black-bar">로그인</div>
+                    <button type="button" className="black-bar-xl w-full" onClick={handleSubmit}>
+                        로그인
+                    </button>
                     <div className="flex justify-between py-2 text-sm">
                         <Link href="/login/create" className={` ${accountFeatures}`}>
                             회원가입

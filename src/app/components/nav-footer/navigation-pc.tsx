@@ -1,24 +1,23 @@
-"use client";
 import { useShoppingCart } from "../../shopping-cart-context";
 import Image from "next/image";
 import Link from "next/link";
 import UserDropDown from "./user-dropdown";
-import { useEffect } from "react";
+import CartBtn from "./component/cart-btn";
 
 export default function NavigationPc() {
-    const { cartQuantity, setSearch, search, setNavOpen } = useShoppingCart();
+    const { setSearch, search, setNavOpen } = useShoppingCart();
 
-    useEffect(() => {
+    const closeNavToggle = () => {
         setNavOpen(false);
-    }, [setNavOpen]);
+    };
 
     return (
         <>
             <header
-                className="border-x-none h-[150px] px-10 pb-5 hidden tb:block sticky top-0 flex justify-between border-b border-light-gray z-50 bg-white  "
+                className="border-x-none h-[200px] px-10 pb-5 sticky top-0 flex flex-col justify-between border-b border-light-gray z-50 bg-white  "
                 style={{ boxShadow: "0px 2px 0px var(--deep-gray)" }}>
                 <div className="flex w-full py-5">
-                    <div className="flex-left basis-3/12">
+                    <div className="flex-left basis-3/12" onClick={closeNavToggle}>
                         <input
                             type="text"
                             className="text-xs-sm mt-0 block w-full px-0.5 border-0 border-b border-gray-200 focus:ring-0 focus:border-sub-black"
@@ -29,25 +28,14 @@ export default function NavigationPc() {
                             value={search}
                         />
                     </div>
-                    <div className="flex justify-center basis-6/12">
-                        <Link href="/">
-                            <Image src="/icons/main-logo.svg" alt="main logo" width={160} height={36} />
+                    <div className="flex-center basis-6/12">
+                        <Link href="/" className="w-[200px] h-[100px] relative">
+                            <Image src="/icons/main-logo.svg" alt="main logo" fill />
                         </Link>
                     </div>
                     <div className="flex-right basis-3/12">
-                        <div className="mx-1">
-                            <UserDropDown />
-                        </div>
-                        <Link href="/cart" className="h-full flex-right">
-                            <Image
-                                src="/icons/shopping-cart.svg"
-                                alt="shopping cart"
-                                className="flex-right"
-                                width={24}
-                                height={24}
-                            />
-                            <div className="text-sm ps-1">{cartQuantity}</div>
-                        </Link>
+                        <UserDropDown />
+                        <CartBtn />
                     </div>
                 </div>
                 <div className="flex justify-between text-sm-base">

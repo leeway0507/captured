@@ -26,7 +26,7 @@ export default function CartProductCardForm(props: cartProductCardFormProps) {
     }
 
     return (
-        <div className="text-sub-black text-sm-base pb-2 border-b border-deep-gray" key={sku}>
+        <div className="text-sub-black text-sm pb-2 border-b border-deep-gray" key={sku}>
             <div className="flex-center flex-col">
                 <div className="flex mb-1 w-full">
                     <div className="flex-center flex-col max-w-[120px] tb:max-w-[150px]">
@@ -37,7 +37,7 @@ export default function CartProductCardForm(props: cartProductCardFormProps) {
                     <div className="m-auto grow">
                         <div className="flex flex-col ps-2 text-blue-black">
                             <div>
-                                <Link href={`category/${brand}`} className="text-sub-black text-sm-base link-animation">
+                                <Link href={`category/${brand}`} className="text-sub-black link-animation">
                                     {brand.toUpperCase()}
                                 </Link>
                             </div>
@@ -46,10 +46,10 @@ export default function CartProductCardForm(props: cartProductCardFormProps) {
                                     {productName}
                                 </Link>
                             </div>
-                            <div className="text-sm">{productId.toUpperCase()}</div>
-                            <div className="flex justify-between">
+                            <div className="text-xs">{productId.toUpperCase()}</div>
+                            <div className="pt-2 text-xs flex justify-between">
                                 <div>{size}</div>
-                                <div className="underline text-sm">{intl ? "해외배송" : "국내배송"}</div>
+                                <div className="underline">{intl ? "해외배송" : "국내배송"}</div>
                             </div>
                         </div>
                     </div>
@@ -81,7 +81,7 @@ export default function CartProductCardForm(props: cartProductCardFormProps) {
                                     />
                                 </button>
                             </div>
-                            <div className="text-sub-black flex-right grow text-lg">
+                            <div className="text-sub-black flex-right grow text-base">
                                 ₩ {totalPrice.toLocaleString()}
                             </div>
                             <PopUpRemoveModalWithoutBtn
@@ -93,10 +93,10 @@ export default function CartProductCardForm(props: cartProductCardFormProps) {
                         </>
                     ) : (
                         <>
-                            <div className="text-sm flex-center max-w-[120px] grow">
+                            <div className="flex-center max-w-[120px] grow">
                                 <span> {`수량 : ${quantity}`}</span>
                             </div>
-                            <div className="text-sub-black flex-right grow text-lg">
+                            <div className="text-sub-black flex-right grow text-base">
                                 ₩ {totalPrice.toLocaleString()}
                             </div>
                         </>

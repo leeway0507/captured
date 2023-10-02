@@ -9,7 +9,6 @@ import { IntlShipment } from "../components/notification/shipment-info";
 import { useEffect, useState } from "react";
 import { addressFormProps } from "../mypage/type";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
 
 const MainMobile = ({ arr }: { arr: cartProductCardProps[] }) => {
     const [selectedAddress, setSelectedAddress] = useState<addressFormProps | undefined>(undefined);
@@ -34,16 +33,17 @@ const MainMobile = ({ arr }: { arr: cartProductCardProps[] }) => {
 
     useEffect(() => {
         setSelectedAddress(addressArray[0]);
+        console.log("mobile", addressArray[0]);
     }, [addressArray]);
 
     // api.getUserAddressArray
     return (
         <>
             <div
-                className={`m-auto flex flex-col py-4 relative absolute top-0 lef-0 h-full w-full bg-white overflow-hidden ${
+                className={`m-auto flex flex-col relative absolute top-0 lef-0 h-full w-full bg-white overflow-hidden ${
                     !isOpen ? "block" : "hidden"
                 }`}>
-                <div className="border-y border-deep-gray py-2">
+                <div className="border-b border-deep-gray py-2">
                     <div className="text-2xl tracking-[0.2em] flex-center py-4 ">주문요약</div>
                     <CartproductCardArr arr={arr} />
                     <div className="py-2"></div>
@@ -58,7 +58,7 @@ const MainMobile = ({ arr }: { arr: cartProductCardProps[] }) => {
                         {selectedAddress ? (
                             <AddressForm {...selectedAddress} onDelete={false} />
                         ) : (
-                            <div>배송지를 선택해주세요</div>
+                            <div>배송지를 추가해주세요.</div>
                         )}
                     </div>
 
