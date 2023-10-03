@@ -1,7 +1,5 @@
-import { useState } from "react";
-
 export const checkPasswordPolicy = (password: string) => {
-    if (password.length === 0) {
+    if (password === "") {
         return true;
     }
     if (password.length < 8) {
@@ -18,7 +16,7 @@ export const checkPasswordPolicy = (password: string) => {
 };
 
 export const checkPasswordAgain = (password1: string, password2: string) => {
-    if (password1.length === 0 || password2.length === 0) {
+    if (password1 === "" || password2 === "") {
         return true;
     }
     if (password1 !== password2) {
@@ -28,7 +26,7 @@ export const checkPasswordAgain = (password1: string, password2: string) => {
 };
 
 export const checkEmail = (email: string) => {
-    if (email.length === 0) {
+    if (email === "") {
         return true;
     }
     // Regular expression for basic email validation
@@ -41,7 +39,7 @@ export const checkName = (name: string) => {
     const hasHan = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(name);
     const notFullhan = /[ㄱ-ㅎ|ㅏ-ㅣ]/.test(name);
 
-    if (name.length === 0) {
+    if (name === "") {
         return true;
     }
 
@@ -56,7 +54,7 @@ export const checkName = (name: string) => {
 };
 
 export const checkEnName = (name: string) => {
-    if (name.length === 0) {
+    if (name === "") {
         return true;
     }
     const regex = /^[a-zA-Z\s]+$/;
@@ -64,26 +62,62 @@ export const checkEnName = (name: string) => {
 };
 
 export const checkPhone = (phone: string) => {
-    if (phone.length === 0) {
+    if (phone === "") {
         return true;
     }
     const regex = /^\d{3}-\d{3,4}-\d{4}$/;
-    return regex.test(phone);
+    return regex.test(phoneNumberAutoFormat(phone));
 };
 
 export const phoneNumberAutoFormat = (phoneNumber: string): string => {
-    const number = phoneNumber.trim().replace(/[^0-9]/g, "");
+    const number = phoneNumber?.trim().replace(/[^0-9]/g, "");
 
-    if (number.length < 4) return number;
-    if (number.length < 7) return number.replace(/(\d{3})(\d{1})/, "$1-$2");
-    if (number.length < 11) return number.replace(/(\d{3})(\d{3})(\d{1})/, "$1-$2-$3");
-    return number.replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3");
+    if (number) {
+        if (number.length < 4) return number;
+        if (number.length < 7) return number.replace(/(\d{3})(\d{1})/, "$1-$2");
+        if (number.length < 11) return number.replace(/(\d{3})(\d{3})(\d{1})/, "$1-$2-$3");
+        return number.replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3");
+    }
+    return "";
 };
 
 export const checkCustomId = (customId: string) => {
-    if (customId.length === 0) {
+    if (customId === "") {
         return true;
     }
     const regex = /^[a-zA-Z]{1}\d{9}$/;
     return regex.test(customId);
+};
+
+export const checkAddressValidation = (
+    krName: string,
+    enName: string,
+    customId: string,
+    phone: string,
+    krAddress: string,
+    enAddress: string
+) => {
+    if (krName === "" || enName === "" || customId === "" || phone === "" || krAddress === "" || enAddress === "") {
+        return false;
+    }
+    return checkEnName(enName) && checkName(krName) && checkPhone(phone) && checkCustomId(customId);
+};
+
+export const checkCustomIdValidation = (customId: string, krName: string, phone: string) => {
+    if (customId === "" || krName === "" || phone === "") {
+        return false;
+    }
+    return checkName(krName) && checkPhone(phone) && checkCustomId(customId);
+};
+
+export const checkDefaultInputValidation = (email: string, name: string, password1: string, password2: string) => {
+    if (email === "" || name === "" || password1 === "" || password2 === "") {
+        return false;
+    }
+    return (
+        checkEmail(email) &&
+        checkName(name) &&
+        checkPasswordPolicy(password1) &&
+        checkPasswordAgain(password1, password2)
+    );
 };

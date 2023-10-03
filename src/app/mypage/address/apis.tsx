@@ -1,4 +1,4 @@
-import { addressFormProps } from "../type";
+import { userAddressProps } from "../type";
 
 //api-call - 통관부호 확인
 //status : 제작필요
@@ -67,11 +67,11 @@ export const find_en_address = (props: findEnAddressProps) => {
 //status : 제작필요
 //type : POST
 //url : /api/mypage/add-address
-//function : add_address(addressFormProps) => response[201]
+//function : add_address(userAddressProps) => response[201]
 //DB : user_address
 
 interface AddAddressProps {
-    reqData: addressFormProps;
+    reqData: userAddressProps;
     setOpenSuccessModal: (v: boolean) => void;
     setOpenFailureModal: (v: boolean) => void;
 }

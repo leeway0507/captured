@@ -1,4 +1,4 @@
-import { orderHistoryProps, OrderDetailProps, addressFormProps, orderRowProps } from "../type";
+import { orderHistoryProps, OrderDetailProps, userAddressProps, orderRowProps } from "../type";
 export const mockOrderHistoryAPI: orderHistoryProps[] = [
     {
         orderId: "OH-1234-0001",
@@ -79,9 +79,9 @@ export const mockDetailAPI: OrderDetailProps = {
         customId: "p123456789",
         phone: "01012345678",
         krAddress: "서울특별시 강남구 테헤란로 427",
-        krAddressRest: "801",
+        krAddressDetail: "801",
         enAddress: "427, Teheran-ro, Gangnam-gu, Seoul, Republic of Korea",
-        enAddressRest: "801",
+        enAddressDetail: "801",
     },
     orderItemList: [
         {
@@ -135,7 +135,7 @@ export const mockDetailAPI: OrderDetailProps = {
     ],
 };
 
-export const mockAddressArrayAPI: addressFormProps[] = [
+export const mockAddressArrayAPI: userAddressProps[] = [
     {
         addressId: "1234-0",
         krName: "홍길동",
@@ -143,9 +143,9 @@ export const mockAddressArrayAPI: addressFormProps[] = [
         customId: "P923059283",
         phone: "01068663403",
         krAddress: "서울특별시 양천구 목동중앙로 143",
-        krAddressRest: "101동 801호",
+        krAddressDetail: "101동 801호",
         enAddress: "143 mokdongjungang-ro yangcheon-gu, seoul, korea",
-        enAddressRest: "101,801",
+        enAddressDetail: "101,801",
     },
     {
         addressId: "1234-1",
@@ -154,9 +154,9 @@ export const mockAddressArrayAPI: addressFormProps[] = [
         customId: "P923059283",
         phone: "01068663403",
         krAddress: "서울특별시 양천구 목동중앙로 143",
-        krAddressRest: "101동 801호",
+        krAddressDetail: "101동 801호",
         enAddress: "143 mokdongjungang-ro yangcheon-gu, seoul, korea",
-        enAddressRest: "101,801",
+        enAddressDetail: "101,801",
     },
     {
         addressId: "1234-2",
@@ -165,9 +165,9 @@ export const mockAddressArrayAPI: addressFormProps[] = [
         customId: "P923059283",
         phone: "01068663403",
         krAddress: "서울특별시 양천구 목동중앙로 143",
-        krAddressRest: "101동 801호",
+        krAddressDetail: "101동 801호",
         enAddress: "143 mokdongjungang-ro yangcheon-gu, seoul, korea",
-        enAddressRest: "101,801",
+        enAddressDetail: "101,801",
     },
 ];
 

@@ -1,6 +1,6 @@
 import OrderDetailProductCardArray from "./order-product-card-array";
 import { phoneNumberAutoFormat } from "@/app/components/custom-input/check-policy";
-import { addressFormProps, OrderDetailProps, orderDetailProductCardProps } from "../../type";
+import { userAddressProps, OrderDetailProps, orderDetailProductCardProps } from "../../type";
 import ProductCheckOut from "@/app/cart/component/product-check-out";
 import { useRouter } from "next/navigation";
 
@@ -12,9 +12,9 @@ const Address = ({
     phone,
     krAddress,
     enAddress,
-    krAddressRest,
-    enAddressRest,
-}: addressFormProps) => {
+    krAddressDetail,
+    enAddressDetail,
+}: userAddressProps) => {
     return (
         <div className="flex flex-col bg-light-gray border border-gray-50 rounded-md shadow p-4 w-full gap-2 mb-3">
             <div className="flex w-full">
@@ -34,13 +34,13 @@ const Address = ({
             <div className="flex w-full">
                 <div className="whitespace-nowrap basis-1/4">한글주소</div>
                 <div className="basis-3/4">
-                    {krAddress} {krAddressRest}
+                    {krAddress} {krAddressDetail}
                 </div>
             </div>
             <div className="flex w-full">
                 <div className="whitespace-nowrap basis-1/4">영문주소</div>
                 <div className="basis-3/4">
-                    {enAddressRest} {enAddress}
+                    {enAddressDetail} {enAddress}
                 </div>
             </div>
         </div>

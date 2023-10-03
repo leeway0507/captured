@@ -1,7 +1,7 @@
 import "./custom-input.css";
 import React from "react";
 
-type customInputProps = {
+interface customInputProps {
     label: string;
     type: string;
     value: string;
@@ -11,7 +11,7 @@ type customInputProps = {
     info: string;
     checkPolicy: (value: string) => boolean | undefined;
     maxLength?: number;
-};
+}
 
 const CustomInput: React.FC<customInputProps> = ({
     label,
