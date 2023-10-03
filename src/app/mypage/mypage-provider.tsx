@@ -1,13 +1,13 @@
 "use client";
 
 import { createContext, useContext, useState } from "react";
-import { addressFormProps, orderHistoryProps } from "./type";
+import { userAddressProps, orderHistoryProps } from "./type";
 import { mockAddressArrayAPI, mockOrderHistoryAPI } from "./component/mock-apis";
 import * as api from "./apis";
 
 interface MyPageContext {
     userInfo: { userId: number; email: string; name: string };
-    addressArray: addressFormProps[];
+    addressArray: userAddressProps[];
     orderArray: orderHistoryProps[];
 }
 

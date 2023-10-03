@@ -7,11 +7,11 @@ import { AddressForm } from "@/app/mypage/component/address-info-form";
 import { mockAddressArrayAPI } from "../mypage/component/mock-apis";
 import { IntlShipment } from "../components/notification/shipment-info";
 import { useEffect, useState } from "react";
-import { addressFormProps } from "../mypage/type";
+import { userAddressProps } from "../mypage/type";
 import { useRouter } from "next/navigation";
 
 const MainMobile = ({ arr }: { arr: cartProductCardProps[] }) => {
-    const [selectedAddress, setSelectedAddress] = useState<addressFormProps | undefined>(undefined);
+    const [selectedAddress, setSelectedAddress] = useState<userAddressProps | undefined>(undefined);
 
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const router = useRouter();
@@ -20,7 +20,7 @@ const MainMobile = ({ arr }: { arr: cartProductCardProps[] }) => {
         setIsOpen(!isOpen);
         router.push("/order?chooseAddress=true");
     };
-    const selectAddressToggle = (address: addressFormProps) => {
+    const selectAddressToggle = (address: userAddressProps) => {
         setSelectedAddress(address);
         setIsOpen(false);
         router.push("/order");

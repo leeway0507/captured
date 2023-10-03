@@ -3,7 +3,7 @@ import BaseModal from "./base-modal";
 import YesNoModalWithoutBtn from "./yes-no-modal-without-btn";
 
 interface modalProps {
-    toggleName: JSX.Element;
+    toggleName: JSX.Element | string;
     title: string;
     content: string | JSX.Element;
     buttonClassName?: string;

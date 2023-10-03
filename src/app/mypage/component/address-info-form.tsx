@@ -1,12 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { addressFormProps } from "../type";
+import { userAddressProps } from "../type";
 import { phoneNumberAutoFormat } from "@/app/components/custom-input/check-policy";
 import Link from "next/link";
 import YesNoModal from "@/app/components/modal/yes-no-modal";
 
-interface addressInfoFormProps extends addressFormProps {
+interface addressInfoFormProps extends userAddressProps {
     onDelete: boolean;
 }
 
@@ -18,9 +18,9 @@ export const AddressForm = (props: addressInfoFormProps) => {
         customId,
         phone,
         krAddress,
-        krAddressRest,
+        krAddressDetail,
         enAddress,
-        enAddressRest,
+        enAddressDetail,
         onDelete = false,
     } = props;
 
@@ -58,9 +58,9 @@ export const AddressForm = (props: addressInfoFormProps) => {
                             customId: customId,
                             phone: phone,
                             krAddress: krAddress,
-                            krAddressRest: krAddressRest,
+                            krAddressDetail: krAddressDetail,
                             enAddress: enAddress,
-                            enAddressRest: enAddressRest,
+                            enAddressDetail: enAddressDetail,
                         },
                     }}
                     shallow={true}
@@ -93,13 +93,13 @@ export const AddressForm = (props: addressInfoFormProps) => {
             <div className="flex w-full">
                 <div className="whitespace-nowrap basis-1/4">한글주소</div>
                 <div className="basis-3/4">
-                    {krAddress} {krAddressRest}
+                    {krAddress} {krAddressDetail}
                 </div>
             </div>
             <div className="flex w-full">
                 <div className="whitespace-nowrap basis-1/4">영문주소</div>
                 <div className="basis-3/4">
-                    {enAddressRest} {enAddress}
+                    {enAddressDetail} {enAddress}
                 </div>
             </div>
         </div>

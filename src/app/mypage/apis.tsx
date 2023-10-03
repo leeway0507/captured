@@ -10,7 +10,7 @@ export function getUserInfo() {}
 //status : 제작필요
 //type : GET
 //url : /api/user/address-array
-//function : get_user_address_array(userId) => addressFormProps[]
+//function : get_user_address_array(userId) => userAddressProps[]
 
 export function getUserAddressArray(userId: string) {}
 
