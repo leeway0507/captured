@@ -11,7 +11,7 @@ const oauthImageClass = "absolute left-4";
 const oauthclickEffect =
     "cursor-pointer active:bg-gray-100 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500";
 
-const accountFeatures = "flex-center my-1 basis-1/2 text-deep-gray hover:text-main-black cursor-pointer ";
+const accountFeatures = "flex-center my-1 basis-1/2 link-animation ";
 
 export default function SignIn() {
     const [email, setEmail] = useState("");
@@ -67,11 +67,11 @@ export default function SignIn() {
                         로그인
                     </button>
                     <div className="flex justify-between py-2 text-sm">
-                        <Link href="/login/create" className={` ${accountFeatures}`}>
+                        <Link href="/auth/register" className={` ${accountFeatures}`}>
                             회원가입
                         </Link>
 
-                        <Link href="/login/reset-password" className={` ${accountFeatures}`}>
+                        <Link href="/auth/reset-password" className={` ${accountFeatures}`}>
                             비밀번호 찾기
                         </Link>
                     </div>

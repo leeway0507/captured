@@ -4,7 +4,7 @@ import Link from "next/link";
 import ProductCheckOut from "../cart/component/product-check-out";
 import { mockAddressArrayAPI } from "../mypage/component/mock-apis";
 import { useEffect, useState } from "react";
-import { addressFormProps } from "../mypage/type";
+import { userAddressProps } from "../mypage/type";
 import { useRouter } from "next/navigation";
 import { IntlShipment } from "../components/notification/shipment-info";
 import { AddressForm } from "@/app/mypage/component/address-info-form";
@@ -13,7 +13,7 @@ import { GrFormClose } from "react-icons/gr";
 const MainPC = ({ arr }: { arr: cartProductCardProps[] }) => {
     const router = useRouter();
     const [isOpen, setIsOpen] = useState<boolean>(false);
-    const [selectedAddress, setSelectedAddress] = useState<addressFormProps | undefined>(undefined);
+    const [selectedAddress, setSelectedAddress] = useState<userAddressProps | undefined>(undefined);
     const addressArray = mockAddressArrayAPI;
     const openToggle = () => {
         setIsOpen(!isOpen);
@@ -37,7 +37,7 @@ const MainPC = ({ arr }: { arr: cartProductCardProps[] }) => {
         return "₩ " + x.toLocaleString("ko-KR");
     }
 
-    const selectAddressToggle = (address: addressFormProps) => {
+    const selectAddressToggle = (address: userAddressProps) => {
         setSelectedAddress(address);
         setIsOpen(false);
         router.push("/order");

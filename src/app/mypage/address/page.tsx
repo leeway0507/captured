@@ -1,9 +1,11 @@
 "use client";
 import NavFooter from "@/app/components/nav-footer/nav-footer";
 import Main from "./main";
-import { addressFormProps } from "../type";
+import { userAddressProps } from "@/app/type";
 
-export default function Page({ params, searchParams }: { params: any; searchParams: addressFormProps }) {
+export default function Page({ params, searchParams }: { params: any; searchParams: userAddressProps }) {
+    const { ...customId } = searchParams;
+
     return (
         <>
             <NavFooter>

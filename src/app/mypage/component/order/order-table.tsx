@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { addressFormProps, OrderDetailProps } from "../../type";
+import { userAddressProps, OrderDetailProps } from "../../type";
 import detailOrder from "./order-detail";
 import { mockDetailAPI } from "../mock-apis";
 import { useMyPage } from "../../mypage-provider";
@@ -34,7 +34,7 @@ export default function OrderTable({ showInitalRows, seeMore, setSeeMore }: Orde
         orderDate: "",
         orderStatus: "",
         orderPrice: "",
-        orderAddress: { phone: "0" } as addressFormProps,
+        orderAddress: { phone: "0" } as userAddressProps,
         orderItemList: [],
     } as OrderDetailProps);
 

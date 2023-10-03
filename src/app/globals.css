@@ -154,3 +154,13 @@ body {
     width: 100%;
     height: 100%;
 }
+
+button:disabled,
+button[disabled] {
+    background-color: var(--deep-gray);
+    color: #666666;
+    cursor: not-allowed;
+}
+button:disabled:active {
+    background-color: none !important;
+}
