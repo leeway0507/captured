@@ -1,15 +1,15 @@
 import { cartProductCardProps } from "../../type";
 
 export default function ProductCheckOut({ arr }: { arr: cartProductCardProps[] }) {
-    const orderPrice = arr.reduce((result, item) => {
+    const orderPrice = arr?.reduce((result, item) => {
         return result + item.price * item.quantity;
     }, 0);
 
-    const domesticShippingFee = arr.reduce((result, item) => {
+    const domesticShippingFee = arr?.reduce((result, item) => {
         return result + (item.intl ? 0 : item.shippingFee * item.quantity);
     }, 0);
 
-    const intlShippingFee = arr.reduce((result, item) => {
+    const intlShippingFee = arr?.reduce((result, item) => {
         return result + (item.intl ? item.shippingFee * item.quantity : 0);
     }, 0);
 
@@ -17,7 +17,7 @@ export default function ProductCheckOut({ arr }: { arr: cartProductCardProps[] }
     const totalPrice = orderPrice + totalShippingFee;
 
     function numToKorWon(x: number) {
-        return "₩ " + x.toLocaleString("ko-KR");
+        return "₩ " + x?.toLocaleString("ko-KR");
     }
 
     return (

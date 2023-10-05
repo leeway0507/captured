@@ -1,12 +1,12 @@
 "use clientt";
 
 import React, { useEffect, useRef } from "react";
-import { useShoppingCart } from "../../shopping-cart-context";
+import { useShoppingCart } from "@/app/components/context/shopping-cart-context";
 
 import ProductCardSimpleArray from "../../cart/component/cart-product-array";
 import ProductCheckOut from "../../cart/component/product-check-out";
 import Image from "next/image";
-
+import { mockDB } from "@/app/api/mock-apis";
 interface CartProps {
     isOpen: boolean;
     setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -15,7 +15,7 @@ interface CartProps {
 
 export default function Cart({ isOpen, setIsOpen, openToggle }: CartProps) {
     const barRef = useRef(null);
-    const { bgFreeze } = useShoppingCart();
+    const { bgFreeze, cartItems } = useShoppingCart();
 
     useEffect(() => {
         const handler = (event: { target: any }) => {
@@ -29,15 +29,13 @@ export default function Cart({ isOpen, setIsOpen, openToggle }: CartProps) {
         };
     }, [barRef, setIsOpen, bgFreeze]);
 
-    const { mockDB, cartItems } = useShoppingCart();
-
     // filter productinfo and append quantity to mockDB
-    const itemInfos = mockDB.filter((item: { id: number }) => {
-        return cartItems.find((cartItem) => cartItem.id === item.id) != null;
+    const itemInfos = mockDB.filter((item: { sku: number }) => {
+        return cartItems?.find((cartItem) => cartItem.id === item.sku) != null;
     });
 
     itemInfos.forEach((item: any) => {
-        const cartItem = cartItems.find((cartItem) => cartItem.id === item.id);
+        const cartItem = cartItems?.find((cartItem) => cartItem.id === item.id);
         if (cartItem !== undefined) {
             item.quantity = cartItem.quantity;
         }
@@ -68,9 +66,9 @@ export default function Cart({ isOpen, setIsOpen, openToggle }: CartProps) {
                             </div>
                         </div>
                         <div className="overflow-y-auto">
-                            <ProductCardSimpleArray ProductCardArray={itemInfos} />
+                            <ProductCardSimpleArray arr={itemInfos} />
                         </div>
-                        <ProductCheckOut ProductCardArray={itemInfos} />
+                        <ProductCheckOut arr={itemInfos} />
                         <div className="basis-3/12"></div>
                     </div>
                 </div>

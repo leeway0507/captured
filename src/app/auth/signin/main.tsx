@@ -1,10 +1,13 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CustomInput from "../../components/custom-input/cusotm-input";
 import { checkEmail } from "../../components/custom-input/check-policy";
-import { signIn } from "next-auth/react";
+import { signIn, getProviders } from "next-auth/react";
+import { useSession } from "next-auth/react";
+import PageLoading from "@/app/components/loading/page-loading";
+import { redirect } from "next/navigation";
 
 const oauthClass = "flex-center relative rounded-lg text-sm py-2 border my-2";
 const oauthImageClass = "absolute left-4";
@@ -20,7 +23,7 @@ export default function SignIn() {
         await signIn("credentials", {
             username: email,
             password: password,
-            redirect: false,
+            redirect: true,
             callbackUrl: "/",
         })
             .then((res) => {
@@ -30,6 +33,53 @@ export default function SignIn() {
                 console.log("err", err);
             });
     };
+
+    // 추가된 부분(아직 이해 못함.)
+    const [providers, setProviders] = useState(null);
+
+    useEffect(() => {
+        (async () => {
+            const res: any = await getProviders();
+            console.log(res);
+            setProviders(res);
+        })();
+    }, []);
+    // 추가된 부분
+
+    const handleKakao = async () => {
+        await signIn("kakao", {
+            redirect: true,
+            callbackUrl: "/",
+        })
+            .then((res) => {
+                console.log("res", res);
+            })
+            .catch((err) => {
+                console.log("err", err);
+            });
+    };
+    const handleNaver = async () => {
+        await signIn("naver", {
+            redirect: true,
+            callbackUrl: "/",
+        })
+            .then((res) => {
+                console.log("res", res);
+            })
+            .catch((err) => {
+                console.log("err", err);
+            });
+    };
+
+    const { data, status } = useSession();
+
+    if (status === "loading") {
+        return <PageLoading />;
+    }
+
+    if (status === "authenticated") {
+        redirect("/");
+    }
 
     const handleOnKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter") {
@@ -84,7 +134,7 @@ export default function SignIn() {
                 </div>
             </div>
             <div>
-                <div className={`${oauthClass} ${oauthclickEffect}`}>
+                <div className={`${oauthClass} ${oauthclickEffect}`} onClick={handleNaver}>
                     <Image
                         src="/icons/naver.svg"
                         width={24}
@@ -94,7 +144,7 @@ export default function SignIn() {
                     />
                     <div>네이버로 로그인</div>
                 </div>
-                <div className={`${oauthClass} ${oauthclickEffect}`}>
+                <div className={`${oauthClass} ${oauthclickEffect}`} onClick={handleKakao}>
                     <Image
                         src="/icons/kakao.svg"
                         width={24}

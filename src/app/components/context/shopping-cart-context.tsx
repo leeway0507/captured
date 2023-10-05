@@ -40,7 +40,7 @@ export function ShoppingCartProvider({ children }: { children: React.ReactNode }
     }, []);
 
     // save cartItems to localStorage
-    const [cartItems, setCartItems] = useState<cartItemProps[]>([]);
+    const [cartItems, setCartItems] = useState<cartItemProps[] | undefined>(undefined);
 
     useEffect(() => {
         const storageCartItems = JSON.parse(localStorage.getItem("cartItems") || "[]");

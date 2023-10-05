@@ -26,7 +26,7 @@ export default function CartProductCardForm(props: cartProductCardFormProps) {
     }
 
     return (
-        <div className="text-sub-black text-sm pb-2 border-b border-deep-gray" key={sku}>
+        <div className="text-sub-black text-sm pb-2 border-b border-deep-gray" key={sku + size}>
             <div className="flex-center flex-col">
                 <div className="flex mb-1 w-full">
                     <div className="flex-center flex-col max-w-[120px] tb:max-w-[150px]">
