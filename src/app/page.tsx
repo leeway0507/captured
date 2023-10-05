@@ -1,10 +1,6 @@
-"use client";
-import NavFooter from "./components/nav-footer/nav-footer";
+import NavFooter from "@/app/components/nav-footer/client-side/nav-footer";
 import Banner from "./components/main/main-banner";
 import BrandList from "./components/main/brand-list";
-import { useSession } from "next-auth/react";
-// import LoginAlertModal from "./components/modal/login-alert-modal-without-btn";
-import { useEffect, useState } from "react";
 
 export default function Home() {
     const thumbnailInfos = [
@@ -27,13 +23,6 @@ export default function Home() {
             href: "/product/3",
         },
     ];
-    const [isOpen, setIsOpen] = useState(false);
-    const { data: session, status } = useSession();
-    useEffect(() => {
-        if (!session) {
-            setIsOpen(true);
-        }
-    }, []);
 
     return (
         <NavFooter>

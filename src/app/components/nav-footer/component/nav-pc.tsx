@@ -1,10 +1,11 @@
-import { useShoppingCart } from "../../shopping-cart-context";
+"use client";
+import { useShoppingCart } from "@/app/components/context/shopping-cart-context";
 import Image from "next/image";
 import Link from "next/link";
 import UserDropDown from "./user-dropdown";
-import CartBtn from "./component/cart-btn";
+import CartBtn from "./cart-btn";
 
-export default function NavigationPc() {
+export default function NavPc() {
     const { setSearch, search, setNavOpen } = useShoppingCart();
 
     const closeNavToggle = () => {

@@ -1,5 +1,5 @@
 "use client";
-import { useShoppingCart } from "../shopping-cart-context";
+import { useShoppingCart } from "@/app/components/context/shopping-cart-context";
 import MainMobile from "./main-mobile";
 import MainPC from "./main-pc";
 import { cartProductCardProps, productCardProps } from "../type";

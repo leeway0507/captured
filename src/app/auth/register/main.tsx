@@ -91,18 +91,8 @@ export default function CreateAccount() {
         },
     };
 
-    // useEffect(() => {
-    //     api.register(reqData).then((res) => {
-    //         if (res) {
-    //             console.log(res);
-    //         } else {
-    //             alert("회원가입에 실패하였습니다.");
-    //         }
-    //     });
-    // }, []);
-
     // address buttons
-    const customIdTrueButton = () => {
+    const trueButton = () => {
         return (
             <div className="flex-center grow">
                 <YesNoModal
@@ -125,7 +115,7 @@ export default function CreateAccount() {
         );
     };
 
-    const customIdFalseButton = () => {
+    const falseButton = () => {
         return (
             <div className="flex-center grow">
                 <button
@@ -137,29 +127,15 @@ export default function CreateAccount() {
             </div>
         );
     };
-    const customDataInvalidButton = () => {
-        return (
-            <div className="flex-center grow">
-                <button
-                    type="button"
-                    disabled
-                    className="black-bar bg-deep-gray text-main-black w-full cursor-not-allowed">
-                    필수 정보를 입력해주세요.
-                </button>
-            </div>
-        );
-    };
 
     return (
         <div className="flex flex-col text-main-black px-5 max-w-[600px] py-4 m-auto">
             <div className={`block ${isOpen && "hidden"}`}>
                 <div className="flex-center text-2xl pb-2">회원정보 입력</div>
                 <div className="flex flex-col py-2 justify-between gap-4">
-                    <div className="flex justify-between">
-                        <div className="grow me-2">
-                            {isUnique ? (
-                                <div className="text-deep-gray pb-2 border-b my-2">{email}</div>
-                            ) : (
+                    <form>
+                        <div className="flex justify-between">
+                            <div className="grow me-2">
                                 <CustomInput
                                     label="이메일 주소"
                                     type="email"
@@ -169,70 +145,76 @@ export default function CreateAccount() {
                                     setValue={setEmail}
                                     id="email"
                                     checkPolicy={checkEmail}
+                                    disabled={isUnique}
                                 />
-                            )}
+                            </div>
+                            <div className="cursor-pointer whitespace-nowrap flex-center pb-3">
+                                <button
+                                    type="button"
+                                    className="border p-2 bg-light-gray rounded active:bg-deep-gray text-xs whitespace-nowrap"
+                                    disabled={email === "" || !checkEmail(email) || isUnique}
+                                    onClick={() => {
+                                        api.checkEmailDuplication(email).then((res) => {
+                                            if (res) {
+                                                setOpenSuccessModal(true);
+                                            } else {
+                                                setOpenFailureModal(true);
+                                            }
+                                        });
+                                    }}>
+                                    이메일 중복 확인
+                                </button>
+                            </div>
                         </div>
-                        <div className="cursor-pointer whitespace-nowrap flex-center pb-3">
+                        <div>
+                            <CustomInput
+                                label="성 명"
+                                type="text"
+                                placeholder="홍길동"
+                                info="최소 2글자 이상의 한글이어야 합니다."
+                                value={name}
+                                setValue={setName}
+                                id="username"
+                                checkPolicy={checkName}
+                                autoComplete="username"
+                            />
+                        </div>
+                        <div>
+                            <CustomInput
+                                label="비밀번호 입력"
+                                type="password"
+                                info="8글자 이상의 영문 숫자 조합이어야 합니다."
+                                value={password1}
+                                setValue={setPassword1}
+                                id="password1"
+                                checkPolicy={checkPasswordPolicy}
+                                autoComplete="new-password"
+                            />
+                        </div>
+                        <div>
+                            <CustomInput
+                                label="비밀번호 확인"
+                                type="password"
+                                info="비밀번호가 일치하지 않습니다."
+                                value={password2}
+                                setValue={setPassword2}
+                                id="password2"
+                                checkPolicy={(value) => checkPasswordAgain(password1, value)}
+                                autoComplete="new-password"
+                            />
+                        </div>
+                        {checkDefaultInputValidation(email, name, password1, password2) ? (
+                            <button type="button" className="black-bar w-full" onClick={() => setIsOpen(true)}>
+                                배송지 입력하기
+                            </button>
+                        ) : (
                             <button
                                 type="button"
-                                className="border p-2 bg-light-gray rounded active:bg-deep-gray text-xs whitespace-nowrap"
-                                disabled={email === "" || !checkEmail(email) || isUnique}
-                                onClick={() => {
-                                    api.checkEmailDuplication(email).then((res) => {
-                                        if (res) {
-                                            setOpenSuccessModal(true);
-                                        } else {
-                                            setOpenFailureModal(true);
-                                        }
-                                    });
-                                }}>
-                                이메일 중복 확인
+                                className="black-bar bg-light-gray text-main-black cursor-not-allowed w-full">
+                                {isUnique ? "필수 정보를 입력해주세요." : "이메일 중복 여부를 확인해주세요."}
                             </button>
-                        </div>
-                    </div>
-                    <div>
-                        <CustomInput
-                            label="성 명"
-                            type="text"
-                            placeholder="홍길동"
-                            info="최소 2글자 이상의 한글이어야 합니다."
-                            value={name}
-                            setValue={setName}
-                            id="name"
-                            checkPolicy={checkName}
-                        />
-                    </div>
-                    <div>
-                        <CustomInput
-                            label="비밀번호 입력"
-                            type="password"
-                            info="8글자 이상의 영문 숫자 조합이어야 합니다."
-                            value={password1}
-                            setValue={setPassword1}
-                            id="password1"
-                            checkPolicy={checkPasswordPolicy}
-                        />
-                    </div>
-                    <div>
-                        <CustomInput
-                            label="비밀번호 확인"
-                            type="password"
-                            info="비밀번호가 일치하지 않습니다."
-                            value={password2}
-                            setValue={setPassword2}
-                            id="password2"
-                            checkPolicy={(value) => checkPasswordAgain(password1, value)}
-                        />
-                    </div>
-                    {checkDefaultInputValidation(email, name, password1, password2) ? (
-                        <button type="button" className="black-bar " onClick={() => setIsOpen(true)}>
-                            배송지 입력하기
-                        </button>
-                    ) : (
-                        <button type="button" className="black-bar bg-light-gray text-main-black cursor-not-allowed">
-                            {isUnique ? "필수 정보를 입력해주세요." : "이메일 중복 여부를 확인해주세요."}
-                        </button>
-                    )}
+                        )}
+                    </form>
                 </div>
             </div>
             <div className={`flex flex-col ${isOpen ? "block" : "hidden"}`}>
@@ -257,9 +239,8 @@ export default function CreateAccount() {
                         setEnAddress={setEnAddressProps}
                         setKrAddressDetail={setKrAddressDetailProps}
                         setEnAddressDetail={setEnAddressDetailProps}
-                        customIdFalseButton={customIdFalseButton()}
-                        customIdTrueButton={customIdTrueButton()}
-                        customDataInvalidButton={customDataInvalidButton()}
+                        falseButton={falseButton()}
+                        trueButton={trueButton()}
                     />
                 </div>
             </div>

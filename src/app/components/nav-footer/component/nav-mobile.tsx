@@ -1,9 +1,9 @@
-import { useShoppingCart } from "../../shopping-cart-context";
+"use client";
+import { useShoppingCart } from "@/app/components/context/shopping-cart-context";
 import Image from "next/image";
 import Link from "next/link";
-import PageLoading from "../loading/page-loading";
 
-export default function NavigationMobile() {
+export default function NavMobile() {
     const { navOpen, setNavOpen } = useShoppingCart();
     const navOpenToggle = () => {
         setNavOpen(!navOpen);

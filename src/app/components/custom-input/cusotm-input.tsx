@@ -11,19 +11,11 @@ interface customInputProps {
     info: string;
     checkPolicy: (value: string) => boolean | undefined;
     maxLength?: number;
+    [rest: string]: any;
 }
 
-const CustomInput: React.FC<customInputProps> = ({
-    label,
-    type,
-    placeholder = undefined,
-    info,
-    value,
-    setValue,
-    id,
-    checkPolicy,
-    ...props
-}) => {
+const CustomInput: React.FC<customInputProps> = (props: customInputProps) => {
+    const { label, type, value, setValue, id, placeholder, info, checkPolicy, ...rest } = props;
     return (
         <div className="relative my-2">
             <input
@@ -35,7 +27,7 @@ const CustomInput: React.FC<customInputProps> = ({
                 value={value}
                 id={id}
                 placeholder={placeholder ?? "empty"}
-                {...props}
+                {...rest}
             />
             <label htmlFor={id} className="custom-label-class">
                 {label}

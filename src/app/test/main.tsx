@@ -1,25 +1,33 @@
-import React, { useEffect } from "react";
-import { useShoppingCart } from "../shopping-cart-context";
-import PageLoading from "../components/loading/page-loading";
+"use client";
+import { useSession } from "next-auth/react";
+import { useEffect } from "react";
+import { useState } from "react";
 
-export default function Page() {
-    async function test() {
-        const data = await fetch("http://localhost:8000/api/auth/regi1ster", {
-            method: "POST",
+export default function Test() {
+    const { data: session } = useSession();
+    console.log("session", session?.user.access_token);
+    const [data, setData] = useState(null);
+
+    async function fetchData() {
+        const response = await fetch("http://localhost:8000/api/auth/", {
+            method: "GET",
             headers: {
-                "Content-Type": "application/json",
+                accept: "application/json",
+                Authorization: `${session?.user.access_token}`,
             },
-            body: JSON.stringify({
-                email: "lee@naver.com",
-                password: "str",
-                kr_name: "str",
-            }),
-        });
-        const jsonData = await data.json();
-        console.log("jsonData", jsonData);
+        })
+            .then((res) => res.json())
+            .catch((error) => {
+                console.log(error);
+            });
+
+        return response;
     }
+
     useEffect(() => {
-        test();
+        const x = fetchData();
+        setData(x);
     }, []);
-    return null;
+    console.log(data);
+    return <div>{data}</div>;
 }

@@ -9,7 +9,7 @@ import AccordionComponent from "@/app/components/accordion/accordion";
 import RelatedProducts from "./component/related-products";
 import ProductSpecificInfo from "./component/product-specific-info";
 import { productCardProps } from "@/app/type";
-import { useShoppingCart } from "@/app/shopping-cart-context";
+import { useShoppingCart } from "@/app/components/context/shopping-cart-context";
 import AddBascketModal from "./component/add-bascket-modal";
 
 export default function MobileMain(product: productCardProps) {

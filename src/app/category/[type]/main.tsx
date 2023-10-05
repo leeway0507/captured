@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { useShoppingCart } from "@/app/shopping-cart-context";
+import { useShoppingCart } from "@/app/components/context/shopping-cart-context";
 import ProductCard from "./component/product-card";
 import Accordion from "./component/filter";
 import SortItem from "./component/sort-dropdown";

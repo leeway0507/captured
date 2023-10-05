@@ -1,6 +1,6 @@
 import { cartProductCardProps } from "@/app/type";
 import YesNoModalWithoutBtn from "@/app/components/modal/yes-no-modal-without-btn";
-import { useShoppingCart } from "@/app/shopping-cart-context";
+import { useShoppingCart } from "@/app/components/context/shopping-cart-context";
 import { ProductCardModal } from "./product-card-modal-form";
 
 export interface popUpRemoveModalProps extends cartProductCardProps {
