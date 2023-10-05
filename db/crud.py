@@ -24,14 +24,16 @@ def execute_query(query) -> List[Any]:
 class DB:
     """DB Base class"""
 
-    def __init__(self, table: type[tables.Base], schema: type[BaseModel],session:Session) -> None:
+    def __init__(
+        self, table: type[tables.MyBase], schema: type[BaseModel], session: Session
+    ) -> None:
         self.table = table
         self.schema = schema
         self.session = session
 
     def __call__(self, *args: Any, **kwds: Any) -> Session:
         if self.session is None or not self.session.is_active:
-            self.session = conn.connect_db(**self.secret)
+            self.session = conn.connect_db(**conn.get_secret())
         return self.session
 
     def __enter__(self):
@@ -100,16 +102,18 @@ class DB:
 # init session
 init_session = conn.connect_db(**conn.get_secret())
 
-class ProductCard(DB):
+
+class ProductInfo(DB):
     """
     product_card table에 대한 CRUD 수행
     """
 
     def __init__(self) -> None:
-        table = tables.ProductCardTable
-        schema = db_model.ProductCardSchema
+        table = tables.ProductInfoTable
+        schema = db_model.ProductInfoSchema
         session = init_session
-        super().__init__(table, schema,session)
+        super().__init__(table, schema, session)
+
 
 class User(DB):
     """
@@ -120,7 +124,9 @@ class User(DB):
         table = tables.UserTable
         schema = db_model.UserSchema
         session = init_session
-        super().__init__(table, schema,session)
+        super().__init__(table, schema, session)
+
+
 class UserAddress(DB):
     """
     user table에 대한 CRUD 수행
@@ -130,7 +136,8 @@ class UserAddress(DB):
         table = tables.UserAddressTable
         schema = db_model.UserAddressSchema
         session = init_session
-        super().__init__(table, schema,session)
+        super().__init__(table, schema, session)
+
 
 class OrderHistory(DB):
     """
@@ -141,7 +148,7 @@ class OrderHistory(DB):
         table = tables.OrderHistoryTable
         schema = db_model.OrderHistorySchema
         session = init_session
-        super().__init__(table, schema,session)
+        super().__init__(table, schema, session)
 
 
 class OrderRow(DB):
@@ -151,6 +158,6 @@ class OrderRow(DB):
 
     def __init__(self) -> None:
         table = tables.OrderHistoryTable
-        schema = db_model.OrderHistorySchema
+        schema = db_model.OrderRowSchmea
         session = init_session
-        super().__init__(table, schema,session)
+        super().__init__(table, schema, session)
