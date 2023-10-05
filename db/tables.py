@@ -6,11 +6,12 @@ from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
 
+
 class MyBase(Base):
     __abstract__ = True
-    def to_dict(self):
-        return {field.name:getattr(self, field.name) for field in self.__table__.c}
 
+    def to_dict(self):
+        return {field.name: getattr(self, field.name) for field in self.__table__.c}  # type: ignore
 
 
 class ProductInfoTable(MyBase):
@@ -35,7 +36,9 @@ class ProductInfoTable(MyBase):
 class UserTable(MyBase):
     __tablename__ = "user"
 
-    user_id = Column(INTEGER, primary_key=True, autoincrement=True, server_default='10000') # start from 10000
+    user_id = Column(
+        INTEGER, primary_key=True, autoincrement=True, server_default="10000"
+    )  # start from 10000
     email = Column(VARCHAR(255), nullable=False, unique=True)
     password = Column(VARCHAR(255), nullable=False)
     kr_name = Column(VARCHAR(30), nullable=False)
@@ -96,8 +99,3 @@ class OrderRowTable(MyBase):
 
     class Config:
         orm_mode = str
-    
-
-
-
-

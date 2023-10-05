@@ -1,7 +1,7 @@
 """db connection"""
 
+from typing import Dict
 
-import json
 from sqlalchemy.orm import sessionmaker, Session
 from sqlalchemy import create_engine
 from decouple import config
@@ -34,10 +34,33 @@ def conn_engine(username: str, password: str, host: str, db_name: str, **_kwargs
     db_url = f"mysql+pymysql://{username}:{password}@{host}:3306/{db_name}"
     return create_engine(db_url)
 
-def get_secret() :
+
+def get_secret() -> Dict[str, str]:
+    username = config("DB_USER_NAME")
+    password = config("DB_PASSWORD")
+    host = config("DB_HOST")
+    db_name = config("DB_NAME")
+
+    assert isinstance(username, str), "username is not str"
+    assert isinstance(password, str), "password is not str"
+    assert isinstance(host, str), "host is not str"
+    assert isinstance(db_name, str), "db_name is not str"
+
     return {
-        "username": config("DB_USER_NAME"),
-        "password": config("DB_PASSWORD"),
-        "host": config("DB_HOST"),
-        "db_name": config("DB_NAME"),
+        "username": username,
+        "password": password,
+        "host": host,
+        "db_name": db_name,
     }
+
+
+engine = conn_engine(**get_secret())
+session_local = sessionmaker(bind=engine)
+
+
+def get_db():
+    db = session_local()
+    try:
+        yield db
+    finally:
+        db.close()

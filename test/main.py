@@ -1,6 +1,6 @@
-from decouple import config
+import sys
 
+import os
 
-ACCESS_TOKEN_EXPIRE_MINUTES = int(config('ACCESS_TOKEN_EXPIRE_MINUTES'))
-
-print(ACCESS_TOKEN_EXPIRE_MINUTES)
+print(os.getcwd())
+print(sys.path)
