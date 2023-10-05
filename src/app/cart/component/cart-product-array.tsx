@@ -6,7 +6,7 @@ import { useState } from "react";
 export default function CartProductCardArr({ arr }: { arr: cartProductCardProps[] }) {
     const [openModal, setOpenModal] = useState<boolean>(false);
 
-    return arr.map((item: cartProductCardProps, idx: number) => {
+    return arr?.map((item: cartProductCardProps, idx: number) => {
         const { brand, productName, productId, imgType } = item;
         const productImgUrl = `/product/${brand}/${productName} ${productId}/main.${imgType}`;
         return (

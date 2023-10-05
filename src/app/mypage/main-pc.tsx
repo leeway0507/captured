@@ -6,6 +6,7 @@ import AddressInfoFrom from "./component/address-info";
 import YesNoModal from "../components/modal/yes-no-modal";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
+import { signOut } from "next-auth/react";
 
 function classNames(...classes: any[]) {
     return classes.filter(Boolean).join(" ");
@@ -83,7 +84,7 @@ export default function MainPc() {
                             title="로그아웃"
                             content="로그아웃 하시겠습니까?"
                             trueCallback={() => {
-                                router.push("/");
+                                signOut({ callbackUrl: "/" });
                             }}
                         />
                     </Tab.List>

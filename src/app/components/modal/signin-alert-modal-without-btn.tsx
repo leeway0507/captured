@@ -8,7 +8,7 @@ export default function SigninAlertModal() {
     };
     return (
         <>
-            <div className={`absolute top-0 bg-white w-screen h-screen`}>asdasdasdasda</div>
+            <div className={`absolute top-0 bg-white w-screen h-screen`}></div>
             <AlertModalWithoutBtn
                 title="로그인 알림"
                 content="로그인이 필요합니다."

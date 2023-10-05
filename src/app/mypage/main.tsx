@@ -1,5 +1,6 @@
+"use client";
+
 import { useSession } from "next-auth/react";
-import { Session } from "next-auth";
 import { useShoppingCart } from "@/app/components/context/shopping-cart-context";
 import MobileMain from "./main-mobile";
 import MobilePc from "./main-pc";
@@ -8,10 +9,16 @@ import PageLoading from "../components/loading/page-loading";
 
 export default function Main() {
     const { data: session, status } = useSession();
-
+    console.log("mypage session", session);
     const { isMobile } = useShoppingCart();
 
-    if (session === undefined) return <PageLoading />;
+    if (status === "unauthenticated") {
+        return <SignInAlertModal />;
+    }
 
-    return <>{session === null ? <SignInAlertModal /> : isMobile ? <MobileMain /> : <MobilePc />}</>;
+    if (status === "loading") {
+        return <PageLoading />;
+    }
+
+    return <>{isMobile ? <MobileMain /> : <MobilePc />}</>;
 }

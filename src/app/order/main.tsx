@@ -5,9 +5,20 @@ import { cartProductCardProps } from "../type";
 import Link from "next/link";
 import Image from "next/image";
 import PageLoading from "../components/loading/page-loading";
+import { mockDB } from "../api/mock-apis";
+import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
+import SignInAlertModal from "@/app/components/modal/signin-alert-modal-without-btn";
 
 export default function Main() {
-    const { mockDB, cartItems, isMobile } = useShoppingCart();
+    const { data: session, status } = useSession();
+    const { cartItems, isMobile } = useShoppingCart();
+
+    if (status === "unauthenticated") {
+        return <SignInAlertModal />;
+    }
+
+    if (cartItems === undefined) return <PageLoading />;
 
     const CartItemArr = cartItems
         ?.map((item) => {
@@ -15,8 +26,6 @@ export default function Main() {
             if (product) return { ...product, size: item.size, quantity: item.quantity };
         })
         .filter((item): item is cartProductCardProps => Boolean(item));
-
-    if (!CartItemArr) return <PageLoading />;
 
     return (
         <>
