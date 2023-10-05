@@ -6,8 +6,14 @@ from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
 
+class MyBase(Base):
+    __abstract__ = True
+    def to_dict(self):
+        return {field.name:getattr(self, field.name) for field in self.__table__.c}
 
-class ProductInfoTable(Base):
+
+
+class ProductInfoTable(MyBase):
     __tablename__ = "product_info"
 
     sku = Column(INTEGER, primary_key=True)
@@ -26,7 +32,7 @@ class ProductInfoTable(Base):
         orm_mode = str
 
 
-class UserTable(Base):
+class UserTable(MyBase):
     __tablename__ = "user"
 
     user_id = Column(INTEGER, primary_key=True, autoincrement=True, server_default='10000') # start from 10000
@@ -39,7 +45,7 @@ class UserTable(Base):
         orm_mode = str
 
 
-class UserAddressTable(Base):
+class UserAddressTable(MyBase):
     __tablename__ = "user_address"
     address_id = Column(VARCHAR(255), primary_key=True)
     user_id = Column(INTEGER, ForeignKey("user.user_id"), nullable=False)
@@ -59,7 +65,7 @@ class UserAddressTable(Base):
         orm_mode = str
 
 
-class OrderHistoryTable(Base):
+class OrderHistoryTable(MyBase):
     __tablename__ = "order_history"
     order_id = Column(VARCHAR(255), primary_key=True)
     user_id = Column(INTEGER, ForeignKey("user.user_id"), nullable=False)
@@ -76,7 +82,7 @@ class OrderHistoryTable(Base):
         orm_mode = str
 
 
-class OrderRowTable(Base):
+class OrderRowTable(MyBase):
     __tablename__ = "order_row"
     order_row_id = Column(INTEGER, primary_key=True, autoincrement=True)
     order_id = Column(VARCHAR(255), ForeignKey("order_history.order_id"), nullable=False)

@@ -1,5 +1,6 @@
-x = [1,2]
-y = str(x)
+from decouple import config
 
-print(type(y))
-print(y)
+
+ACCESS_TOKEN_EXPIRE_MINUTES = int(config('ACCESS_TOKEN_EXPIRE_MINUTES'))
+
+print(ACCESS_TOKEN_EXPIRE_MINUTES)

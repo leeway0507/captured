@@ -1,48 +1,55 @@
-from typing import Dict
-from fastapi import APIRouter, Depends,Request
-from model.auth_model import UserLoginSchema
-from model.db_model import UserAddressSchema
-from model.registration_model import RegistrationSchema
-from auth.lib.jwt_handler import sign_jwt
-from auth.lib.jwt_bearer import jwtBearer
-from auth.lib.register import register_user_and_address,get_user_by_email
+from fastapi import APIRouter, Depends,HTTPException,status
+from fastapi.security import OAuth2PasswordRequestForm
 
+
+from model.auth_model import LoginSchema,LoginResponseSchema
+from model.db_model import UserAddressSchema,UserSchema
+from model.registration_model import RegistrationSchema
+
+from auth.lib.utils import *
 
 router = APIRouter()
 
 
 
-@router.get("/", dependencies=[Depends(jwtBearer())])
-async def read_root():
-    return {"Hello": "auth"}
+@router.post("/signin", response_model=LoginResponseSchema)
+async def signin(form_data: OAuth2PasswordRequestForm = Depends()):
+    """로그인 수행"""
 
-@router.post("/email-check")
-async def read_raw_body(request: Request):
-    req_body = await request.body()
-    email = req_body.decode('utf-8')
+    user = authenticate_user(LoginSchema(email=form_data.username,password=form_data.password))
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect email or password",
+            headers={"WWW-Authenticate": "Bearer"},
+            )
+    return { **user.model_dump(), "access_token" : create_access_token_form(user.email)}
+
+
+
+@router.get("users/me", response_model=UserSchema)
+async def read_users_me(current_user: UserSchema = Depends(get_verfied_user)):
+    """인증하는 기본 양식"""
+    return current_user
+
+
+
+@router.get("/email-check")
+async def email_check(email:str):
+    """이메일 중복 체크"""
     user_info = get_user_by_email(email)
-    print(user_info)
-    
     return {'isUnique': user_info is None}
 
 
-@router.post("/register",status_code=201)
+
+@router.post("/register",status_code=201,response_model=LoginResponseSchema)
 async def register(user:RegistrationSchema,address:UserAddressSchema):
-    register_user_and_address(user,address)
-    return sign_jwt(user.email)
+    """회원가입"""
+    if register_user_and_address(user,address): 
+        email = user.email  
+        return { **get_user_by_email(email), "access_token" : create_access_token_form(email)}
+    else : 
+        return HTTPException(status_code=406, detail="failed to register")
 
 
-
-def check_user(data:UserLoginSchema):
-    for user in users :
-        if user.email == data.email and user.password == data.password:
-            return True
-    return False
-
-
-@router.post("/login")
-async def login(data:UserLoginSchema) -> Dict[str,str]|str:
-    if check_user(data):
-        return sign_jwt(data.email)
-    return {"error":"Wrong Credentials"}
 
