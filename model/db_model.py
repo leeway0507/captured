@@ -35,11 +35,14 @@ class UserSchema(BaseModel):
     """User Schema"""
     user_id :int
     email: EmailStr
-    password :str
     kr_name :str
     email_verification:bool
 
 
+class UserIndDBSchema(UserSchema) :
+    """User Schema in DB"""
+    password:str
+    
 
 class UserAddressSchema(BaseModel):
     """UserAddresTable Schema"""
@@ -48,7 +51,7 @@ class UserAddressSchema(BaseModel):
 
     # volume_id: int
     address_id: str = None # UA-[user_id]-[0~n]
-    user_id: str = None
+    user_id: int = None
     kr_name: str
     en_name: str
     custom_id: str
