@@ -1,16 +1,15 @@
 "use client";
-import { useMyPage } from "../mypage-provider";
 import Link from "next/link";
 
 import AlertModal from "@/app/components/modal/alert-modal";
 import { AddressForm } from "./address-info-form";
-import * as api from "../apis";
+import { mockAddressArrayAPI } from "@/app/api/mock-apis";
 
 //css
 const addressInfoClass = "text-base flex-right active:text-deep-gray cursor-pointer";
 
 export default function AddressInfoFrom() {
-    const { addressArray } = useMyPage();
+    const addressArray = mockAddressArrayAPI;
 
     return (
         <div className="text-sm overflow-auto max-w-[500px] mx-auto">

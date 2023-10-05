@@ -2,15 +2,14 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { useShoppingCart } from "@/app/components/context/shopping-cart-context";
 import ProductCard from "./component/product-card";
 import Accordion from "./component/filter";
 import SortItem from "./component/sort-dropdown";
 import { useParams } from "next/navigation";
+import { mockDB } from "@/app/api/mock-apis";
 
 export default function Category() {
     const { type } = useParams();
-    const { mockDB } = useShoppingCart();
 
     const [openFilter, setOpenFilter] = useState<boolean>(false);
 

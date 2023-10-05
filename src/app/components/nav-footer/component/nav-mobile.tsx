@@ -2,14 +2,13 @@
 import { useShoppingCart } from "@/app/components/context/shopping-cart-context";
 import Image from "next/image";
 import Link from "next/link";
+import CartBtn from "./cart-btn";
 
 export default function NavMobile() {
-    const { navOpen, setNavOpen } = useShoppingCart();
+    const { navOpen, setNavOpen, cartQuantity } = useShoppingCart();
     const navOpenToggle = () => {
         setNavOpen(!navOpen);
     };
-
-    const { cartQuantity } = useShoppingCart();
 
     return (
         <>
@@ -30,16 +29,7 @@ export default function NavMobile() {
                     </Link>
                 </div>
                 <div className="flex-right basis-2/12">
-                    <Link href="/cart" className="w-full h-full flex-right link-animation">
-                        <Image
-                            src="/icons/shopping-cart.svg"
-                            alt="shopping cart"
-                            className="flex-right"
-                            width={24}
-                            height={24}
-                        />
-                        <div className="text-sm ps-1">{cartQuantity}</div>
-                    </Link>
+                    <CartBtn />
                 </div>
             </header>
         </>

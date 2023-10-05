@@ -1,38 +1,39 @@
 import { Dropdown } from "flowbite-react";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
-import SignInOutButton from "./sign-btn";
+import { signOut } from "next-auth/react";
 import Link from "next/link";
 
 export default function UserDropDown() {
     const { data: session } = useSession();
     const userIcon = <Image src="/icons/person.svg" alt="person" className="flex-right" width={24} height={24} />;
+
     return (
         <>
             {!session ? (
-                <Link href="/auth/signin" className="px-4 link-animation">
+                <Link href="/auth/signin" className="flex px-4 py-2">
                     {userIcon}
                 </Link>
             ) : (
-                <Dropdown
-                    label={userIcon}
-                    arrowIcon={false}
-                    theme={{
-                        floating: {
-                            target: "bg-transparent link-animation enabled:hover:bg-transparent  focus:ring-transparent  ",
-                        },
-                    }}>
-                    <Dropdown.Header>
-                        {session.user.kr_name}({session.user.email})
-                    </Dropdown.Header>
-                    <Dropdown.Item>
-                        <Link href="/mypage">마이페이지</Link>
-                    </Dropdown.Item>
-                    <Dropdown.Divider />
-                    <Dropdown.Item>
-                        <SignInOutButton />
-                    </Dropdown.Item>
-                </Dropdown>
+                <div className="group relative flex-center">
+                    <button className=" flex px-4 py-2 ">{userIcon}</button>
+                    <div className="border hidden absolute top-full z-5 group-hover:block mx-5 flex flex-col bg-white text-sm shadow-lg rounded-md">
+                        <div className="whitespace-nowrap py-3 px-4 border-b-2 border-light-gray">
+                            {session?.user.kr_name}(<span className="text-xs">{session?.user.email}</span>)
+                        </div>
+                        <Link href="/mypage" className="link-animation  ">
+                            <div className="whitespace-nowrap py-3 px-4 w-full hover:bg-slate-50">마이페이지</div>
+                        </Link>
+                        <div className="link-animation hover:bg-slate-50 ">
+                            <button
+                                type="button"
+                                className="whitespace-nowrap py-3 px-4 w-full flex-left"
+                                onClick={() => signOut({ callbackUrl: "/" })}>
+                                로그아웃
+                            </button>
+                        </div>
+                    </div>
+                </div>
             )}
         </>
     );

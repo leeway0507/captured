@@ -164,3 +164,17 @@ button[disabled] {
 button:disabled:active {
     background-color: none !important;
 }
+
+/* .dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+} */

@@ -1,15 +1,15 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import PageLoading from "@/app/components/loading/page-loading";
+// import PageLoading from "@/app/components/loading/page-loading";
 
 export default function EmailVerification() {
     const router = useRouter();
     const email = localStorage.getItem("email");
-    if (email === null) {
-        router.push("/");
-        return <PageLoading />;
-    }
+    // if (email === null) {
+    //     router.push("/");
+    //     return <PageLoading />;
+    // }
 
     localStorage.removeItem("email");
     return (

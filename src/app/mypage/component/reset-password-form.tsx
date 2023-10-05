@@ -1,13 +1,14 @@
 import CustomInput from "@/app/components/custom-input/cusotm-input";
 import { checkPasswordPolicy, checkPasswordAgain } from "@/app/components/custom-input/check-policy";
 import { useState } from "react";
-import { useMyPage } from "../mypage-provider";
+import { useSession } from "next-auth/react";
 
 export default function ResetPasswordFrom() {
-    const { userInfo } = useMyPage();
-    const { email, name } = userInfo;
+    const { data: session, status } = useSession();
     const [password1, setPassword1] = useState("");
     const [password2, setPassword2] = useState("");
+
+    console.log("mypage session", session);
 
     //api-call - 비밀번호 변경
     //status : 제작필요
@@ -20,16 +21,16 @@ export default function ResetPasswordFrom() {
             <div className="flex flex-col justify-between gap-4">
                 <div className="flex flex-col">
                     <label htmlFor="email">이메일 주소</label>
-                    <input type="text" value={email} disabled className="custom-input-disabled" />
+                    <input type="text" value={session?.user.email} disabled className="custom-input-disabled" />
                 </div>
                 <div className="flex flex-col">
                     <label htmlFor="name">성 명</label>
-                    <input type="text" value={name} disabled className="custom-input-disabled" />
+                    <input type="text" value={session?.user.kr_name} disabled className="custom-input-disabled" />
                 </div>
                 <div className="flex justify-between gap-4 ">
                     <div className="flex flex-col basis-1/2">
                         <CustomInput
-                            label="비밀번호"
+                            label="신규 비밀번호"
                             type="password"
                             info="8글자 이상의 영문 숫자 조합이어야 합니다."
                             value={password1}

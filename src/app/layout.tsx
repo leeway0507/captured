@@ -18,7 +18,6 @@ const mondaL = Monda({
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         <html lang="kr">
-            <head></head>
             <body className={`${monda.className} ${mondaL.variable}`}>{children}</body>
         </html>
     );

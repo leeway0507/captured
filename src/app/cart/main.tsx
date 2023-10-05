@@ -3,11 +3,10 @@ import { useShoppingCart } from "@/app/components/context/shopping-cart-context"
 import MainMobile from "./main-mobile";
 import MainPC from "./main-pc";
 import { cartProductCardProps, productCardProps } from "../type";
-import { Suspense } from "react";
-import PageLoading from "../components/loading/page-loading";
+import { mockDB } from "../api/mock-apis";
 
 export default function Cart() {
-    const { mockDB, cartItems, isMobile } = useShoppingCart();
+    const { cartItems, isMobile } = useShoppingCart();
 
     const CartItemArr = cartItems
         ?.map((item) => {
@@ -16,7 +15,7 @@ export default function Cart() {
         })
         .filter((item): item is cartProductCardProps => Boolean(item));
 
-    if (!CartItemArr) return <PageLoading />;
+    console.log("cartItems", CartItemArr);
 
     return (
         <>

@@ -4,7 +4,7 @@ import Link from "next/link";
 import ProductCheckOut from "../cart/component/product-check-out";
 import { mockAddressArrayAPI } from "../mypage/component/mock-apis";
 import { useEffect, useState } from "react";
-import { userAddressProps } from "../mypage/type";
+import { userAddressProps } from "../type";
 import { useRouter } from "next/navigation";
 import { IntlShipment } from "../components/notification/shipment-info";
 import { AddressForm } from "@/app/mypage/component/address-info-form";
@@ -19,22 +19,22 @@ const MainPC = ({ arr }: { arr: cartProductCardProps[] }) => {
         setIsOpen(!isOpen);
         router.push("/order?chooseAddress=true");
     };
-    const orderPrice = arr.reduce((result, item) => {
+    const orderPrice = arr?.reduce((result, item) => {
         return result + item.price * item.quantity;
     }, 0);
 
-    const domesticShippingFee = arr.reduce((result, item) => {
+    const domesticShippingFee = arr?.reduce((result, item) => {
         return result + (item.intl ? 0 : item.shippingFee * item.quantity);
     }, 0);
 
-    const intlShippingFee = arr.reduce((result, item) => {
+    const intlShippingFee = arr?.reduce((result, item) => {
         return result + (item.intl ? item.shippingFee * item.quantity : 0);
     }, 0);
 
     const totalShippingFee = domesticShippingFee + intlShippingFee;
     const totalPrice = orderPrice + totalShippingFee;
     function numToKorWon(x: number) {
-        return "₩ " + x.toLocaleString("ko-KR");
+        return "₩ " + x?.toLocaleString("ko-KR");
     }
 
     const selectAddressToggle = (address: userAddressProps) => {
