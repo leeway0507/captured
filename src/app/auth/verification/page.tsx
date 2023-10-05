@@ -1,8 +1,7 @@
 "use client";
-import NavFooter from "@/app/components/nav-footer/nav-footer";
+import NavFooter from "@/app/components/nav-footer/client-side/nav-footer";
 import EmailVerification from "./main";
-import { useShoppingCart } from "@/app/shopping-cart-context";
-
+import { useShoppingCart } from "@/app/components/context/shopping-cart-context";
 export default function Page() {
     return (
         <>

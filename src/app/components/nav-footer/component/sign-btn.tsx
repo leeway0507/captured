@@ -5,10 +5,10 @@ function SignInOutButton() {
     const { data: session } = useSession();
 
     if (session && session.user) {
-        return <button onClick={() => signOut()}>로그아웃</button>;
+        return <div onClick={() => signOut()}>로그아웃</div>;
     }
 
-    return <button onClick={() => signIn()}>로그인 / 회원가입</button>;
+    return <div onClick={() => signIn()}>로그인 / 회원가입</div>;
 }
 
 export default SignInOutButton;

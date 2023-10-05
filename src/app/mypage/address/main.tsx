@@ -1,6 +1,6 @@
 import { phoneNumberAutoFormat } from "@/app/components/custom-input/check-policy";
 import { useState } from "react";
-import { userAddressProps } from "../type";
+import { userAddressProps } from "@/app/type";
 import { useRouter } from "next/navigation";
 import AlertModalWithoutBtn from "@/app/components/modal/alert-modal-without-btn";
 import YesNoModal from "@/app/components/modal/yes-no-modal";
@@ -49,7 +49,7 @@ const Main = (props: userAddressProps) => {
         });
     };
 
-    const customIdTrueButton = () => {
+    const trueButton = () => {
         return (
             <div className="flex gap-5">
                 <YesNoModal
@@ -72,7 +72,7 @@ const Main = (props: userAddressProps) => {
         );
     };
 
-    const customIdFalseButton = () => {
+    const falseButton = () => {
         return (
             <div className="flex gap-5">
                 <button type="button" className="basis-3/4 black-bar">
@@ -104,8 +104,8 @@ const Main = (props: userAddressProps) => {
         setEnAddress: setEnAddressProps,
         setKrAddressDetail: setKrAddressDetailProps,
         setEnAddressDetail: setEnAddressDetailProps,
-        customIdTrueButton: customIdTrueButton(),
-        customIdFalseButton: customIdFalseButton(),
+        trueButton: trueButton(),
+        falseButton: falseButton(),
     };
 
     return (

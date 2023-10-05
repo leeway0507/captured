@@ -1,7 +1,7 @@
 import { Dropdown } from "flowbite-react";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
-import SignInOutButton from "./component/sign-btn";
+import SignInOutButton from "./sign-btn";
 import Link from "next/link";
 
 export default function UserDropDown() {
@@ -23,7 +23,7 @@ export default function UserDropDown() {
                         },
                     }}>
                     <Dropdown.Header>
-                        {session.user.krName}({session.user.email})
+                        {session.user.kr_name}({session.user.email})
                     </Dropdown.Header>
                     <Dropdown.Item>
                         <Link href="/mypage">마이페이지</Link>

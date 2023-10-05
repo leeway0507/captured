@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { popUpRemoveModalProps } from "../type";
 import YesNoModal from "@/app/components/modal/yes-no-modal";
-import { useShoppingCart } from "@/app/shopping-cart-context";
+import { useShoppingCart } from "@/app/components/context/shopping-cart-context";
 import { ProductCardModal } from "@/app/components/product-card/product-card-modal-form";
 
 export default function PopUpRemoveModal(props: popUpRemoveModalProps) {

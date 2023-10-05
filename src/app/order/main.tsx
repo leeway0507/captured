@@ -1,4 +1,4 @@
-import { useShoppingCart } from "../shopping-cart-context";
+import { useShoppingCart } from "@/app/components/context/shopping-cart-context";
 import MainMobile from "./main-mobile";
 import MainPc from "./main-pc";
 import { cartProductCardProps } from "../type";

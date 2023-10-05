@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { ChangeEvent, useState } from "react";
+import { useState } from "react";
 import CustomInput from "../../components/custom-input/cusotm-input";
 import { checkEmail } from "../../components/custom-input/check-policy";
 import { signIn } from "next-auth/react";
@@ -18,11 +18,17 @@ export default function SignIn() {
     const [password, setPassword] = useState("");
     const handleSubmit = async () => {
         await signIn("credentials", {
-            email: email,
+            username: email,
             password: password,
-            redirect: true,
+            redirect: false,
             callbackUrl: "/",
-        });
+        })
+            .then((res) => {
+                console.log("res", res);
+            })
+            .catch((err) => {
+                console.log("err", err);
+            });
     };
 
     const handleOnKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
