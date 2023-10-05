@@ -2,7 +2,7 @@
 import CartProductCardArr from "./component/cart-product-array";
 import ProductCheckOut from "./component/product-check-out";
 import { cartProductCardProps } from "../type";
-import { useShoppingCart } from "../shopping-cart-context";
+import { useShoppingCart } from "@/app/components/context/shopping-cart-context";
 import CartEmptyGuide from "./component/cart-empty-guide";
 import Link from "next/link";
 import { IntlShipment } from "../components/notification/shipment-info";

@@ -1,6 +1,6 @@
 "use client";
 
-import { useShoppingCart } from "../shopping-cart-context";
+import { useShoppingCart } from "@/app/components/context/shopping-cart-context";
 import Image from "next/image";
 import Link from "next/link";
 

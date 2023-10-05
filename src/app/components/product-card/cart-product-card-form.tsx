@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { cartProductCardProps } from "@/app/type";
-import { useShoppingCart } from "@/app/shopping-cart-context";
+import { useShoppingCart } from "@/app/components/context/shopping-cart-context";
 import PopUpRemoveModalWithoutBtn from "./cart-remove-modal-without-btn";
 
 interface cartProductCardFormProps extends cartProductCardProps {

@@ -1,14 +1,9 @@
 import Link from "next/link";
 import Image from "next/image";
-import { useShoppingCart } from "@/app/shopping-cart-context";
-import PageLoading from "../../loading/page-loading";
+import { useShoppingCart } from "@/app/components/context/shopping-cart-context";
 
 export default function CartBtn() {
     const { cartQuantity } = useShoppingCart();
-    // if (cartQuantity === undefined) {
-    //     console.log("cart", cartQuantity);
-    //     return <PageLoading />;
-    // }
     return (
         <>
             <Link href="/cart" className="h-full flex-right link-animation">

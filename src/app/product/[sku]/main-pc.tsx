@@ -8,7 +8,7 @@ import RelatedProducts from "./component/related-products";
 import ProductSpecificInfo from "./component/product-specific-info";
 import Thumbnail from "./component/thumbnail-pc";
 import { productCardProps } from "@/app/type";
-import { useShoppingCart } from "@/app/shopping-cart-context";
+import { useShoppingCart } from "@/app/components/context/shopping-cart-context";
 import ProductSizeTable from "./component/product-size-table";
 import AddBascketModal from "./component/add-bascket-modal";
 

@@ -1,11 +1,11 @@
-"use clientt";
+"use client";
 import React, { useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useShoppingCart } from "../../shopping-cart-context";
-import SignInOutButton from "./component/sign-btn";
+import { useShoppingCart } from "@/app/components/context/shopping-cart-context";
+import SignInOutButton from "./sign-btn";
 
-export default function NavMobile({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: (v: boolean) => void }) {
+export default function NavMobileSideBar({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: (v: boolean) => void }) {
     const barRef = useRef<HTMLDivElement>(null);
     const { setSearch } = useShoppingCart();
 
