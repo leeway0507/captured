@@ -50,7 +50,7 @@ export default function AddressForm(props: addAddressFromProps) {
 
     return (
         <>
-            <div className="flex flex-col max-w-[600px] gap-4 text-xs">
+            <div className="flex flex-col max-w-[600px] text-xs grow">
                 <div className="flex gap-5">
                     <div className="grow">
                         <CustomInput

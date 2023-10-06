@@ -1,27 +1,29 @@
+import { user_address } from "@/app/types/fastapi-schema";
 import { userAddressProps } from "@/app/type";
 
-export const getAddress = async (access_token: string | undefined) => {
+export const createAddress = async (address: userAddressProps, access_token: string | undefined) => {
     if (access_token == undefined) {
-        return [];
+        return;
     }
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/mypage/get-address`, {
-        method: "GET",
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/mypage/create-address`, {
+        method: "POST",
         headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${access_token}`,
         },
+        body: JSON.stringify(address),
     });
     const data = await res.json();
     return data;
 };
 
-export const deleteAddress = async (address: userAddressProps, access_token: string | undefined) => {
+export const updateAddress = async (address: userAddressProps, access_token: string | undefined) => {
     if (access_token == undefined) {
         return;
     }
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/mypage/delete-address`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/mypage/update-address`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

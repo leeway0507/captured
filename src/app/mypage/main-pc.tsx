@@ -2,7 +2,7 @@
 import { Tab } from "@headlessui/react";
 import Order from "./component/order/order";
 import ResetPasswordFrom from "./component/reset-password-form";
-import AddressInfoFrom from "./component/address-info";
+import AddressInfo from "./component/address-info";
 import YesNoModal from "../components/modal/yes-no-modal";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
@@ -107,11 +107,11 @@ export default function MainPc() {
                             주소 추가 및 변경
                         </div>
                         <div className="py-2">
-                            <AddressInfoFrom />
+                            <AddressInfo />
                         </div>
                     </Tab.Panel>
                     <Tab.Panel key="logout" className="grow">
-                        <div>logout</div>
+                        <div></div>
                     </Tab.Panel>
                 </Tab.Panels>
             </Tab.Group>

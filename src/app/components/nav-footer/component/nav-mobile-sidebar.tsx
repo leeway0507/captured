@@ -87,27 +87,28 @@ export default function NavMobileSideBar({ isOpen, setIsOpen }: { isOpen: boolea
                                     ACCESSORY
                                 </Link>
                             </div>
-                            <div className="bg-light-gray flex-center justify-between px-6 text-sm-base basis-1/12">
+                            <div className="bg-light-gray flex px-6 basis-1/12 w-full justify-between items-center">
                                 <Link href="/mypage" onClick={closeNavToggle}>
                                     마이페이지
                                 </Link>
-
-                                <SignInOutButton />
+                                <div>
+                                    <SignInOutButton />
+                                </div>
                             </div>
 
                             <div className="flex flex-col py-3 justify-between px-2 border-b-2">
                                 <a href={process.env.INSTARGRAM_URL} className="hover:bg-light-gray">
-                                    <div className="flex-left py-1">
-                                        <div className="basis-1/12 flex-center ">
-                                            <Image src="/icons/instagram.svg" width={16} height={16} alt="instagram" />
+                                    <div className="flex-left py-1 m-auto">
+                                        <div className="">
+                                            <Image src="/icons/instagram.svg" width={12} height={12} alt="instagram" />
                                         </div>
                                         <div className="ms-1">인스타그램</div>
                                     </div>
                                 </a>
                                 <a href={process.env.CUSTOM_ID_URL} className="hover:bg-light-gray">
                                     <div className="flex-left py-1">
-                                        <div className="basis-1/12 flex-center">
-                                            <Image src="/icons/approval.svg" width={20} height={20} alt="instagram" />
+                                        <div className=" flex-center">
+                                            <Image src="/icons/approval.svg" width={16} height={16} alt="instagram" />
                                         </div>
                                         <div className="ms-1">개인통관부호</div>
                                     </div>

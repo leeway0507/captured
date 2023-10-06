@@ -17,7 +17,7 @@ declare module "next-auth" {
             user_id: number;
             kr_name: string;
             email_verification: boolean;
-            access_token: Object;
+            access_token: string;
         };
     }
 }
