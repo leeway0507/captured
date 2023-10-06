@@ -18,6 +18,8 @@ from db.crud import User, UserAddress
 from logs.make_log import make_logger
 from db.tables import UserTable, UserAddressTable
 
+error_log = make_logger("logs/db/register.log")
+
 
 JWT_SECRET = config("JWT_SECRET")
 JWT_ALGORITHM = config("JWT_ALGORITHM")
@@ -136,9 +138,6 @@ async def get_current_user(token: str = Depends(oauth2_scheme)) -> TokenData:
 #     return current_user
 
 
-error_log = make_logger("logs/db/register.log")
-
-
 def register_user_and_address(
     db: Session, user_registration: RegistrationSchema, address: UserAddressSchema
 ) -> UserSchema | None:
@@ -164,7 +163,7 @@ def register_user_and_address(
             raise ValueError("user is None!!!")
 
         user_address_in_db = UserAddressInDBSchema(
-            address_id=f"OH-{user.user_id}-0", user_id=user.user_id, **address.model_dump()
+            address_id=f"UA-{user.user_id}-0", user_id=user.user_id, **address.model_dump()
         )
         db.add(UserAddressTable(**user_address_in_db.model_dump()))
         db.commit()

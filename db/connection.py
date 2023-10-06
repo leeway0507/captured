@@ -64,3 +64,17 @@ def get_db():
         yield db
     finally:
         db.close()
+
+
+def commit(db: Session, query: callable, error_log: callable = None):
+    try:
+        query
+        db.commit()
+        return True
+    except Exception as e:
+        if error_log:
+            error_log.error(e)
+        else:
+            print(e)
+        db.rollback()
+        return False
