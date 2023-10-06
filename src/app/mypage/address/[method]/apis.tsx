@@ -1,4 +1,4 @@
-import { userAddressProps } from "../type";
+import { userAddressProps } from "@/app/type";
 
 //api-call - 통관부호 확인
 //status : 제작필요
@@ -69,18 +69,3 @@ export const find_en_address = (props: findEnAddressProps) => {
 //url : /api/mypage/add-address
 //function : add_address(userAddressProps) => response[201]
 //DB : user_address
-
-interface AddAddressProps {
-    reqData: userAddressProps;
-    setOpenSuccessModal: (v: boolean) => void;
-    setOpenFailureModal: (v: boolean) => void;
-}
-
-export const AddAddress = (props: AddAddressProps) => {
-    const { reqData, setOpenSuccessModal, setOpenFailureModal } = props;
-
-    const result = 201;
-    if (result === 201) {
-        setOpenSuccessModal(true);
-    } else setOpenFailureModal(true);
-};

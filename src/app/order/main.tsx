@@ -4,18 +4,16 @@ import MainPc from "./main-pc";
 import { cartProductCardProps } from "../type";
 import Link from "next/link";
 import Image from "next/image";
-import PageLoading from "../components/loading/page-loading";
 import { mockDB } from "../api/mock-apis";
 import { useSession } from "next-auth/react";
-import { redirect } from "next/navigation";
-import SignInAlertModal from "@/app/components/modal/signin-alert-modal-without-btn";
+import PageLoading from "@/app/components/loading/page-loading";
+import SigninAlertModal from "@/app/components/modal/signin-alert-modal-without-btn";
 
 export default function Main() {
     const { data: session, status } = useSession();
     const { cartItems, isMobile } = useShoppingCart();
-
     if (status === "unauthenticated") {
-        return <SignInAlertModal />;
+        return <SigninAlertModal />;
     }
 
     if (cartItems === undefined) return <PageLoading />;

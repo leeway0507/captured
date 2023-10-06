@@ -15,6 +15,12 @@
     .black-bar-xl {
         @apply black-bar tracking-[0.3rem] text-base;
     }
+    .disabled-bar {
+        @apply bg-deep-gray flex-center text-white py-3 rounded-lg cursor-not-allowed text-sm;
+    }
+    .disabled-bar-xl {
+        @apply disabled-bar tracking-[0.3rem] text-base;
+    }
     .custom-container {
         @apply flex flex-col justify-between relative m-auto h-full;
     }
@@ -161,20 +167,6 @@ button[disabled] {
     color: #666666;
     cursor: not-allowed;
 }
-button:disabled:active {
-    background-color: none !important;
+button:disabled > button:active {
+    background-color: transparent !important;
 }
-
-/* .dropdown {
-    position: relative;
-    display: inline-block;
-}
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-}
-
-.dropdown:hover .dropdown-content {
-    display: block;
-} */

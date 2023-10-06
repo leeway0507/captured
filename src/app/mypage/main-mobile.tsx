@@ -4,17 +4,18 @@ import Order from "./component/order/order";
 import AccordionComponent from "@/app/components/accordion/accordion";
 import ResetPasswordFrom from "./component/reset-password-form";
 import AddressInfoFrom from "./component/address-info";
+import { mockDB } from "../api/mock-apis";
 
 export default function MobileMain() {
-    const { mockDB, cartItems } = useShoppingCart();
+    const { cartItems } = useShoppingCart();
 
     // filter productinfo and append quantity to mockDB
     const itemInfos = mockDB.filter((item) => {
-        return cartItems.find((cartItem) => cartItem.id === item.id) != null;
+        return cartItems?.find((cartItem) => cartItem.id === item.sku) != null;
     });
 
     itemInfos.forEach((item: any) => {
-        const cartItem = cartItems.find((cartItem) => cartItem.id === item.id);
+        const cartItem = cartItems?.find((cartItem) => cartItem.id === item.id);
         if (cartItem !== undefined) {
             item.quantity = cartItem.quantity;
         }

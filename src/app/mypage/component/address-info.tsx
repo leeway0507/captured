@@ -1,20 +1,35 @@
-"use client";
 import Link from "next/link";
-
 import AlertModal from "@/app/components/modal/alert-modal";
 import { AddressForm } from "./address-info-form";
-import { mockAddressArrayAPI } from "@/app/api/mock-apis";
+import { getAddress } from "./fetch";
+import { userAddressProps } from "@/app/type";
+import { useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
 
 //css
 const addressInfoClass = "text-base flex-right active:text-deep-gray cursor-pointer";
 
-export default function AddressInfoFrom() {
-    const addressArray = mockAddressArrayAPI;
+export default function AddressInfo() {
+    const { data: session } = useSession();
+
+    const [isLoading, setLoading] = useState(true);
+    const [addressArray, setAddressArray] = useState<userAddressProps[]>([]);
+
+    useEffect(() => {
+        getAddress(session?.user.access_token).then((data) => {
+            setAddressArray(data);
+            setLoading(false);
+            console.log(data);
+        });
+    }, []);
+
+    if (isLoading) return <p>Loading...</p>;
+    if (addressArray.length === 0) return <p>No profile data</p>;
 
     return (
         <div className="text-sm overflow-auto max-w-[500px] mx-auto">
             {addressArray.length < 4 ? (
-                <Link href="mypage/address" className={`${addressInfoClass}`}>
+                <Link href="mypage/address/create" className={`${addressInfoClass}`}>
                     + 신규 주소 추가
                 </Link>
             ) : (
@@ -27,9 +42,16 @@ export default function AddressInfoFrom() {
                     </AlertModal>
                 </div>
             )}
-            <div className="  overflow-auto pt-2">
-                {addressArray.map((item) => {
-                    return <AddressForm {...item} onDelete={true} key={item.addressId} />;
+            <div className="overflow-auto pt-2">
+                {addressArray.map((item: userAddressProps) => {
+                    return (
+                        <AddressForm
+                            {...item}
+                            onDelete={true}
+                            access_token={session?.user.access_token}
+                            key={item.addressId}
+                        />
+                    );
                 })}
             </div>
         </div>
