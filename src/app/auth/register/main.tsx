@@ -10,7 +10,7 @@ import {
 } from "@/app/components/custom-input/check-policy";
 import YesNoModal from "@/app/components/modal/yes-no-modal";
 import AlertModalWithoutBtn from "@/app/components/modal/alert-modal-without-btn";
-import AddressForm from "@/app/mypage/address/component/address-form";
+import AddressForm from "@/app/mypage/address/[method]/component/address-form";
 import { useRouter } from "next/navigation";
 import { userAddressProps, userProps } from "@/app/type";
 import * as api from "./component/fetch";
@@ -208,10 +208,8 @@ export default function CreateAccount() {
                                 배송지 입력하기
                             </button>
                         ) : (
-                            <button
-                                type="button"
-                                className="black-bar bg-light-gray text-main-black cursor-not-allowed w-full">
-                                {isUnique ? "필수 정보를 입력해주세요." : "이메일 중복 여부를 확인해주세요."}
+                            <button type="button" className="disabled-bar" disabled>
+                                {isUnique ? "필수 항목을 입력해주세요.." : "이메일 중복 여부를 확인해주세요."}
                             </button>
                         )}
                     </form>

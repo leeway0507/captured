@@ -9,7 +9,6 @@ import PageLoading from "../components/loading/page-loading";
 
 export default function Main() {
     const { data: session, status } = useSession();
-    console.log("mypage session", session);
     const { isMobile } = useShoppingCart();
 
     if (status === "unauthenticated") {
