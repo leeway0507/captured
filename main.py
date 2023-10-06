@@ -3,8 +3,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
-from router.auth.router import auth_router
-from router.mypage.router import mypage_router
+from router.auth import auth_router
+from router.mypage import mypage_router
+from router.product import product_router
 
 app = FastAPI()
 
@@ -27,6 +28,7 @@ app.add_middleware(
 
 app.include_router(auth_router, prefix="/api/auth", tags=["auth"])
 app.include_router(mypage_router, prefix="/api/mypage", tags=["mypage"])
+app.include_router(product_router, prefix="/api/product", tags=["product"])
 
 
 # 422 error handler
