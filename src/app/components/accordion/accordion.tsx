@@ -1,3 +1,5 @@
+"use client";
+
 import "./accordion.css";
 import { useState } from "react";
 function AccordionComponent({ title, content, cat }: { title: string; content: React.ReactNode; cat: string }) {

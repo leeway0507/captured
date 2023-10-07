@@ -1,5 +1,6 @@
-import { Fragment, useState } from "react";
-import BaseModal from "./base-modal";
+"use client";
+
+import { useState } from "react";
 import YesNoModalWithoutBtn from "./yes-no-modal-without-btn";
 
 interface modalProps {

@@ -21,7 +21,7 @@ export default function MainPC({ arr }: { arr: cartProductCardProps[] }) {
                 </div>
                 {/* <div className="border-e border-gray-200"></div> */}
                 <div className="basis-[40%] relative ">
-                    <div className="sticky top-[220px]">
+                    <div className="sticky top-5">
                         <ProductCheckOut arr={arr} />
                         <Link href="/order" className="black-bar-xl m-3 tracking-[0.2em]">
                             주문하기

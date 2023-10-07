@@ -1,4 +1,4 @@
-import NavFooter from "@/app/components/nav-footer/server-side/nav-footer";
+import NavFooter from "@/app/components/nav-footer/client-side/nav-footer";
 import Banner from "./components/main/main-banner";
 import BrandList from "./components/main/brand-list";
 

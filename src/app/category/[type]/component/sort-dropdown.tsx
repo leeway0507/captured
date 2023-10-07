@@ -31,16 +31,16 @@ export default function SortItem() {
                 </div>
             </div>
             {isActive && (
-                <div className="mondaL absolute flex-center flex-col w-full bg-white shadow-xl border rounded z-50">
+                <div className="mondaL absolute flex-center flex-col w-full bg-black shadow-xl border rounded z-50">
                     {sortList.map((item, index) => (
                         <div
                             key={index}
-                            className="flex-center w-full h-full p-2 text-sm-base hover:bg-light-gray"
+                            className="flex-center w-full h-full p-2 text-sm-base hover:bg-light-gray z-50 bg-white"
                             onClick={() => {
                                 setIsActive(false);
                                 setSelected(item);
                             }}>
-                            {item}
+                            <div className="w-full bg-white h-full">{item}</div>
                         </div>
                     ))}
                 </div>

@@ -31,24 +31,22 @@ export default function Accordion({ isOpen, setIsOpen }: FilterDropdownProps) {
     };
 
     return (
-        <>
-            <div className={`w-full ${isOpen ? "block" : "hidden"}`}>
-                <AccordionComponent title="카테고리" content={OptionArraySelected(brand, setBrand)} cat="category" />
-                <AccordionComponent title="브랜드" content={OptionArraySelected(category, setCategory)} cat="brand" />
-                <AccordionComponent
-                    title="사이즈"
-                    content={OptionArrayShowAll({ contentList: size, setContentList: setSize, showTitle: false })}
-                    cat="size"
-                />
-                <AccordionComponent title="배송" content={OptionArraySelected(shipping, setShipping)} cat="delivery" />
-                <AccordionComponent title="가격" content={OptionArraySelected(price, setPrice)} cat="price" />
+        <div className={`w-full h-full ${isOpen ? "block" : "hidden"}`}>
+            <AccordionComponent title="카테고리" content={OptionArraySelected(brand, setBrand)} cat="category" />
+            <AccordionComponent title="브랜드" content={OptionArraySelected(category, setCategory)} cat="brand" />
+            <AccordionComponent
+                title="사이즈"
+                content={OptionArrayShowAll({ contentList: size, setContentList: setSize, showTitle: false })}
+                cat="size"
+            />
+            <AccordionComponent title="배송" content={OptionArraySelected(shipping, setShipping)} cat="delivery" />
+            <AccordionComponent title="가격" content={OptionArraySelected(price, setPrice)} cat="price" />
 
-                <div
-                    className="text-light-gray flex-center p-4 bg-main-black text-lg-xl tracking-widest"
-                    onClick={AdoptFilter}>
-                    적용하기
-                </div>
+            <div
+                className="text-light-gray flex-center p-4 bg-main-black text-lg-xl tracking-widest"
+                onClick={AdoptFilter}>
+                적용하기
             </div>
-        </>
+        </div>
     );
 }

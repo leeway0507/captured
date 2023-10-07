@@ -1,6 +1,3 @@
-"use client";
-
-import { useEffect, useState } from "react";
 import ProductInfo from "./component/product-info";
 import { IntlShipment, DomeShipment } from "@/app/components/notification/shipment-info";
 import AccordionComponent from "@/app/components/accordion/accordion";
@@ -8,30 +5,22 @@ import RelatedProducts from "./component/related-products";
 import ProductSpecificInfo from "./component/product-specific-info";
 import Thumbnail from "./component/thumbnail-pc";
 import { productCardProps } from "@/app/type";
-import { useShoppingCart } from "@/app/components/context/shopping-cart-context";
-import ProductSizeTable from "./component/product-size-table";
-import AddBascketModal from "./component/add-bascket-modal";
+import { headers } from "next/headers";
+import { getCategory } from "@/app/category/[type]/component/fetch";
+import { getProduct } from "./component/fetch";
 
-export default function MainPc(product: productCardProps) {
-    const { brand, productName, productId, imgType } = product;
-    //api-call - 신발 재고 정보
-    //status : 제작필요
-    //type : GET
-    //url : /api/product/:sku/size-info
-    //function : get_size_info(sku:int) => {sizeType:string, size:string[]}
-    const { sizeType, availableSize } = { sizeType: "신발", availableSize: ["230", "245", "250"] };
+import AddBasket from "./component/add-basket-client";
 
-    const relatedProductsArray: productCardProps[] = [product, product, product, product, product, product];
-    const productImgUrl = `/product/${brand}/${productName} ${productId}/main.${imgType}`;
-    const [selectedItem, setSelectedItem] = useState<string>(availableSize[0]);
-    const [openModal, setOpenModal] = useState(false);
+export default async function MainPc() {
+    let data: productCardProps[] = await getCategory();
 
-    const { increaseCartQuantity } = useShoppingCart();
+    const header_list = headers();
+    const header_data = header_list.get("x-invoke-path") as string;
+    const sku = header_data.split("/").slice(-1)[0];
 
-    function AddBascketToggle() {
-        setOpenModal(true);
-        increaseCartQuantity(product.sku, selectedItem);
-    }
+    const product = data.find((v: productCardProps) => v.sku === parseInt(sku)) as productCardProps;
+
+    if (!product) data = await getProduct(sku);
 
     return (
         <div className="w-full flex-col">
@@ -40,26 +29,14 @@ export default function MainPc(product: productCardProps) {
                     <Thumbnail {...product} />
                 </div>
                 <div className="flex flex-col justify-between ">
-                    <div className="py-4 sticky top-[200px] w-[380px]">
+                    <div className="py-4 sticky top-0 w-[380px]">
                         <ProductInfo {...product} />
-                        <div className="pt-4 ">
-                            <ProductSizeTable
-                                sizeType={sizeType}
-                                availableSize={availableSize}
-                                selectedItem={selectedItem}
-                                setSelectedItem={setSelectedItem}
-                            />
-                        </div>
-                        <div>
-                            <div className="black-bar-xl my-4" onClick={AddBascketToggle}>
-                                장바구니 담기
-                            </div>
-                        </div>
+                        <AddBasket {...product} />
                         <div>
                             {product.intl ? (
                                 <IntlShipment
                                     title="해외배송 상품"
-                                    content="해당 제품은 해외 구매대행 상품입니다. 
+                                    content="해당 제품은 해외 구매대행 상품입니다.
                         상품 구입을 위해 고유 통관부호가 필요하며 5 ~ 15일의 배송기간이 소요 됩니다."
                                 />
                             ) : (
@@ -81,17 +58,7 @@ export default function MainPc(product: productCardProps) {
                     </div>
                 </div>
             </div>
-            <div className="py-4">
-                <RelatedProducts arr={relatedProductsArray} />
-            </div>
-            <AddBascketModal
-                {...product}
-                size={selectedItem}
-                quantity={1}
-                openModal={openModal}
-                setOpenModal={setOpenModal}
-                productImgUrl={productImgUrl}
-            />
+            <div className="py-4">{/* <RelatedProducts arr={relatedProductsArray} /> */}</div>
         </div>
     );
 }

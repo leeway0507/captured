@@ -7,6 +7,9 @@ export interface productCardProps {
     shippingFee: number;
     intl: boolean;
     imgType: string;
+    size: string;
+    category: string;
+    color: string;
 }
 export interface userAddressProps {
     addressId: string;
@@ -68,7 +71,7 @@ export interface cartProductCardProps extends productCardProps {
 }
 
 export interface cartItemProps {
-    id: number;
+    sku: number;
     quantity: number;
     size: string;
 }
