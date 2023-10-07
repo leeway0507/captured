@@ -5,31 +5,34 @@ import Link from "next/link";
 import CartBtn from "./cart-btn";
 
 export default function NavMobile() {
-    const { navOpen, setNavOpen, cartQuantity } = useShoppingCart();
+    const { navOpen, setNavOpen } = useShoppingCart();
     const navOpenToggle = () => {
         setNavOpen(!navOpen);
     };
 
     return (
         <>
-            <header className="sticky bg-white h-[100px] left-0 top-0 flex flex-row p-4 justify-between shadow-sm shadow-gray-200 z-50 w-100">
-                <div className="flex-left basis-2/12">
-                    {navOpen ? (
-                        <Image src="/icons/close.svg" alt="close" width={24} height={24} />
-                    ) : (
-                        <div className="w-full h-full flex-left" onClick={navOpenToggle}>
-                            <Image src="/icons/list.svg" alt="list" width={40} height={40} />
+            <header>
+                <div className="sticky top-0 h-[100px] w-full m-auto px-4 z-50 bg-white">
+                    <div className="flex h-full">
+                        <div className="flex-left basis-1/4 z-50">
+                            {navOpen ? (
+                                <Image src="/icons/close.svg" alt="close" width={24} height={24} />
+                            ) : (
+                                <div onClick={navOpenToggle}>
+                                    <Image src="/icons/list.svg" alt="list" width={40} height={40} />
+                                </div>
+                            )}
                         </div>
-                    )}
-                </div>
-
-                <div className="flex-center basis-8/12">
-                    <Link href="/">
-                        <Image src="/icons/main-logo.svg" alt="main logo" width={160} height={36} />
-                    </Link>
-                </div>
-                <div className="flex-right basis-2/12">
-                    <CartBtn />
+                        <div className="flex-center basis-1/2">
+                            <Link href="/">
+                                <Image src="/icons/main-logo.svg" alt="main logo" width={160} height={36} />
+                            </Link>
+                        </div>
+                        <div className="flex-right  basis-1/4">
+                            <CartBtn />
+                        </div>
+                    </div>
                 </div>
             </header>
         </>

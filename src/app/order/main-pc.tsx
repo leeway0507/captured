@@ -9,16 +9,25 @@ import { useRouter } from "next/navigation";
 import { IntlShipment } from "../components/notification/shipment-info";
 import { AddressForm } from "@/app/mypage/component/address-info-form";
 import { GrFormClose } from "react-icons/gr";
+import { addressInfoFormProps } from "@/app/mypage/component/address-info-form";
+import { useSession } from "next-auth/react";
+import { getAddress } from "../mypage/component/fetch";
+import PageLoading from "../components/loading/page-loading";
 
 const MainPC = ({ arr }: { arr: cartProductCardProps[] }) => {
     const router = useRouter();
+    const { data: session } = useSession();
     const [isOpen, setIsOpen] = useState<boolean>(false);
-    const [selectedAddress, setSelectedAddress] = useState<userAddressProps | undefined>(undefined);
-    const addressArray = mockAddressArrayAPI;
-    const openToggle = () => {
+    const [selectedAddress, setSelectedAddress] = useState<addressInfoFormProps | undefined>(undefined);
+    const [addressArray, setAddressArray] = useState<addressInfoFormProps[]>([]);
+
+    // 주소 오픈/클로즈 토글
+    const openAddressToggle = () => {
         setIsOpen(!isOpen);
         router.push("/order?chooseAddress=true");
     };
+
+    //가격 계산
     const orderPrice = arr?.reduce((result, item) => {
         return result + item.price * item.quantity;
     }, 0);
@@ -37,16 +46,24 @@ const MainPC = ({ arr }: { arr: cartProductCardProps[] }) => {
         return "₩ " + x?.toLocaleString("ko-KR");
     }
 
+    //주소 선택 토글
     const selectAddressToggle = (address: userAddressProps) => {
-        setSelectedAddress(address);
+        const addressWithToken = { ...address, access_token: session?.user.access_token };
+        setSelectedAddress(addressWithToken);
         setIsOpen(false);
         router.push("/order");
     };
 
     useEffect(() => {
-        setSelectedAddress(addressArray[0]);
-        console.log("PC", addressArray[0]);
-    }, [addressArray]);
+        getAddress(session?.user.access_token).then((data) => {
+            setAddressArray(data);
+            setSelectedAddress(data[0]);
+            console.log(data);
+        });
+    }, [session?.user.access_token]);
+
+    if (!addressArray) return <PageLoading />;
+
     return (
         <>
             <div className="flex relative py-8 h-full gap-8">
@@ -66,7 +83,7 @@ const MainPC = ({ arr }: { arr: cartProductCardProps[] }) => {
                     <div className={`sticky top-[150px] ${isOpen ? "hidden" : "block"}`}>
                         <div className="border-b border-deep-gray">
                             <div className="text-xl tracking-[0.2em] flex-center pb-4">배송지 선택</div>
-                            <div className="text-sm flex-right link-animation" onClick={openToggle}>
+                            <div className="text-sm flex-right link-animation" onClick={openAddressToggle}>
                                 다른 배송지 선택하기
                             </div>
                             <div className="overflow-auto">
@@ -101,27 +118,45 @@ const MainPC = ({ arr }: { arr: cartProductCardProps[] }) => {
                         <div className="text-xl tracking-[0.2em] flex-center pb-4 flex ">
                             <div className="basis-1/4"></div>
                             <div className="basis-1/2 flex-center">배송지 변경</div>
-                            <div className="basis-1/4 link-animation flex-center" onClick={openToggle}>
+                            <div className="basis-1/4 link-animation flex-right text-2xl" onClick={openAddressToggle}>
                                 <GrFormClose />
                             </div>
                         </div>
-                        {addressArray.map(
-                            (address, index) =>
-                                address.addressId != selectedAddress?.addressId && (
-                                    <div key={index} className="flex flex-col flex-center py-3 ">
-                                        <AddressForm {...address} onDelete={false} />
-                                        <div
-                                            className="m-auto w-full bg-light-gray rounded-md py-3 px-5 -mt-4 z-10"
-                                            onClick={() => selectAddressToggle(address)}>
-                                            <div className="black-bar">선택하기</div>
-                                        </div>
-                                    </div>
-                                )
+                        {addressArray.length === 1 ? (
+                            <div className="flex-center flex-col w-full py-8">
+                                <div className="text-2xl py-4">배송지가 없습니다.</div>
+                                <button type="button" className="text-xl text-deep-gray underline link-animation">
+                                    <Link
+                                        href={{
+                                            pathname: "/mypage/address/create",
+                                        }}
+                                        shallow={true}
+                                        className="ms-2 active:text-deep-gray">
+                                        추가하기
+                                    </Link>
+                                </button>
+                            </div>
+                        ) : (
+                            <>
+                                {addressArray.map(
+                                    (address, index) =>
+                                        address.addressId != selectedAddress?.addressId && (
+                                            <div key={index} className="flex flex-col flex-center py-3 ">
+                                                <AddressForm {...address} onDelete={false} />
+                                                <div
+                                                    className="m-auto w-full bg-light-gray rounded-md py-3 px-5 -mt-4 z-10"
+                                                    onClick={() => selectAddressToggle(address)}>
+                                                    <div className="black-bar">선택하기</div>
+                                                </div>
+                                            </div>
+                                        )
+                                )}
+                            </>
                         )}
                         <button
                             type="button"
                             className="w-full border-b border-black flex-center py-1 active:bg-light-gray py-3 mb-6 tracking-[0.2rem] "
-                            onClick={openToggle}>
+                            onClick={openAddressToggle}>
                             닫기
                         </button>
                     </div>

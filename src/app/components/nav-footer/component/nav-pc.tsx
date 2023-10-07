@@ -15,9 +15,9 @@ export default function NavPc() {
     return (
         <>
             <header
-                className="border-x-none h-[200px] px-10 pb-5 sticky top-0 flex flex-col justify-between border-b border-light-gray z-50 bg-white  "
+                className="border-x-none h-[130px] px-10 sticky top-0 flex flex-col justify-between border-light-gray z-50 bg-white"
                 style={{ boxShadow: "0px 2px 0px var(--deep-gray)" }}>
-                <div className="flex w-full py-5">
+                <div className="flex w-full">
                     <div className="flex-left basis-3/12" onClick={closeNavToggle}>
                         <input
                             type="text"
@@ -30,7 +30,7 @@ export default function NavPc() {
                         />
                     </div>
                     <div className="flex-center basis-6/12">
-                        <Link href="/" className="w-[200px] h-[100px] relative">
+                        <Link href="/" className="w-[160px] h-[80px] relative">
                             <Image src="/icons/main-logo.svg" alt="main logo" fill />
                         </Link>
                     </div>
@@ -39,7 +39,7 @@ export default function NavPc() {
                         <CartBtn />
                     </div>
                 </div>
-                <div className="flex justify-between text-sm-base">
+                <div className="flex justify-between text-sm-base pb-4">
                     <Link href="/category/latest" className="py-2 grow rounded-md flex-center active:bg-light-gray">
                         <div className="mx-2">LATEST</div>
                     </Link>

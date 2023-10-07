@@ -3,29 +3,33 @@ import { useShoppingCart } from "@/app/components/context/shopping-cart-context"
 import MainMobile from "./main-mobile";
 import MainPC from "./main-pc";
 import { cartProductCardProps, productCardProps } from "../type";
-import { mockDB } from "../api/mock-apis";
+import { useEffect, useState } from "react";
 
 export default function Cart() {
-    const { cartItems, isMobile } = useShoppingCart();
+    const { cartItems, isMobile, isLoading } = useShoppingCart();
+    const [data, setData] = useState<cartProductCardProps[]>([]);
 
-    const CartItemArr = cartItems
-        ?.map((item) => {
-            const product = mockDB.find((product) => product.sku === item.id);
-            if (product) return { ...product, size: item.size, quantity: item.quantity };
-        })
-        .filter((item): item is cartProductCardProps => Boolean(item));
+    useEffect(() => {
+        const CartItemArr = cartItems
+            ?.map((item) => {
+                const product = localStorage.getItem(item.sku.toString());
+                if (product) return { ...JSON.parse(product), size: item.size, quantity: item.quantity };
+            })
+            .filter((item): item is cartProductCardProps => Boolean(item));
+        setData(CartItemArr);
+    }, [cartItems]);
 
-    console.log("cartItems", CartItemArr);
+    if (isLoading) return null;
 
     return (
         <>
             {isMobile ? (
                 <div className="">
-                    <MainMobile arr={CartItemArr} />
+                    <MainMobile arr={data} />
                 </div>
             ) : (
                 <div className="px-5">
-                    <MainPC arr={CartItemArr} />
+                    <MainPC arr={data} />
                 </div>
             )}
         </>
