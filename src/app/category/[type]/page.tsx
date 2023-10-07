@@ -1,4 +1,3 @@
-"use client";
 import NavFooter from "@/app/components/nav-footer/client-side/nav-footer";
 import Category from "./main";
 

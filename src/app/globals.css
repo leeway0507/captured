@@ -22,7 +22,7 @@
         @apply disabled-bar tracking-[0.3rem] text-base;
     }
     .custom-container {
-        @apply flex flex-col justify-between relative m-auto h-full;
+        @apply flex flex-col relative m-auto h-full;
     }
     .flex-center {
         @apply flex items-center justify-center;

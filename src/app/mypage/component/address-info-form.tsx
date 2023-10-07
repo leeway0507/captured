@@ -1,14 +1,11 @@
-"use client";
 import { userAddressProps } from "@/app/type";
 import { phoneNumberAutoFormat } from "@/app/components/custom-input/check-policy";
 import Link from "next/link";
 import YesNoModal from "@/app/components/modal/yes-no-modal";
 import { deleteAddress, getAddress } from "./fetch";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
 
-interface addressInfoFormProps extends userAddressProps {
-    onDelete: boolean;
+export interface addressInfoFormProps extends userAddressProps {
+    onDelete?: boolean | undefined;
     access_token: string | undefined;
 }
 

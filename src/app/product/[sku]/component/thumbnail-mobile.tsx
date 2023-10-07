@@ -1,3 +1,4 @@
+"use client";
 import CarouselProgressBar from "../../../components/carousel/EmblaCarouselProgressBar";
 import Image from "next/image";
 import { ThumbnailProps } from "../type";

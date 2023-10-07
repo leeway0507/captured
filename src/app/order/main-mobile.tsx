@@ -7,7 +7,7 @@ import { AddressForm } from "@/app/mypage/component/address-info-form";
 import { mockAddressArrayAPI } from "../mypage/component/mock-apis";
 import { IntlShipment } from "../components/notification/shipment-info";
 import { useEffect, useState } from "react";
-import { userAddressProps } from "../mypage/type";
+import { userAddressProps } from "@/app/type";
 import { useRouter } from "next/navigation";
 
 const MainMobile = ({ arr }: { arr: cartProductCardProps[] }) => {
