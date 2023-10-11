@@ -8,6 +8,7 @@ from router.mypage import mypage_router
 from router.product import product_router
 from router.order import order_router
 from router.admin import admin_router
+from fastapi_pagination import add_pagination
 
 app = FastAPI()
 
