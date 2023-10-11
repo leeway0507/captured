@@ -11,7 +11,7 @@ function AccordionComponent({ title, content, cat }: { title: string; content: R
     return (
         <div className="accordion">
             <input type="checkbox" id={id} className="click-effect" />
-            <label htmlFor={id} className="text-xl-2xl py-3" onClick={openToggle}>
+            <label htmlFor={id} className="text-lg py-3" onClick={openToggle}>
                 <div className="flex justify-between  active:bg-light-gray">
                     {title}
                     <em style={{ background: "url(/icons/expand.svg)" }} />

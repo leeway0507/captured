@@ -3,11 +3,19 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Accordion from "./component/filter";
-import SortItem from "./component/sort-dropdown";
+import { initMetaProps } from "./type";
 import { useParams } from "next/navigation";
 import { productCardProps } from "@/app/type";
 
-export default function CateogryClient({ children, data }: { children: React.ReactNode; data: productCardProps[] }) {
+export default function CateogryClient({
+    children,
+    data,
+    meta,
+}: {
+    children: React.ReactNode;
+    data: productCardProps[];
+    meta: initMetaProps;
+}) {
     const { type } = useParams();
     const [openFilter, setOpenFilter] = useState<boolean>(false);
     const openFilterToggle = () => {
@@ -45,7 +53,7 @@ export default function CateogryClient({ children, data }: { children: React.Rea
                 <div className="py-4">
                     <FilterHeader />
                 </div>
-                <Accordion isOpen={openFilter} setIsOpen={setOpenFilter} />
+                <Accordion initMeta={meta} isOpen={openFilter} setIsOpen={setOpenFilter} />
                 <div className={` ${openFilter ? "hidden" : "block"}`}>{children}</div>
             </div>
         </div>
