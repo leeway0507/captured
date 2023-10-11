@@ -26,11 +26,13 @@ class ProductInfoSchema(BaseModel):
     @validator("size", "color", pre=True)
     def str_to_list(cls, v: str) -> str:
         """str to list to str"""
-        if isinstance(v, eval(v)):
-            return [str(i) for i in v]
-        else:
-            print(type(v), v)
-            raise ValueError("size, color must be stringfied list")
+        lst = eval(v)
+
+        # list empty or list[0] is str => return v
+        if not lst and isinstance(lst[0], str):
+            return v
+
+        return str([str(i) for i in eval(v)])
 
 
 class ProductInfoDBSchema(ProductInfoSchema):
