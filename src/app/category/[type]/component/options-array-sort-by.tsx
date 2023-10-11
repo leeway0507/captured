@@ -1,7 +1,7 @@
 // css
-const itemBoxClass = "mondaL flex-center text-xs max-w-[200px] min-h-[30px] border-2 px-2 me-2 mb-2";
-const checkedItem = "bg-main-black border-main-black cursor-pointer text-light-gray active:text-main-black shadow-md";
-const notCheckedItem = "border-sub-black cursor-pointer text-sub-black active:text-main-black shadow-md";
+const itemBoxClass = "grow mondaL flex-1 flex-center text-sm min-h-[30px] px-2 me-2 mb-2";
+const checkedItem = " cursor-pointer text-sub-black capitalize";
+const notCheckedItem = " cursor-pointer text-gray-400 capitalize link-animation";
 import { ItemBoxSelectedProps } from "../type";
 import { useState } from "react";
 
@@ -9,45 +9,43 @@ import { useState } from "react";
 const ItemBoxSelected = ({ content, checked, setChecked }: ItemBoxSelectedProps) => {
     const status = checked ? checkedItem : notCheckedItem;
     return (
-        <div className={`${itemBoxClass} ${status}`}>
-            <div className="px-2" onClick={() => setChecked(content)}>
-                {content.toUpperCase()}
-            </div>
+        <div className={`${itemBoxClass} ${status}`} onClick={() => setChecked(content)}>
+            {content}
         </div>
     );
 };
 
 //
-export const OptionArraySelected = (contentList: Array<string>, setContentList: (v: string[]) => void) => {
+export const OptionArraySortBy = (contentList: Array<string>, setFilter: (v: string) => void) => {
     // create Array for ItemBoxSelected
-    const itemBoxArray = contentList.map((content) => {
-        return { content: content, checked: true };
-    });
+    const itemBoxArray = [
+        { content: "최신순", checked: true },
+        { content: "인기순 ", checked: false },
+        { content: "낮은 가격 순", checked: false },
+        { content: "높은 가격 순", checked: false },
+    ];
 
     // create useState for ItemBoxSelected
     const [itemBoxSelectedArray, setItemBoxSelectedArray] =
         useState<Array<{ content: string; checked: boolean }>>(itemBoxArray);
 
     // create Toggle
-    const selectToggle = (content: string) => {
-        const newContentList = contentList.includes(content)
-            ? contentList.filter((c) => c !== content)
-            : [...contentList, content];
-        setContentList(newContentList);
+    const selectToggle = (newValue: string) => {
+        setFilter(newValue);
 
         const newObject = itemBoxSelectedArray.map((obj) => {
-            if (obj["content"] === content) {
-                return { ...obj, checked: !obj["checked"] };
+            if (obj["content"] === newValue) {
+                return { ...obj, checked: true };
             } else {
-                return obj;
+                return { ...obj, checked: false };
             }
         });
         setItemBoxSelectedArray(newObject);
     };
 
     return (
-        <div className="w-full">
-            <div className="flex flex-wrap">
+        <div className="w-full overflow-auto">
+            <div className="flex flex-col">
                 {itemBoxSelectedArray.map((content, idx) => {
                     return (
                         <div key={idx}>
@@ -64,4 +62,4 @@ export const OptionArraySelected = (contentList: Array<string>, setContentList: 
     );
 };
 
-export default OptionArraySelected;
+export default OptionArraySortBy;

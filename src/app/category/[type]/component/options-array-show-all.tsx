@@ -1,6 +1,12 @@
 "use client";
 import { useState } from "react";
-import { ItemBoxShowAllProps, ItemBoxShowAllObjectProps, InlineContentShowAllProps } from "../type";
+import { ItemBoxShowAllProps, ItemBoxShowAllObjectProps, SizeObject } from "../type";
+
+export interface InlineContentShowAllProps {
+    contentList: SizeObject[];
+    setContentList: (v: SizeObject[]) => void;
+    showTitle: boolean;
+}
 
 // css
 const itemBoxClass = "mondaL flex-center text-xs max-w-[200px] min-h-[30px] border-2 px-2 me-2 mb-2";
@@ -30,12 +36,13 @@ const matchDefaultWithExisting = (obj_size: string[], defaultSizeArray: string[]
 
 const OptionArrayShowAll = ({ contentList, setContentList, showTitle = true }: InlineContentShowAllProps) => {
     // 1. load default size from env and stringify to Object
-    const defaultSizeArryString = process.env.NEXT_PUBLIC_DEFAULT_SIZE;
-    const defaultTypeObject = JSON.parse(defaultSizeArryString || "{}");
+    // const defaultSizeArryString = process.env.NEXT_PUBLIC_DEFAULT_SIZE;
+    // const defaultTypeObject = JSON.parse(defaultSizeArryString || "{}");
 
     // 2. matchDefaultWithExisting를 이용해 array 생성
     const arr: ItemBoxShowAllObjectProps[] = contentList.map((obj) => {
-        const defaultSizeArray = defaultTypeObject[obj["sizeType"]];
+        // const defaultSizeArray = defaultTypeObject[obj["sizeType"]];
+        const defaultSizeArray = obj["defaultSize"];
         return { sizeType: obj["sizeType"], sizeArray: matchDefaultWithExisting(obj["size"], defaultSizeArray) };
     });
 

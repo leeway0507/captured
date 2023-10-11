@@ -1,12 +1,3 @@
-export interface filterMetaProps {
-    brand: Array<string>;
-    category: Array<string>;
-    size: Array<string>;
-    sizeType: Array<string>;
-    shipping: Array<string>;
-    price: Array<string>;
-}
-
 //inline content
 export interface ItemBoxSelectedProps {
     content: string;
@@ -34,10 +25,23 @@ export interface ItemBoxShowAllObjectProps {
 export interface SizeObject {
     sizeType: string;
     size: string[];
+    defaultSize: string[];
 }
 
-export interface InlineContentShowAllProps {
-    contentList: SizeObject[];
-    setContentList: React.Dispatch<React.SetStateAction<SizeObject[]>>;
-    showTitle: boolean;
+export interface filterMetaProps {
+    brand: string[];
+    category: string[];
+    intl: string[];
+    price: number[];
+    sizeArray: SizeObject[];
+    page: number;
+}
+
+export interface initMetaProps {
+    sortBy: string[];
+    brand: string[];
+    category: string[];
+    intl: string[];
+    price: number[];
+    sizeArray: string[];
 }
