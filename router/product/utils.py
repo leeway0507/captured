@@ -1,210 +1,251 @@
-from typing import Any, Dict
+from typing import Dict, Tuple, Optional, List, Any
 import json
 
 from sqlalchemy.orm import Session
-from sqlalchemy import and_, desc, asc  # 필수(eval에서 사용)
+from sqlalchemy import and_, func
 
 from logs.make_log import make_logger
-from db.tables import ProductInfoTable
+from db.tables import ProductInfoTable, SizeTable
 
 from model.db_model import ProductInfoSchema
-from model.meta_model import InitMetaSchema
+from model.product_model import FilterMetaSchema, ProductResponseSchema, RequestFilterSchema
 import time
 from functools import cache
 
 error_log = make_logger("logs/db/product.log")
 
-with open("./json/init_meta.json", "r") as f:
-    init_meta = json.load(f)
+
+def get_product_size(sku_list: List[int], db: Session) -> Dict[str, List[str]]:
+    result = (
+        db.query(SizeTable.sku, func.group_concat(SizeTable.size).label("size"))
+        .filter(SizeTable.sku.in_(sku_list))
+        .group_by(SizeTable.sku)
+        .all()
+    )
+    return {row.sku: row.size.split(",") for row in result}
 
 
-def get_category(db: Session) -> list[Dict]:
-    page_idx = create_page_index(db)
-    last_page = max(page_idx.keys())
-    result = db.query(ProductInfoTable).order_by(desc(ProductInfoTable.sku)).limit(5)
+def get_init_category(page: int, limit: int, db: Session) -> ProductResponseSchema:
+    # page to cursor
+    page_cursor, last_page = get_page_cursor(page, limit, db)
 
-    x = [ProductInfoSchema(**row.to_dict()).model_dump(by_alias=True) for row in result]
-
-    return {
-        "data": x,
-        "meta": get_init_meta_data(),
-        "currentPage": 1,
-        "lastPage": last_page,
-    }
-
-
-def get_cursor_test(db: Session, page: int = 1):
-    page_idx = create_page_index(db)
-    last_page = max(page_idx.keys())
-    if last_page < page:
-        return []
+    # query
     result = (
         db.query(ProductInfoTable)
-        .filter(ProductInfoTable.sku < page_idx[page])
-        .order_by(desc(ProductInfoTable.sku))
-        .limit(5)
+        .filter(ProductInfoTable.sku < page_cursor)
+        .order_by(ProductInfoTable.sku.desc())
+        .limit(limit)
     )
-    return {
-        "data": [ProductInfoSchema(**row.to_dict()).model_dump(by_alias=True) for row in result],
-        "currentPage": page,
-        "lastPage": last_page,
-    }
+
+    data = [ProductInfoSchema(**row.to_dict()).model_dump(by_alias=True) for row in result]
+
+    return ProductResponseSchema(data=data, currentPage=page, lastPage=last_page)
 
 
 def get_init_meta_data():
-    return init_meta
+    with open("./json/init_meta.json", "r") as f:
+        init_meta = json.load(f)
+    return FilterMetaSchema(**init_meta).model_dump(by_alias=True)
 
 
-def get_filtered_category(
+def get_category(
     db: Session,
-    page: int = None,
-    filter: InitMetaSchema = None,
-) -> list[ProductInfoSchema] | list:
+    page: int = 1,
+    request_filter: Optional[RequestFilterSchema] = None,
+    limit: int = 10,
+) -> ProductResponseSchema:
     print("----------------------")
     print("filter category 시작")
     print("page", page)
-    print("filter", filter)
+    print("request_filter", request_filter)
     print("----------------------")
 
-    # filter 없는 경우 init으로
-    if page is None and filter is None:
-        print("filter 없는 경우 init으로")
-        return get_category(db)
-
-    # filter는 없고 page만 있는 경우
-    if page and filter is None:
-        print("filter는 없고 page만 있는 경우")
-        page_idx = create_page_index(db)
-        last_page = max(page_idx.keys())
-        if last_page < page:
-            return []
-        result = (
-            db.query(ProductInfoTable)
-            .filter(ProductInfoTable.sku < page_idx[page])
-            .order_by(desc(ProductInfoTable.sku))
-            .limit(5)
-        )
-        x = [ProductInfoSchema(**row.to_dict()).model_dump(by_alias=True) for row in result]
+    # request_filter 없는 경우 get_init_category로
+    if request_filter is None:
+        print("request_filter 없는 경우 get_init_category로")
         print("----------------------")
-        print("page_idx", page_idx)
-        print("page_idx[page]", page_idx[page])
-        print(x)
-        print("----------------------")
+        return get_init_category(page, limit, db)
 
-    # filter가 있는 경우
-    if filter:
-        print("filter가 있는 경우")
-        filter_dict = filter.model_dump()
-        order_by_value = create_order_by_query(filter_dict.pop("sort_by"))
-        filter_query = create_filter_query(filter_dict)
-        page_idx = create_page_index(
-            db,
-            filter=(
-                filter_query,
-                order_by_value,
-            ),
+    # request_filter가 있는 경우
+    else:
+        print("request_filter가 있는 경우")
+
+        filter_query_dict = create_filter_query(request_filter)
+
+        # page to cursor
+        page_cursor, last_page = get_page_cursor(page, limit, db, query=(filter_query_dict))
+
+        if last_page == 0:
+            """필터 결과 없음"""
+            return ProductResponseSchema(data=[], currentPage=0, lastPage=0)
+
+        print("최종 필터 쿼리 :", filter_query_dict)
+        print("최종 order_by :", filter_query_dict.get("order_by"))
+
+        order_by = filter_query_dict.pop("order_by")
+
+        if "size_array" in filter_query_dict.keys():
+            result = (
+                db.query(ProductInfoTable)
+                .join(SizeTable, ProductInfoTable.sku == SizeTable.sku)
+                .filter(*filter_query_dict.values(), ProductInfoTable.sku < page_cursor)
+                .group_by(ProductInfoTable.sku)
+                .order_by(*order_by)
+                .limit(limit)
+            )
+
+        # size filter가 없는 경우
+        else:
+            result = (
+                db.query(ProductInfoTable)
+                .filter(*filter_query_dict.values(), ProductInfoTable.sku < page_cursor)
+                .order_by(*order_by)
+                .limit(limit)
+            )
+
+        data = [ProductInfoSchema(**row.to_dict()).model_dump(by_alias=True) for row in result]
+        return ProductResponseSchema(data=data, currentPage=page, lastPage=last_page)
+
+
+def create_price_filter(price: str) -> List:
+    print("price")
+    print(price)
+    price = price.split(",")
+
+    if len(price) != 2:
+        raise ValueError("price는 2개의 원소를 가져야 합니다.")
+
+    price = list(map(int, price))
+
+    if not isinstance(price[0], int) or not isinstance(price[1], int):
+        raise ValueError("price의 원소는 int여야 합니다.")
+
+    if price == [0, 0]:
+        return []
+
+    return sorted(price)
+
+
+def create_filter_query(filter: RequestFilterSchema) -> Dict[str, Any]:
+    """
+    RequestFilterSchema를 받아서 filter query와 order query를 생성
+    """
+    filter_query_dict = {}
+
+    filter_dict = filter.model_dump()
+
+    # order_query 생성
+    order_by_value = filter_dict.pop("sort_by")
+    order_list = create_order_by_query(sort_by=order_by_value)
+    filter_query_dict.update({"order_by": order_list})
+
+    # size filter 생성
+    size_array = filter_dict.pop("size_array")
+    if size_array:
+        filter_query_dict.update({"size_array": SizeTable.size.in_(size_array.split(","))})
+
+    # price filter 생성
+    price = filter_dict.pop("price")  # range로 처리하기
+
+    if price:
+        price_filter = create_price_filter(price)
+        filter_query_dict.update(
+            {"price": ProductInfoTable.price.between({price_filter[0]}, {price_filter[1]})}
         )
-        last_page = max(page_idx.keys())
 
-        # page는 없는 경우 page = 1
-        if page == None:
-            page = 1
-
-        # 요청 페이지가 최종 페이지보다 큰 경우 page = 마지막 페이지
-        if last_page < page:
-            page = last_page
-
-        print("flter의 page ", page)
-        result = (
-            db.query(ProductInfoTable)
-            .filter(eval(filter_query))
-            .filter(ProductInfoTable.sku < page_idx[page])
-            .order_by(order_by_value)
-            .limit(5)
-        )
-
-    x = [ProductInfoSchema(**row.to_dict()).model_dump(by_alias=True) for row in result]
-
-    return {
-        "data": x,
-        "meta": get_init_meta_data(),
-        "currentPage": page,
-        "lastPage": last_page,
+    # category, brand, intl 생성
+    filter_dict = {k: v.split(",") for k, v in filter_dict.items() if v != ""}
+    filter_values = {
+        "category": ProductInfoTable.category,
+        "brand": ProductInfoTable.brand,
+        "intl": ProductInfoTable.intl,
     }
-
-
-def create_filter_query(filter_dict: Dict[str, any]) -> list[ProductInfoSchema] | list:
-    filter_query = ""
-
-    if filter_dict.get("price"):
-        price = filter_dict.pop("price")  # range로 처리하기
-        if not isinstance(price, list):
-            raise ValueError("price는 list로 받아야 합니다.")
-        if len(price) != 2:
-            raise ValueError("price는 2개의 원소를 가져야 합니다.")
-        if not isinstance(price[0], int) or not isinstance(price[1], int):
-            raise ValueError("price의 원소는 int여야 합니다.")
-
-        price = sorted(price)
-        filter_query += f"ProductInfoTable.price.between({price[0]}, {price[1]}),"
-
-    filter_dict = {k: v for k, v in filter_dict.items() if v != []}
-    if not filter_dict:
-        return "No filter"
-
-    # fleter query 생성
     for k, v in filter_dict.items():
-        filter = f"ProductInfoTable.{k}.in_({v})"
-        filter_query += filter + ","
+        filter_query_dict.update({k: filter_values[k].in_(v)})
 
-    filter_query = filter_query[:-1]
-    return filter_query
+    return filter_query_dict
 
 
-def create_order_by_query(sort_by: str | None = None) -> list[ProductInfoSchema] | list:
-    if sort_by == "최신순" or sort_by == "인기순" or not sort_by:
-        return "ProductInfoTable.sku.desc()"
-
+def create_order_by_query(sort_by: str | None = None) -> List:
+    """sort_by에 맞는 order_by query 생성"""
     if sort_by == "높은 가격 순":
-        return "ProductInfoTable.price.desc()"
+        return [ProductInfoTable.price.desc(), ProductInfoTable.sku.desc()]
 
     if sort_by == "낮은 가격 순":
-        # 가격 낮은 순 => price Asc
-        return "ProductInfoTable.price.asc()"
+        return [ProductInfoTable.price.asc(), ProductInfoTable.sku.desc()]
 
-
-def get_product(sku: int, db: Session) -> ProductInfoSchema:
-    result = db.query(ProductInfoTable).filter(ProductInfoTable.sku == sku).first()
-    return ProductInfoSchema(**result.to_dict()).model_dump(by_alias=True)
-
-
-def get_infinite_scroll_product(db: Session):
-    query = db.query(ProductInfoTable).order_by(desc(ProductInfoTable.sku))
-    return query
-
-
-@cache
-def create_page_index(db: Session, filter: tuple = None):
-    limit_items = 5
-    start = time.time()
-
-    if filter is None:
-        sku_list = db.query(ProductInfoTable.sku).order_by(desc(ProductInfoTable.sku)).all()
+    # if sort_by == "최신순" or sort_by == "인기순" or not sort_by:
     else:
-        sku_list = (
-            db.query(ProductInfoTable.sku).filter(eval(filter[0])).order_by(eval(filter[1])).all()
-        )
+        return [ProductInfoTable.sku.desc()]
 
-    sku_list = list(map(lambda x: x[0], sku_list))
-    index_dict = {
-        i + 1: sku_list[i * limit_items] + 1 for i in range(0, len(sku_list) // limit_items + 1)
-    }
 
+def get_page_cursor(
+    page: int, limit: int, db: Session, query: Optional[Dict[str, Any]] = None
+) -> Tuple[int, int]:
+    """page index에서 페이지에 해당하는 sku를 추출"""
+    start = time.time()
+    if query == None:
+        query = {"order_by": [ProductInfoTable.sku.desc()]}
+
+    page_idx = create_page_index(limit, db, query)
     end = time.time()
-    print("query time: ", f"{end-start:.4f}")
+    print(f"create_page_index time|| page_cursor:{page_idx}", f"{end-start:.4f}")
 
+    if not page_idx:
+        return 0, 0
+
+    last_page = max(page_idx.keys())
+    if page > last_page:
+        return page_idx[last_page], last_page
+    return page_idx[page], last_page
+
+
+def create_page_index(limit: int, db: Session, query: Dict[str, Any]) -> Dict[int, int]:
+    """page index 생성"""
+    local_query = query.copy()
+    order_by = local_query.pop("order_by")
+
+    has_filter = local_query.keys()
+
+    if has_filter:
+        # size filter가 있는 경우
+        if "size_array" in local_query.keys():
+            print("size filter가 존재하는 경우")
+            sku_list = (
+                db.query(ProductInfoTable.sku)
+                .join(SizeTable, ProductInfoTable.sku == SizeTable.sku)
+                .filter(*local_query.values())
+                .group_by(ProductInfoTable.sku)
+                .order_by(*order_by)
+                .all()
+            )
+
+        # size filter가 없는 경우
+        else:
+            print("size filter가 없는 경우")
+            sku_list = (
+                db.query(ProductInfoTable.sku)
+                .filter(*local_query.values())
+                .order_by(*order_by)
+                .all()
+            )
+    # filter가 없는 경우
+    else:
+        print("filter가 없는 경우")
+        sku_list = db.query(ProductInfoTable.sku).order_by(*order_by).all()
+
+    if not sku_list:
+        return {}
+
+    print("sku_list", sku_list)
+    sku_list = list(map(lambda x: x[0], sku_list))
+    index_dict = {i + 1: sku_list[i * limit] + 1 for i in range(0, len(sku_list) // limit + 1)}
     return index_dict
 
+
+# def get_product(sku: int, db: Session) -> ProductInfoSchema:
+#     result = db.query(ProductInfoTable).filter(ProductInfoTable.sku == sku).first()
+#     return ProductInfoSchema(**result.to_dict()).model_dump(by_alias=True)
 
 # def get_meta_data(product_list: list[Dict]) -> Dict[str, Any]:
 #     category_sizes = defaultdict(set)

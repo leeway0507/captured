@@ -1,7 +1,8 @@
-from sqlalchemy.dialects.mysql import VARCHAR, INTEGER, DATE, BOOLEAN
+from sqlalchemy.dialects.mysql import VARCHAR, INTEGER, DATE, BOOLEAN, DATETIME
 from sqlalchemy import Column, ForeignKey
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
+from datetime import datetime
 
 
 Base = declarative_base()
@@ -29,6 +30,19 @@ class ProductInfoTable(MyBase):
     color = Column(VARCHAR(50))
     category = Column(VARCHAR(50))
     img_type = Column(VARCHAR(10))
+
+    class Config:
+        orm_mode = str
+
+
+class SizeTable(MyBase):
+    __tablename__ = "size"
+    size_id = Column(INTEGER, primary_key=True, autoincrement=True)
+    sku = Column(INTEGER, ForeignKey("product_info.sku"), nullable=False)
+    size = Column(VARCHAR(50), nullable=False)
+    available = Column(BOOLEAN, nullable=False, default=True)
+    updated_at = Column(DATETIME, nullable=False, default=datetime.now())
+    product = relationship("ProductInfoTable")
 
     class Config:
         orm_mode = str

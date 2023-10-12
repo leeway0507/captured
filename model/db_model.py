@@ -15,7 +15,7 @@ class ProductInfoSchema(BaseModel):
     brand: str
     product_name: str
     product_id: str
-    size: str  # List[str]
+    # size: str  # List[str] 정착되면 없애기
     price: int
     shipping_fee: int
     intl: bool
@@ -23,7 +23,8 @@ class ProductInfoSchema(BaseModel):
     category: str
     img_type: str
 
-    @validator("size", "color", pre=True)
+    # @validator("size", "color", pre=True)
+    @validator("color", pre=True)
     def str_to_list(cls, v: str) -> str:
         """str to list to str"""
         lst = eval(v)
@@ -40,6 +41,15 @@ class ProductInfoDBSchema(ProductInfoSchema):
 
     model_config = ConfigDict(alias_generator=to_camel, populate_by_name=True)
     search_info: str
+
+
+class SizeSchema(BaseModel):
+    """SizeTable Schema"""
+
+    model_config = ConfigDict(alias_generator=to_camel, populate_by_name=True)
+    sku: int
+    size: str
+    available: bool
 
 
 class UserSchema(BaseModel):
