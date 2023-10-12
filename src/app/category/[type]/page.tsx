@@ -6,24 +6,15 @@ export default function Page({
     searchParams,
 }: {
     params: { slug: string };
-    searchParams: { [key: string]: string | string[] | undefined };
+    searchParams: { [key: string]: string | undefined };
 }) {
-    // console.log(params);
-    // console.log("page_params", searchParams);
+    console.log("---------Page---------");
+    console.log(searchParams);
 
-    let filter = undefined;
-    if (searchParams.filter && typeof searchParams.filter === "string") {
-        filter = searchParams.filter.slice(0, -2) + "}";
-        filter = JSON.parse(filter);
-    }
-    let page = undefined;
-    if (searchParams.page && typeof searchParams.page === "string") {
-        page = searchParams.page;
-    }
     return (
         <>
             <NavFooter>
-                <Main filter={filter} page={page} />
+                <Main params={searchParams} />
             </NavFooter>
         </>
     );

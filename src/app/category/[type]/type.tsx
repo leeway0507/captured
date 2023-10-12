@@ -28,20 +28,20 @@ export interface SizeObject {
     defaultSize: string[];
 }
 
-export interface filterMetaProps {
-    brand: string[];
-    category: string[];
-    intl: string[];
-    price: number[];
-    sizeArray: SizeObject[];
-    page: number;
-}
-
-export interface initMetaProps {
+export interface initFilterMetaProps {
     sortBy: string[];
-    brand: string[];
-    category: string[];
+    brand?: string[];
+    category?: string[];
     intl: string[];
     price: number[];
     sizeArray: string[];
+}
+
+export interface filterProps {
+    sortBy: string;
+    brand?: string;
+    category?: string;
+    intl: string;
+    price: string;
+    sizeArray: string;
 }
