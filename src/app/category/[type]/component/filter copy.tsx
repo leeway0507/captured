@@ -19,7 +19,7 @@ interface FilterDropdownProps {
     setIsOpen: (v: boolean) => void;
 }
 
-export default function Accordion({ initMeta, isOpen, setIsOpen }: FilterDropdownProps) {
+function Accordion({ initMeta, isOpen, setIsOpen }: FilterDropdownProps) {
     const router = useRouter();
     const [meta, setMeta] = useState(() => initMeta);
 
@@ -58,7 +58,7 @@ export default function Accordion({ initMeta, isOpen, setIsOpen }: FilterDropdow
         console.log(query);
 
         JSON.stringify(initMeta) != JSON.stringify(meta) && console.log(query);
-        router.push(`\?filter=${query}`);
+        router.push(`\?${query}`);
 
         // getFilteredCategory(queryMeta).then((v) => {
         //     console.log(v);

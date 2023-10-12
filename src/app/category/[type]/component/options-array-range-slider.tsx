@@ -8,7 +8,6 @@ const itemBoxClass = "mondaL flex-center text-xs w-[100px] max-w-[200px] min-h-[
 
 const Slider = (value: number[], setValue: (v: number[]) => void) => {
     // localValue  =>  setValue With 500ms delay
-    const [localValue, setLocalValue] = useState<number[]>([0, 0]);
     const timerRef = useRef<any>(null);
 
     const changeHandler = (value: number[]) => {
