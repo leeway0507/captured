@@ -11,14 +11,14 @@ function AccordionComponent({ title, content, cat }: { title: string; content: R
     return (
         <div className="accordion">
             <input type="checkbox" id={id} className="click-effect" />
-            <label htmlFor={id} className="text-lg py-3" onClick={openToggle}>
+            <label htmlFor={id} className="text-xl py-3" onClick={openToggle}>
                 <div className="flex justify-between  active:bg-light-gray">
                     {title}
                     <em style={{ background: "url(/icons/expand.svg)" }} />
                 </div>
             </label>
-            <div className={`w-full ${active ? "block" : "hidden"}`}>
-                <div className="m-4">{content}</div>
+            <div className={`w-full ${active ? "block" : "hidden"} max-h-[280px] overflow-auto  scroll-bar`}>
+                <div className="my-4 ">{content}</div>
             </div>
         </div>
     );
