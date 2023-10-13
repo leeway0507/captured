@@ -9,8 +9,8 @@ from model.db_model import ProductInfoSchema
 class FilterMetaSchema(BaseModel):
     model_config = ConfigDict(alias_generator=to_camel, populate_by_name=True)
     sort_by: List[str]
-    category: Optional[List[str]]  # clothing, shoes 카테고리에서 사용 x
-    brand: Optional[List[str]]  # brand 카테고리에서 사용 x
+    category: Optional[List[str]] = None  # clothing, shoes 카테고리에서 사용 x
+    brand: Optional[List[str]] = None  # brand 카테고리에서 사용 x
     intl: List[str]
     price: List[int]
     size_array: List[str]
@@ -19,8 +19,8 @@ class FilterMetaSchema(BaseModel):
 class RequestFilterSchema(BaseModel):
     model_config = ConfigDict(alias_generator=to_camel, populate_by_name=True)
     sort_by: str
-    category: Optional[str]  # clothing, shoes 카테고리에서 사용 x
-    brand: Optional[str]  # brand 카테고리에서 사용 x
+    category: Optional[str] = None  # clothing, shoes 카테고리에서 사용 x
+    brand: Optional[str] = None  # brand 카테고리에서 사용 x
     intl: str
     price: str
     size_array: str

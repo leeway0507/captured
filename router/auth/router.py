@@ -14,7 +14,7 @@ from fastapi.security import OAuth2PasswordRequestForm
 
 from model.auth_model import LoginSchema, LoginResponseSchema
 from model.db_model import UserAddressSchema
-from model.registration_model import RegistrationSchema
+from model.registration_model import RegistrationEmailSchema, RegistrationOauthSchema
 from db.connection import get_db
 from sqlalchemy.orm import Session
 
@@ -45,13 +45,37 @@ async def email_check(email: str, db: Session = Depends(get_db)) -> dict[str, bo
     return {"isUnique": user_info is None}
 
 
-@auth_router.post("/register", status_code=201, response_model=LoginResponseSchema)
+@auth_router.get("/user-check")
+async def email_check(user_id: str, db: Session = Depends(get_db)) -> dict[str, bool]:
+    """유저 존재 여부 체크"""
+    user_info = get_user_by_email(db, user_id)
+    return {"exist": user_info is None}
+
+
+@auth_router.post("/register", status_code=201)
 async def register(
-    user_registration: RegistrationSchema, address: UserAddressSchema, db: Session = Depends(get_db)
+    user_registration: RegistrationEmailSchema,
+    address: UserAddressSchema,
+    db: Session = Depends(get_db),
 ):
     """회원가입"""
     user = register_user_and_address(db, user_registration, address)
+
     if user:
-        return {**user.model_dump(), "access_token": create_access_token_form(user.user_id)}
-    else:
-        return HTTPException(status_code=406, detail="회원가입에 실패했습니다. 다시 시도해주세요.")
+        return LoginResponseSchema(
+            **user.model_dump(), **create_access_token_form(user.user_id).model_dump()
+        ).model_dump(by_alias=True)
+    return HTTPException(status_code=406, detail="회원가입에 실패했습니다. 다시 시도해주세요.")
+
+
+@auth_router.get("/register-oauth", status_code=201)
+async def register_oauth(
+    auth_user_registration: RegistrationOauthSchema, db: Session = Depends(get_db)
+):
+    user = register_auth_user(auth_user_registration, db)
+
+    if user:
+        return LoginResponseSchema(
+            **user.model_dump(), **create_access_token_form(user.user_id).model_dump()
+        ).model_dump(by_alias=True)
+    return HTTPException(status_code=406, detail="회원가입에 실패했습니다. 다시 시도해주세요.")

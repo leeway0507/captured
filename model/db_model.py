@@ -11,11 +11,11 @@ class ProductInfoSchema(BaseModel):
     """ProductInfoTable Schema"""
 
     model_config = ConfigDict(alias_generator=to_camel, populate_by_name=True)
-    sku: Optional[int]
+    sku: Optional[int] = None
     brand: str
     product_name: str
     product_id: str
-    # size: str  # List[str] 정착되면 없애기
+    size: Optional[str] = None
     price: int
     shipping_fee: int
     intl: bool
@@ -57,16 +57,18 @@ class UserSchema(BaseModel):
     """User Schema"""
 
     model_config = ConfigDict(alias_generator=to_camel, populate_by_name=True)
-    user_id: int
-    email: EmailStr
+    user_id: str
+    email: Optional[EmailStr] = None
     kr_name: str
     email_verification: bool
+    register_at: Optional[datetime] = None
+    sign_up_type: str
 
 
 class UserIndDBSchema(UserSchema):
     """User Schema in DB"""
 
-    password: str
+    password: Optional[str] = None
 
 
 class UserAddressSchema(BaseModel):
@@ -74,7 +76,7 @@ class UserAddressSchema(BaseModel):
 
     model_config = ConfigDict(alias_generator=to_camel, populate_by_name=True)
 
-    address_id: Optional[str]  # UA-[user_id]-[0~n]
+    address_id: Optional[str] = None  # UA-[user_id]-[0~n]
     kr_name: str
     en_name: str
     custom_id: str
@@ -88,7 +90,7 @@ class UserAddressSchema(BaseModel):
 class UserAddressInDBSchema(UserAddressSchema):
     """UserAddresTable Schema"""
 
-    user_id: Optional[int]
+    user_id: Optional[str] = None
     permanent: bool = False
 
 
@@ -97,7 +99,7 @@ class OrderHistorySchema(BaseModel):
 
     model_config = ConfigDict(alias_generator=to_camel, populate_by_name=True)
 
-    user_id: Optional[int]
+    user_id: Optional[str] = None
     order_date: datetime
     address_id: str
     order_total_price: int

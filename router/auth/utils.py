@@ -2,6 +2,9 @@
 
 from typing import Dict
 from datetime import datetime, timedelta
+from uuid import uuid1
+from random import choices
+
 
 import jwt
 from decouple import config
@@ -12,11 +15,11 @@ from sqlalchemy.orm import Session
 
 
 from model.db_model import UserSchema, UserAddressSchema, UserIndDBSchema, UserAddressInDBSchema
-from model.registration_model import RegistrationSchema
+from model.registration_model import RegistrationEmailSchema, RegistrationOauthSchema
 from model.auth_model import LoginSchema, TokenData, Token
-from db.crud import User, UserAddress
 from logs.make_log import make_logger
 from db.tables import UserTable, UserAddressTable
+from db.connection import commit
 
 error_log = make_logger("logs/db/register.log")
 
@@ -114,7 +117,7 @@ async def get_current_user(token: str = Depends(oauth2_scheme)) -> TokenData:
         if expire_time is None or expire_time < datetime.utcnow().timestamp():
             raise exp_exception
 
-        token_data = TokenData(user_id=int(user_id))
+        token_data = TokenData(user_id=user_id)
 
     except jwt.PyJWTError as e:
         error_log.error(e)
@@ -138,41 +141,51 @@ async def get_current_user(token: str = Depends(oauth2_scheme)) -> TokenData:
 #     return current_user
 
 
+def register_auth_user(
+    auth_user_registration: RegistrationOauthSchema, db: Session
+) -> UserSchema | bool:
+    """네이버 카카오 회원가입 시 user 정보를 DB에 저장"""
+    query = db.add(UserTable(**auth_user_registration.model_dump()))
+    result = commit(db, query, error_log)
+    if result:
+        return get_user_by_user_id(db, auth_user_registration.user_id)
+    return False
+
+
 def register_user_and_address(
-    db: Session, user_registration: RegistrationSchema, address: UserAddressSchema
-) -> UserSchema | None:
+    db: Session, user_registration: RegistrationEmailSchema, address: UserAddressSchema
+) -> UserSchema | bool:
     """
     회원가입 시 user, address 정보를 DB에 저장 | 성공 & 실패 여부에 따라 UserSchema 반환
-    - args : user(RegistrationSchema), address(UserAddressSchema)
-    - return : bool
+    - args : user(RegistrationEmailSchema), address(UserAddressSchema)
+    - return : UserSchema | None
     """
 
     try:
         # add user info
+        user_registration.user_id = create_user_id()
         user_registration.password = get_password_hash(user_registration.password)
-        print(
-            "user_db에서 user_id가 자동으로 매칭되는지 확인해보기",
-            UserTable(**user_registration.model_dump()).to_dict(),
-        )
         db.add(UserTable(**user_registration.model_dump()))
         db.commit()
 
-        # add address info
-        user = get_user_by_email(db, user_registration.email)
-        if user is None:
-            raise ValueError("user is None!!!")
-
         user_address_in_db = UserAddressInDBSchema(
-            address_id=f"UA-{user.user_id}-0", user_id=user.user_id, **address.model_dump()
+            user_id=user_registration.user_id,
+            **address.model_dump(),
         )
+        user_address_in_db.address_id = f"UA-{user_registration.user_id}-{0}"
         db.add(UserAddressTable(**user_address_in_db.model_dump()))
         db.commit()
-        return user
+        return get_user_by_email(db, user_registration.email)
 
     except Exception as e:
         error_log.error(e)
         db.rollback()
-        return None
+        return False
+
+
+def create_user_id() -> str:
+    """email을 통해 user_id 생성"""
+    return "".join(choices(uuid1().hex, k=16))
 
 
 def get_user_by_email(db: Session, email: str) -> UserSchema | None:
@@ -198,3 +211,16 @@ def get_user_db_by_email(db: Session, email: str) -> UserIndDBSchema | None:
 
     result = result.to_dict()
     return UserIndDBSchema(**result)
+
+
+def get_user_by_user_id(db: Session, user_id: str) -> UserSchema | None:
+    """email을 통해 user정보 획득"""
+
+    result = db.query(UserTable).filter(UserTable.user_id == user_id).first()  # type: ignore
+
+    if not result:
+        return None
+
+    result = result.to_dict()
+    result.pop("password")
+    return UserSchema(**result)
