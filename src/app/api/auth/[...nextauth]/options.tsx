@@ -2,6 +2,7 @@ import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import KakaoProvider from "next-auth/providers/kakao";
 import NaverProvider from "next-auth/providers/naver";
+import { signInByEmail, registerOauthUser, checkUser } from "./fetch";
 
 export const options: NextAuthOptions = {
     providers: [
@@ -16,12 +17,7 @@ export const options: NextAuthOptions = {
                 params.append("username", credentials?.username || "");
                 params.append("password", credentials?.password || "");
 
-                const res = await fetch(`http://127.0.0.1:8000/api/auth/signin`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                    body: params,
-                });
-                const user = await res.json();
+                const user = await signInByEmail(params);
 
                 if (user) {
                     // Any object returned will be saved in `user` property of the JWT
@@ -45,6 +41,24 @@ export const options: NextAuthOptions = {
     ],
 
     callbacks: {
+        async signIn({ user, account, profile, email, credentials }) {
+            try {
+                if (account!.provider === "credentials") {
+                    return true;
+                }
+                if (account!.type === "oauth") {
+                    const user_check = await checkUser(account!);
+                    //register user when user is not existed
+                    !user_check.is_existed && (await registerOauthUser(account!, profile, user));
+                    return true;
+                }
+                return false;
+            } catch (fetchError) {
+                console.log(fetchError);
+                return `signin?errorcode=${fetchError}`;
+            }
+        },
+
         async jwt({ token, user }) {
             return { ...token, ...user };
         },

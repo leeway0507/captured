@@ -43,10 +43,10 @@ export default function CateogryClient({
 
     return (
         <div className="flex flex-col justify-between w-full px-5">
-            <div className="flex-center text-3xl text-sub-black uppercase py-5 my-5 h-[80px] border-b-2 border-black">
-                {Array.isArray(type)
+            <div className="flex-center text-3xl text-sub-black uppercase py-5 ">
+                {/* {Array.isArray(type)
                     ? type[0].replace("-", " ").replace("%20", " ")
-                    : type.replace("-", " ").replace("%20", " ")}
+                    : type.replace("-", " ").replace("%20", " ")} */}
             </div>
             <div className="block lg:hidden">
                 <FilterHeader />

@@ -1,7 +1,11 @@
 import Client from "./client";
 import MainPc from "./main-pc";
 import MainMobile from "./main-mobile";
+import { productCardProps } from "@/app/type";
+import { getProduct } from "./component/fetch";
 
-export default function Product() {
-    return <Client Mobile={<MainMobile />} Pc={<MainPc />} />;
+export default async function Product({ sku }: { sku: string }) {
+    const product = await getProduct(sku);
+
+    return <Client Mobile={<MainMobile {...product} />} Pc={<MainPc {...product} />} />;
 }
