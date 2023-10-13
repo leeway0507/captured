@@ -34,8 +34,8 @@ export default function MainPc() {
     return (
         <div className="flex">
             <Tab.Group vertical selectedIndex={selectedIndex} onChange={setSelectedIndex}>
-                <Tab.List className="basis-1/3 border-e">
-                    <Tab.List className={"flex flex-col  text-xl sticky top-[200px]"}>
+                <Tab.List className="basis-1/3 border-e max-w-[350px]">
+                    <Tab.List className={"flex flex-col  text-xl sticky top-0 py-8"}>
                         <Tab
                             onClick={() => router.push("/mypage?pageindex=0")}
                             key="order"

@@ -15,7 +15,7 @@ export default function Thumbnail({ src, brand, productName, href }: PropType) {
 
     return (
         <div className="bg-gray-50 flex-center flex-col relative">
-            <div className="square max-w-[75%] tb:max-w-[50%] mb-4">
+            <div className="square max-w-[75%] tb:max-w-[40%] mb-4">
                 <Link href={href} className="inner flex-right flex-col hover:opacity-60">
                     <Image src={src} alt={productName} className="mb-4" width={1000} height={1000} />
                 </Link>

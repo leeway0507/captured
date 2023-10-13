@@ -27,7 +27,7 @@ export default function ProductSpecificInfo(props: productCardProps) {
             <div className={`${row} bg-light-gray`}>
                 <div className={`${column1}`}>색상</div>
                 <div className={`${column2}`}>
-                    {JSON.parse(props.color).map((v: string, i: number) => {
+                    {JSON.parse(props.color.replace(/'/g, '"')).map((v: string, i: number) => {
                         return (
                             <span key={i} className="mx-1">
                                 {v}

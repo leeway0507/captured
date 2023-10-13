@@ -5,19 +5,9 @@ import AccordionComponent from "@/app/components/accordion/accordion";
 import RelatedProducts from "./component/related-products";
 import ProductSpecificInfo from "./component/product-specific-info";
 import { productCardProps } from "@/app/type";
-import { headers } from "next/headers";
-import { getCategory } from "@/app/category/[type]/component/fetch";
 import AddBasket from "./component/add-basket-client";
 
-export default async function MainMobile() {
-    const data: productCardProps[] = await getCategory();
-
-    const header_list = headers();
-    const header_data = header_list.get("x-invoke-path") as string;
-    const sku = header_data.split("/").slice(-1)[0];
-
-    const product = data.find((v: productCardProps) => v.sku === parseInt(sku)) as productCardProps;
-
+export default async function MainMobile(product: productCardProps) {
     return (
         <div className="flex flex-col justify-between w-full">
             <Thumbnail {...product} />

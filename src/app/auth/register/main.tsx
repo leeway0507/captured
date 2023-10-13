@@ -76,7 +76,7 @@ export default function CreateAccount() {
         userData: {
             email: email,
             password: password1,
-            name: name,
+            krName: name,
         },
         addressData: {
             addressId: "",
@@ -205,11 +205,11 @@ export default function CreateAccount() {
                         </div>
                         {checkDefaultInputValidation(email, name, password1, password2) ? (
                             <button type="button" className="black-bar w-full" onClick={() => setIsOpen(true)}>
-                                배송지 입력하기
+                                다 음
                             </button>
                         ) : (
-                            <button type="button" className="disabled-bar" disabled>
-                                {isUnique ? "필수 항목을 입력해주세요.." : "이메일 중복 여부를 확인해주세요."}
+                            <button type="button" className="disabled-bar w-full" disabled>
+                                {isUnique ? "필수 항목을 입력해주세요." : "이메일 중복 여부를 확인해주세요."}
                             </button>
                         )}
                     </form>

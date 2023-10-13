@@ -73,7 +73,7 @@ const Main = (props: userAddressProps) => {
                         content="해당 주소를 등록하시겠습니까?"
                         buttonClassName="basis-3/4 black-bar"
                         trueCallback={() =>
-                            createAddress(address, session?.user.access_token)
+                            createAddress(address, session?.user.accessToken)
                                 .then(router.back)
                                 .catch(() => setOpenFailureModal(true))
                         }
@@ -85,7 +85,7 @@ const Main = (props: userAddressProps) => {
                         content="해당 주소를 수정하시겠습니까?"
                         buttonClassName="basis-3/4 black-bar"
                         trueCallback={() =>
-                            updateAddress(address, session?.user.access_token)
+                            updateAddress(address, session?.user.accessToken)
                                 .then(router.back)
                                 .catch(() => setOpenFailureModal(true))
                         }

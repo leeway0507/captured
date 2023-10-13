@@ -48,25 +48,25 @@ const MainPC = ({ arr }: { arr: cartProductCardProps[] }) => {
 
     //주소 선택 토글
     const selectAddressToggle = (address: userAddressProps) => {
-        const addressWithToken = { ...address, access_token: session?.user.access_token };
+        const addressWithToken = { ...address, access_token: session?.user.accessToken };
         setSelectedAddress(addressWithToken);
         setIsOpen(false);
         router.push("/order");
     };
 
     useEffect(() => {
-        getAddress(session?.user.access_token).then((data) => {
+        getAddress(session?.user.accessToken).then((data) => {
             setAddressArray(data);
             setSelectedAddress(data[0]);
             console.log(data);
         });
-    }, [session?.user.access_token]);
+    }, [session?.user.accessToken]);
 
     if (!addressArray) return <PageLoading />;
 
     return (
         <>
-            <div className="flex relative py-8 h-full gap-8">
+            <div className="max-w-4xl flex relative py-8 h-full gap-8 justify-evenly mx-auto ">
                 <div className="basis-[55%] pe-1 me-1 overflow-auto">
                     <div className="text-xl tracking-[0.2em] flex-center pb-4">주문요약</div>
                     <CartproductCardArr arr={arr} />
@@ -79,7 +79,7 @@ const MainPC = ({ arr }: { arr: cartProductCardProps[] }) => {
                             상품 구입을 위해 개인통관부호가 필요하며 5 ~ 15일의 배송기간이 소요 됩니다."
                     />
                 </div>
-                <div className="basis-[45%] relative ">
+                <div className="basis-[45%] max-w-[380px] relative ">
                     <div className={`sticky top-[150px] ${isOpen ? "hidden" : "block"}`}>
                         <div className="border-b border-deep-gray">
                             <div className="text-xl tracking-[0.2em] flex-center pb-4">배송지 선택</div>

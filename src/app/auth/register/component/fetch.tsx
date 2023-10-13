@@ -1,5 +1,4 @@
 import { userAddressProps, userProps } from "@/app/type";
-import { user, user_address } from "@/app/types/fastapi-schema";
 
 interface register {
     userData: userProps;
@@ -14,7 +13,7 @@ export const register = async (props: register) => {
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify({ user: user(userData), address: user_address(addressData) }),
+        body: JSON.stringify({ user_registration: userData, address: addressData }),
     });
 
     console.log("res.ok", res.ok);

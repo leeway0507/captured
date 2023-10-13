@@ -40,7 +40,6 @@ export default function SignIn() {
     useEffect(() => {
         (async () => {
             const res: any = await getProviders();
-            console.log(res);
             setProviders(res);
         })();
     }, []);
