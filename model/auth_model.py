@@ -2,6 +2,7 @@
 
 from pydantic import BaseModel, EmailStr, ConfigDict
 from model.db_model import UserSchema
+from pydantic.alias_generators import to_camel
 
 
 class LoginSchema(BaseModel):
@@ -18,13 +19,15 @@ class Token(BaseModel):
 
 
 class TokenData(BaseModel):
-    user_id: int
+    user_id: str
 
 
 class LoginResponseSchema(Token):
     """login_response Schema"""
 
-    user_id: int
+    model_config = ConfigDict(alias_generator=to_camel, populate_by_name=True)
+
+    user_id: str
     email: EmailStr
     kr_name: str
     email_verification: bool

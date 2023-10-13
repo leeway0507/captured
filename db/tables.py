@@ -22,7 +22,6 @@ class ProductInfoTable(MyBase):
     brand = Column(VARCHAR(50))
     product_name = Column(VARCHAR(255))
     product_id = Column(VARCHAR(255))
-    size = Column(VARCHAR(255))
     shipping_fee = Column(INTEGER)
     price = Column(INTEGER)
     intl = Column(BOOLEAN)
@@ -30,6 +29,8 @@ class ProductInfoTable(MyBase):
     color = Column(VARCHAR(50))
     category = Column(VARCHAR(50))
     img_type = Column(VARCHAR(10))
+    price_desc_cursor = Column(VARCHAR(100))
+    price_asc_cursor = Column(VARCHAR(100))
 
     class Config:
         orm_mode = str
@@ -51,13 +52,13 @@ class SizeTable(MyBase):
 class UserTable(MyBase):
     __tablename__ = "user"
 
-    user_id = Column(
-        INTEGER, primary_key=True, autoincrement=True, server_default="10000"
-    )  # start from 10000
-    email = Column(VARCHAR(255), nullable=False, unique=True)
-    password = Column(VARCHAR(255), nullable=False)
+    user_id = Column(VARCHAR(50), primary_key=True)
+    email = Column(VARCHAR(255), nullable=True, unique=True)
+    password = Column(VARCHAR(255), nullable=True)
     kr_name = Column(VARCHAR(30), nullable=False)
     email_verification = Column(BOOLEAN, nullable=False, default=False)
+    register_at = Column(DATETIME, nullable=False, default=datetime.now())
+    sign_up_type = Column(VARCHAR(20), nullable=False)
 
     class Config:
         orm_mode = str
@@ -66,7 +67,7 @@ class UserTable(MyBase):
 class UserAddressTable(MyBase):
     __tablename__ = "user_address"
     address_id = Column(VARCHAR(255), primary_key=True)
-    user_id = Column(INTEGER, ForeignKey("user.user_id"), nullable=False)
+    user_id = Column(VARCHAR(50), ForeignKey("user.user_id"), nullable=False)
     kr_name = Column(VARCHAR(30), nullable=False)
     en_name = Column(VARCHAR(30), nullable=False)
     custom_id = Column(VARCHAR(50), nullable=False)
@@ -86,7 +87,7 @@ class UserAddressTable(MyBase):
 class OrderHistoryTable(MyBase):
     __tablename__ = "order_history"
     order_id = Column(VARCHAR(255), primary_key=True)
-    user_id = Column(INTEGER, ForeignKey("user.user_id"), nullable=False)
+    user_id = Column(VARCHAR(50), ForeignKey("user.user_id"), nullable=False)
     address_id = Column(VARCHAR(255), ForeignKey("user_address.address_id"), nullable=False)
     order_date = Column(DATE, nullable=False)
     user_order_number = Column(INTEGER, nullable=False)
