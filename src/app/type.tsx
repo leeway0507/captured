@@ -35,7 +35,7 @@ export interface setUserAddressProps extends userAddressProps {
 }
 
 export interface userProps {
-    name: string;
+    krName: string;
     email: string;
     password: string;
 }

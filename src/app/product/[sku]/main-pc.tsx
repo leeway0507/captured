@@ -5,31 +5,18 @@ import RelatedProducts from "./component/related-products";
 import ProductSpecificInfo from "./component/product-specific-info";
 import Thumbnail from "./component/thumbnail-pc";
 import { productCardProps } from "@/app/type";
-import { headers } from "next/headers";
-import { getCategory } from "@/app/category/[type]/component/fetch";
-import { getProduct } from "./component/fetch";
 
 import AddBasket from "./component/add-basket-client";
 
-export default async function MainPc() {
-    let data: productCardProps[] = await getCategory();
-
-    const header_list = headers();
-    const header_data = header_list.get("x-invoke-path") as string;
-    const sku = header_data.split("/").slice(-1)[0];
-
-    const product = data.find((v: productCardProps) => v.sku === parseInt(sku)) as productCardProps;
-
-    if (!product) data = await getProduct(sku);
-
+export default async function MainPc(product: productCardProps) {
     return (
         <div className="w-full flex-col">
-            <div className="flex justify-between">
-                <div className="">
+            <div className="flex justify-evenly">
+                <div className="max-w-2xl">
                     <Thumbnail {...product} />
                 </div>
                 <div className="flex flex-col justify-between ">
-                    <div className="py-4 sticky top-0 w-[380px]">
+                    <div className="py-4 sticky top-0 min-w-[380px] max-w-[480px]">
                         <ProductInfo {...product} />
                         <AddBasket {...product} />
                         <div>

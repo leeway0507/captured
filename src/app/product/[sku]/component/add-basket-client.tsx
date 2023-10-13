@@ -7,12 +7,14 @@ import AddBascketModal from "./add-bascket-modal";
 
 const AddBasket = (data: productCardProps) => {
     const { brand, productName, productId, imgType, sku, size, category } = data;
+
     const productImgUrl = `/product/${brand}/${productName} ${productId}/main.${imgType}`;
 
     const { sizeType, availableSize } = {
         sizeType: category,
-        availableSize: JSON.parse(size).map((v: string | number) => typeof v === "number" && v.toString()),
+        availableSize: size.split(","),
     };
+
     const [selectedItem, setSelectedItem] = useState<string>(availableSize[0]);
     const { increaseCartQuantity } = useShoppingCart();
     const [openModal, setOpenModal] = useState(false);
@@ -32,7 +34,7 @@ const AddBasket = (data: productCardProps) => {
                 />
             </div>
             <div>
-                <div className="black-bar-xl my-4" onClick={AddBascketToggle}>
+                <div className="black-bar-xl my-4 lg:text-xl" onClick={AddBascketToggle}>
                     장바구니 담기
                 </div>
             </div>

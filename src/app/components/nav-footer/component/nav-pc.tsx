@@ -15,9 +15,9 @@ export default function NavPc() {
     return (
         <>
             <header
-                className="border-x-none h-[130px] px-10 sticky top-0 flex flex-col justify-between border-light-gray z-50 bg-white"
+                className="border-x-none h-[130px] px-16 xl:px-32 sticky top-0 flex flex-col justify-between border-light-gray z-50 bg-white pt-3"
                 style={{ boxShadow: "0px 2px 0px var(--deep-gray)" }}>
-                <div className="flex w-full">
+                <div className="flex w-full justify-evenly">
                     <div className="flex-left basis-3/12" onClick={closeNavToggle}>
                         <input
                             type="text"
@@ -40,19 +40,19 @@ export default function NavPc() {
                     </div>
                 </div>
                 <div className="flex justify-between text-sm-base pb-4">
-                    <Link href="/category/latest" className="py-2 grow rounded-md flex-center active:bg-light-gray">
+                    <Link href="/category/latest">
                         <div className="mx-2">LATEST</div>
                     </Link>
-                    <Link href="/brands" className="py-2 grow rounded-md flex-center active:bg-light-gray">
+                    <Link href="/brands">
                         <div className="mx-2">BRANDS</div>
                     </Link>
-                    <Link href="/category/shoes" className="py-2 grow rounded-md flex-center active:bg-light-gray">
+                    <Link href="/category/shoes">
                         <div className="mx-2">SHOES</div>
                     </Link>
-                    <Link href="/category/clothing" className="py-2 grow rounded-md flex-center active:bg-light-gray">
+                    <Link href="/category/clothing">
                         <div className="mx-2">CLOTHING</div>
                     </Link>
-                    <Link href="/category/accessory" className="py-2 grow rounded-md flex-center active:bg-light-gray">
+                    <Link href="/category/accessory">
                         <div className="mx-2">ACCESSORY</div>
                     </Link>
                 </div>

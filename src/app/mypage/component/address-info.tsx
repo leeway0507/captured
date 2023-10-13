@@ -11,20 +11,29 @@ const addressInfoClass = "text-base flex-right active:text-deep-gray cursor-poin
 
 export default function AddressInfo() {
     const { data: session } = useSession();
+    console.log(session);
 
     const [isLoading, setLoading] = useState(true);
     const [addressArray, setAddressArray] = useState<userAddressProps[]>([]);
 
     useEffect(() => {
-        getAddress(session?.user.access_token).then((data) => {
+        getAddress(session?.user.accessToken).then((data) => {
             setAddressArray(data);
             setLoading(false);
             console.log(data);
         });
     }, []);
 
-    if (isLoading) return <p>Loading...</p>;
-    if (addressArray.length === 0) return <p>No profile data</p>;
+    if (isLoading) return null;
+    if (addressArray.length === 1)
+        return (
+            <div className="flex-center flex-col py-8 text-xl">
+                <div className="text-2xl">등록된 주소가 없습니다.</div>
+                <Link href="mypage/address/create" className="pt-4 link-animation underline">
+                    + 주소 추가하기
+                </Link>
+            </div>
+        );
 
     return (
         <div className="text-sm overflow-auto max-w-[500px] mx-auto">
@@ -48,7 +57,7 @@ export default function AddressInfo() {
                         <AddressForm
                             {...item}
                             onDelete={true}
-                            access_token={session?.user.access_token}
+                            access_token={session?.user.accessToken}
                             key={item.addressId}
                         />
                     );

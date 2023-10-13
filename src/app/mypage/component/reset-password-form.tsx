@@ -25,7 +25,7 @@ export default function ResetPasswordFrom() {
                 </div>
                 <div className="flex flex-col">
                     <label htmlFor="name">성 명</label>
-                    <input type="text" value={session?.user.kr_name} disabled className="custom-input-disabled" />
+                    <input type="text" value={session?.user.krName} disabled className="custom-input-disabled" />
                 </div>
                 <div className="flex justify-between gap-4 ">
                     <div className="flex flex-col basis-1/2">
