@@ -6,24 +6,36 @@ from model.db_model import ProductInfoSchema
 ## filter model
 
 
+class itemArray(BaseModel):
+    productType: List[str]
+    sizeArray: List[str]
+
+
+class categorySpec(BaseModel):
+    의류: itemArray
+    신발: itemArray
+    기타: itemArray
+    전체: itemArray
+
+
 class FilterMetaSchema(BaseModel):
     model_config = ConfigDict(alias_generator=to_camel, populate_by_name=True)
     sort_by: List[str]
-    category: Optional[List[str]] = None  # clothing, shoes 카테고리에서 사용 x
-    brand: Optional[List[str]] = None  # brand 카테고리에서 사용 x
+    category: categorySpec
+    brand: List[str]
     intl: List[str]
     price: List[int]
-    size_array: List[str]
 
 
 class RequestFilterSchema(BaseModel):
     model_config = ConfigDict(alias_generator=to_camel, populate_by_name=True)
-    sort_by: str
-    category: Optional[str] = None  # clothing, shoes 카테고리에서 사용 x
-    brand: Optional[str] = None  # brand 카테고리에서 사용 x
-    intl: str
-    price: str
-    size_array: str
+    sort_by: Optional[str] = None
+    category: Optional[str] = None
+    category_spec: Optional[str] = None
+    brand: Optional[str] = None
+    intl: Optional[str] = None
+    price: Optional[str] = None
+    size_array: Optional[str] = None
 
 
 class ProductResponseSchema(BaseModel):

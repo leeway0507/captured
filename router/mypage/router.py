@@ -34,7 +34,7 @@ async def create_address(
     if create_user_address(db, new_address):
         return {"message": "success"}
     else:
-        return HTTPException(status_code=406, detail="주소 등록에 실패했습니다. 다시 시도해주세요.")
+        raise HTTPException(status_code=406, detail="주소 등록에 실패했습니다. 다시 시도해주세요.")
 
 
 @mypage_router.post("/update-address")
@@ -49,7 +49,7 @@ async def update_address(
     if update_user_address(db, user_address_db):
         return {"message": "success"}
     else:
-        return HTTPException(status_code=406, detail="주소 업데이트에 실패했습니다. 다시 시도해주세요.")
+        raise HTTPException(status_code=406, detail="주소 업데이트에 실패했습니다. 다시 시도해주세요.")
 
 
 @mypage_router.post("/delete-address")
@@ -62,4 +62,4 @@ async def delete_address(
     if delete_user_address(db, address.address_id):
         return {"message": "success"}
     else:
-        return HTTPException(status_code=406, detail="주소 삭제에 실패했습니다. 다시 시도해주세요.")
+        raise HTTPException(status_code=406, detail="주소 삭제에 실패했습니다. 다시 시도해주세요.")

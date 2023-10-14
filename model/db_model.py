@@ -21,6 +21,7 @@ class ProductInfoSchema(BaseModel):
     intl: bool
     color: str  # List[str]
     category: str
+    category_spec: str
     img_type: str
 
     # @validator("size", "color", pre=True)

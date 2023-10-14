@@ -3,6 +3,7 @@
 from pydantic import BaseModel, EmailStr, ConfigDict
 from model.db_model import UserSchema
 from pydantic.alias_generators import to_camel
+from typing import Optional
 
 
 class LoginSchema(BaseModel):
@@ -28,6 +29,7 @@ class LoginResponseSchema(Token):
     model_config = ConfigDict(alias_generator=to_camel, populate_by_name=True)
 
     user_id: str
-    email: EmailStr
+    email: Optional[EmailStr] = None
     kr_name: str
     email_verification: bool
+    sign_up_type: str

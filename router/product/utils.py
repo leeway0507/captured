@@ -53,7 +53,7 @@ def get_category(
     db: Session,
     page: int = 1,
     request_filter: Optional[RequestFilterSchema] = None,
-    limit: int = 50,
+    limit: int = 10,
 ) -> ProductResponseSchema:
     print("----------------------")
     print("filter category 시작")
@@ -62,7 +62,8 @@ def get_category(
     print("----------------------")
 
     # request_filter 없는 경우 get_init_category로
-    if request_filter is None:
+    has_filter = any(request_filter.model_dump().values())
+    if not has_filter:
         print("request_filter 없는 경우 get_init_category로")
         print("----------------------")
         return get_init_category(page, limit, db)
@@ -147,13 +148,7 @@ def get_page_cursor(
 
 def is_only_sort_by(request_filter: RequestFilterSchema) -> bool:
     """sort_by만 있는 경우"""
-    return not any(
-        request_filter.category
-        or request_filter.brand
-        or request_filter.intl
-        or request_filter.size_array
-        or request_filter.price
-    )
+    return not any(request_filter.model_dump().values())
 
 
 def create_filter_query(filter: RequestFilterSchema) -> Dict[str, Any]:
@@ -185,9 +180,17 @@ def create_filter_query(filter: RequestFilterSchema) -> Dict[str, Any]:
         )
 
     # category, brand, intl 생성
-    filter_dict = {k: v.split(",") for k, v in filter_dict.items() if v != ""}
+    filter_dict = {k: v.split(",") for k, v in filter_dict.items() if v != None and v != ""}
+
+    # intl filter 수정
+    if "intl" in filter_dict.keys():
+        filter_dict["intl"] = list(
+            map(lambda x: True if x == "해외배송" else False, filter_dict["intl"])
+        )
+
     filter_values = {
         "category": ProductInfoTable.category,
+        "category_spec": ProductInfoTable.category_spec,
         "brand": ProductInfoTable.brand,
         "intl": ProductInfoTable.intl,
     }

@@ -46,7 +46,7 @@ def get_password_hash(password) -> str:
     return pwd_context.hash(password)
 
 
-def authenticate_user(db: Session, login: LoginSchema) -> UserSchema | None:
+def authenticate_user(db: Session, login: LoginSchema) -> UserSchema | int:
     """
     로그인 요청한 유저가 DB에 있는지 확인
     - args : LoginSchema(email, password)
@@ -55,9 +55,9 @@ def authenticate_user(db: Session, login: LoginSchema) -> UserSchema | None:
 
     user_db = get_user_db_by_email(db, login.email)
     if user_db is None:
-        return None
+        return 404
     if not verify_password(login.password, user_db.password):
-        return None
+        return 401
     return UserSchema(**user_db.model_dump())
 
 
@@ -147,6 +147,7 @@ def register_auth_user(
     """네이버 카카오 회원가입 시 user 정보를 DB에 저장"""
     query = db.add(UserTable(**auth_user_registration.model_dump()))
     result = commit(db, query, error_log)
+
     if result:
         return get_user_by_user_id(db, auth_user_registration.user_id)
     return False
@@ -185,7 +186,7 @@ def register_user_and_address(
 
 def create_user_id() -> str:
     """email을 통해 user_id 생성"""
-    return "".join(choices(uuid1().hex, k=16))
+    return uuid1().hex
 
 
 def get_user_by_email(db: Session, email: str) -> UserSchema | None:
@@ -219,7 +220,7 @@ def get_user_by_user_id(db: Session, user_id: str) -> UserSchema | None:
     result = db.query(UserTable).filter(UserTable.user_id == user_id).first()  # type: ignore
 
     if not result:
-        return None
+        return 404
 
     result = result.to_dict()
     result.pop("password")

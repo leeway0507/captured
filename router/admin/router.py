@@ -60,7 +60,7 @@ async def create(product: ProductInfoSchema, db: Session = Depends(get_db)):
     if create_product(db, product_info_db):
         return {"message": "success"}
     else:
-        return HTTPException(status_code=406, detail="제품 등록 실패. 다시 시도해주세요.")
+        raise HTTPException(status_code=406, detail="제품 등록 실패. 다시 시도해주세요.")
 
 
 @admin_router.post("/update-product")
@@ -69,15 +69,15 @@ async def update(product_in_db: ProductInfoDBSchema, db: Session = Depends(get_d
     if update_product(db, product_in_db):
         return {"message": "success"}
     else:
-        return HTTPException(status_code=406, detail="제품 업데이트에 실패했습니다. 다시 시도해주세요.")
+        raise HTTPException(status_code=406, detail="제품 업데이트에 실패했습니다. 다시 시도해주세요.")
 
 
 @admin_router.post("/delete-product")
 async def delete(product: ProductInfoSchema, db: Session = Depends(get_db)):
     """제품 삭제"""
     if product.sku == None:
-        return HTTPException(status_code=406, detail="제품정보에 SKU가 존재하지 않아 삭제할 수 없습니다.")
+        raise HTTPException(status_code=406, detail="제품정보에 SKU가 존재하지 않아 삭제할 수 없습니다.")
     if delete_product(db, product.sku):
         return {"message": "success"}
     else:
-        return HTTPException(status_code=406, detail="제품 삭제에 실패했습니다. 다시 시도해주세요.")
+        raise HTTPException(status_code=406, detail="제품 삭제에 실패했습니다. 다시 시도해주세요.")
