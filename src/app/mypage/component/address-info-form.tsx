@@ -6,11 +6,11 @@ import { deleteAddress, getAddress } from "./fetch";
 
 export interface addressInfoFormProps extends userAddressProps {
     onDelete?: boolean | undefined;
-    access_token: string | undefined;
+    accessToken: string | undefined;
 }
 
 export const AddressForm = (props: addressInfoFormProps) => {
-    const { onDelete, access_token, ...address } = props;
+    const { onDelete, accessToken, ...address } = props;
     const isMain = address.addressId.split("-")[2] === "0";
     const deleteAddressButton = <div className="active:text-deep-gray">삭제</div>;
 
@@ -25,7 +25,7 @@ export const AddressForm = (props: addressInfoFormProps) => {
                         title="주소 삭제"
                         content="해당 주소를 삭제하시겠습니까?"
                         trueCallback={() => {
-                            deleteAddress(address, access_token).then(() => location.reload());
+                            deleteAddress(address, accessToken).then(() => location.reload());
                         }}
                     />
                 )}

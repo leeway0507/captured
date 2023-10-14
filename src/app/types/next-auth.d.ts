@@ -10,6 +10,7 @@ declare module "next-auth" {
         krName: string;
         emailVerification: boolean;
         accessToken: string;
+        signUpType: string;
     }
     interface Session {
         user: {
@@ -18,6 +19,7 @@ declare module "next-auth" {
             krName: string;
             emailVerification: boolean;
             accessToken: string;
+            signUpType: string;
         };
     }
 }

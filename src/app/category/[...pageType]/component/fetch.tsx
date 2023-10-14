@@ -1,15 +1,15 @@
 import { productCardProps } from "@/app/type";
-import { initFilterMetaProps, filterProps } from "../type";
+import { initFilterMetaProps, filterRequestProps } from "../type";
 export interface responseProps {
     data: productCardProps[];
     currentPage: number;
     lastPage: number;
 }
 
-export const getCategory = async (filter: filterProps | undefined, page: string | number) => {
+export const getCategory = async (filter: filterRequestProps | undefined, page: string | number) => {
     console.log("----------getCategory----------");
     console.log(filter);
-    console.log(page);
+    // console.log(page);
     const req = await fetch(`http://127.0.0.1:8000/api/product/get-category?page=${page}`, {
         method: "POST",
         headers: {

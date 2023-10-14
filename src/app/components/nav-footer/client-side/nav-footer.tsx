@@ -10,7 +10,7 @@ interface NavFooterProps {
 export default function NavFooter({ children }: NavFooterProps) {
     return (
         <ContextWrapper>
-            <main className="custom-container h-screen lg:mx-8">
+            <main className="custom-container h-screen xl:mx-4">
                 <NavMain />
                 <div className="grow flex flex-col justify-between overflow-scroll ">
                     <div>{children}</div>

@@ -1,12 +1,3 @@
-export interface filterMetaProps {
-    brand: Array<string>;
-    category: Array<string>;
-    size: Array<string>;
-    sizeType: Array<string>;
-    shipping: Array<string>;
-    price: Array<string>;
-}
-
 //inline content
 export interface ItemBoxSelectedProps {
     content: string;

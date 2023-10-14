@@ -5,16 +5,16 @@ export default function Page({
     params,
     searchParams,
 }: {
-    params: { slug: string };
+    params: { pageType: string[] };
     searchParams: { [key: string]: string | undefined };
 }) {
     console.log("---------Page---------");
-    console.log(searchParams);
+    console.log(params);
 
     return (
         <>
             <NavFooter>
-                <Main params={searchParams} />
+                <Main searchParams={searchParams} params={params} />
             </NavFooter>
         </>
     );

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import ProductCard from "../component/product-card";
+import ProductCard from "./product-card";
 import { productCardProps } from "@/app/type";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -76,8 +76,6 @@ const ProductCardArrary = ({
 
     const nextPage = currentPage + 1;
     const prevPage = currentPage - 1;
-
-    console.log(localData);
 
     return (
         <>

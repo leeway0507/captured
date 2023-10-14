@@ -3,7 +3,7 @@ import { useState } from "react";
 
 interface alertModalProps {
     title: string;
-    content: string;
+    content: string | JSX.Element;
     isOpen: boolean;
     setIsOpen: (isOpen: boolean) => void;
     checkColor?: "black" | "green" | "red";
