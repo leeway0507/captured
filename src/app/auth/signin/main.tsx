@@ -8,6 +8,8 @@ import { signIn, getProviders } from "next-auth/react";
 import { useSession } from "next-auth/react";
 import PageLoading from "@/app/components/loading/page-loading";
 import { redirect } from "next/navigation";
+import AlertModalWithoutBtn from "@/app/components/modal/alert-modal-without-btn";
+import { handleCredentials, handleKakao, handleNaver } from "./component/sign-in-providers";
 
 const oauthClass = "flex-center relative rounded-lg text-sm py-2 border my-2";
 const oauthImageClass = "absolute left-4";
@@ -19,55 +21,10 @@ const accountFeatures = "flex-center my-1 basis-1/2 link-animation ";
 export default function SignIn() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const handleSubmit = async () => {
-        await signIn("credentials", {
-            username: email,
-            password: password,
-            redirect: true,
-            callbackUrl: "/",
-        })
-            .then((res) => {
-                console.log("res", res);
-            })
-            .catch((err) => {
-                console.log("err", err);
-            });
-    };
+    const [openFailureModal, setOpenFailureModal] = useState(false);
 
-    // 추가된 부분(아직 이해 못함.)
-    const [providers, setProviders] = useState(null);
-
-    useEffect(() => {
-        (async () => {
-            const res: any = await getProviders();
-            setProviders(res);
-        })();
-    }, []);
-    // 추가된 부분
-
-    const handleKakao = async () => {
-        await signIn("kakao", {
-            redirect: true,
-            callbackUrl: "/",
-        })
-            .then((res) => {
-                console.log("res", res);
-            })
-            .catch((err) => {
-                console.log("err", err);
-            });
-    };
-    const handleNaver = async () => {
-        await signIn("naver", {
-            redirect: true,
-            callbackUrl: "/",
-        })
-            .then((res) => {
-                console.log("res", res);
-            })
-            .catch((err) => {
-                console.log("err", err);
-            });
+    const openModalToggle = () => {
+        setOpenFailureModal(!openFailureModal);
     };
 
     const { data, status } = useSession();
@@ -82,7 +39,7 @@ export default function SignIn() {
 
     const handleOnKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter") {
-            handleSubmit();
+            handleCredentials(email, password, openFailureModal, openModalToggle);
         }
     };
 
@@ -118,7 +75,10 @@ export default function SignIn() {
                     </label>
                 </div>
                 <div>
-                    <button type="button" className="black-bar-xl w-full" onClick={handleSubmit}>
+                    <button
+                        type="button"
+                        className="black-bar-xl w-full"
+                        onClick={() => handleCredentials(email, password, openFailureModal, openModalToggle)}>
                         로그인
                     </button>
                     <div className="flex justify-between py-2 text-sm">
@@ -133,7 +93,7 @@ export default function SignIn() {
                 </div>
             </div>
             <div>
-                <div className={`${oauthClass} ${oauthclickEffect}`} onClick={handleNaver}>
+                <div className={`${oauthClass} ${oauthclickEffect}`} onClick={() => handleNaver()}>
                     <Image
                         src="/icons/naver.svg"
                         width={24}
@@ -143,7 +103,7 @@ export default function SignIn() {
                     />
                     <div>네이버로 로그인</div>
                 </div>
-                <div className={`${oauthClass} ${oauthclickEffect}`} onClick={handleKakao}>
+                <div className={`${oauthClass} ${oauthclickEffect}`} onClick={() => handleKakao()}>
                     <Image
                         src="/icons/kakao.svg"
                         width={24}

@@ -19,7 +19,15 @@ export default function UserDropDown() {
                     <button className=" flex px-4 py-2 ">{userIcon}</button>
                     <div className="border hidden absolute top-full z-5 group-hover:block mx-5 flex flex-col bg-white text-sm shadow-lg rounded-md">
                         <div className="whitespace-nowrap py-3 px-4 border-b-2 border-light-gray">
-                            {session?.user.kr_name}(<span className="text-xs">{session?.user.email}</span>)
+                            {session?.user.krName}(
+                            <span className="text-xs">
+                                {session?.user.signUpType === "email" ? (
+                                    session.user.email
+                                ) : (
+                                    <span className="captalize">{session.user.signUpType}</span>
+                                )}
+                            </span>
+                            )
                         </div>
                         <Link href="/mypage" className="link-animation  ">
                             <div className="whitespace-nowrap py-3 px-4 w-full hover:bg-slate-50">마이페이지</div>

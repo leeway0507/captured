@@ -9,9 +9,12 @@ import { IntlShipment } from "../components/notification/shipment-info";
 import { useEffect, useState } from "react";
 import { userAddressProps } from "@/app/type";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 const MainMobile = ({ arr }: { arr: cartProductCardProps[] }) => {
     const [selectedAddress, setSelectedAddress] = useState<userAddressProps | undefined>(undefined);
+
+    const { data: session } = useSession();
 
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const router = useRouter();
@@ -51,12 +54,18 @@ const MainMobile = ({ arr }: { arr: cartProductCardProps[] }) => {
                 </div>
                 <div className="border-b border-deep-gray py-4 my-4">
                     <div className="text-2xl tracking-[0.2em] flex-center py-4">배송지 정보</div>
-                    <div className="flex-right link-animation" onClick={openToggle}>
-                        다른 배송지 선택하기
-                    </div>
                     <div className="overflow-auto pt-2">
                         {selectedAddress ? (
-                            <AddressForm {...selectedAddress} onDelete={false} />
+                            <>
+                                <div className="flex-right link-animation" onClick={openToggle}>
+                                    다른 배송지 선택하기
+                                </div>
+                                <AddressForm
+                                    {...selectedAddress}
+                                    accessToken={session?.user.accessToken}
+                                    onDelete={false}
+                                />
+                            </>
                         ) : (
                             <div>배송지를 추가해주세요.</div>
                         )}

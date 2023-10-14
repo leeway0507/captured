@@ -25,7 +25,7 @@ export default function AddressInfo() {
     }, []);
 
     if (isLoading) return null;
-    if (addressArray.length === 1)
+    if (addressArray.length === 0)
         return (
             <div className="flex-center flex-col py-8 text-xl">
                 <div className="text-2xl">등록된 주소가 없습니다.</div>
@@ -57,7 +57,7 @@ export default function AddressInfo() {
                         <AddressForm
                             {...item}
                             onDelete={true}
-                            access_token={session?.user.accessToken}
+                            accessToken={session?.user.accessToken}
                             key={item.addressId}
                         />
                     );

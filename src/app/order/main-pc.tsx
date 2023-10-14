@@ -48,7 +48,7 @@ const MainPC = ({ arr }: { arr: cartProductCardProps[] }) => {
 
     //주소 선택 토글
     const selectAddressToggle = (address: userAddressProps) => {
-        const addressWithToken = { ...address, access_token: session?.user.accessToken };
+        const addressWithToken = { ...address, accessToken: session?.user.accessToken };
         setSelectedAddress(addressWithToken);
         setIsOpen(false);
         router.push("/order");
@@ -83,14 +83,22 @@ const MainPC = ({ arr }: { arr: cartProductCardProps[] }) => {
                     <div className={`sticky top-[150px] ${isOpen ? "hidden" : "block"}`}>
                         <div className="border-b border-deep-gray">
                             <div className="text-xl tracking-[0.2em] flex-center pb-4">배송지 선택</div>
-                            <div className="text-sm flex-right link-animation" onClick={openAddressToggle}>
-                                다른 배송지 선택하기
-                            </div>
                             <div className="overflow-auto">
                                 {selectedAddress ? (
-                                    <AddressForm {...selectedAddress} onDelete={false} />
+                                    <>
+                                        <div className="text-sm flex-right link-animation" onClick={openAddressToggle}>
+                                            다른 배송지 선택하기
+                                        </div>
+                                        <AddressForm {...selectedAddress} onDelete={false} />
+                                    </>
                                 ) : (
-                                    <div>배송지를 추가해주세요.</div>
+                                    <div className="w-full h-[200px] flex-center flex-col gap-4">
+                                        <Link
+                                            className="underline text-sm link-animation"
+                                            href="/mypage/address/create">
+                                            + 배송지 추가하기
+                                        </Link>
+                                    </div>
                                 )}
                             </div>
                         </div>
@@ -124,17 +132,9 @@ const MainPC = ({ arr }: { arr: cartProductCardProps[] }) => {
                         </div>
                         {addressArray.length === 1 ? (
                             <div className="flex-center flex-col w-full py-8">
-                                <div className="text-2xl py-4">배송지가 없습니다.</div>
-                                <button type="button" className="text-xl text-deep-gray underline link-animation">
-                                    <Link
-                                        href={{
-                                            pathname: "/mypage/address/create",
-                                        }}
-                                        shallow={true}
-                                        className="ms-2 active:text-deep-gray">
-                                        추가하기
-                                    </Link>
-                                </button>
+                                <Link className="underline text-sm link-animation" href="/mypage/address/create">
+                                    + 배송지 추가하기
+                                </Link>
                             </div>
                         ) : (
                             <>
