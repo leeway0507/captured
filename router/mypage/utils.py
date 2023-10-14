@@ -68,6 +68,9 @@ def create_new_address_id(db: Session, user_id: str):
     last_number = db.query(column).filter(condition).order_by(column.desc())
 
     # last_number = (query, query_result=tuple(result)) 구성임. 따라서 last_number[0][0]으로 값을 추출
-    last_number = last_number[0][0].split("-")[-1]
 
-    return f"UA-{user_id}-{int(last_number)+1}"
+    if last_number.count() == 0:
+        return f"UA-{user_id}-0"
+    else:
+        last_number = last_number[0][0].split("-")[-1]
+        return f"UA-{user_id}-{int(last_number)+1}"

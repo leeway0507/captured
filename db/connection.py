@@ -77,4 +77,5 @@ def commit(db: Session, query: callable, error_log: callable = None):
         else:
             print(e)
         db.rollback()
+        print("커밋 실패 후 rollback")
         return False

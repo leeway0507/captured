@@ -28,6 +28,7 @@ class ProductInfoTable(MyBase):
     search_info = Column(VARCHAR(255))
     color = Column(VARCHAR(50))
     category = Column(VARCHAR(50))
+    category_spec = Column(VARCHAR(50))
     img_type = Column(VARCHAR(10))
     price_desc_cursor = Column(VARCHAR(100))
     price_asc_cursor = Column(VARCHAR(100))
