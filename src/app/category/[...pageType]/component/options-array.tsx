@@ -17,7 +17,7 @@ const ItemBoxSelected = ({ content, checked, setChecked }: ItemBoxSelectedProps)
 
 //
 
-export const OptionArraySelected = (contentList: Array<string>, setFilter: (v: string[]) => void) => {
+export const OptionArraySelected = (contentList: string[], setFilter: (v: string[]) => void) => {
     // create Array for ItemBoxSelected
     const itemBoxArray = contentList.map((content) => {
         return { content: content, checked: false };

@@ -4,19 +4,22 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Filter from "./component/filter";
 import { initFilterMetaProps } from "./type";
-import { useParams } from "next/navigation";
 import { productCardProps } from "@/app/type";
 
 export default function CateogryClient({
     children,
     data,
-    meta,
+    initFilterMeta,
+    pageType,
 }: {
     children: React.ReactNode;
     data: productCardProps[];
-    meta: initFilterMetaProps;
+    initFilterMeta: initFilterMetaProps;
+    pageType: string[];
 }) {
-    const { type } = useParams();
+    console.log("-----------category/client.tsx---------------");
+    console.log("pageType: ", pageType);
+
     const [openFilter, setOpenFilter] = useState<boolean>(false);
     const openFilterToggle = () => {
         setOpenFilter(!openFilter);
@@ -50,7 +53,7 @@ export default function CateogryClient({
             </div>
             <div className="block lg:hidden">
                 <FilterHeader />
-                <Filter filterMeta={meta} isOpen={openFilter} setIsOpen={setOpenFilter} />
+                <Filter initFilterMeta={initFilterMeta} isOpen={openFilter} pageType={pageType[0]} />
                 <div
                     className={`${openFilter ? "block" : "hidden"} black-bar-xl text-center my-4`}
                     onClick={openFilterToggle}>
@@ -64,7 +67,7 @@ export default function CateogryClient({
                     <div className="basis-1/4">
                         <div className="sticky top-0 pb-8">
                             <div className="overflow-scroll">
-                                <Filter filterMeta={meta} isOpen={true} setIsOpen={setOpenFilter} />
+                                <Filter initFilterMeta={initFilterMeta} isOpen={true} pageType={pageType[0]} />
                             </div>
                         </div>
                     </div>

@@ -28,16 +28,37 @@ export interface SizeObject {
     defaultSize: string[];
 }
 
+interface itemArray {
+    productType: string[];
+    sizeArray: string[];
+}
+interface categorySpec {
+    의류: itemArray;
+    신발: itemArray;
+    기타: itemArray;
+    전체: itemArray;
+}
+
 export interface initFilterMetaProps {
     sortBy: string[];
     brand?: string[];
-    category?: string[];
+    category: categorySpec;
     intl: string[];
     price: number[];
     sizeArray: string[];
 }
 
-export interface filterProps {
+export interface filterMetaProps {
+    sortBy: string[];
+    brand: string[];
+    category: string[];
+    categorySpec: string[];
+    sizeArray: string[];
+    intl: string[];
+    price: number[];
+}
+
+export interface filterRequestProps {
     sortBy: string;
     brand?: string;
     category?: string;

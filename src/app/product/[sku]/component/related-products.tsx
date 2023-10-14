@@ -1,7 +1,7 @@
 "use client";
 import type { productCardProps } from "@/app/type";
 import EmblaCarouselMultiProducts from "@/app/components/carousel/EmblaCarouselMultiProducts";
-import ProductCard from "@/app/category/[type]/component/product-card";
+import ProductCard from "@/app/category/[...pageType]/component/product-card";
 
 export default function RelatedProducts({ arr }: { arr: productCardProps[] }) {
     const producInfos: productCardProps[] = arr;
