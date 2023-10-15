@@ -29,7 +29,7 @@ export default function CartProductCardForm(props: cartProductCardFormProps) {
         <div className="text-sub-black text-sm pb-2 border-b border-deep-gray" key={sku + size}>
             <div className="flex-center flex-col">
                 <div className="flex mb-1 w-full">
-                    <div className="flex-center flex-col max-w-[120px] tb:max-w-[150px]">
+                    <div className="flex-center flex-col max-w-[150px] tb:max-w-[180px]">
                         <Link href={`product/${sku}`} className="text-blue-black hover:opacity-50 active:opacity-100">
                             <Image src={productImgUrl} width={500} height={500} alt={productId} />
                         </Link>

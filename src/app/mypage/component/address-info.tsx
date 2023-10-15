@@ -5,26 +5,22 @@ import { getAddress } from "./fetch";
 import { userAddressProps } from "@/app/type";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
+import PageLoading from "@/app/components/loading/page-loading";
 
 //css
 const addressInfoClass = "text-base flex-right active:text-deep-gray cursor-pointer";
 
 export default function AddressInfo() {
     const { data: session } = useSession();
-    console.log(session);
 
-    const [isLoading, setLoading] = useState(true);
     const [addressArray, setAddressArray] = useState<userAddressProps[]>([]);
 
     useEffect(() => {
         getAddress(session?.user.accessToken).then((data) => {
             setAddressArray(data);
-            setLoading(false);
-            console.log(data);
         });
-    }, []);
+    }, [session]);
 
-    if (isLoading) return null;
     if (addressArray.length === 0)
         return (
             <div className="flex-center flex-col py-8 text-xl">
@@ -36,7 +32,7 @@ export default function AddressInfo() {
         );
 
     return (
-        <div className="text-sm overflow-auto max-w-[500px] mx-auto">
+        <div className="text-sm overflow-auto max-w-[500px] mx-auto px-2">
             {addressArray.length < 4 ? (
                 <Link href="mypage/address/create" className={`${addressInfoClass}`}>
                     + 신규 주소 추가

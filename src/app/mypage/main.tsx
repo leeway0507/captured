@@ -2,14 +2,15 @@
 
 import { useSession } from "next-auth/react";
 import { useShoppingCart } from "@/app/components/context/shopping-cart-context";
-import MobileMain from "./main-mobile";
-import MobilePc from "./main-pc";
+import MainMobile from "./main-mobile";
+import MainPc from "./main-pc";
 import SignInAlertModal from "../components/modal/signin-alert-modal-without-btn";
 import PageLoading from "../components/loading/page-loading";
+import { mockDB } from "../api/mock-apis";
 
-export default function Main() {
+export default function Main({ orderHistory }: { orderHistory: JSX.Element }) {
     const { data: session, status } = useSession();
-    const { isMobile } = useShoppingCart();
+    const { isMobile, cartItems } = useShoppingCart();
 
     if (status === "unauthenticated") {
         return <SignInAlertModal />;
@@ -19,5 +20,13 @@ export default function Main() {
         return <PageLoading />;
     }
 
-    return <>{isMobile ? <MobileMain /> : <MobilePc />}</>;
+    return (
+        <>
+            {isMobile ? (
+                <MainMobile signUpType={session?.user.signUpType!} orderHistory={orderHistory} />
+            ) : (
+                <MainPc orderHistory={orderHistory} />
+            )}
+        </>
+    );
 }

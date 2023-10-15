@@ -3,6 +3,7 @@ import { useShoppingCart } from "@/app/components/context/shopping-cart-context"
 import Image from "next/image";
 import Link from "next/link";
 import CartBtn from "./cart-btn";
+import UserDropDown from "./user-dropdown";
 
 export default function NavMobile() {
     const { navOpen, setNavOpen } = useShoppingCart();
@@ -30,6 +31,7 @@ export default function NavMobile() {
                             </Link>
                         </div>
                         <div className="flex-right  basis-1/4">
+                            <UserDropDown />
                             <CartBtn />
                         </div>
                     </div>
