@@ -1,13 +1,13 @@
-import { orderDetailProductCardProps } from "@/app/mypage/type";
+import { orderDetailProductCardProps } from "@/app/type";
 import CartProductCardForm from "@/app/components/product-card/cart-product-card-form";
 import Link from "next/link";
 
-const OrderDetailProductCardArray = (props: orderDetailProductCardProps[]) => {
-    return props.map((item: orderDetailProductCardProps, idx: number) => {
+const OrderDetailProductCardArray = ({ orderItemList }: { orderItemList: orderDetailProductCardProps[] }) => {
+    return orderItemList.map((item: orderDetailProductCardProps, idx: number) => {
         return (
-            <div key={idx} className="relative my-4">
-                <div className="absolute -top-2 right-0  text-xs underline ">
-                    {item.deliveryNumber == "-" ? (
+            <div key={idx} className="relative">
+                <div className="absolute top-2 right-0  text-xs underline ">
+                    {item.deliveryNumber == undefined ? (
                         <div>배송 준비 중</div>
                     ) : (
                         <Link href="" className="link-animation">
@@ -15,7 +15,7 @@ const OrderDetailProductCardArray = (props: orderDetailProductCardProps[]) => {
                         </Link>
                     )}
                 </div>
-                <div className="my-4 border-b border-deep-gray">
+                <div className="border-b border-deep-gray">
                     <CartProductCardForm {...item} countEnable={false} />
                 </div>
             </div>

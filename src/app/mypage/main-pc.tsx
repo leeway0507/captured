@@ -7,19 +7,15 @@ import YesNoModal from "../components/modal/yes-no-modal";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import { signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
 
 function classNames(...classes: any[]) {
     return classes.filter(Boolean).join(" ");
 }
 
-//api-call - 로그아웃
-//status : 제작필요
-//type : GET
-//url : /api/auth/logout
-//function : logout(?) => response[200]
-
-export default function MainPc() {
+export default function MainPc({ orderHistory }: { orderHistory: JSX.Element }) {
     const router = useRouter();
+    const { data: session } = useSession();
     const searchParams = useSearchParams();
 
     const [selectedIndex, setSelectedIndex] = useState(0);
@@ -49,17 +45,6 @@ export default function MainPc() {
                         </Tab>
                         <Tab
                             onClick={() => router.push("/mypage?pageindex=1")}
-                            key="resetPassword"
-                            className={({ selected }) =>
-                                classNames(
-                                    "py-4 tracking-[0.1em] cursor-pointer focus:outline-none",
-                                    selected ? "bg-main-black text-white" : ""
-                                )
-                            }>
-                            비밀번호 변경
-                        </Tab>
-                        <Tab
-                            onClick={() => router.push("/mypage?pageindex=2")}
                             key="setAddress"
                             className={({ selected }) =>
                                 classNames(
@@ -69,17 +54,24 @@ export default function MainPc() {
                             }>
                             주소 추가 및 변경
                         </Tab>
+                        {session?.user.signUpType === "email" && (
+                            <Tab
+                                onClick={() => router.push("/mypage?pageindex=2")}
+                                key="resetPassword"
+                                className={({ selected }) =>
+                                    classNames(
+                                        "py-4 tracking-[0.1em] cursor-pointer focus:outline-none",
+                                        selected ? "bg-main-black text-white" : ""
+                                    )
+                                }>
+                                비밀번호 변경
+                            </Tab>
+                        )}
                         <YesNoModal
                             toggleName={
-                                <Tab
-                                    className={({ selected }) =>
-                                        classNames(
-                                            "py-4 w-full tracking-[0.1em] cursor-pointer focus:outline-none active:bg-main-black active:text-white",
-                                            selected ? "bg-main-black text-white" : ""
-                                        )
-                                    }>
+                                <button className="py-4 w-full tracking-[0.1em] cursor-pointer focus:outline-none active:bg-main-black active:text-white ">
                                     로그아웃
-                                </Tab>
+                                </button>
                             }
                             title="로그아웃"
                             content="로그아웃 하시겠습니까?"
@@ -92,15 +84,7 @@ export default function MainPc() {
                 <Tab.Panels className="flex flex-col basis-2/3 ps-4 my-4">
                     <Tab.Panel key="order" className="grow">
                         <div className="text-3xl flex-center h-[100px] bg-white z-30 tracking-[0.2rem]">주문배송</div>
-                        <Order fontSize="sm" />
-                    </Tab.Panel>
-                    <Tab.Panel key="resetPassword" className="grow">
-                        <div className="text-3xl flex-center h-[100px] bg-white z-30 tracking-[0.2rem]">
-                            비밀번호 변경
-                        </div>
-                        <div className="py-2">
-                            <ResetPasswordFrom />
-                        </div>
+                        {orderHistory}
                     </Tab.Panel>
                     <Tab.Panel key="setAddress" className="grow">
                         <div className="text-3xl flex-center h-[100px] bg-white z-30 tracking-[0.2rem]">
@@ -108,6 +92,14 @@ export default function MainPc() {
                         </div>
                         <div className="py-2">
                             <AddressInfo />
+                        </div>
+                    </Tab.Panel>
+                    <Tab.Panel key="resetPassword" className="grow">
+                        <div className="text-3xl flex-center h-[100px] bg-white z-30 tracking-[0.2rem]">
+                            비밀번호 변경
+                        </div>
+                        <div className="py-2">
+                            <ResetPasswordFrom />
                         </div>
                     </Tab.Panel>
                     <Tab.Panel key="logout" className="grow">

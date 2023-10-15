@@ -88,7 +88,7 @@ export default function NavMobileSideBar({ isOpen, setIsOpen }: { isOpen: boolea
                                 </Link>
                             </div>
                             <div className="bg-light-gray flex px-6 basis-1/12 w-full justify-between items-center">
-                                <Link href="/mypage" onClick={closeNavToggle}>
+                                <Link href="/mypage" onClick={closeNavToggle} className="link-animation">
                                     마이페이지
                                 </Link>
                                 <div>

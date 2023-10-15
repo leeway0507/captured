@@ -1,9 +1,9 @@
-"use client";
-import Spinner from "../components/spinner/spinner";
+import OrderHistory from "../mypage/component/order/order";
+
 const Main = () => {
     return (
         <div>
-            <Spinner></Spinner>
+            <OrderHistory></OrderHistory>
         </div>
     );
 };

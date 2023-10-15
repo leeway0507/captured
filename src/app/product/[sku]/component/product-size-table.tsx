@@ -32,6 +32,7 @@ const ItemBox = ({ size, selectedItem, setSelectedItem, exist }: itemBoxProps) =
 
 const ProductSizeTable = (sizeInfo: sizeInfo) => {
     const { sizeType, availableSize, selectedItem, setSelectedItem } = sizeInfo;
+    console.log("sizeInfo", sizeInfo);
 
     const defaultSizeArryString = process.env.NEXT_PUBLIC_DEFAULT_SIZE;
     const defaultTypeObject = JSON.parse(defaultSizeArryString || "{}");
