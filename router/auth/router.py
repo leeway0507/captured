@@ -41,7 +41,10 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = 
             detail="Incorrect email or password",
             headers={"WWW-Authenticate": "Bearer"},
         )
-    return {**user.model_dump(), **create_access_token_form(user.user_id).model_dump()}
+    return {
+        **user.model_dump(),
+        **create_access_token_form(user.user_id).model_dump(by_alias=False),
+    }
 
 
 @auth_router.get("/sign-in-sns", response_model=LoginResponseSchema)

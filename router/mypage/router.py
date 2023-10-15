@@ -21,6 +21,13 @@ async def get_address(
     return get_user_address(db, user)
 
 
+@mypage_router.get("/get-address-info")
+async def get_address_info_by_id(
+    address_id: str, user: TokenData = Depends(get_current_user), db: Session = Depends(get_db)
+) -> UserAddressSchema:
+    return get_user_address_info(db, address_id)
+
+
 @mypage_router.post("/create-address")
 async def create_address(
     address: UserAddressSchema,
