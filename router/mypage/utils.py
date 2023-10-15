@@ -24,6 +24,14 @@ def get_user_address(db: Session, user: TokenData) -> List[UserAddressSchema]:
     return [UserAddressSchema(**row.to_dict()).model_dump(by_alias=True) for row in result]
 
 
+def get_user_address_info(db: Session, address_id: str) -> UserAddressSchema:
+    """주소 불러오기"""
+
+    result = db.query(UserAddressTable).filter(UserAddressTable.address_id == address_id).first()
+    print(result)
+    return UserAddressSchema(**result.to_dict()).model_dump(by_alias=True)
+
+
 def create_user_address(db: Session, user_address_db: UserAddressInDBSchema) -> bool:
     """주소 생성"""
 

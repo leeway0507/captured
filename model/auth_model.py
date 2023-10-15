@@ -26,7 +26,7 @@ class TokenData(BaseModel):
 class LoginResponseSchema(Token):
     """login_response Schema"""
 
-    model_config = ConfigDict(alias_generator=to_camel, populate_by_name=True)
+    # model_config = ConfigDict(alias_generator=to_camel, populate_by_name=True)
 
     user_id: str
     email: Optional[EmailStr] = None

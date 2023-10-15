@@ -90,7 +90,7 @@ class OrderHistoryTable(MyBase):
     order_id = Column(VARCHAR(255), primary_key=True)
     user_id = Column(VARCHAR(50), ForeignKey("user.user_id"), nullable=False)
     address_id = Column(VARCHAR(255), ForeignKey("user_address.address_id"), nullable=False)
-    order_date = Column(DATE, nullable=False)
+    ordered_at = Column(DATETIME, nullable=False, default=datetime.now())
     user_order_number = Column(INTEGER, nullable=False)
     order_status = Column(VARCHAR(50), nullable=False)
     order_total_price = Column(INTEGER, nullable=False)

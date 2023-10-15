@@ -100,12 +100,23 @@ class OrderHistorySchema(BaseModel):
 
     model_config = ConfigDict(alias_generator=to_camel, populate_by_name=True)
 
-    user_id: Optional[str] = None
-    order_date: datetime
+    user_id: str
     address_id: str
     order_total_price: int
     payment_method: str
     payment_info: str  # hash # 카드번호 & 계좌번호 등..
+
+
+class OrderHistoryResponseSchema(BaseModel):
+    model_config = ConfigDict(alias_generator=to_camel, populate_by_name=True)
+    order_id: str
+    user_order_number: int
+    ordered_at: Optional[datetime] = None
+    order_status: str = "배송준비"  # 배송준비/배송중/배송완료/반품중/취소요청/환불완료
+    payment_status: str = "승인대기"  # 승인대기/승인완료/결제취소
+    address_id: str
+    order_total_price: int
+    payment_method: str
 
 
 class OrderHistoryInDBSchema(OrderHistorySchema):
@@ -115,6 +126,7 @@ class OrderHistoryInDBSchema(OrderHistorySchema):
 
     order_id: str  # OH-[user_id]-[user_order_number]
     user_order_number: int
+    ordered_at: Optional[datetime] = None
     order_status: str = "배송준비"  # 배송준비/배송중/배송완료/반품중/취소요청/환불완료
     payment_status: str = "승인대기"  # 승인대기/승인완료/결제취소
     payment_info: str  # hash # 카드번호 & 계좌번호 등..
@@ -127,6 +139,15 @@ class OrderRowSchmea(BaseModel):
     sku: int
     size: str
     quantity: int
+
+
+class OrderRowResponseSchema(OrderRowSchmea):
+    brand: str
+    product_name: str
+    product_id: str
+    price: int
+    shipping_fee: int
+    intl: bool
 
 
 class OrderRowInDBSchmea(OrderRowSchmea):
