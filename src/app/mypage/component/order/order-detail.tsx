@@ -1,8 +1,88 @@
 import OrderDetailProductCardArray from "./order-product-card-array";
 import { phoneNumberAutoFormat } from "@/app/components/custom-input/check-policy";
-import { userAddressProps, OrderDetailProps, orderDetailProductCardProps } from "../../type";
+import { userAddressProps, orderHistoryProps, orderDetailProductCardProps } from "@/app/type";
 import ProductCheckOut from "@/app/cart/component/product-check-out";
 import { useRouter } from "next/navigation";
+import * as api from "./fetch-client";
+import { useSession } from "next-auth/react";
+
+export default function OrderDetailForm({ orderHistory }: { orderHistory: orderHistoryProps | undefined }) {
+    const router = useRouter();
+    const { data: session } = useSession();
+
+    if (orderHistory === undefined) return <div>loading...</div>;
+
+    const {
+        data: orderAddress,
+        error: addErr,
+        isLoading: loadingAdd,
+    } = api.GetUserAddressInfo(orderHistory.addressId, session?.user.accessToken!);
+    const {
+        data: orderItemList,
+        error: ardErr,
+        isLoading: loadingOrd,
+    } = api.GetOrderRows(orderHistory.orderId, session?.user.accessToken!);
+
+    if (addErr || ardErr) return <div>failed to load</div>;
+    if (loadingAdd || loadingOrd) return <div>loading...</div>;
+    if (session === undefined) return <div>loading...</div>;
+
+    return (
+        <div className="flex flex-col px-3 ">
+            <div className="flex flex-col pb-2 ">
+                <div className="flex-left text-2xl mb-8 border-b border-main-black w-full top-0  py-4 sticky bg-white z-20">
+                    상세 주문 정보
+                </div>
+                <div className="flex justify-between mb-4 text-sm-base ">
+                    <div className="flex flex-col gap-2">
+                        <div className="">주문번호</div>
+                        <div className="">결제일</div>
+                        <div className="">결제방식</div>
+                    </div>
+                    <div className="flex flex-col gap-2">
+                        <div>{orderHistory.userOrderNumber}</div>
+                        <div className="text-xs">
+                            {orderHistory.orderedAt.split("T").map((v, idx) => {
+                                return <div key={idx}>{v}</div>;
+                            })}
+                        </div>
+                        <div>{orderHistory.paymentMethod}</div>
+                    </div>
+                    <div className="flex flex-col gap-2">
+                        <div className="">결제금액</div>
+                        <div className="">주문상태</div>
+                        <div className="">결제상태</div>
+                    </div>
+                    <div className="flex flex-col gap-2 ">
+                        <div>{orderHistory.orderTotalPrice}</div>
+                        <div>{orderHistory.orderStatus}</div>
+                        <div>{orderHistory.paymentStatus}</div>
+                    </div>
+                </div>
+            </div>
+            <div className="flex flex-col pb-8">
+                <div className="flex-left text-2xl mb-8 border-b border-main-black w-full top-0  py-4 sticky bg-white z-20">
+                    배송 정보
+                </div>
+                <Address {...orderAddress} />
+            </div>
+            <div className="flex flex-col pb-2 ">
+                <div className="flex-left text-2xl mb-8 border-b border-main-black w-full top-0  py-4 sticky bg-white z-20">
+                    상세 주문 내역
+                </div>
+                <OrderDetailProductCardArray orderItemList={orderItemList} />
+            </div>
+            <ProductCheckOut arr={orderItemList} />
+            <div
+                className="black-bar-xl"
+                onClick={() => {
+                    router.back(), router.refresh();
+                }}>
+                확인
+            </div>
+        </div>
+    );
+}
 
 const Address = ({
     addressId,
@@ -46,53 +126,3 @@ const Address = ({
         </div>
     );
 };
-
-const DetailOrder = (targetDetail: OrderDetailProps) => {
-    const { orderItemList, orderAddress, ...productInfo } = targetDetail;
-    const router = useRouter();
-    return (
-        <div className="flex flex-col px-3">
-            <div className="flex flex-col pb-2 ">
-                <div className="flex-left text-2xl mb-8 border-b border-main-black w-full tb:top-[197px] tb:h-[80px] tb:sticky bg-white z-20">
-                    상세 주문 정보
-                </div>
-                <div className="flex justify-between mb-4 ">
-                    <div className="flex flex-col gap-2">
-                        <div className="">주문번호</div>
-                        <div className="">결제일</div>
-                    </div>
-                    <div className="flex flex-col gap-2">
-                        <div>{productInfo.orderId}</div>
-                        <div>{productInfo.orderDate}</div>
-                    </div>
-                    <div className="flex flex-col gap-2">
-                        <div className="">결제금액</div>
-                        <div className="">주문상태</div>
-                    </div>
-                    <div className="flex flex-col gap-2 ">
-                        <div>{productInfo.orderPrice}</div>
-                        <div>{productInfo.orderStatus}</div>
-                    </div>
-                </div>
-                <div className="flex flex-col pb-8">
-                    <div className="text-base pb-2">배송정보</div>
-                    <Address {...orderAddress} />
-                </div>
-            </div>
-            <div className="flex flex-col pb-2 ">
-                <div className="flex-left text-2xl mb-8 border-b border-main-black w-full tb:top-[197px] tb:h-[80px] tb:sticky bg-white z-20">
-                    상세 주문 내역
-                </div>
-                {orderItemList.map((item: orderDetailProductCardProps, idx) => (
-                    <div key={idx}>{OrderDetailProductCardArray([item])}</div>
-                ))}
-            </div>
-            <ProductCheckOut arr={targetDetail.orderItemList} />
-            <div className="black-bar-xl" onClick={() => router.back()}>
-                확인
-            </div>
-        </div>
-    );
-};
-
-export default DetailOrder;

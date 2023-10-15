@@ -42,10 +42,13 @@ export interface userProps {
 
 export interface orderHistoryProps {
     orderId: string;
-    orderNumber: string;
-    orderDate: string;
+    userOrderNumber: string;
+    orderedAt: string;
     orderStatus: string;
-    orderPrice: string;
+    orderTotalPrice: string;
+    addressId: string;
+    paymentMethod: string;
+    paymentStatus: string;
 }
 
 export interface orderRowProps {

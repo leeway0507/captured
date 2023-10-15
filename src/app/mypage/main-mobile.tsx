@@ -1,26 +1,14 @@
 "use client";
-import { useShoppingCart } from "@/app/components/context/shopping-cart-context";
+
 import Order from "./component/order/order";
 import AccordionComponent from "@/app/components/accordion/accordion";
 import ResetPasswordFrom from "./component/reset-password-form";
 import AddressInfoFrom from "./component/address-info";
-import { mockDB } from "../api/mock-apis";
 
-export default function MobileMain() {
-    const { cartItems } = useShoppingCart();
+import { signOut } from "next-auth/react";
+import YesNoModal from "../components/modal/yes-no-modal";
 
-    // filter productinfo and append quantity to mockDB
-    const itemInfos = mockDB.filter((item) => {
-        return cartItems?.find((cartItem) => cartItem.id === item.sku) != null;
-    });
-
-    itemInfos.forEach((item: any) => {
-        const cartItem = cartItems?.find((cartItem) => cartItem.id === item.id);
-        if (cartItem !== undefined) {
-            item.quantity = cartItem.quantity;
-        }
-    });
-
+export default function MobileMain({ signUpType, orderHistory }: { signUpType: string; orderHistory: JSX.Element }) {
     return (
         <>
             <div className="flex flex-row w-full px-5">
@@ -29,17 +17,31 @@ export default function MobileMain() {
                         <div className="flex-center text-3xl text-sub-black tracking-[.25em] tb:tracking-[.4em]">
                             주문배송
                         </div>
-                        <Order fontSize="xs" />
+                        {orderHistory}
                         <div className="basis-full">
+                            {signUpType === "email" && (
+                                <AccordionComponent
+                                    title="비밀번호 변경"
+                                    content={ResetPasswordFrom()}
+                                    cat="AddRemoveAddress"
+                                />
+                            )}
                             <AccordionComponent
-                                title="비밀번호 변경"
-                                content={ResetPasswordFrom()}
-                                cat="AddRemoveAddress"
-                            />
-                            <AccordionComponent
-                                title="주소지 추가 및 변경"
+                                title="주소 추가 및 변경"
                                 content={AddressInfoFrom()}
                                 cat="changePersonalInfo"
+                            />
+                            <YesNoModal
+                                toggleName={
+                                    <button type="button" className="text-xl py-3 link-animation">
+                                        로그아웃
+                                    </button>
+                                }
+                                title="로그아웃"
+                                content="로그아웃 하시겠습니까?"
+                                trueCallback={() => {
+                                    signOut({ callbackUrl: "/" });
+                                }}
                             />
                         </div>
                     </div>

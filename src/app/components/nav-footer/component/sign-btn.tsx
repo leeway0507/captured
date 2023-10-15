@@ -5,7 +5,7 @@ function SignInOutButton() {
     const { data: session } = useSession();
 
     return (
-        <div className="w-full h-full">
+        <div className="w-full h-full link-animation">
             {session && session.user ? (
                 <div onClick={() => signOut({ callbackUrl: "/" })}>로그아웃</div>
             ) : (

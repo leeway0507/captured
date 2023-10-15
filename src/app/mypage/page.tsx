@@ -1,15 +1,11 @@
 import NavFooter from "@/app/components/nav-footer/client-side/nav-footer";
 import Main from "./main";
-import { MyPageProvider } from "./mypage-provider";
+import OrderHistory from "./component/order/order";
 
 export default function Page() {
     return (
-        <>
-            <MyPageProvider>
-                <NavFooter>
-                    <Main />
-                </NavFooter>
-            </MyPageProvider>
-        </>
+        <NavFooter>
+            <Main orderHistory={<OrderHistory />} />
+        </NavFooter>
     );
 }

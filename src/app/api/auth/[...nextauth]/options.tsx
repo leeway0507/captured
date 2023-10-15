@@ -23,8 +23,25 @@ export const options: NextAuthOptions = {
                 if (res.status == 401) throw new Error("아이디 또는 패스워드가 일치하지 않습니다.");
 
                 if (res.status == 200) {
-                    // Any object returned will be saved in `user` property of the JWT
-                    return res.user;
+                    //update user when user is existed
+                    // Swagger에서는 accessToken을 인식 못하므로 signin result에 대해서는 snake_case를 사용
+                    const user = {
+                        id: "",
+                        userId: "",
+                        accessToken: "",
+                        krName: "",
+                        signUpType: "",
+                        emailVerification: false,
+                        email: "",
+                    };
+
+                    user.userId = res.user.user_id;
+                    user.accessToken = res.user.access_token;
+                    user.krName = res.user.kr_name;
+                    user.signUpType = res.user.sign_up_type;
+                    user.emailVerification = res.user.email_verification;
+                    user.email = res.user.email;
+                    return user;
                 } else {
                     // If you return null then an error will be displayed advising the user to check their details.
                     return null;
@@ -50,15 +67,19 @@ export const options: NextAuthOptions = {
                 if (account!.type === "oauth") {
                     var user_check = await api.getOauthUser(account!);
 
+                    // console.log("---------signIn---------");
+                    // console.log(user_check);
+
                     //register user when user is not existed
                     const res =
                         user_check.status == 404 ? await api.registerOauthUser(account!, profile, user) : user_check;
 
                     //update user when user is existed
-                    user.accessToken = res.user.accessToken;
-                    user.krName = res.user.krName;
-                    user.signUpType = res.user.signUpType;
-                    user.emailVerification = res.user.emailVerification;
+                    // Swagger에서는 accessToken을 인식 못하므로 signin result에 대해서는 snake_case를 사용
+                    user.accessToken = res.user.access_token;
+                    user.krName = res.user.kr_name;
+                    user.signUpType = res.user.sign_up_type;
+                    user.emailVerification = res.user.email_verification;
 
                     return true;
                 }
@@ -69,11 +90,11 @@ export const options: NextAuthOptions = {
         },
 
         async jwt({ token, user, account, profile }) {
-            console.log("---------jwt---------");
-            console.log("token : ", token);
-            console.log("user : ", user);
-            console.log("account : ", account);
-            console.log("profile : ", profile);
+            // console.log("---------jwt---------");
+            // console.log("token : ", token);
+            // console.log("user : ", user);
+            // console.log("account : ", account);
+            // console.log("profile : ", profile);
 
             return { ...token, ...user };
         },

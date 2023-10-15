@@ -4,47 +4,58 @@ import CartproductCardArr from "./component/product-card-array";
 import { cartProductCardProps } from "../type";
 import ProductCheckOut from "../cart/component/product-check-out";
 import { AddressForm } from "@/app/mypage/component/address-info-form";
-import { mockAddressArrayAPI } from "../mypage/component/mock-apis";
 import { IntlShipment } from "../components/notification/shipment-info";
 import { useEffect, useState } from "react";
 import { userAddressProps } from "@/app/type";
 import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
+import Image from "next/image";
+import Link from "next/link";
+import { DefaultAddressModule, SubAddressModule } from "./component/address-info";
 
-const MainMobile = ({ arr }: { arr: cartProductCardProps[] }) => {
-    const [selectedAddress, setSelectedAddress] = useState<userAddressProps | undefined>(undefined);
-
-    const { data: session } = useSession();
-
-    const [isOpen, setIsOpen] = useState<boolean>(false);
+const MainMobile = ({
+    arr,
+    accessToken,
+    addressArray,
+}: {
+    arr: cartProductCardProps[];
+    accessToken: string;
+    addressArray: userAddressProps[];
+}) => {
     const router = useRouter();
+    const [changeAddress, setChangeAddress] = useState<boolean>(false);
+    const [selectedAddress, setSelectedAddress] = useState<userAddressProps>(addressArray[0]);
 
-    const openToggle = () => {
-        setIsOpen(!isOpen);
-        router.push("/order?chooseAddress=true");
+    // 주소 오픈/클로즈 토글
+    const openAddressToggle = () => {
+        setChangeAddress(!changeAddress);
+        window.location.href.includes("?chooseAddress=true")
+            ? router.push("/order")
+            : router.push("/order?chooseAddress=true");
     };
+
+    //주소 선택 토글
     const selectAddressToggle = (address: userAddressProps) => {
         setSelectedAddress(address);
-        setIsOpen(false);
+        setChangeAddress(false);
         router.push("/order");
     };
 
-    //api-call - 제품 정보
-
-    //api-call - 배송지 정보
-    const addressArray = mockAddressArrayAPI;
-
-    useEffect(() => {
-        setSelectedAddress(addressArray[0]);
-        console.log("mobile", addressArray[0]);
-    }, [addressArray]);
-
-    // api.getUserAddressArray
     return (
-        <>
+        <div className="px-4">
+            <div className="sticky top-0 h-[100px] w-full m-auto px-4 z-50 bg-white">
+                <div className="flex h-full">
+                    <div className="flex-center basis-1/4"></div>
+                    <div className="flex-center basis-1/2">
+                        <Link href="/">
+                            <Image src="/icons/main-logo.svg" alt="main logo" width={160} height={36} />
+                        </Link>
+                    </div>
+                    <div className="flex-center basis-1/4"></div>
+                </div>
+            </div>
             <div
                 className={`m-auto flex flex-col relative absolute top-0 lef-0 h-full w-full bg-white overflow-hidden ${
-                    !isOpen ? "block" : "hidden"
+                    !changeAddress ? "block" : "hidden"
                 }`}>
                 <div className="border-b border-deep-gray py-2">
                     <div className="text-2xl tracking-[0.2em] flex-center py-4 ">주문요약</div>
@@ -55,20 +66,12 @@ const MainMobile = ({ arr }: { arr: cartProductCardProps[] }) => {
                 <div className="border-b border-deep-gray py-4 my-4">
                     <div className="text-2xl tracking-[0.2em] flex-center py-4">배송지 정보</div>
                     <div className="overflow-auto pt-2">
-                        {selectedAddress ? (
-                            <>
-                                <div className="flex-right link-animation" onClick={openToggle}>
-                                    다른 배송지 선택하기
-                                </div>
-                                <AddressForm
-                                    {...selectedAddress}
-                                    accessToken={session?.user.accessToken}
-                                    onDelete={false}
-                                />
-                            </>
-                        ) : (
-                            <div>배송지를 추가해주세요.</div>
-                        )}
+                        <DefaultAddressModule
+                            openAddressToggle={openAddressToggle}
+                            addressArray={addressArray}
+                            selectedAddress={selectedAddress}
+                            accessToken={accessToken}
+                        />
                     </div>
 
                     <IntlShipment
@@ -86,28 +89,21 @@ const MainMobile = ({ arr }: { arr: cartProductCardProps[] }) => {
             </div>
 
             {/* 배송지 선택 */}
-            <div className={`w-full bg-white overflow-hidden ${isOpen ? "block" : "hidden"}`}>
-                {addressArray.map(
-                    (address, index) =>
-                        address.addressId != selectedAddress?.addressId && (
-                            <div key={index} className="flex flex-col border-b border-black flex-center py-3 ">
-                                <AddressForm {...address} onDelete={false} />
-                                <div
-                                    className="m-auto w-full bg-light-gray rounded-md py-3 px-5 -mt-4 z-10"
-                                    onClick={() => selectAddressToggle(address)}>
-                                    <div className="black-bar">선택하기</div>
-                                </div>
-                            </div>
-                        )
-                )}
+            <div className={`w-full bg-white overflow-hidden ${changeAddress ? "block" : "hidden"}`}>
+                <SubAddressModule
+                    addressArray={addressArray}
+                    selectAddressToggle={selectAddressToggle}
+                    accessToken={accessToken}
+                    selectedAddress={selectedAddress}
+                />
                 <button
                     type="button"
-                    className="border-b border-black flex-center py-1 active:bg-light-gray py-3 mb-6 tracking-[0.2rem] "
-                    onClick={openToggle}>
+                    className="w-full border-b border-black flex-center py-1 active:bg-light-gray py-3 mb-6 tracking-[0.2rem] "
+                    onClick={openAddressToggle}>
                     닫기
                 </button>
             </div>
-        </>
+        </div>
     );
 };
 
