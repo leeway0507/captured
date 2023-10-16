@@ -1,8 +1,7 @@
 from sqlalchemy.dialects.mysql import VARCHAR, INTEGER, DATE, BOOLEAN, DATETIME
-from sqlalchemy import Column, ForeignKey
+from sqlalchemy import Column, ForeignKey, func
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
-from datetime import datetime
 
 
 Base = declarative_base()
@@ -43,7 +42,10 @@ class SizeTable(MyBase):
     sku = Column(INTEGER, ForeignKey("product_info.sku"), nullable=False)
     size = Column(VARCHAR(50), nullable=False)
     available = Column(BOOLEAN, nullable=False, default=True)
-    updated_at = Column(DATETIME, nullable=False, default=datetime.now())
+    updated_at = Column(
+        DATETIME,
+        nullable=False,
+    )
     product = relationship("ProductInfoTable")
 
     class Config:
@@ -58,7 +60,7 @@ class UserTable(MyBase):
     password = Column(VARCHAR(255), nullable=True)
     kr_name = Column(VARCHAR(30), nullable=False)
     email_verification = Column(BOOLEAN, nullable=False, default=False)
-    register_at = Column(DATETIME, nullable=False, default=datetime.now())
+    register_at = Column(DATETIME, nullable=False)
     sign_up_type = Column(VARCHAR(20), nullable=False)
 
     class Config:
@@ -90,7 +92,7 @@ class OrderHistoryTable(MyBase):
     order_id = Column(VARCHAR(255), primary_key=True)
     user_id = Column(VARCHAR(50), ForeignKey("user.user_id"), nullable=False)
     address_id = Column(VARCHAR(255), ForeignKey("user_address.address_id"), nullable=False)
-    ordered_at = Column(DATETIME, nullable=False, default=datetime.now())
+    ordered_at = Column(DATETIME, nullable=False)
     user_order_number = Column(INTEGER, nullable=False)
     order_status = Column(VARCHAR(50), nullable=False)
     order_total_price = Column(INTEGER, nullable=False)

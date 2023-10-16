@@ -3,7 +3,7 @@
 from pydantic import BaseModel, validator, ConfigDict, EmailStr, Field
 from pydantic.alias_generators import to_camel
 
-from typing import List, Any, Optional
+from typing import Optional
 from datetime import datetime
 
 
@@ -62,13 +62,13 @@ class UserSchema(BaseModel):
     email: Optional[EmailStr] = None
     kr_name: str
     email_verification: bool
-    register_at: Optional[datetime] = None
     sign_up_type: str
 
 
 class UserIndDBSchema(UserSchema):
     """User Schema in DB"""
 
+    register_at: datetime
     password: Optional[str] = None
 
 
@@ -95,7 +95,7 @@ class UserAddressInDBSchema(UserAddressSchema):
     permanent: bool = False
 
 
-class OrderHistorySchema(BaseModel):
+class OrderHistoryRequestSchema(BaseModel):
     """OrderHistoryTable Schema"""
 
     model_config = ConfigDict(alias_generator=to_camel, populate_by_name=True)
@@ -111,7 +111,7 @@ class OrderHistoryResponseSchema(BaseModel):
     model_config = ConfigDict(alias_generator=to_camel, populate_by_name=True)
     order_id: str
     user_order_number: int
-    ordered_at: Optional[datetime] = None
+    ordered_at: datetime
     order_status: str = "배송준비"  # 배송준비/배송중/배송완료/반품중/취소요청/환불완료
     payment_status: str = "승인대기"  # 승인대기/승인완료/결제취소
     address_id: str
@@ -119,14 +119,14 @@ class OrderHistoryResponseSchema(BaseModel):
     payment_method: str
 
 
-class OrderHistoryInDBSchema(OrderHistorySchema):
+class OrderHistoryInDBSchema(OrderHistoryRequestSchema):
     """OrderHistoryTable Schema"""
 
     model_config = ConfigDict(alias_generator=to_camel, populate_by_name=True)
 
     order_id: str  # OH-[user_id]-[user_order_number]
     user_order_number: int
-    ordered_at: Optional[datetime] = None
+    ordered_at: datetime
     order_status: str = "배송준비"  # 배송준비/배송중/배송완료/반품중/취소요청/환불완료
     payment_status: str = "승인대기"  # 승인대기/승인완료/결제취소
     payment_info: str  # hash # 카드번호 & 계좌번호 등..

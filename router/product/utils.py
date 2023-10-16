@@ -274,20 +274,26 @@ def create_page_index(limit: int, db: Session, query: Dict[str, Any]) -> Dict[in
 
     if not sku_list:
         return {}
+    print("-----create_page_index-----")
+    print("sku_list", sku_list)
     return _get_index_by_sort_type(sort_type, sku_list, limit)
 
 
 def _get_index_by_sort_type(sort_type: str, sku_list: List, limit: int) -> Dict[int, int | str]:
+    if len(sku_list) % limit == 0:
+        page = len(sku_list) // limit
+    else:
+        page = len(sku_list) // limit + 1
+
     if sort_type in ["높은 가격 순", "낮은 가격 순"]:
         # 높은 가격 순 일 땐 12자리, 낮은 가격 순 일 땐 11자리를 맞춰줘야함.
 
         zfill_value = 12 if sort_type == "높은 가격 순" else 11
         sku_list = list(map(lambda x: int(x[0]), sku_list))
-        return {
-            i + 1: str(sku_list[i * limit] + 1).zfill(zfill_value)
-            for i in range(0, len(sku_list) // limit + 1)
-        }
+        return {i + 1: str(sku_list[i * limit] + 1).zfill(zfill_value) for i in range(0, page)}
 
     else:
         sku_list = list(map(lambda x: x[0], sku_list))
-        return {i + 1: int(sku_list[i * limit] + 1) for i in range(0, len(sku_list) // limit + 1)}
+        print("-----_get_index_by_sort_type-----")
+        print("sku_list", sku_list)
+        return {i + 1: int(sku_list[i * limit] + 1) for i in range(0, page)}

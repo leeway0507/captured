@@ -14,6 +14,7 @@ from model.db_model import (
 )
 
 from passlib.context import CryptContext
+from datetime import datetime
 
 error_log = make_logger("logs/db/product.log")
 
@@ -58,7 +59,7 @@ def get_order_history_from_db(db: Session, user_id: str):
         db.query(OrderHistoryTable)
         .filter(OrderHistoryTable.user_id == user_id)
         .order_by(OrderHistoryTable.ordered_at.desc())
-        .limit(10)
+        .limit(20)
         .all()
     )
     return [OrderHistoryResponseSchema(**row.to_dict()).model_dump(by_alias=True) for row in result]
