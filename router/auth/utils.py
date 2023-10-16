@@ -15,7 +15,7 @@ from sqlalchemy.orm import Session
 
 
 from model.db_model import UserSchema, UserAddressSchema, UserIndDBSchema, UserAddressInDBSchema
-from model.registration_model import RegistrationEmailSchema, RegistrationOauthSchema
+from model.registration_model import EmailRegistrationSchema, RegistrationOauthSchema
 from model.auth_model import LoginSchema, TokenData, Token
 from logs.make_log import make_logger
 from db.tables import UserTable, UserAddressTable
@@ -154,11 +154,11 @@ def register_auth_user(
 
 
 def register_user_and_address(
-    db: Session, user_registration: RegistrationEmailSchema, address: UserAddressSchema
+    db: Session, user_registration: EmailRegistrationSchema, address: UserAddressSchema
 ) -> UserSchema | bool:
     """
     회원가입 시 user, address 정보를 DB에 저장 | 성공 & 실패 여부에 따라 UserSchema 반환
-    - args : user(RegistrationEmailSchema), address(UserAddressSchema)
+    - args : user(EmailRegistrationSchema), address(UserAddressSchema)
     - return : UserSchema | None
     """
 
@@ -166,6 +166,7 @@ def register_user_and_address(
         # add user info
         user_registration.user_id = create_user_id()
         user_registration.password = get_password_hash(user_registration.password)
+        user_registration.register_at = datetime.now()
         db.add(UserTable(**user_registration.model_dump()))
         db.commit()
 

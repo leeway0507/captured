@@ -14,7 +14,7 @@ from fastapi.security import OAuth2PasswordRequestForm
 
 from model.auth_model import LoginSchema, LoginResponseSchema
 from model.db_model import UserAddressSchema
-from model.registration_model import RegistrationEmailSchema, RegistrationOauthSchema
+from model.registration_model import EmailRegistrationSchema, RegistrationOauthSchema
 from db.connection import get_db
 from sqlalchemy.orm import Session
 
@@ -77,7 +77,7 @@ async def email_check(email: str, db: Session = Depends(get_db)) -> dict[str, bo
 
 @auth_router.post("/register", status_code=201, response_model=LoginResponseSchema)
 async def register(
-    user_registration: RegistrationEmailSchema,
+    user_registration: EmailRegistrationSchema,
     address: UserAddressSchema,
     db: Session = Depends(get_db),
 ):

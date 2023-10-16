@@ -5,7 +5,7 @@ from fastapi import APIRouter, Depends, HTTPException
 
 from model.auth_model import TokenData
 from model.db_model import (
-    OrderHistorySchema,
+    OrderHistoryRequestSchema,
     OrderRowSchmea,
     OrderHistoryInDBSchema,
     OrderRowInDBSchmea,
@@ -48,7 +48,7 @@ async def get_order_row(
 
 @order_router.post("/create-order-history")
 async def create_order_history(
-    order_history: OrderHistorySchema,
+    order_history: OrderHistoryRequestSchema,
     db: Session = Depends(get_db),
     user: TokenData = Depends(get_current_user),
 ):
@@ -60,6 +60,7 @@ async def create_order_history(
         **order_history.model_dump(),
         order_id=order_id,
         user_order_number=order_count,
+        ordered_at=datetime.now(),
     )
     if create_order_history_into_db(order_history_in_db, db):
         return {"orderId": order_id}
