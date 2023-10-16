@@ -34,10 +34,10 @@ const selectFilterType = (initFilterMeta: initFilterMetaProps, pageType: string)
 export default function Filter({ initFilterMeta, isOpen, pageType }: FilterDropdownProps) {
     const { productType, sizeArray } = selectFilterType(initFilterMeta, pageType);
 
-    console.log("-----------filter.tsx---------------");
-    console.log("pageType: ", pageType);
+    // console.log("-----------filter.tsx---------------");
+    // console.log("pageType: ", pageType);
     // console.log("initFilterMeta: ", initFilterMeta);
-    console.log("productType: ", productType);
+    // console.log("productType: ", productType);
     // console.log("sizeArray: ", sizeArray);
     // console.log("--------------------------");
 

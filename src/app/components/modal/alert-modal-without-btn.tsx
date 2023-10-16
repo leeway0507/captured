@@ -1,6 +1,4 @@
 import BaseModal from "./base-modal";
-import { useState } from "react";
-
 interface alertModalProps {
     title: string;
     content: string | JSX.Element;

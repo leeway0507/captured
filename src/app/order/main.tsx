@@ -23,7 +23,7 @@ const getCartDataFromLocalStorage = (cartItems: cartItemProps[]) => {
 
 export default function Main({ addressArray }: { addressArray: userAddressProps[] }) {
     const { isMobile, cartItems } = useShoppingCart();
-    const { data: session, status } = useSession();
+    const { data: session } = useSession();
 
     const [data, setData] = useState<cartProductCardProps[] | undefined>(undefined);
 
@@ -31,7 +31,6 @@ export default function Main({ addressArray }: { addressArray: userAddressProps[
         setData(getCartDataFromLocalStorage(cartItems));
     }, [cartItems]);
 
-    if (status === "unauthenticated") return <SigninAlertModal />;
     if (data === undefined) return <PageLoading />;
 
     return (

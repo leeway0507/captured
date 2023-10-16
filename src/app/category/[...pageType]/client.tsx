@@ -17,8 +17,8 @@ export default function CateogryClient({
     initFilterMeta: initFilterMetaProps;
     pageType: string[];
 }) {
-    console.log("-----------category/client.tsx---------------");
-    console.log("pageType: ", pageType);
+    // console.log("-----------category/client.tsx---------------");
+    // console.log("pageType: ", pageType);
 
     const [openFilter, setOpenFilter] = useState<boolean>(false);
     const openFilterToggle = () => {

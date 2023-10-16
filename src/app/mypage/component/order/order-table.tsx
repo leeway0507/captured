@@ -21,14 +21,14 @@ export default function OrderTable({
     orderHistoryArray: orderHistoryProps[];
 }) {
     const router = useRouter();
-    const searchParams = useSearchParams();
 
     const [seeMore, setSeeMore] = useState(false);
     const [openDetailOrder, setOpenDetailOrder] = useState(false);
     const [targetOrder, setTargetOrder] = useState<orderHistoryProps>();
-    const [orderList, setOrderList] = useState(() => orderHistoryArray.slice(0, showInitalRows));
-    const openToggle = () => {
-        setSeeMore(!seeMore);
+    const [orderList, setOrderList] = useState(orderHistoryArray.slice(0, showInitalRows));
+    const openToggle = (value: boolean) => {
+        setSeeMore(value);
+        value ? setOrderList(orderHistoryArray) : setOrderList(orderHistoryArray.slice(0, showInitalRows));
     };
 
     const openDetailOrderToggle = (e: React.MouseEvent) => {
@@ -36,11 +36,6 @@ export default function OrderTable({
         router.push(`/mypage/?orderId=${orderId}`);
         setOpenDetailOrder(true);
         setTargetOrder(orderHistoryArray.find((order) => order.orderId === orderId));
-        scrollToTop();
-    };
-
-    const closeDetailToggle = () => {
-        router.push("/mypage?pageindex=0");
         scrollToTop();
     };
 
@@ -78,13 +73,15 @@ export default function OrderTable({
                     </div>
                     <div
                         className="border-b border-main-black flex-center py-3 mb-6 tracking-[0.2rem] link-animation"
-                        onClick={openToggle}>
+                        onClick={() => {
+                            openToggle(!seeMore);
+                        }}>
                         {seeMore ? "닫기" : "더보기"}
                     </div>
                 </div>
             ) : (
                 <div>
-                    <OrderDetailForm orderHistory={targetOrder} />
+                    <OrderDetailForm orderHistory={targetOrder} setOpenDetailOrder={setOpenDetailOrder} />
                 </div>
             )}
         </div>

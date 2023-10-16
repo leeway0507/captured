@@ -44,7 +44,7 @@ export default function SignIn() {
     };
 
     return (
-        <div className="flex flex-col text-main-black px-5 max-w-[600px] h-full justify-between py-16 m-auto">
+        <div className="flex flex-col text-main-black px-5 max-w-[600px] w-full mx-auto pt-16">
             <div className="flex flex-col py-2 gap-6">
                 <div>
                     <CustomInput

@@ -5,8 +5,8 @@ import Link from "next/link";
 const OrderDetailProductCardArray = ({ orderItemList }: { orderItemList: orderDetailProductCardProps[] }) => {
     return orderItemList.map((item: orderDetailProductCardProps, idx: number) => {
         return (
-            <div key={idx} className="relative">
-                <div className="absolute top-2 right-0  text-xs underline ">
+            <div key={idx} className="relative py-2">
+                <div className="absolute top-2 left-[150px] px-2  text-xs underline ">
                     {item.deliveryNumber == undefined ? (
                         <div>배송 준비 중</div>
                     ) : (

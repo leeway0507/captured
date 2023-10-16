@@ -12,8 +12,8 @@ export default function NavFooter({ children }: NavFooterProps) {
         <ContextWrapper>
             <main className="custom-container h-screen xl:mx-4">
                 <NavMain />
-                <div className="grow flex flex-col justify-between overflow-scroll ">
-                    <div>{children}</div>
+                <div className="grow flex flex-col justify-between overflow-scroll w-full" id="main-body">
+                    {children}
                     <Footer />
                 </div>
             </main>

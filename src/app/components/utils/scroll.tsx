@@ -1,5 +1,5 @@
 export const scrollToTop = (behavior: "auto" | "smooth" = "smooth") => {
-    window.scrollTo({
+    document.querySelector("#main-body")!.scrollTo({
         top: 0,
         behavior: behavior,
     });

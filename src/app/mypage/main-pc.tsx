@@ -81,7 +81,7 @@ export default function MainPc({ orderHistory }: { orderHistory: JSX.Element }) 
                         />
                     </Tab.List>
                 </Tab.List>
-                <Tab.Panels className="flex flex-col basis-2/3 ps-4 my-4">
+                <Tab.Panels className="flex flex-col basis-2/3 px-4 my-4">
                     <Tab.Panel key="order" className="grow">
                         <div className="text-3xl flex-center h-[100px] bg-white z-30 tracking-[0.2rem]">주문배송</div>
                         {orderHistory}
