@@ -7,14 +7,20 @@ import ProductSpecificInfo from "./component/product-specific-info";
 import { productCardProps } from "@/app/type";
 import AddBasket from "./component/add-basket-client";
 
-export default async function MainMobile(product: productCardProps) {
+export default async function MainMobile({
+    product,
+    defaultSizeArr,
+}: {
+    product: productCardProps;
+    defaultSizeArr: string[];
+}) {
     return (
         <div className="flex flex-col justify-between w-full">
             <Thumbnail {...product} />
             <div className="m-4">
                 <ProductInfo {...product} />
                 <div className="pt-4 ">
-                    <AddBasket {...product} />
+                    <AddBasket data={product} defaultSizeArr={defaultSizeArr} />
                     <div className="py-4">
                         {product.intl ? (
                             <IntlShipment

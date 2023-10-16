@@ -1,4 +1,3 @@
-import { Dropdown } from "flowbite-react";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { signOut } from "next-auth/react";

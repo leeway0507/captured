@@ -29,7 +29,7 @@ export default function CartProductCardForm(props: cartProductCardFormProps) {
         <div className="text-sub-black text-sm pb-2 border-b border-deep-gray" key={sku + size}>
             <div className="flex-center flex-col">
                 <div className="flex mb-1 w-full">
-                    <div className="flex-center flex-col max-w-[150px] tb:max-w-[180px]">
+                    <div className="flex-center flex-col max-w-[150px] ">
                         <Link href={`product/${sku}`} className="text-blue-black hover:opacity-50 active:opacity-100">
                             <Image src={productImgUrl} width={500} height={500} alt={productId} />
                         </Link>
@@ -57,7 +57,7 @@ export default function CartProductCardForm(props: cartProductCardFormProps) {
                 <div className="flex w-full">
                     {countEnable ? (
                         <>
-                            <div className="flex-center max-w-[120px] grow">
+                            <div className="flex-center max-w-[150px] grow">
                                 <button
                                     type="button"
                                     className="px-3"
@@ -93,7 +93,7 @@ export default function CartProductCardForm(props: cartProductCardFormProps) {
                         </>
                     ) : (
                         <>
-                            <div className="flex-center max-w-[120px] grow">
+                            <div className="flex-center max-w-[150px] grow">
                                 <span> {`수량 : ${quantity}`}</span>
                             </div>
                             <div className="text-sub-black flex-right grow text-base">

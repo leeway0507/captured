@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import UserDropDown from "./user-dropdown";
 import CartBtn from "./cart-btn";
+import BrandDropDown from "./brand-dropdown";
 
 export default function NavPc() {
     const { setSearch, search, setNavOpen } = useShoppingCart();
@@ -15,7 +16,7 @@ export default function NavPc() {
     return (
         <>
             <header
-                className="border-x-none h-[130px] px-16 xl:px-32 sticky top-0 flex flex-col justify-between border-light-gray z-50 bg-white pt-3"
+                className="relative border-x-none h-[130px] px-16 xl:px-32 sticky top-0 flex flex-col justify-between border-light-gray z-50 bg-white pt-3"
                 style={{ boxShadow: "0px 2px 0px var(--deep-gray)" }}>
                 <div className="flex w-full justify-evenly">
                     <div className="flex-left basis-3/12" onClick={closeNavToggle}>
@@ -44,7 +45,10 @@ export default function NavPc() {
                         <div className="mx-2">LATEST</div>
                     </Link>
                     <Link href="/brands">
-                        <div className="mx-2">BRANDS</div>
+                        <div className="mx-2 group ">
+                            BRANDS
+                            <BrandDropDown />
+                        </div>
                     </Link>
                     <Link href="/category/shoes">
                         <div className="mx-2">SHOES</div>

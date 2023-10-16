@@ -5,8 +5,15 @@ import ProductCheckOut from "@/app/cart/component/product-check-out";
 import { useRouter } from "next/navigation";
 import * as api from "./fetch-client";
 import { useSession } from "next-auth/react";
+import { scrollToTop } from "@/app/components/utils/scroll";
 
-export default function OrderDetailForm({ orderHistory }: { orderHistory: orderHistoryProps | undefined }) {
+export default function OrderDetailForm({
+    orderHistory,
+    setOpenDetailOrder,
+}: {
+    orderHistory: orderHistoryProps | undefined;
+    setOpenDetailOrder: (v: boolean) => void;
+}) {
     const router = useRouter();
     const { data: session } = useSession();
 
@@ -67,7 +74,7 @@ export default function OrderDetailForm({ orderHistory }: { orderHistory: orderH
                 <Address {...orderAddress} />
             </div>
             <div className="flex flex-col pb-2 ">
-                <div className="flex-left text-2xl mb-8 border-b border-main-black w-full top-0  py-4 sticky bg-white z-20">
+                <div className="flex-left text-2xl mb-2 border-b border-main-black w-full top-0  py-4 sticky bg-white z-20">
                     상세 주문 내역
                 </div>
                 <OrderDetailProductCardArray orderItemList={orderItemList} />
@@ -76,7 +83,8 @@ export default function OrderDetailForm({ orderHistory }: { orderHistory: orderH
             <div
                 className="black-bar-xl"
                 onClick={() => {
-                    router.back(), router.refresh();
+                    scrollToTop();
+                    setOpenDetailOrder(false);
                 }}>
                 확인
             </div>
