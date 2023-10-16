@@ -6,7 +6,6 @@ import MainMobile from "./main-mobile";
 import MainPc from "./main-pc";
 import SignInAlertModal from "../components/modal/signin-alert-modal-without-btn";
 import PageLoading from "../components/loading/page-loading";
-import { mockDB } from "../api/mock-apis";
 
 export default function Main({ orderHistory }: { orderHistory: JSX.Element }) {
     const { data: session, status } = useSession();

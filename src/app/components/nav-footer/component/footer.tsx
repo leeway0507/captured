@@ -18,12 +18,12 @@ export default function Footer() {
                 </a>
             </div>
 
-            <div className="flex flex-row justify-between px-5 tb:px-12 py-3 text-sm tb:text-base">
-                <a href=".">FAQ</a>
-                <a href=".">문의하기</a>
-                <a href=".">교환 및 반품</a>
-                <a href=".">배송안내</a>
-                <a href=".">주문조회</a>
+            <div className="flex flex-row justify-between px-5 tb:px-12 py-3 text-xs tb:text-sm tb:text-base">
+                <a href="/support/aboutus">ABOUT US</a>
+                <a href="/support/faq">FAQ</a>
+                <a href="/support/policy/delivery">배송안내</a>
+                <a href="/support/policy/privacy">개인정보</a>
+                <a href="/mypage">주문조회</a>
             </div>
             <div className="py-3"></div>
             <div className="flex flex-col px-5 tb:px-12 text-xs tb:text-sm">

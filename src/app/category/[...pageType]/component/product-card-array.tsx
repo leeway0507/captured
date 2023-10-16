@@ -72,7 +72,7 @@ const ProductCardArrary = ({
 
         // 마지막 페이지 도달 시 더보기 실행 방지
         currentPage < lastPage ? loadMoreObserver.observe(ref.current!) : loadMoreObserver.unobserve(ref.current!);
-    }, [data, currentPage, lastPage, router]);
+    }, [data, currentPage, router, refresh, lastPage]);
 
     const nextPage = currentPage + 1;
     const prevPage = currentPage - 1;
@@ -91,16 +91,16 @@ const ProductCardArrary = ({
                 {Object.entries(localData).map((item, idx) => {
                     const currentPage = parseInt(item[0]);
                     return (
-                        <>
-                            <div className={`grid grid-cols-2 tb:grid-cols-3 gap-1 page-container`} key={idx}>
-                                {item[1].map((data: any) => {
+                        <div key={idx}>
+                            <div className={`grid grid-cols-2 tb:grid-cols-3 gap-1 page-container`}>
+                                {item[1].map((data) => {
                                     return <ProductCard {...data} key={data.sku} />;
                                 })}
                             </div>
                             <div
                                 className="page-observer h-[100px] w-full bg-red-300"
                                 data-next={`page=${currentPage + 1 <= lastPage ? currentPage + 1 : lastPage} `}></div>
-                        </>
+                        </div>
                     );
                 })}
             </div>

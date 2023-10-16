@@ -3,6 +3,7 @@ interface sizeInfo {
     availableSize: string[];
     selectedItem: string;
     setSelectedItem: (v: string) => void;
+    defaultSizeArr: string[];
 }
 
 interface itemBoxProps {
@@ -31,16 +32,12 @@ const ItemBox = ({ size, selectedItem, setSelectedItem, exist }: itemBoxProps) =
 };
 
 const ProductSizeTable = (sizeInfo: sizeInfo) => {
-    const { sizeType, availableSize, selectedItem, setSelectedItem } = sizeInfo;
+    const { sizeType, availableSize, selectedItem, setSelectedItem, defaultSizeArr } = sizeInfo;
     console.log("sizeInfo", sizeInfo);
-
-    const defaultSizeArryString = process.env.NEXT_PUBLIC_DEFAULT_SIZE;
-    const defaultTypeObject = JSON.parse(defaultSizeArryString || "{}");
-    const defaultSizeArray = defaultTypeObject[sizeType];
 
     return (
         <div className="flex flex-wrap">
-            {defaultSizeArray.map((defaultSize: string) => {
+            {defaultSizeArr.map((defaultSize: string) => {
                 return ItemBox({
                     type: sizeType,
                     size: defaultSize,

@@ -4,12 +4,16 @@ import Image from "next/image";
 import Link from "next/link";
 import CartBtn from "./cart-btn";
 import UserDropDown from "./user-dropdown";
+import { useSession } from "next-auth/react";
 
 export default function NavMobile() {
     const { navOpen, setNavOpen } = useShoppingCart();
     const navOpenToggle = () => {
         setNavOpen(!navOpen);
     };
+
+    const { data: session } = useSession();
+    const userIcon = <Image src="/icons/person.svg" alt="person" className="flex-right" width={24} height={24} />;
 
     return (
         <>
@@ -31,7 +35,15 @@ export default function NavMobile() {
                             </Link>
                         </div>
                         <div className="flex-right  basis-1/4">
-                            <UserDropDown />
+                            {!session ? (
+                                <Link href="/auth/signin" className="flex px-4 py-2">
+                                    {userIcon}
+                                </Link>
+                            ) : (
+                                <Link href="/mypage" className="flex px-4 py-2">
+                                    {userIcon}
+                                </Link>
+                            )}
                             <CartBtn />
                         </div>
                     </div>

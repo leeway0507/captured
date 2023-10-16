@@ -1,3 +1,4 @@
+"use client";
 import AlertModalWithoutBtn from "./alert-modal-without-btn";
 import { useRouter } from "next/navigation";
 

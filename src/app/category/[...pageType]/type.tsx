@@ -32,7 +32,7 @@ interface itemArray {
     productType: string[];
     sizeArray: string[];
 }
-interface categorySpec {
+export interface categorySpec {
     의류: itemArray;
     신발: itemArray;
     기타: itemArray;

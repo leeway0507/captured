@@ -8,7 +8,13 @@ import { productCardProps } from "@/app/type";
 
 import AddBasket from "./component/add-basket-client";
 
-export default async function MainPc(product: productCardProps) {
+export default async function MainPc({
+    product,
+    defaultSizeArr,
+}: {
+    product: productCardProps;
+    defaultSizeArr: string[];
+}) {
     return (
         <div className="w-full flex-col">
             <div className="flex justify-evenly">
@@ -18,7 +24,7 @@ export default async function MainPc(product: productCardProps) {
                 <div className="flex flex-col justify-between ">
                     <div className="py-4 sticky top-0 min-w-[380px] max-w-[480px]">
                         <ProductInfo {...product} />
-                        <AddBasket {...product} />
+                        <AddBasket data={product} defaultSizeArr={defaultSizeArr} />
                         <div>
                             {product.intl ? (
                                 <IntlShipment

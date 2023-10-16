@@ -15,7 +15,7 @@ function addDefaultCategoryFilter(pageType: string[], filterMeta: filterRequestP
         case "accessory":
             return (filterMeta.category = "기타");
         case "brand":
-            return (filterMeta.brand = pageType[1]);
+            return (filterMeta.brand = pageType[1].replace("-", " "));
     }
 }
 
