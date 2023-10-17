@@ -8,9 +8,6 @@ export default function Page({
     params: { sku: string };
     searchParams: { [key: string]: string | undefined };
 }) {
-    console.log(params);
-    console.log(searchParams);
-
     return (
         <>
             <NavFooter>

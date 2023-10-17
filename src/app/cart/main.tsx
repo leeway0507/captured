@@ -2,34 +2,21 @@
 import { useShoppingCart } from "@/app/components/context/shopping-cart-context";
 import MainMobile from "./main-mobile";
 import MainPC from "./main-pc";
-import { cartProductCardProps, productCardProps } from "../type";
-import { useEffect, useState } from "react";
+import PageLoading from "../components/loading/page-loading";
 
 export default function Cart() {
-    const { cartItems, isMobile, isLoading } = useShoppingCart();
-    const [data, setData] = useState<cartProductCardProps[]>([]);
+    const { cartItems, isMobile } = useShoppingCart();
 
-    useEffect(() => {
-        const CartItemArr = cartItems
-            ?.map((item) => {
-                const product = localStorage.getItem(item.sku.toString());
-                if (product) return { ...JSON.parse(product), size: item.size, quantity: item.quantity };
-            })
-            .filter((item): item is cartProductCardProps => Boolean(item));
-        setData(CartItemArr);
-    }, [cartItems]);
-
-    if (isLoading) return null;
-
+    if (cartItems === undefined) return <PageLoading />;
     return (
         <>
             {isMobile ? (
                 <div className="">
-                    <MainMobile arr={data} />
+                    <MainMobile arr={cartItems} />
                 </div>
             ) : (
                 <div className="px-5">
-                    <MainPC arr={data} />
+                    <MainPC arr={cartItems} />
                 </div>
             )}
         </>

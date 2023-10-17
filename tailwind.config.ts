@@ -9,6 +9,9 @@ const config: Config = {
     ],
     theme: {
         extend: {
+            fontFamily: {
+                test: ['var(--test)'],
+            },
             screens: {
                 tb: "768px",
             },

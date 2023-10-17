@@ -39,9 +39,9 @@ export default function BrandDropDown() {
         "Casio G-Shock G-MS",
     ];
     return (
-        <div className="hidden group-hover:block w-full right-0 top-100 absolute ">
-            <div className="h-full w-full my-2 text-main-black bg-white shadow-lg border-t">
-                <div className="grid grid-cols-6 pt-8 pb-16 px-4 gap-2">
+        <div className="hidden group-hover:block w-full right-0 top-100 absolute z-50 ">
+            <div className="h-full w-full my-2 text-main-black bg-white shadow-xl ">
+                <div className="grid grid-cols-5 xl:grid-cols-6 pt-8 pb-16 gap-2">
                     {brands.map((brandName: string, idx) => {
                         const brandNameBar = brandName.replace(" ", "-");
                         return (

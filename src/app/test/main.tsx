@@ -1,62 +1,12 @@
 "use client";
-import { scrollToTop } from "../components/utils/scroll";
-import OrderHistory from "../mypage/component/order/order";
+
+import Slider from "../category/[...pageType]/component/options-array-range-slider";
+import { useState } from "react";
 
 const Main = () => {
-    return (
-        <div>
-            <div>asdasd</div>
-            <div>asdasd</div>
-            <div>asdasd</div>
-            <div>asdasd</div>
-            <div>asdasd</div>
-            <div>asdasd</div>
-            <div>asdasd</div>
-            <div>asdasd</div>
-            <div>asdasd</div>
-            <div>asdasd</div>
-            <div>asdasd</div>
-            <div>asdasd</div>
-            <div>asdasd</div>
-            <div>asdasd</div>
-            <div>asdasd</div>
-            <div>asdasd</div>
-            <div>asdasd</div>
-            <div>asdasd</div>
-            <div>asdasd</div>
-            <div>asdasd</div>
-            <div>asdasd</div>
-            <div>asdasd</div>
-            <div>asdasd</div>
-            <div>asdasd</div>
-            <div>asdasd</div>
-            <div>asdasd</div>
-            <div>asdasd</div>
-            <div>asdasd</div>
-            <div>asdasd</div>
-            <div>asdasd</div>
-            <div>asdasd</div>
-            <div>asdasd</div>
-            <div>asdasd</div>
-            <div>asdasd</div>
-            <div>asdasd</div>
-            <div>asdasd</div>
-            <div>asdasd</div>
-            <div>asdasd</div>
-            <div>asdasd</div>
-            <div>asdasd</div>
-            <div>asdasd</div>
-            <div>asdasd</div>
-            <div>asdasd</div>
-            <div>asdasd</div>
-            <div>asdasd</div>
-            <div>asdasd</div>
-            <div>asdasd</div>
-            <div className="black-bar-xl w-full" onClick={() => scrollToTop("smooth")}>
-                Top
-            </div>
-        </div>
-    );
+    const downloadval = [0, 1000000];
+    const [val, setVal] = useState<number[]>([0, 1000000]);
+    return <div className="m-auto w-[400px] h-[200px]">{Slider(downloadval, setVal)}</div>;
 };
 
 export default Main;

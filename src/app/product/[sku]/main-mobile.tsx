@@ -45,7 +45,9 @@ export default async function MainMobile({
                         cat={"delivery-info"}
                     />
                 </div>
-                <div className="py-4">{/* <RelatedProducts arr={relatedProductsArray} /> */}</div>
+                <div className="py-4">
+                    <RelatedProducts />
+                </div>
             </div>
         </div>
     );

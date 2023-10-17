@@ -1,10 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import { getServerSession } from "next-auth";
-import { options } from "../api/auth/[...nextauth]/options";
-export default async function Brands() {
-    const session = await getServerSession(options);
 
+export default async function Brands() {
     const brandsArray = JSON.parse(process.env.BRAND_ARRAY as string);
 
     const brandsComponent = (brandName: string) => {

@@ -1,4 +1,3 @@
-import { user_address } from "@/app/types/fastapi-schema";
 import { userAddressProps } from "@/app/type";
 
 export const createAddress = async (address: userAddressProps, access_token: string | undefined) => {

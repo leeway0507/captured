@@ -51,7 +51,9 @@ export default async function MainPc({
                     </div>
                 </div>
             </div>
-            <div className="py-4">{/* <RelatedProducts arr={relatedProductsArray} /> */}</div>
+            <div className="py-4">
+                <RelatedProducts />
+            </div>
         </div>
     );
 }

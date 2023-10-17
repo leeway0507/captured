@@ -15,6 +15,7 @@ export default async function Product({ sku }: { sku: string }) {
         <Client
             Mobile={<MainMobile product={product} defaultSizeArr={defaultSizeArr} />}
             Pc={<MainPc product={product} defaultSizeArr={defaultSizeArr} />}
+            data={product}
         />
     );
 }

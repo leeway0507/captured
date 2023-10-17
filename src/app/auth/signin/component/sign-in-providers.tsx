@@ -1,4 +1,4 @@
-import { signIn, getProviders } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import { redirect } from "next/navigation";
 import AlertModalWithoutBtn from "@/app/components/modal/alert-modal-without-btn";
 

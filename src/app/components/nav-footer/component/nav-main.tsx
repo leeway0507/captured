@@ -1,20 +1,13 @@
+"use client";
 import NavMobile from "./nav-mobile";
 import NavPc from "./nav-pc";
-import NavMobileSideBar from "./nav-mobile-sidebar";
 import { useShoppingCart } from "@/app/components/context/shopping-cart-context";
+import PageLoading from "../../loading/page-loading";
 
 export default function NavMain() {
-    const { navOpen, setNavOpen, isMobile } = useShoppingCart();
-    return (
-        <>
-            {isMobile ? (
-                <>
-                    <NavMobile />
-                    <NavMobileSideBar isOpen={navOpen} setIsOpen={setNavOpen} />
-                </>
-            ) : (
-                <NavPc />
-            )}
-        </>
-    );
+    const { isMobile } = useShoppingCart();
+
+    if (isMobile === undefined) return <PageLoading />;
+
+    return <>{isMobile ? <NavMobile /> : <NavPc />}</>;
 }

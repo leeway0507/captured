@@ -16,9 +16,6 @@ export default function AlertModalWithoutBtn(props: alertModalProps) {
         setIsOpen(false);
     }
 
-    function openModal() {
-        setIsOpen(true);
-    }
     const modalButton = (
         <button
             type="button"

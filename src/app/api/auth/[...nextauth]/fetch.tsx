@@ -1,4 +1,4 @@
-import { Profile, Account, User } from "next-auth";
+import { Account, User } from "next-auth";
 
 export const signInByEmail = async (params: URLSearchParams) => {
     const res = await fetch(`http://127.0.0.1:8000/api/auth/signin`, {

@@ -1,6 +1,5 @@
 "use client";
 import { Tab } from "@headlessui/react";
-import Order from "./component/order/order";
 import ResetPasswordFrom from "./component/reset-password-form";
 import AddressInfo from "./component/address-info";
 import YesNoModal from "../components/modal/yes-no-modal";
