@@ -8,8 +8,8 @@ export default function Page({
     params: { pageType: string[] };
     searchParams: { [key: string]: string | undefined };
 }) {
-    console.log("---------Page---------");
-    console.log(params);
+    // console.log("---------Page---------");
+    // console.log(params);
 
     return (
         <>

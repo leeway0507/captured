@@ -1,19 +1,17 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import Filter from "./component/filter";
 import { initFilterMetaProps } from "./type";
-import { productCardProps } from "@/app/type";
 
 export default function CateogryClient({
     children,
-    data,
     initFilterMeta,
     pageType,
 }: {
     children: React.ReactNode;
-    data: productCardProps[];
+
     initFilterMeta: initFilterMetaProps;
     pageType: string[];
 }) {
@@ -24,16 +22,10 @@ export default function CateogryClient({
     const openFilterToggle = () => {
         setOpenFilter(!openFilter);
     };
-    useEffect(() => {
-        data?.map((props) => {
-            const sku = props.sku.toString();
-            return localStorage.getItem(sku) === null && localStorage.setItem(sku, JSON.stringify(props));
-        });
-    }, [data]);
 
     function FilterHeader() {
         return (
-            <div className="sticky top-0 flex justify-between w-full bg-white z-50 my-5 pt-2">
+            <div className="sticky top-0 flex justify-between w-full bg-white z-40 my-5 pt-2">
                 <div className="flex-left grow ">
                     <div className="flex link-animation" onClick={openFilterToggle}>
                         <Image src="/icons/filter.svg" width={24} height={0} alt={"filter"} className="bg-white" />
@@ -46,11 +38,7 @@ export default function CateogryClient({
 
     return (
         <div className="flex flex-col justify-between w-full px-5">
-            <div className="flex-center text-3xl text-sub-black uppercase py-5 ">
-                {/* {Array.isArray(type)
-                    ? type[0].replace("-", " ").replace("%20", " ")
-                    : type.replace("-", " ").replace("%20", " ")} */}
-            </div>
+            <div className="flex-center text-3xl text-sub-black uppercase py-5 "></div>
             <div className="block lg:hidden">
                 <FilterHeader />
                 <Filter initFilterMeta={initFilterMeta} isOpen={openFilter} pageType={pageType[0]} />

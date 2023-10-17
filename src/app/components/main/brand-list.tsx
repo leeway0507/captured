@@ -10,7 +10,7 @@ export default function BrandList() {
             <div className="flex flex-row ">
                 <Link href="." className="brand-box bg-main-black">
                     <Image
-                        src="/brands/adidas-original-logo.png"
+                        src="/brands/adidas-originals-logo.png"
                         alt="test-img"
                         width={1000}
                         height={1000}
@@ -28,7 +28,7 @@ export default function BrandList() {
                 </Link>
                 <Link href="." className="brand-box bg-main-black">
                     <Image
-                        src="/brands/adidas-original-logo.png"
+                        src="/brands/adidas-originals-logo.png"
                         alt="test-img"
                         width={1000}
                         height={1000}
@@ -46,7 +46,7 @@ export default function BrandList() {
                 </Link>
                 <Link href="." className="brand-box bg-main-black">
                     <Image
-                        src="/brands/adidas-original-logo.png"
+                        src="/brands/adidas-originals-logo.png"
                         alt="test-img"
                         width={1000}
                         height={1000}
@@ -66,7 +66,7 @@ export default function BrandList() {
                 </Link>
                 <Link href="." className="brand-box bg-main-black">
                     <Image
-                        src="/brands/adidas-original-logo.png"
+                        src="/brands/adidas-originals-logo.png"
                         alt="test-img"
                         width={1000}
                         height={1000}
@@ -84,7 +84,7 @@ export default function BrandList() {
                 </Link>
                 <Link href="." className="brand-box bg-main-black">
                     <Image
-                        src="/brands/adidas-original-logo.png"
+                        src="/brands/adidas-originals-logo.png"
                         alt="test-img"
                         width={1000}
                         height={1000}

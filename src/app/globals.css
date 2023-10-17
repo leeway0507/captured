@@ -59,7 +59,11 @@
     }
     .click-effect {
         @apply cursor-pointer rounded-full hover:ring-2 hover:ring-deep-gray active:bg-light-gray;
+
     }
+    .search-bar {
+        @apply mt-0 h-10 block w-full px-0.5 border-0 border-b focus:ring-0 placeholder-sub-black tracking-[0.1rem] focus:border-main-black caret-main-black
+        }
 }
 .triangle-right {
     width: 0;
@@ -92,10 +96,7 @@
     }
 }
 
-::-webkit-scrollbar {
-    width: 0px;
-    background: transparent; /* make scrollbar transparent */
-}
+
 
 body {
     /* max-width: 1024px; */
@@ -184,4 +185,17 @@ button[disabled] {
 }
 button:disabled > button:active {
     background-color: transparent !important;
+}
+
+
+.nav-effect {
+    transition: all 0.2s ease-in-out;
+    translate: 0px -100%;
+    opacity: 0;
+    display: hidden;
+}
+.nav-effect-back {
+    transition: all 0.2s ease-out;
+    translate: 0px 0%;
+    opacity: 100;
 }

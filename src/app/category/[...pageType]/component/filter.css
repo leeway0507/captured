@@ -7,13 +7,14 @@
 /* multi-range */
 .horizontal-slider{
     width: 80%;
-    height: 50px;
+    height: 30px;
     margin: auto;
   
   }
   .horizontal-slider .example-track{
     top: 20px;
     height: 10px;
+    border-radius: 5px;
   }
   .example-track.example-track-0{
     background-color: var(--deep-gray);
@@ -26,13 +27,14 @@
   }
   .horizontal-slider .example-thumb {
     position: relative;
-    border-radius: 5px;
-    top:10px;
-    width: 30px;
-    height: 30px;
+    border-radius: 100px;
+    top:13px;
+    width: 25px;
+    height: 25px;
     text-align: center;
     background-color: var(--main-black );
-    padding: 0px 5px;
+    padding: 0px 0px;
+    margin: -1px -1px;
     display: flex;
     justify-content: center;
     align-items: center;

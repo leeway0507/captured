@@ -32,3 +32,20 @@ export const deleteAddress = async (address: userAddressProps, accessToken: stri
     const data = await res.json();
     return data;
 };
+
+export const resetPassword = async (password: string, accessToken: string | undefined) => {
+    if (accessToken == undefined) {
+        return;
+    }
+
+    const res = await fetch(`http://127.0.0.1:8000/mypage/delete-address`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+        },
+        body: JSON.stringify(password),
+    });
+    const data = await res.json();
+    return data;
+};

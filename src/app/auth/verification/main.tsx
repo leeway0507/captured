@@ -1,17 +1,22 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-// import PageLoading from "@/app/components/loading/page-loading";
 
-export default function EmailVerification() {
+export default function Main() {
+    const [email, setEmail] = useState("");
     const router = useRouter();
-    const email = localStorage.getItem("email");
-    // if (email === null) {
-    //     router.push("/");
-    //     return <PageLoading />;
-    // }
+    useEffect(() => {
+        const email = localStorage.getItem("email");
+        if (email === null) {
+            alert("잘못된 접근입니다.");
+            router.push("/");
+        } else {
+            setEmail(email);
+            localStorage.removeItem("email");
+        }
+    }, []);
 
-    localStorage.removeItem("email");
     return (
         <div className="flex-center flex-col max-w-[600px] m-auto py-12 gap-8 px-5">
             <div className="text-3xl">이메일 인증</div>

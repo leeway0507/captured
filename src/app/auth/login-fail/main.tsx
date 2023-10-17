@@ -2,7 +2,6 @@
 import AlertModalWithoutBtn from "@/app/components/modal/alert-modal-without-btn";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
-import { useEffect } from "react";
 
 export default function LoginFail() {
     const searchParams = useSearchParams();

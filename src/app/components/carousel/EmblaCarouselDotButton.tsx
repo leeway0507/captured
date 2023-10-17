@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback, ReactNode } from "react";
-import useEmblaCarousel, { EmblaCarouselType, EmblaOptionsType } from "embla-carousel-react";
+import useEmblaCarousel, { EmblaCarouselType } from "embla-carousel-react";
 import { DotButton } from "./EmblaDot";
 import Autoplay from "embla-carousel-autoplay";
 import "./carousel.css";

@@ -2,14 +2,14 @@ import CartproductCardArr from "./component/product-card-array";
 import { cartProductCardProps } from "../type";
 import Link from "next/link";
 import ProductCheckOut from "../cart/component/product-check-out";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { userAddressProps } from "../type";
 import { useRouter } from "next/navigation";
 import { IntlShipment } from "../components/notification/shipment-info";
 import { GrFormClose } from "react-icons/gr";
-import Image from "next/image";
 import CalculateOrderPrice from "./component/total-price";
 import { DefaultAddressModule, SubAddressModule } from "./component/address-info";
+import Logo from "../components/nav-footer/component/logo";
 
 const MainPC = ({
     arr,
@@ -44,15 +44,9 @@ const MainPC = ({
 
     return (
         <>
-            <div className="sticky top-0 h-[130px] w-full m-auto px-4 z-50 bg-white border-b">
-                <div className="flex h-full">
-                    <div className="flex-center basis-1/4"></div>
-                    <div className="flex-center basis-1/2">
-                        <Link href="/">
-                            <Image src="/icons/main-logo.svg" alt="main logo" width={200} height={36} />
-                        </Link>
-                    </div>
-                    <div className="flex-center basis-1/4"></div>
+            <div className="sticky top-0 h-[130px] w-full m-auto p-4 z-50 bg-white border-b">
+                <div className="flex-center h-full">
+                    <Logo />
                 </div>
             </div>
             <div className="max-w-4xl flex relative py-8 h-full gap-8 justify-evenly mx-auto ">

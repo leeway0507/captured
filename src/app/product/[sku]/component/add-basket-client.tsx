@@ -15,12 +15,12 @@ const AddBasket = ({ data, defaultSizeArr }: { data: productCardProps; defaultSi
         availableSize: size.split(","),
     };
 
-    const [selectedItem, setSelectedItem] = useState<string>(availableSize[0]);
+    const [selectedItem, setSelectedItem] = useState<string>(availableSize[0] || "");
     const { increaseCartQuantity } = useShoppingCart();
     const [openModal, setOpenModal] = useState(false);
     function AddBascketToggle() {
         setOpenModal(true);
-        increaseCartQuantity(sku, selectedItem);
+        increaseCartQuantity(sku, selectedItem, data);
     }
 
     return (
@@ -35,9 +35,15 @@ const AddBasket = ({ data, defaultSizeArr }: { data: productCardProps; defaultSi
                 />
             </div>
             <div>
-                <div className="black-bar-xl my-4 lg:text-xl" onClick={AddBascketToggle}>
-                    장바구니 담기
-                </div>
+                {availableSize.length === 0 ? (
+                    <button className="black-bar-xl my-4 lg:text-xl w-full" disabled>
+                        품절
+                    </button>
+                ) : (
+                    <button className="black-bar-xl my-4 lg:text-xl w-full" onClick={AddBascketToggle}>
+                        장바구니 담기
+                    </button>
+                )}
             </div>
             <AddBascketModal
                 {...data}

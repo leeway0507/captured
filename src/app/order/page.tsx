@@ -15,11 +15,11 @@ export default async function Page() {
 
     return (
         <ContextWrapper>
-            <div className="custom-container">
-                <div className="grow">
+            <div className="custom-container h-full">
+                <div className="grow flex-col flex justify-between">
                     <Main addressArray={addressArray} />
+                    <Footer />
                 </div>
-                <Footer />
             </div>
         </ContextWrapper>
     );

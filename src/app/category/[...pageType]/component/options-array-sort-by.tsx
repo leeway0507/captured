@@ -1,9 +1,10 @@
+import { ItemBoxSelectedProps } from "../type";
+import { useState } from "react";
+
 // css
 const itemBoxClass = "grow mondaL flex-1 flex-center text-sm min-h-[30px] px-2 me-2 mb-2";
 const checkedItem = " cursor-pointer text-sub-black capitalize";
 const notCheckedItem = " cursor-pointer text-gray-400 capitalize link-animation";
-import { ItemBoxSelectedProps } from "../type";
-import { useState } from "react";
 
 // ItemBox Component for selected
 const ItemBoxSelected = ({ content, checked, setChecked }: ItemBoxSelectedProps) => {
