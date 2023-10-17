@@ -1,23 +1,17 @@
 "use client";
 import { createContext, useContext, useState } from "react";
-import { cartItemProps } from "@/app/type";
+import { cartItemProps, cartProductCardProps, productCardProps } from "@/app/type";
 import { useEffect } from "react";
 import assert from "assert";
+
 interface ShoppingCartContext {
     getItemquantity: (sku: number, size: string) => number;
-    increaseCartQuantity: (sku: number, size: string) => void;
+    increaseCartQuantity: (sku: number, size: string, productInfo: productCardProps) => void;
     decreaseCartQuantity: (sku: number, size: string) => void;
     removeFromCart: (sku: number, size: string) => void;
-    setBgFreeze: (value: string | undefined) => void;
-    setNavOpen: (value: boolean) => void;
-    setSearch: (value: string) => void;
     isMobile: boolean | undefined;
-    isLoading: boolean;
-    search: string;
-    navOpen: boolean;
-    bgFreeze: string | undefined;
     cartQuantity: number | undefined;
-    cartItems: cartItemProps[];
+    cartItems: cartProductCardProps[];
 }
 
 export const ShoppingCartContext = createContext({} as ShoppingCartContext);
@@ -29,7 +23,6 @@ export function useShoppingCart() {
 export function ShoppingCartProvider({ children }: { children: React.ReactNode }) {
     // mobile check
     const [isMobile, setIsMobile] = useState<boolean | undefined>(undefined);
-    const [isLoading, setIsLodaing] = useState<boolean>(true);
 
     useEffect(() => {
         const handleResize = () => {
@@ -41,23 +34,16 @@ export function ShoppingCartProvider({ children }: { children: React.ReactNode }
     }, []);
 
     // save cartItems to localStorage
-    const [cartItems, setCartItems] = useState<cartItemProps[]>([]);
+    const [cartItems, setCartItems] = useState<cartProductCardProps[]>([]);
 
     useEffect(() => {
         const storageCartItems = JSON.parse(localStorage.getItem("cartItems") || "[]");
         setCartItems(storageCartItems);
-        setIsLodaing(false);
     }, []);
 
     useEffect(() => {
         localStorage.setItem("cartItems", JSON.stringify(cartItems));
     }, [cartItems]);
-
-    const [search, setSearch] = useState("");
-
-    // modal 열렸을 시 배경 freeze 용도
-    const [bgFreeze, setBgFreeze] = useState<string | undefined>();
-    const [navOpen, setNavOpen] = useState(false);
 
     const cartQuantity = cartItems?.reduce((quantity, item) => item.quantity + quantity, 0);
 
@@ -65,11 +51,12 @@ export function ShoppingCartProvider({ children }: { children: React.ReactNode }
         return cartItems?.find((item) => item.sku === sku && item.size === size)?.quantity || 0;
     };
 
-    const increaseCartQuantity = (sku: number, size: string) => {
+    const increaseCartQuantity = (sku: number, size: string, productInfo: productCardProps) => {
         setCartItems((currItems) => {
-            assert(currItems, "cartItems is undefined currItems should be cartItemProps[]");
             if (currItems.find((item) => item.sku === sku && item.size === size) == null) {
-                return [...currItems, { sku: sku, size: size, quantity: 1 }];
+                // productInfo에 사이즈 변경, quantity 추가 후 cartItems에 저장
+                productInfo.size = size;
+                return [...currItems, { ...productInfo, quantity: 1 }];
             } else {
                 return currItems.map((item) => {
                     if (item.sku === sku && item.size === size) {
@@ -84,7 +71,6 @@ export function ShoppingCartProvider({ children }: { children: React.ReactNode }
 
     const decreaseCartQuantity = (sku: number, size: string) => {
         setCartItems((currItems) => {
-            assert(currItems, "cartItems is undefined currItems should be cartItemProps[]");
             if (currItems.find((item) => item.sku === sku && item.size === size)?.quantity === 1) {
                 return currItems.filter((item) => !(item.sku === sku && item.size === size));
             } else {
@@ -113,14 +99,7 @@ export function ShoppingCartProvider({ children }: { children: React.ReactNode }
                 increaseCartQuantity,
                 decreaseCartQuantity,
                 removeFromCart,
-                setBgFreeze,
-                setNavOpen,
-                setSearch,
                 isMobile,
-                isLoading,
-                search,
-                navOpen,
-                bgFreeze,
                 cartItems,
                 cartQuantity,
             }}>

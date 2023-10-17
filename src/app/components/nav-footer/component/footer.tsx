@@ -2,8 +2,8 @@ import Image from "next/image";
 
 export default function Footer() {
     return (
-        <div className="flex flex-col bg-footer-gray py-2">
-            <div className="flex flex-row justify-between px-10 tb:px-16 py-3 border-b-2 text-sm tb:text-base">
+        <div className="flex flex-col bg-footer-gray py-2 ">
+            <div className="flex flex-row justify-between px-10 xl:px-16 py-3 border-b-2 text-sm tb:text-base">
                 <a href={process.env.INSTARGRAM_URL} className="ms-2">
                     <div className="flex-center">
                         <Image src="/icons/instagram.svg" width={16} height={16} alt="instagram" />

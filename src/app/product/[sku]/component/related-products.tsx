@@ -2,16 +2,24 @@
 import type { productCardProps } from "@/app/type";
 import EmblaCarouselMultiProducts from "@/app/components/carousel/EmblaCarouselMultiProducts";
 import ProductCard from "@/app/category/[...pageType]/component/product-card";
+import { useEffect, useState } from "react";
+import PageLoading from "@/app/components/loading/page-loading";
 
-export default function RelatedProducts({ arr }: { arr: productCardProps[] }) {
-    const producInfos: productCardProps[] = arr;
+export default function RelatedProducts() {
+    // Open recent view
+    const [productInfos, setProductInfos] = useState<productCardProps[] | undefined>(undefined);
+    useEffect(() => {
+        setProductInfos(JSON.parse(localStorage.getItem("recentView") || "[]"));
+    }, []);
+
+    if (productInfos === undefined) return <PageLoading />;
 
     return (
         <>
-            <div className="text-xl pb-2">최근 본 상품</div>
+            <div className="text-xl-2xl pb-2">최근 본 아이템</div>
             <div className="flex justify-between overflow-hidden">
                 <EmblaCarouselMultiProducts>
-                    {producInfos.map((props: productCardProps, idx: number) => {
+                    {productInfos.map((props: productCardProps, idx: number) => {
                         return (
                             <div key={idx} className="embla__slide">
                                 <ProductCard {...props} />

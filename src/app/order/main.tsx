@@ -4,11 +4,8 @@ import { useShoppingCart } from "@/app/components/context/shopping-cart-context"
 import MainMobile from "./main-mobile";
 import MainPc from "./main-pc";
 import { cartItemProps, cartProductCardProps, userAddressProps } from "../type";
-import Link from "next/link";
-import Image from "next/image";
 import { useSession } from "next-auth/react";
 import PageLoading from "@/app/components/loading/page-loading";
-import SigninAlertModal from "@/app/components/modal/signin-alert-modal-without-btn";
 import { useEffect, useState } from "react";
 
 const getCartDataFromLocalStorage = (cartItems: cartItemProps[]) => {

@@ -5,7 +5,6 @@ import { getAddress } from "./fetch";
 import { userAddressProps } from "@/app/type";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
-import PageLoading from "@/app/components/loading/page-loading";
 
 //css
 const addressInfoClass = "text-base flex-right active:text-deep-gray cursor-pointer";

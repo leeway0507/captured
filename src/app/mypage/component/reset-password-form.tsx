@@ -1,20 +1,42 @@
+"use client";
 import CustomInput from "@/app/components/custom-input/cusotm-input";
 import { checkPasswordPolicy, checkPasswordAgain } from "@/app/components/custom-input/check-policy";
 import { useState } from "react";
 import { useSession } from "next-auth/react";
+import { resetPassword } from "./fetch";
+import AlertModalWithoutBtn from "@/app/components/modal/alert-modal-without-btn";
+import { useRouter } from "next/navigation";
 
 export default function ResetPasswordFrom() {
-    const { data: session, status } = useSession();
+    const router = useRouter();
+    const { data: session } = useSession();
     const [password1, setPassword1] = useState("");
     const [password2, setPassword2] = useState("");
 
-    console.log("mypage session", session);
+    const [openSuccessModal, setOpenSuccessModal] = useState(false);
+    const [openFailureModal, setOpenFailureModal] = useState(false);
 
-    //api-call - 비밀번호 변경
-    //status : 제작필요
-    //type : GET
-    //url : /api/auth/rest-password
-    //function : reset-password() => response(200)
+    const FailureModal = () => {
+        return AlertModalWithoutBtn({
+            title: "변경 실패",
+            content: "비밀번호 변경에 실패하였습니다.",
+            isOpen: openFailureModal,
+            setIsOpen: setOpenFailureModal,
+            checkColor: "red",
+        });
+    };
+    const SuccessModal = () => {
+        return AlertModalWithoutBtn({
+            title: "변경 성공",
+            content: "비밀번호가 변경되었습니다.",
+            isOpen: openSuccessModal,
+            setIsOpen: setOpenSuccessModal,
+            trueCallback: () => {
+                router.push("/mypage?pageindex=0");
+            },
+            checkColor: "green",
+        });
+    };
 
     return (
         <div className="flex flex-col my-8 text-sm max-h-[600px] max-w-[500px] mx-auto">
@@ -51,8 +73,36 @@ export default function ResetPasswordFrom() {
                         />
                     </div>
                 </div>
-                <div className="black-bar tracking-[0.2em]">변경하기</div>
+                {password1.length != 0 &&
+                checkPasswordPolicy(password1) &&
+                password2.length != 0 &&
+                checkPasswordPolicy(password2) &&
+                checkPasswordAgain(password1, password2) ? (
+                    <button
+                        className="black-bar tracking-[0.2em]"
+                        onClick={() => {
+                            resetPassword(password1, session?.user.accessToken)
+                                .then((res) => {
+                                    if (res.ok) {
+                                        setOpenSuccessModal(true);
+                                    } else {
+                                        setOpenFailureModal(true);
+                                    }
+                                })
+                                .catch((err) => {
+                                    setOpenFailureModal(true);
+                                });
+                        }}>
+                        변경하기
+                    </button>
+                ) : (
+                    <button className="black-bar-xl" disabled>
+                        변경하기
+                    </button>
+                )}
             </div>
+            <FailureModal />
+            <SuccessModal />
         </div>
     );
 }

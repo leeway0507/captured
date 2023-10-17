@@ -1,9 +1,9 @@
+import { ItemBoxSelectedProps } from "../type";
+import { useState } from "react";
 // css
 const itemBoxClass = "grow mondaL flex-1 flex-center text-xs min-h-[30px] border-2 px-2 me-2 mb-2";
 const checkedItem = "bg-main-black border-main-black cursor-pointer text-light-gray active:text-main-black shadow-md";
 const notCheckedItem = "border-sub-black cursor-pointer text-sub-black active:text-main-black shadow-md";
-import { ItemBoxSelectedProps } from "../type";
-import { useState } from "react";
 
 // ItemBox Component for selected
 const ItemBoxSelected = ({ content, checked, setChecked }: ItemBoxSelectedProps) => {

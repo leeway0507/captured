@@ -2,7 +2,7 @@ import { Suspense } from "react";
 
 import * as api from "./component/fetch";
 import CateogryClient from "./client";
-import { filterMetaProps, filterRequestProps } from "./type";
+import { filterRequestProps } from "./type";
 import { responseProps } from "./component/fetch";
 import ProductCardArrary from "./component/product-card-array";
 
@@ -32,7 +32,7 @@ export const Main = async ({ searchParams, params }: { params: { pageType: strin
     const res: responseProps = await api.getCategory(filter, page || 1);
 
     return (
-        <CateogryClient data={res.data} initFilterMeta={initFilterMeta} pageType={pageType}>
+        <CateogryClient initFilterMeta={initFilterMeta} pageType={pageType}>
             <Suspense fallback={<div>Suspense Loading.....</div>}>
                 {res.lastPage === 0 ? (
                     <>

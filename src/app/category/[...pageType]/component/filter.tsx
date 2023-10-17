@@ -9,7 +9,7 @@ import type { filterMetaProps, initFilterMetaProps } from "../type";
 import { useEffect, useState } from "react";
 import AccordionComponent from "@/app/components/accordion/accordion";
 import Slider from "./options-array-range-slider";
-import { useRouter, useParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 interface FilterDropdownProps {
     initFilterMeta: initFilterMetaProps;
@@ -83,7 +83,6 @@ export default function Filter({ initFilterMeta, isOpen, pageType }: FilterDropd
             ? window.location.search.includes("sortBy") && router.push(window.location.pathname)
             : adooptFilter(queryMeta);
 
-        // window.location.reload();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [queryMeta]);
 

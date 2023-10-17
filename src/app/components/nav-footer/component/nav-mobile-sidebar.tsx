@@ -1,124 +1,62 @@
 "use client";
-import React, { useEffect, useRef } from "react";
-import Image from "next/image";
-import Link from "next/link";
-import { useShoppingCart } from "@/app/components/context/shopping-cart-context";
-import SignInOutButton from "./sign-btn";
 
-export default function NavMobileSideBar({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: (v: boolean) => void }) {
-    const barRef = useRef<HTMLDivElement>(null);
-    const { setSearch } = useShoppingCart();
+import { Dialog, Transition } from "@headlessui/react";
+import { Fragment, useState } from "react";
+import { Instagram, Custom, NavArr, MyPageSignINOut, SearchBar } from "./mobile-sidebar-components";
 
-    useEffect(() => {
-        const handler = (event: MouseEvent) => {
-            if (barRef.current && !barRef.current.contains(event.target as Node)) {
-                setIsOpen(false);
-            }
-        };
-        document.addEventListener("mousedown", handler);
-        return () => {
-            document.removeEventListener("mousedown", handler);
-        };
-    }, [barRef, setIsOpen]);
+const NavMobileSideBar = ({ isOpen, closeModal }: { isOpen: boolean; closeModal: () => void }) => {
+    const [search, setSearch] = useState("");
 
-    useEffect(() => {
-        if (isOpen) {
-            document.body.style.overflow = "hidden";
-        }
-        return () => {
-            document.body.style.overflow = "unset";
-        };
-    }, [isOpen]);
-
-    const closeNavToggle = () => {
-        setIsOpen(false);
-    };
-
-    // "API : search query"
     return (
-        <>
-            <div
-                className={`mondaL fixed top-0 left-0 z-40 w-full h-[150px] ${
-                    isOpen ? "side-bar-visible" : "side-bar-hidden"
-                }`}>
-                <div className="fixed w-screen h-full top-0 left-0 bg-main-black opacity-50"></div>
-                <div className="fixed z-50 flex flex-row text-sub-black w-screen h-screen">
-                    <div className="flex flex-col w-[80%] max-w-[400px] bg-white " ref={barRef}>
-                        <div className="flex flex-col h-full text-base-lg">
-                            <div className="bg-light-gray flex-center py-4">
-                                <input
-                                    type="text"
-                                    className="text-base-lg mx-5 bg-light-gray mt-0 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:ring-0 focus:border-sub-black"
-                                    onChange={(e) => {
-                                        setSearch(e.target.value);
-                                    }}
-                                    placeholder="검색하기"
-                                />
-                            </div>
-                            <div className="flex flex-col basis-5/12 justify-between py-6 text-lg-xl">
-                                <Link
-                                    href="/category/latest"
-                                    className="ps-6 basis-1/5 flex-left hover:bg-light-gray"
-                                    onClick={closeNavToggle}>
-                                    LATEST
-                                </Link>
-                                <Link
-                                    href="/brands"
-                                    className="ps-6 basis-1/5 flex-left hover:bg-light-gray"
-                                    onClick={closeNavToggle}>
-                                    BRANDS
-                                </Link>
-                                <Link
-                                    href="/category/shoes"
-                                    className="ps-6 basis-1/5 flex-left hover:bg-light-gray"
-                                    onClick={closeNavToggle}>
-                                    SHOES
-                                </Link>
-                                <Link
-                                    href="/category/clothing"
-                                    className="ps-6 basis-1/5 flex-left hover:bg-light-gray"
-                                    onClick={closeNavToggle}>
-                                    CLOTHING
-                                </Link>
-                                <Link
-                                    href="/category/accessory"
-                                    className="ps-6 basis-1/5 flex-left hover:bg-light-gray"
-                                    onClick={closeNavToggle}>
-                                    ACCESSORY
-                                </Link>
-                            </div>
-                            <div className="bg-light-gray flex px-6 basis-1/12 w-full justify-between items-center">
-                                <Link href="/mypage" onClick={closeNavToggle} className="link-animation">
-                                    마이페이지
-                                </Link>
-                                <div>
-                                    <SignInOutButton />
-                                </div>
-                            </div>
+        <div>
+            <Transition appear show={isOpen} as={Fragment}>
+                <Dialog as="div" className="relative z-50 " onClose={closeModal}>
+                    <Transition.Child
+                        as={Fragment}
+                        enter="transition-opacity duration-75"
+                        enterFrom="opacity-0"
+                        enterTo="opacity-100"
+                        leave="transition-opacity duration-150"
+                        leaveFrom="opacity-100"
+                        leaveTo="opacity-0">
+                        <div className="fixed inset-0 bg-black bg-opacity-25 top-[100px] h-full" />
+                    </Transition.Child>
 
-                            <div className="flex flex-col py-3 justify-between px-2 border-b-2">
-                                <a href={process.env.INSTARGRAM_URL} className="hover:bg-light-gray">
-                                    <div className="flex-left py-1 m-auto">
-                                        <div className="">
-                                            <Image src="/icons/instagram.svg" width={12} height={12} alt="instagram" />
+                    <div className="fixed inset-0 overflow-y-auto h-full">
+                        <div className="flex h-full pt-[100px] ">
+                            <Transition.Child
+                                as={Fragment}
+                                enter="transition  duration-500 ease-out transform"
+                                enterFrom="-translate-x-full"
+                                enterTo="translate-x-0"
+                                leave="transition  duration-500 ease-out transform"
+                                leaveFrom="translate-x-0"
+                                leaveTo="-translate-x-full">
+                                <Dialog.Panel className="h-full w-80 max-w-[400px] transform overflow-hidden bg-white border border-deep-gray shadow-2xl transition-all">
+                                    <div className="flex flex-col ">
+                                        <div className="py-4 px-2">
+                                            <SearchBar search={search} setSearch={setSearch} />
                                         </div>
-                                        <div className="ms-1">인스타그램</div>
-                                    </div>
-                                </a>
-                                <a href={process.env.CUSTOM_ID_URL} className="hover:bg-light-gray">
-                                    <div className="flex-left py-1">
-                                        <div className=" flex-center">
-                                            <Image src="/icons/approval.svg" width={16} height={16} alt="instagram" />
+                                        <div className="p-2">
+                                            <NavArr />
                                         </div>
-                                        <div className="ms-1">개인통관부호</div>
+                                        <div className="bg-light-gray py-4 mt-4 mb-2">
+                                            <MyPageSignINOut />
+                                        </div>
+
+                                        <div className="flex justify-between mx-4 py-2">
+                                            <Instagram />
+                                            <Custom />
+                                        </div>
                                     </div>
-                                </a>
-                                <div className="py-1"></div>
-                            </div>
+                                </Dialog.Panel>
+                            </Transition.Child>
                         </div>
                     </div>
-                </div>
-            </div>
-        </>
+                </Dialog>
+            </Transition>
+        </div>
     );
-}
+};
+
+export default NavMobileSideBar;

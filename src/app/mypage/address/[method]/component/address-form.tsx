@@ -8,7 +8,6 @@ import {
     checkAddressValidation,
 } from "@/app/components/custom-input/check-policy";
 import { setUserAddressProps } from "@/app/type";
-import * as api from "../apis";
 import { PostcodePopUp } from "./search_address";
 
 export interface addAddressFromProps extends setUserAddressProps {

@@ -1,6 +1,6 @@
 import OrderDetailProductCardArray from "./order-product-card-array";
 import { phoneNumberAutoFormat } from "@/app/components/custom-input/check-policy";
-import { userAddressProps, orderHistoryProps, orderDetailProductCardProps } from "@/app/type";
+import { userAddressProps, orderHistoryProps } from "@/app/type";
 import ProductCheckOut from "@/app/cart/component/product-check-out";
 import { useRouter } from "next/navigation";
 import * as api from "./fetch-client";

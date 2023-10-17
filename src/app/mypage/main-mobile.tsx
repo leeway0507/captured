@@ -1,6 +1,4 @@
 "use client";
-
-import Order from "./component/order/order";
 import AccordionComponent from "@/app/components/accordion/accordion";
 import ResetPasswordFrom from "./component/reset-password-form";
 import AddressInfoFrom from "./component/address-info";

@@ -1,14 +1,12 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import CustomInput from "../../components/custom-input/cusotm-input";
 import { checkEmail } from "../../components/custom-input/check-policy";
-import { signIn, getProviders } from "next-auth/react";
 import { useSession } from "next-auth/react";
 import PageLoading from "@/app/components/loading/page-loading";
 import { redirect } from "next/navigation";
-import AlertModalWithoutBtn from "@/app/components/modal/alert-modal-without-btn";
 import { handleCredentials, handleKakao, handleNaver } from "./component/sign-in-providers";
 
 const oauthClass = "flex-center relative rounded-lg text-sm py-2 border my-2";

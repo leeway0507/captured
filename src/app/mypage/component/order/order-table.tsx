@@ -1,10 +1,9 @@
 "use client";
-import { useEffect, useState } from "react";
-import { userAddressProps, OrderDetailProps, orderHistoryProps } from "@/app/type";
+import { useState } from "react";
+import { orderHistoryProps } from "@/app/type";
 import OrderDetailForm from "./order-detail";
 import { scrollToTop } from "@/app/components/utils/scroll";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 //css
 const header = "border-main-black text-center basis-1/4";
 const item = "flex justify-evenly  text-center py-3 my-auto link-animation";
