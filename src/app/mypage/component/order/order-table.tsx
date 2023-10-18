@@ -31,7 +31,7 @@ export default function OrderTable({
     };
 
     const openDetailOrderToggle = (e: React.MouseEvent) => {
-        const orderId = e.currentTarget.getAttribute("data-orderId");
+        const orderId = e.currentTarget.getAttribute("data-orderid");
         router.push(`/mypage/?orderId=${orderId}`);
         setOpenDetailOrder(true);
         setTargetOrder(orderHistoryArray.find((order) => order.orderId === orderId));
@@ -56,7 +56,7 @@ export default function OrderTable({
                                 onClick={(e) => {
                                     openDetailOrderToggle(e);
                                 }}
-                                data-orderId={order.orderId}>
+                                data-orderid={order.orderId}>
                                 <div className="m-auto basis-1/4 underline">{order.userOrderNumber}</div>
                                 <div className="m-auto basis-1/4 text-xs">
                                     {order.orderedAt.split("T").map((v, idx) => {

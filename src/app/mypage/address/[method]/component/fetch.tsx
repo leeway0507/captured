@@ -5,7 +5,7 @@ export const createAddress = async (address: userAddressProps, access_token: str
         return;
     }
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/mypage/create-address`, {
+    const res = await fetch(`${process.env.API_URL}/mypage/create-address`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -22,7 +22,7 @@ export const updateAddress = async (address: userAddressProps, access_token: str
         return;
     }
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/mypage/update-address`, {
+    const res = await fetch(`${process.env.API_URL}/mypage/update-address`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

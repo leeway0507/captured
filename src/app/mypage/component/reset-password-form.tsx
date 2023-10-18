@@ -1,11 +1,40 @@
 "use client";
 import CustomInput from "@/app/components/custom-input/cusotm-input";
 import { checkPasswordPolicy, checkPasswordAgain } from "@/app/components/custom-input/check-policy";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useSession } from "next-auth/react";
 import { resetPassword } from "./fetch";
 import AlertModalWithoutBtn from "@/app/components/modal/alert-modal-without-btn";
 import { useRouter } from "next/navigation";
+
+const FailureModal = ({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: (v: boolean) => void }) => {
+    console.log("fail");
+    return AlertModalWithoutBtn({
+        title: "변경 실패",
+        content: "비밀번호 변경에 실패하였습니다.",
+        isOpen: isOpen,
+        setIsOpen: setIsOpen,
+        checkColor: "red",
+    });
+};
+const SuccessModal = ({
+    isOpen,
+    setIsOpen,
+    trueCallback,
+}: {
+    isOpen: boolean;
+    setIsOpen: (v: boolean) => void;
+    trueCallback: () => void;
+}) => {
+    return AlertModalWithoutBtn({
+        title: "변경 성공",
+        content: "비밀번호가 변경되었습니다.",
+        isOpen: isOpen,
+        setIsOpen: setIsOpen,
+        trueCallback: trueCallback,
+        checkColor: "green",
+    });
+};
 
 export default function ResetPasswordFrom() {
     const router = useRouter();
@@ -15,28 +44,6 @@ export default function ResetPasswordFrom() {
 
     const [openSuccessModal, setOpenSuccessModal] = useState(false);
     const [openFailureModal, setOpenFailureModal] = useState(false);
-
-    const FailureModal = () => {
-        return AlertModalWithoutBtn({
-            title: "변경 실패",
-            content: "비밀번호 변경에 실패하였습니다.",
-            isOpen: openFailureModal,
-            setIsOpen: setOpenFailureModal,
-            checkColor: "red",
-        });
-    };
-    const SuccessModal = () => {
-        return AlertModalWithoutBtn({
-            title: "변경 성공",
-            content: "비밀번호가 변경되었습니다.",
-            isOpen: openSuccessModal,
-            setIsOpen: setOpenSuccessModal,
-            trueCallback: () => {
-                router.push("/mypage?pageindex=0");
-            },
-            checkColor: "green",
-        });
-    };
 
     return (
         <div className="flex flex-col my-8 text-sm max-h-[600px] max-w-[500px] mx-auto">
@@ -79,11 +86,11 @@ export default function ResetPasswordFrom() {
                 checkPasswordPolicy(password2) &&
                 checkPasswordAgain(password1, password2) ? (
                     <button
-                        className="black-bar tracking-[0.2em]"
+                        className="black-bar"
                         onClick={() => {
                             resetPassword(password1, session?.user.accessToken)
                                 .then((res) => {
-                                    if (res.ok) {
+                                    if (res.message == "success") {
                                         setOpenSuccessModal(true);
                                     } else {
                                         setOpenFailureModal(true);
@@ -96,13 +103,19 @@ export default function ResetPasswordFrom() {
                         변경하기
                     </button>
                 ) : (
-                    <button className="black-bar-xl" disabled>
+                    <button className="black-bar" disabled>
                         변경하기
                     </button>
                 )}
             </div>
-            <FailureModal />
-            <SuccessModal />
+            <FailureModal isOpen={openFailureModal} setIsOpen={setOpenFailureModal} />
+            <SuccessModal
+                isOpen={openSuccessModal}
+                setIsOpen={setOpenSuccessModal}
+                trueCallback={() => {
+                    router.push("/mypage?pageindex=0");
+                }}
+            />
         </div>
     );
 }

@@ -5,6 +5,7 @@ import CateogryClient from "./client";
 import { filterRequestProps } from "./type";
 import { responseProps } from "./component/fetch";
 import ProductCardArrary from "./component/product-card-array";
+import AccordionComponent from "@/app/components/accordion/accordion";
 
 function addDefaultCategoryFilter(pageType: string[], filterMeta: filterRequestProps) {
     switch (pageType[0]) {
@@ -35,14 +36,9 @@ export const Main = async ({ searchParams, params }: { params: { pageType: strin
         <CateogryClient initFilterMeta={initFilterMeta} pageType={pageType}>
             <Suspense fallback={<div>Suspense Loading.....</div>}>
                 {res.lastPage === 0 ? (
-                    <>
-                        <div>{filter?.brand}</div>
-                        <div>{filter?.category}</div>
-                        <div>{filter?.intl}</div>
-                        <div>{filter?.price}</div>
-                        <div>{filter?.sizeArray}</div>
-                        <div>{filter?.sortBy}</div>
-                    </>
+                    <div className="flex flex-col mx-auto h-full p-16">
+                        <div className="text-3xl pb-2">요청 결과가 존재하지 않습니다.</div>
+                    </div>
                 ) : (
                     <ProductCardArrary
                         data={res.data}

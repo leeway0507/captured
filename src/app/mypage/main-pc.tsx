@@ -6,15 +6,13 @@ import YesNoModal from "../components/modal/yes-no-modal";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import { signOut } from "next-auth/react";
-import { useSession } from "next-auth/react";
 
 function classNames(...classes: any[]) {
     return classes.filter(Boolean).join(" ");
 }
 
-export default function MainPc({ orderHistory }: { orderHistory: JSX.Element }) {
+export default function MainPc({ signUpType, orderHistory }: { signUpType: string; orderHistory: JSX.Element }) {
     const router = useRouter();
-    const { data: session } = useSession();
     const searchParams = useSearchParams();
 
     const [selectedIndex, setSelectedIndex] = useState(0);
@@ -53,7 +51,7 @@ export default function MainPc({ orderHistory }: { orderHistory: JSX.Element }) 
                             }>
                             주소 추가 및 변경
                         </Tab>
-                        {session?.user.signUpType === "email" && (
+                        {signUpType === "email" && (
                             <Tab
                                 onClick={() => router.push("/mypage?pageindex=2")}
                                 key="resetPassword"

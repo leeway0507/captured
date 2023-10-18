@@ -15,7 +15,7 @@ interface itemBoxProps {
 }
 
 // css
-const itemBoxClass = "mondaL flex-center text-xs max-w-[90px] h-[30px] border mr-2 mb-3";
+const itemBoxClass = "mondaL flex-center text-xs min-w-[50px] max-w-[90px] h-[30px] border mr-2 mb-3";
 const checkedItem = "bg-main-black border-main-black cursor-pointer text-light-gray active:text-main-black shadow-md";
 const notCheckedItem = "border-sub-black cursor-pointer text-sub-black border-1 shadow-md";
 const notSelctableItem = "border-deep-gray cursor-not-allowed line-through decoration-[2px] text-deep-gray shadow-md";
@@ -33,7 +33,6 @@ const ItemBox = ({ size, selectedItem, setSelectedItem, exist }: itemBoxProps) =
 
 const ProductSizeTable = (sizeInfo: sizeInfo) => {
     const { sizeType, availableSize, selectedItem, setSelectedItem, defaultSizeArr } = sizeInfo;
-    console.log("sizeInfo", sizeInfo);
 
     return (
         <div className="flex flex-wrap">

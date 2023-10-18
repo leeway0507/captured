@@ -2,7 +2,7 @@ import Thumbnail from "./component/thumbnail-mobile";
 import ProductInfo from "./component/product-info";
 import { IntlShipment, DomeShipment } from "@/app/components/notification/shipment-info";
 import AccordionComponent from "@/app/components/accordion/accordion";
-import RelatedProducts from "./component/related-products";
+import RelatedProducts from "./component/recent-view-products";
 import ProductSpecificInfo from "./component/product-specific-info";
 import { productCardProps } from "@/app/type";
 import AddBasket from "./component/add-basket-client";

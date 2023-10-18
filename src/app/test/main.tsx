@@ -2,11 +2,10 @@
 
 import Slider from "../category/[...pageType]/component/options-array-range-slider";
 import { useState } from "react";
+import PageLoading from "../components/loading/page-loading";
 
 const Main = () => {
-    const downloadval = [0, 1000000];
-    const [val, setVal] = useState<number[]>([0, 1000000]);
-    return <div className="m-auto w-[400px] h-[200px]">{Slider(downloadval, setVal)}</div>;
+    return <PageLoading />;
 };
 
 export default Main;
