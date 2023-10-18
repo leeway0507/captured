@@ -226,3 +226,13 @@ def get_user_by_user_id(db: Session, user_id: str) -> UserSchema | None:
     result = result.to_dict()
     result.pop("password")
     return UserSchema(**result)
+
+
+def reset_user_password(db: Session, password: str, user_id: str) -> bool:
+    """비밀번호 변경"""
+    query = (
+        db.query(UserTable)
+        .filter(UserTable.user_id == user_id)
+        .update({"password": get_password_hash(password)})
+    )
+    return commit(db, query, error_log)

@@ -10,7 +10,10 @@ from datetime import datetime
 class ProductInfoSchema(BaseModel):
     """ProductInfoTable Schema"""
 
-    model_config = ConfigDict(alias_generator=to_camel, populate_by_name=True)
+    model_config = ConfigDict(
+        alias_generator=to_camel,
+        populate_by_name=True,
+    )
     sku: Optional[int] = None
     brand: str
     product_name: str
@@ -41,6 +44,10 @@ class ProductInfoDBSchema(ProductInfoSchema):
     """ProductInfoTable Schema"""
 
     model_config = ConfigDict(alias_generator=to_camel, populate_by_name=True)
+
+    ## productInfoSchema는 request, response로 사용 중임.
+    ## 이때 size 항목이 포함되는데 productInfoTable은 size 컬럼이 없음. 따라서 exclude로 제거해야함.
+    size: str | None = Field(default=None, exclude=True)
     search_info: str
 
 
