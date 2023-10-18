@@ -6,7 +6,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from model.auth_model import TokenData
 from model.db_model import UserAddressSchema, UserAddressInDBSchema
 
-from router.auth import get_current_user
+from router.auth import get_current_user, reset_user_password
 from router.mypage import *
 from db.connection import get_db
 from .utils import *
@@ -70,3 +70,17 @@ async def delete_address(
         return {"message": "success"}
     else:
         raise HTTPException(status_code=406, detail="주소 삭제에 실패했습니다. 다시 시도해주세요.")
+
+
+@mypage_router.post("/resset-password")
+async def reset_password(
+    request: dict, user: TokenData = Depends(get_current_user), db: Session = Depends(get_db)
+):
+    """비밀번호 변경"""
+
+    assert request.get("password"), HTTPException(status_code=406, detail="비밀번호를 전달받지 못했습니다.")
+
+    if reset_user_password(db, request.get("password"), user.user_id):
+        return {"message": "success"}
+    else:
+        raise HTTPException(status_code=406, detail="비밀번호 변경에 실패했습니다. 다시 시도해주세요.")

@@ -32,13 +32,18 @@ def get_init_category(page: int, limit: int, db: Session) -> ProductResponseSche
 
     # query
     result = (
-        db.query(ProductInfoTable)
+        db.query(ProductInfoTable, func.group_concat(SizeTable.size).label("size"))
+        .join(SizeTable, ProductInfoTable.sku == SizeTable.sku)
         .filter(ProductInfoTable.sku < page_cursor)
+        .group_by(SizeTable.sku)
         .order_by(ProductInfoTable.sku.desc())
         .limit(limit)
     )
 
-    data = [ProductInfoSchema(**row.to_dict()).model_dump(by_alias=True) for row in result]
+    data = [
+        ProductInfoSchema(**row[0].to_dict(), size=row[1]).model_dump(by_alias=True)
+        for row in result
+    ]
 
     return ProductResponseSchema(data=data, currentPage=page, lastPage=last_page)
 
@@ -89,7 +94,7 @@ def get_category(
         if "size_array" in filter_query_dict.keys():
             print("size filter가 있는 경우")
             result = (
-                db.query(ProductInfoTable)
+                db.query(ProductInfoTable, func.group_concat(SizeTable.size).label("size"))
                 .join(SizeTable, ProductInfoTable.sku == SizeTable.sku)
                 .filter(*filter_query_dict.values(), cursor_query < page_cursor)
                 .group_by(ProductInfoTable.sku)
@@ -101,21 +106,29 @@ def get_category(
             if is_only_sort_by(request_filter):
                 print("filter가 없고 오로지 sort_by만 있는 경우")
                 result = (
-                    db.query(ProductInfoTable)
+                    db.query(ProductInfoTable, func.group_concat(SizeTable.size).label("size"))
+                    .join(SizeTable, ProductInfoTable.sku == SizeTable.sku)
                     .filter(cursor_query < page_cursor)
+                    .group_by(SizeTable.sku)
                     .order_by(*order_by)
                     .limit(limit)
                 )
             else:
                 print("size filter가 없는 경우")
+
             result = (
-                db.query(ProductInfoTable)
+                db.query(ProductInfoTable, func.group_concat(SizeTable.size).label("size"))
+                .join(SizeTable, ProductInfoTable.sku == SizeTable.sku)
                 .filter(*filter_query_dict.values(), cursor_query < page_cursor)
+                .group_by(SizeTable.sku)
                 .order_by(*order_by)
                 .limit(limit)
             )
 
-        data = [ProductInfoSchema(**row.to_dict()).model_dump(by_alias=True) for row in result]
+        data = [
+            ProductInfoSchema(**row[0].to_dict(), size=row[1]).model_dump(by_alias=True)
+            for row in result
+        ]
         return ProductResponseSchema(data=data, currentPage=page, lastPage=last_page)
 
 
