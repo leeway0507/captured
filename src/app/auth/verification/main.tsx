@@ -15,7 +15,7 @@ export default function Main() {
             setEmail(email);
             localStorage.removeItem("email");
         }
-    }, []);
+    }, [router]);
 
     return (
         <div className="flex-center flex-col max-w-[600px] m-auto py-12 gap-8 px-5">

@@ -17,9 +17,10 @@ export default function Client({
     // Add recentView Item
     useEffect(() => {
         const recentViewArr = JSON.parse(localStorage.getItem("recentView") || "[]");
-        recentViewArr.filter((item: any) => item.sku === data.sku).length === 0 && recentViewArr.push(data);
-        recentViewArr.length > 10 && recentViewArr.shift();
-        localStorage.setItem("recentView", JSON.stringify(recentViewArr));
+        const newRecentViewArr = recentViewArr.filter((item: any) => item.sku !== data.sku);
+        newRecentViewArr.push(data);
+        newRecentViewArr.length > 10 && newRecentViewArr.shift();
+        localStorage.setItem("recentView", JSON.stringify(newRecentViewArr));
     }, [data]);
 
     return <div>{isMobile ? <div className="px-5">{Mobile}</div> : <div className="px-5">{Pc}</div>}</div>;

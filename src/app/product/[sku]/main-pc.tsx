@@ -1,7 +1,7 @@
 import ProductInfo from "./component/product-info";
 import { IntlShipment, DomeShipment } from "@/app/components/notification/shipment-info";
 import AccordionComponent from "@/app/components/accordion/accordion";
-import RelatedProducts from "./component/related-products";
+import RelatedProducts from "./component/recent-view-products";
 import ProductSpecificInfo from "./component/product-specific-info";
 import Thumbnail from "./component/thumbnail-pc";
 import { productCardProps } from "@/app/type";
@@ -22,7 +22,7 @@ export default async function MainPc({
                     <Thumbnail {...product} />
                 </div>
                 <div className="flex flex-col justify-between ">
-                    <div className="py-4 sticky top-0 min-w-[380px] max-w-[480px]">
+                    <div className="py-8 sticky top-[60px] min-w-[380px] max-w-[480px]">
                         <ProductInfo {...product} />
                         <AddBasket data={product} defaultSizeArr={defaultSizeArr} />
                         <div>

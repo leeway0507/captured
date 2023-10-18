@@ -1,7 +1,7 @@
 import { Account, User } from "next-auth";
 
 export const signInByEmail = async (params: URLSearchParams) => {
-    const res = await fetch(`http://127.0.0.1:8000/api/auth/signin`, {
+    const res = await fetch(`${process.env.API_URL}/api/auth/signin`, {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: params,
@@ -17,7 +17,7 @@ export const registerOauthUser = async (account: Account, profile: any, user: Us
     body.userId = account.providerAccountId;
     body.krName = body.signUpType === "kakao" ? user.name! : profile.response.name;
 
-    const res = await fetch(`http://127.0.0.1:8000/api/auth/register-oauth`, {
+    const res = await fetch(`${process.env.API_URL}/api/auth/register-oauth`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
@@ -27,7 +27,7 @@ export const registerOauthUser = async (account: Account, profile: any, user: Us
 };
 
 export const getOauthUser = async (account: Account) => {
-    const res = await fetch(`http://127.0.0.1:8000/api/auth/sign-in-sns?id=${account!.providerAccountId}`, {
+    const res = await fetch(`${process.env.API_URL}/api/auth/sign-in-sns?id=${account!.providerAccountId}`, {
         cache: "no-store",
     });
 

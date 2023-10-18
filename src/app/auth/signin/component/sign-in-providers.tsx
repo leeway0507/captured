@@ -1,30 +1,14 @@
 import { signIn } from "next-auth/react";
 import { redirect } from "next/navigation";
-import AlertModalWithoutBtn from "@/app/components/modal/alert-modal-without-btn";
 
-const FailureModal = (title: string, content: string, openFailureModal: boolean, setOpenFailureModal: () => void) => {
-    return AlertModalWithoutBtn({
-        title: title,
-        content: content,
-        isOpen: openFailureModal,
-        setIsOpen: setOpenFailureModal,
-        checkColor: "red",
-    });
-};
-
-export const handleCredentials = async (
-    email: string,
-    password: string,
-    openFailureModal: boolean,
-    openModalToggle: () => void
-) => {
+export const handleCredentials = async (email: string, password: string, openModalToggle: () => void) => {
     await signIn("credentials", {
         username: email,
         password: password,
         redirect: false,
     })
         .then((res) => {
-            res!.error ? FailureModal("로그인 실패", res!.error, openFailureModal, openModalToggle) : redirect("/");
+            res!.error ? openModalToggle() : redirect("/");
         })
         .catch((err) => {
             console.log("err", err);
