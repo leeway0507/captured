@@ -27,11 +27,11 @@ export default function Home() {
     return (
         <NavFooter>
             <Banner thumbnailInfos={thumbnailInfos} />
-            <div className="p-4"></div>
-            <div className="mx-2">
+            <div className="py-4"></div>
+            <div>
                 <BrandList />
             </div>
-            <div className="p-5"></div>
+            <div className="py-5"></div>
         </NavFooter>
     );
 }

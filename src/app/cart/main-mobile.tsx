@@ -8,6 +8,8 @@ import Link from "next/link";
 
 export default function MainMobile({ arr }: { arr: cartProductCardProps[] }) {
     const { cartQuantity } = useShoppingCart();
+
+    if (cartQuantity === undefined) return null;
     return cartQuantity === 0 ? (
         <CartEmptyGuide fontSize="2xl" />
     ) : (

@@ -71,7 +71,10 @@ export default function CartProductCardForm(props: cartProductCardFormProps) {
                                     />
                                 </button>
                                 <div>{quantity}</div>
-                                <button type="button" className="px-3" onClick={() => increaseCartQuantity(sku, size)}>
+                                <button
+                                    type="button"
+                                    className="px-3"
+                                    onClick={() => increaseCartQuantity(sku, size, props)}>
                                     <Image
                                         src="/icons/add.svg"
                                         width={18}

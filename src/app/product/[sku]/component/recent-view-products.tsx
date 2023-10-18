@@ -17,17 +17,16 @@ export default function RelatedProducts() {
     return (
         <>
             <div className="text-xl-2xl pb-2">최근 본 아이템</div>
-            <div className="flex justify-between overflow-hidden">
-                <EmblaCarouselMultiProducts>
-                    {productInfos.map((props: productCardProps, idx: number) => {
-                        return (
-                            <div key={idx} className="embla__slide">
-                                <ProductCard {...props} />
-                            </div>
-                        );
-                    })}
-                </EmblaCarouselMultiProducts>
-            </div>
+
+            <EmblaCarouselMultiProducts>
+                {productInfos.toReversed().map((props: productCardProps, idx: number) => {
+                    return (
+                        <div key={idx} className="embla__slide flex-center">
+                            <ProductCard {...props} />
+                        </div>
+                    );
+                })}
+            </EmblaCarouselMultiProducts>
         </>
     );
 }

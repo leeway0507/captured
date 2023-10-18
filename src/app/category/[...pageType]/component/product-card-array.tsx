@@ -94,7 +94,14 @@ const ProductCardArrary = ({
                         <div key={idx}>
                             <div className={`grid grid-cols-2 tb:grid-cols-3 gap-1 page-container`}>
                                 {item[1].map((data) => {
-                                    return <ProductCard {...data} key={data.sku} />;
+                                    return (
+                                        <div key={data.sku} className={`relative ${data.size === "" && "opacity-60"}`}>
+                                            {data.size === "" && (
+                                                <div className="absolute top-[5%] left-0 text-main-black ">SoldOut</div>
+                                            )}
+                                            <ProductCard {...data} />
+                                        </div>
+                                    );
                                 })}
                             </div>
                             <div

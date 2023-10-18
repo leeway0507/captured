@@ -99,3 +99,9 @@
         --slide-size: 33.3333%;
     }
 }
+
+@media (min-width: 1024px) {
+    .embla-multi {
+        --slide-size: 25%;
+    }
+}

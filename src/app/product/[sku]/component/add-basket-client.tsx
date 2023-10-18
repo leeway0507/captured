@@ -20,7 +20,7 @@ const AddBasket = ({ data, defaultSizeArr }: { data: productCardProps; defaultSi
     const [openModal, setOpenModal] = useState(false);
     function AddBascketToggle() {
         setOpenModal(true);
-        increaseCartQuantity(sku, selectedItem, data);
+        increaseCartQuantity(sku, selectedItem, { ...data });
     }
 
     return (

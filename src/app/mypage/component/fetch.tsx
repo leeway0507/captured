@@ -5,7 +5,7 @@ export const getAddress = async (accessToken: string | undefined) => {
         return [];
     }
 
-    const res = await fetch(`http://127.0.0.1:8000/api/mypage/get-address`, {
+    const res = await fetch(`${process.env.API_URL}/api/mypage/get-address`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -21,7 +21,7 @@ export const deleteAddress = async (address: userAddressProps, accessToken: stri
         return;
     }
 
-    const res = await fetch(`http://127.0.0.1:8000/mypage/delete-address`, {
+    const res = await fetch(`${process.env.API_URL}/api/mypage/delete-address`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -38,13 +38,13 @@ export const resetPassword = async (password: string, accessToken: string | unde
         return;
     }
 
-    const res = await fetch(`http://127.0.0.1:8000/mypage/delete-address`, {
+    const res = await fetch(`${process.env.API_URL}/api/mypage/resset-password`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${accessToken}`,
         },
-        body: JSON.stringify(password),
+        body: JSON.stringify({ password: password }),
     });
     const data = await res.json();
     return data;
