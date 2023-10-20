@@ -17,7 +17,7 @@ jobs:
 
       - name: connect to aws cl
         run: |
-          ssh -i ~/.ssh/dodo-instance.pem ubuntu@13.124.238.182
+          ssh -i ~/.ssh/dodo-instance.pem ubuntu@13.124.238.182 && pwd
 
       - name: check connection status
         run: |
