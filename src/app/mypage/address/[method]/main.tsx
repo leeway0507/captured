@@ -22,8 +22,6 @@ const Main = (props: userAddressProps) => {
         enAddressDetail = "",
     } = props;
 
-    console.log("create-props", props, enAddress);
-
     const router = useRouter();
     const { data: session } = useSession();
     const { method } = useParams();

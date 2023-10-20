@@ -10,12 +10,8 @@ import { redirect } from "next/navigation";
 import { handleCredentials, handleKakao, handleNaver } from "./component/sign-in-providers";
 import AlertModalWithoutBtn from "@/app/components/modal/alert-modal-without-btn";
 
-const oauthClass = "flex-center relative rounded-lg text-sm py-2 border my-2";
-const oauthImageClass = "absolute left-4";
-const oauthclickEffect =
-    "cursor-pointer active:bg-gray-100 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500";
-
-const accountFeatures = "flex-center my-1 basis-1/2 link-animation ";
+const oauthClass = "flex-center relative rounded-lg text-sm py-3 border my-2 text-lg";
+const accountFeatures = "flex-center my-1 basis-1/2";
 
 const FailureModal = ({
     title,
@@ -63,7 +59,7 @@ export default function SignIn() {
     };
 
     return (
-        <div className="flex flex-col text-main-black px-5 max-w-[600px] w-full mx-auto pt-16">
+        <div className="flex flex-col text-main-black px-5 max-w-md w-full mx-auto py-8">
             <div className="flex flex-col py-2 gap-6">
                 <div>
                     <CustomInput
@@ -96,7 +92,7 @@ export default function SignIn() {
                 <div>
                     <button
                         type="button"
-                        className="black-bar-xl w-full"
+                        className="black-bar w-full tracking-[0.1rem]"
                         onClick={() => handleCredentials(email, password, openModalToggle)}>
                         로그인
                     </button>
@@ -112,35 +108,25 @@ export default function SignIn() {
                 </div>
             </div>
             <div>
-                <div className={`${oauthClass} ${oauthclickEffect}`} onClick={() => handleNaver()}>
+                <div className={`${oauthClass}`} style={{ backgroundColor: "#03C75A" }} onClick={() => handleNaver()}>
                     <Image
-                        src="/icons/naver.svg"
-                        width={24}
-                        height={24}
+                        src="/icons/naver.png"
+                        width={30}
+                        height={30}
                         alt="naver oauth"
-                        className={`${oauthImageClass}`}
+                        className={`absolute left-3 text-white `}
                     />
-                    <div>네이버로 로그인</div>
+                    <div className="text-white">네이버 로그인</div>
                 </div>
-                <div className={`${oauthClass} ${oauthclickEffect}`} onClick={() => handleKakao()}>
+                <div className={`${oauthClass}`} style={{ backgroundColor: "#FEE500" }} onClick={() => handleKakao()}>
                     <Image
                         src="/icons/kakao.svg"
-                        width={24}
-                        height={24}
-                        alt="naver oauth"
-                        className={`${oauthImageClass}`}
+                        width={20}
+                        height={20}
+                        alt="kakao oauth"
+                        className={`absolute left-4`}
                     />
-                    <div>카카오로 로그인</div>
-                </div>
-                <div className={`${oauthClass}  ${oauthclickEffect}`}>
-                    <Image
-                        src="/icons/google.svg"
-                        width={24}
-                        height={24}
-                        alt="naver oauth"
-                        className={`${oauthImageClass}`}
-                    />
-                    <div>구글로 로그인</div>
+                    <div style={{ color: "#000000 85%" }}>카카오 로그인</div>
                 </div>
             </div>
             <FailureModal
