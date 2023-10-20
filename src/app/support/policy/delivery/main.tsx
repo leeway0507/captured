@@ -1,5 +1,19 @@
 import AccordionComponent from "@/app/components/accordion/accordion";
 
+export default function Main() {
+    return (
+        <div className="max-w-2xl w-full pt-4 pb-16 px-8 text-sm mx-auto flex-left flex-col">
+            <div className={`${main} me-8`}>배송안내</div>
+            <div className="w-full max-w-xl h-full">
+                <AccordionComponent title="배송절차" content={process} cat="process" />
+                <AccordionComponent title="배송비" content={shippingFee} cat="shippingFee" />
+                <AccordionComponent title="교환 및 반품" content={refundAndExchange} cat="refundAndExchange" />
+                <AccordionComponent title="관부가세 대납" content={customFee} cat="customFee" />
+            </div>
+        </div>
+    );
+}
+
 const main = "text-4xl font-bold mb-4 w-full flex-center";
 const title = "text-2xl font-bold mb-4 w-full";
 const subTitle = "text-lg mb-2  w-full";
@@ -76,17 +90,3 @@ const refundAndExchange = (
 );
 
 const customFee = <div>상품 가격에 관·부가세를 포함하고 있습니다.</div>;
-
-export default function Main() {
-    return (
-        <div className="max-w-2xl w-full py-16 px-8 text-sm mx-auto flex-left flex-col">
-            <div className={`${main}`}>배송안내</div>
-            <div className="w-full max-w-xl h-full">
-                <AccordionComponent title="배송절차" content={process} cat="process" />
-                <AccordionComponent title="배송비" content={shippingFee} cat="shippingFee" />
-                <AccordionComponent title="교환 및 반품" content={refundAndExchange} cat="refundAndExchange" />
-                <AccordionComponent title="관부가세 대납" content={customFee} cat="customFee" />
-            </div>
-        </div>
-    );
-}

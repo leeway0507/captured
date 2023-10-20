@@ -18,39 +18,38 @@ export default function ResetPassword() {
     const [isEmailValid, setIsEmailValid] = useState(false);
 
     return (
-        <div className="flex flex-col text-main-black px-5 max-w-[600px] justify-between py-12 m-auto">
-            <div className={`flex flex-col py-2 justify-between gap-4 ${isEmailValid && "hidden"}`}>
-                <div>
-                    <CustomInput
-                        label="이메일 주소"
-                        type="email"
-                        placeholder="wanted@captured.co.kr"
-                        info="이메일 형식이 올바르지 않습니다."
-                        value={email}
-                        setValue={setEmail}
-                        id="email"
-                        checkPolicy={checkEmail}
-                    />
-                </div>
-                <div>
-                    <CustomInput
-                        label="성 명"
-                        type="text"
-                        placeholder="홍길동"
-                        info="최소 2글자 이상의 한글이어야 합니다."
-                        value={name}
-                        setValue={setName}
-                        id="name"
-                        checkPolicy={checkName}
-                    />
-                </div>
-                <div
-                    className="black-bar-xl"
-                    onClick={() => {
-                        setIsEmailValid(true);
-                    }}>
-                    비밀번호 찾기
-                </div>
+        <div
+            className={`max-w-md m-auto w-full px-4 py-16 flex flex-col justify-between gap-6 ${
+                isEmailValid && "hidden"
+            }`}>
+            <CustomInput
+                label="이메일 주소"
+                type="email"
+                placeholder="wanted@captured.co.kr"
+                info="이메일 형식이 올바르지 않습니다."
+                value={email}
+                setValue={setEmail}
+                id="email"
+                checkPolicy={checkEmail}
+            />
+
+            <CustomInput
+                label="성 명"
+                type="text"
+                placeholder="홍길동"
+                info="최소 2글자 이상의 한글이어야 합니다."
+                value={name}
+                setValue={setName}
+                id="name"
+                checkPolicy={checkName}
+            />
+
+            <div
+                className="black-bar "
+                onClick={() => {
+                    setIsEmailValid(true);
+                }}>
+                비밀번호 찾기
             </div>
 
             {/*  */}
@@ -78,7 +77,7 @@ export default function ResetPassword() {
                         checkPolicy={(value) => checkPasswordAgain(password1, value)}
                     />
                 </div>
-                <div className="black-bar-xl">변경하기</div>
+                <div className="black-bar">변경하기</div>
             </div>
         </div>
     );
