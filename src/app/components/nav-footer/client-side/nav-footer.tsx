@@ -9,7 +9,7 @@ interface NavFooterProps {
 export default function NavFooter({ children }: NavFooterProps) {
     return (
         <ContextWrapper>
-            <main className="flex flex-col w-full h-full min-h-screen relative">
+            <main className="flex flex-col w-full h-full min-h-screen relative tb:px-8 xl:px-12">
                 <div className="sticky top-0 z-50">
                     <NavMain />
                 </div>

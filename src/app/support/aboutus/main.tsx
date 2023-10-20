@@ -1,12 +1,12 @@
-import Image from "next/image";
-
 export default function Main() {
     return (
         <div className="max-w-2xl w-full flex-left flex-col m-auto py-16 px-4">
-            <div className="flex-center flex-wrap">
-                <div className="text-2xl tb:text-3xl whitespace-nowrap">전세계 숨은 재고를 찾아 검거하는</div>
-                <div className="relative w-[200px] h-[100px] mx-4">
-                    <Image src="/icons/main-logo.svg" alt="main logo" fill />
+            <div className="flex-center flex-col">
+                <div className="text-3xl tb:text-4xl whitespace-nowrap pb-4">전세계 숨은 재고를 찾아 검거하는</div>
+                <div
+                    className="font-test -rotate-[2.2deg] text-4xl text-rose-600 tracking-[0.2rem]"
+                    style={{ textShadow: "2px 3px 1px lightgrey" }}>
+                    CAPTURED
                 </div>
             </div>
 
