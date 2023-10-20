@@ -20,9 +20,10 @@ jobs:
           colima start
         
       - name: docker-compose build and push
-        run: cd /Users/yangwoolee/repo/captured/docker && \
-             ${{ env.DOCKER_LOCAL }} build && \
-             ${{ env.DOCKER_LOCAL }} push
+        run: cd /Users/yangwoolee/repo/captured/docker
+
+      - name: test
+        run: docker-compose --version 
       - name: docker-compose pull and up in AWS CLI
         run: ssh -i ~/.ssh/dodo-instance.pem ubuntu@13.124.238.182 "cd captured && \
               ${{ env.DOCKER_SERVER }} down && \ 
