@@ -17,8 +17,8 @@ jobs:
     steps:
       - name: docker-compose build and push
         run: cd /Users/yangwoolee/repo/captured/docker && \
-             docker-compose -f ${{ env.DOCKER_LOCAL }} build && \
-             docker-compose -f ${{ env.DOCKER_LOCAL }} push
+             ${{ env.DOCKER_LOCAL }} build && \
+             ${{ env.DOCKER_LOCAL }} push
       - name: docker-compose 
         run: ssh -i ~/.ssh/dodo-instance.pem ubuntu@13.124.238.182 "cd captured && \
               ${{ env.DOCKER_SERVER }} down && \ 
