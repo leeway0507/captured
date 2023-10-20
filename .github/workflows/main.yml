@@ -15,17 +15,14 @@ jobs:
     runs-on: self-hosted
 
     steps:
-      - name: colima start
-        run: |
-          colima start
-        
       - name: docker-compose build and push
-        run: cd /Users/yangwoolee/repo/captured/docker
-
-      - name: test
-        run: docker-compose --version 
-      - name: docker-compose pull and up in AWS CLI
-        run: ssh -i ~/.ssh/dodo-instance.pem ubuntu@13.124.238.182 "cd captured && \
-              ${{ env.DOCKER_SERVER }} down && \ 
-              ${{ env.DOCKER_SERVER }} pull && \
+        run: |
+             cd /Users/yangwoolee/repo/captured/docker 
+             docker-compose -f docker_compose_staging_build.yml build
+             ${{ env.DOCKER_LOCAL }} push
+      - name: docker-compose 
+        run: |
+              ssh -i ~/.ssh/dodo-instance.pem ubuntu@13.124.238.182 "cd captured
+              ${{ env.DOCKER_SERVER }} down
+              ${{ env.DOCKER_SERVER }} pull
               ${{ env.DOCKER_SERVER }} up -d"
