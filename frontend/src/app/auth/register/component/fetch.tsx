@@ -8,7 +8,7 @@ interface register {
 export const register = async (props: register) => {
     const { userData, addressData } = props;
 
-    const res = await fetch(`${process.env.API_URL}/auth/register`, {
+    const res = await fetch(`${setBackendEnvAPI}/auth/register`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -22,7 +22,7 @@ export const register = async (props: register) => {
 };
 
 export const checkEmailDuplication = async (email: string) => {
-    const res = await fetch(`${process.env.API_URL}/auth/email-check?email=${email}`);
+    const res = await fetch(`${setBackendEnvAPI}/auth/email-check?email=${email}`);
     const data = await res.json();
     return data.isUnique;
 };
