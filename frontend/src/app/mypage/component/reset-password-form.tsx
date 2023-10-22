@@ -8,7 +8,6 @@ import AlertModalWithoutBtn from "@/app/components/modal/alert-modal-without-btn
 import { useRouter } from "next/navigation";
 
 const FailureModal = ({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: (v: boolean) => void }) => {
-    console.log("fail");
     return AlertModalWithoutBtn({
         title: "변경 실패",
         content: "비밀번호 변경에 실패하였습니다.",

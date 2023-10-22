@@ -1,3 +1,4 @@
+import { setBackendEnvAPI } from "@/app/components/utils/env-utiils";
 import { userAddressProps } from "@/app/type";
 
 export const createAddress = async (address: userAddressProps, access_token: string | undefined) => {
@@ -5,7 +6,7 @@ export const createAddress = async (address: userAddressProps, access_token: str
         return;
     }
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/mypage/create-address`, {
+    const res = await fetch(`${setBackendEnvAPI()}/api/mypage/create-address`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -22,7 +23,7 @@ export const updateAddress = async (address: userAddressProps, access_token: str
         return;
     }
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/mypage/update-address`, {
+    const res = await fetch(`${setBackendEnvAPI()}/api/mypage/update-address`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

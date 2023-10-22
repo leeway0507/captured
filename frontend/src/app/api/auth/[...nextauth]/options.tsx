@@ -65,26 +65,29 @@ export const options: NextAuthOptions = {
                     return true;
                 }
                 if (account!.type === "oauth") {
-                    var user_check = await api.getOauthUser(account!);
+                    const user_check = await api.getOauthUser(account!);
 
                     // console.log("---------signIn---------");
                     // console.log(user_check);
 
                     //register user when user is not existed
-                    const res =
+                    const userInfo =
                         user_check.status == 404 ? await api.registerOauthUser(account!, profile, user) : user_check;
+
+                    if (userInfo.status == 406) throw new Error("406 error");
 
                     //update user when user is existed
                     // Swagger에서는 accessToken을 인식 못하므로 signin result에 대해서는 snake_case를 사용
-                    user.accessToken = res.user.access_token;
-                    user.krName = res.user.kr_name;
-                    user.signUpType = res.user.sign_up_type;
-                    user.emailVerification = res.user.email_verification;
+                    user.accessToken = userInfo.user.access_token;
+                    user.krName = userInfo.user.kr_name;
+                    user.signUpType = userInfo.user.sign_up_type;
+                    user.emailVerification = userInfo.user.email_verification;
 
                     return true;
                 }
-                throw new Error("잘못된 접근입니다.");
+                throw new Error("401 error");
             } catch (err) {
+                console.log(err);
                 return `/auth/login-fail?error=${err}`;
             }
         },

@@ -145,6 +145,10 @@ def register_auth_user(
     auth_user_registration: RegistrationOauthSchema, db: Session
 ) -> UserSchema | bool:
     """네이버 카카오 회원가입 시 user 정보를 DB에 저장"""
+
+    auth_user_registration.user_id = create_user_id()
+    auth_user_registration.register_at = datetime.now()
+
     query = db.add(UserTable(**auth_user_registration.model_dump()))
     result = commit(db, query, error_log)
 

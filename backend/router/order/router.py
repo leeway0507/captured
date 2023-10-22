@@ -26,10 +26,7 @@ async def get_order_history(
 ):
     """주문 내역 조회"""
     order_history = get_order_history_from_db(db, user.user_id)
-    if order_history:
-        return order_history
-    else:
-        raise HTTPException(status_code=400, detail="주문내역 조회 실패")
+    return order_history
 
 
 @order_router.get("/get-order-row")
@@ -40,10 +37,7 @@ async def get_order_row(
 ):
     """주문 상세내역 조회"""
     order_row = get_order_row_from_db(db, order_id)
-    if order_row:
-        return order_row
-    else:
-        raise HTTPException(status_code=400, detail="주문상세내역 조회 실패")
+    return order_row
 
 
 @order_router.post("/create-order-history")

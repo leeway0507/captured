@@ -1,5 +1,6 @@
 import { productCardProps } from "@/app/type";
 import { initFilterMetaProps, filterRequestProps } from "../type";
+import { setBackendEnvAPI } from "@/app/components/utils/env-utiils";
 export interface responseProps {
     data: productCardProps[];
     currentPage: number;
@@ -11,7 +12,7 @@ export const getCategory = async (filter: filterRequestProps | undefined, page: 
     // console.log(filter);
     // console.log(page);
 
-    const req = await fetch(`${setBackendEnvAPI}/api/product/get-category?page=${page}`, {
+    const req = await fetch(`${setBackendEnvAPI()}/api/product/get-category?page=${page}`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -23,7 +24,7 @@ export const getCategory = async (filter: filterRequestProps | undefined, page: 
 };
 
 export const getFilterMeta = async () => {
-    const req = await fetch(`${setBackendEnvAPI}/api/product/get-filter-meta`);
+    const req = await fetch(`${setBackendEnvAPI()}/api/product/get-filter-meta`);
     const result: initFilterMetaProps = await req.json();
     return result;
 };

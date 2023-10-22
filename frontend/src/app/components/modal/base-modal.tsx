@@ -37,7 +37,7 @@ const BaseModal = (props: baseModalProps) => {
                             leave="ease-in duration-200"
                             leaveFrom="opacity-100 scale-100"
                             leaveTo="opacity-0 scale-95">
-                            <Dialog.Panel className="w-full max-w-[350px] transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle border border-deep-gray shadow-2xl transition-all">
+                            <Dialog.Panel className="w-full max-w-[380px] transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle border border-deep-gray shadow-2xl transition-all">
                                 <Dialog.Title as="h3" className="text-lg leading-6 text-gray-900">
                                     {title}
                                 </Dialog.Title>

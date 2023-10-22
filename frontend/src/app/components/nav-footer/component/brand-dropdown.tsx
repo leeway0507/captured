@@ -46,7 +46,7 @@ export default function BrandDropDown() {
                         const brandNameBar = brandName.replace(" ", "-");
                         return (
                             <Link
-                                href={`${process.env.NEXT_PUBLIC_FRONTEND_URL}/category/brand/${brandNameBar}`}
+                                href={`/category/brand/${brandNameBar}`}
                                 key={idx}
                                 className="flex hover:bg-main-black hover:text-white">
                                 <div className="relative w-[35px] h-[35px]">

@@ -3,8 +3,9 @@ import os
 
 
 def make_logger(path, name=None):
-    if not os.path.exists("logs"):
-        os.mkdir("logs")
+    if not os.path.exists(path):
+        dir = path.rsplit("/", 1)[0]
+        os.makedirs(dir, exist_ok=True)
 
     # 1 logger instance를 만든다.
     logger = logging.getLogger(name)

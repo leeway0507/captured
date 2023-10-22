@@ -10,7 +10,7 @@ import { redirect } from "next/navigation";
 import { handleCredentials, handleKakao, handleNaver } from "./component/sign-in-providers";
 import AlertModalWithoutBtn from "@/app/components/modal/alert-modal-without-btn";
 
-const oauthClass = "flex-center relative rounded-lg text-sm py-3 border my-2 text-lg";
+const oauthClass = "flex-center relative rounded-lg text-sm py-3 border my-2 text-lg  cursor-pointer";
 const accountFeatures = "flex-center my-1 basis-1/2";
 
 const FailureModal = ({

@@ -24,7 +24,7 @@ export default function OrderTable({
     const [seeMore, setSeeMore] = useState(false);
     const [openDetailOrder, setOpenDetailOrder] = useState(false);
     const [targetOrder, setTargetOrder] = useState<orderHistoryProps>();
-    const [orderList, setOrderList] = useState(orderHistoryArray.slice(0, showInitalRows));
+    const [orderList, setOrderList] = useState(orderHistoryArray ? orderHistoryArray.slice(0, showInitalRows) : []);
     const openToggle = (value: boolean) => {
         setSeeMore(value);
         value ? setOrderList(orderHistoryArray) : setOrderList(orderHistoryArray.slice(0, showInitalRows));
@@ -70,13 +70,19 @@ export default function OrderTable({
                             </div>
                         ))}
                     </div>
-                    <div
-                        className="border-b border-main-black flex-center py-3 mb-6 tracking-[0.2rem] link-animation"
-                        onClick={() => {
-                            openToggle(!seeMore);
-                        }}>
-                        {seeMore ? "닫기" : "더보기"}
-                    </div>
+                    {orderHistoryArray.length === 0 ? (
+                        <div className="flex-center py-3 my-6 text-xl">주문내역이 없습니다.</div>
+                    ) : (
+                        orderList.length > showInitalRows && (
+                            <div
+                                className="border-b border-main-black flex-center py-3 mb-6 tracking-[0.2rem] link-animation"
+                                onClick={() => {
+                                    openToggle(!seeMore);
+                                }}>
+                                {seeMore ? "닫기" : "더보기"}
+                            </div>
+                        )
+                    )}
                 </div>
             ) : (
                 <div>
