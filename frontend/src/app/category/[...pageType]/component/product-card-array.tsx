@@ -82,7 +82,7 @@ const ProductCardArrary = ({
             <Link
                 href={`?page=${prevPage}`}
                 className={`${Object.keys(localData).includes("1") ? "hidden" : "block"} `}>
-                <div className="border-black pointer-cursor py-2 flex-center my-8 link-animation text-lg hover:bg-black hover:rounded-lg hover:text-white">
+                <div className="border rounded-lg border-deep-gray pointer-cursor py-2 flex-center my-8 bg-main-black text-white ">
                     이전으로
                 </div>
             </Link>
@@ -105,7 +105,7 @@ const ProductCardArrary = ({
                                 })}
                             </div>
                             <div
-                                className="page-observer h-[100px] w-full bg-red-300"
+                                className="page-observer h-[50px] w-full"
                                 data-next={`page=${currentPage + 1 <= lastPage ? currentPage + 1 : lastPage} `}></div>
                         </div>
                     );

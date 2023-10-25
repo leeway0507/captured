@@ -47,7 +47,9 @@ class ProductInfoDBSchema(ProductInfoSchema):
 
     ## productInfoSchema는 request, response로 사용 중임.
     ## 이때 size 항목이 포함되는데 productInfoTable은 size 컬럼이 없음. 따라서 exclude로 제거해야함.
-    size: str | None = Field(default=None, exclude=True)
+    size: Optional[str] = Field(default=None, exclude=True)
+    price_desc_cursor: str
+    price_asc_cursor: str
     search_info: str
 
 
@@ -58,6 +60,7 @@ class SizeSchema(BaseModel):
     sku: int
     size: str
     available: bool
+    updated_at: datetime
 
 
 class UserSchema(BaseModel):

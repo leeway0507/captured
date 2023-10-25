@@ -43,7 +43,7 @@ export default function OrderTable({
             {!openDetailOrder ? (
                 <div className={`overflow-auto`}>
                     <div className={`border-main-black justify-evenly relative`}>
-                        <div className="flex justify-evenly bg-white pb-4">
+                        <div className="flex justify-evenly bg-white pb-4 border-b border-main-black">
                             <div className={`${header}`}>주문번호</div>
                             <div className={`${header}`}>주문일</div>
                             <div className={`${header}`}>주문상태</div>

@@ -25,10 +25,10 @@ export default function MainPc({ signUpType, orderHistory }: { signUpType: strin
     }, [pageIdx]);
 
     return (
-        <div className="flex">
+        <div className="flex grow">
             <Tab.Group vertical selectedIndex={selectedIndex} onChange={setSelectedIndex}>
-                <Tab.List className="basis-1/3 border-e max-w-[350px]">
-                    <Tab.List className={"flex flex-col  text-xl sticky top-0 py-8"}>
+                <Tab.List className="basis-1/3 border-e max-w-[350px] my-8">
+                    <Tab.List className={"flex flex-col  text-xl sticky top-0 py-2"}>
                         <Tab
                             onClick={() => router.push("/mypage?pageindex=0")}
                             key="order"

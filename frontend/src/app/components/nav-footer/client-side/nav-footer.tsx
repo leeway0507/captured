@@ -9,14 +9,14 @@ interface NavFooterProps {
 export default function NavFooter({ children }: NavFooterProps) {
     return (
         <ContextWrapper>
-            <main className="flex flex-col w-full h-full min-h-screen relative tb:px-8 xl:px-12">
+            <main className="main-container">
                 <div className="sticky top-0 z-50">
                     <NavMain />
                 </div>
-                <div className="grow flex flex-col justify-between w-full" id="main-body">
+                <div className="grow flex flex-col justify-between w-full tb:px-8 xl:px-12" id="main-body">
                     {children}
-                    <Footer />
                 </div>
+                <Footer />
             </main>
         </ContextWrapper>
     );

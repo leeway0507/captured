@@ -24,9 +24,9 @@ export default async function MainMobile({
                     <div className="py-4">
                         {product.intl ? (
                             <IntlShipment
-                                title="해외배송 상품"
+                                title="해외배송"
                                 content="해당 제품은 해외 구매대행 상품입니다. 
-                        상품 구입을 위해 고유 통관부호가 필요하며 5 ~ 15일의 배송기간이 소요 됩니다."
+                        상품 구입을 위해 고유 통관부호가 필요하며 5 - 15일의 배송기간이 소요 됩니다."
                             />
                         ) : (
                             <DomeShipment />

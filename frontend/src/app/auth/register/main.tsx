@@ -129,91 +129,89 @@ export default function CreateAccount() {
     };
 
     return (
-        <div className="flex flex-col text-main-black px-5 max-w-[600px] py-4 m-auto">
+        <div className="flex flex-col text-main-black px-5 max-w-md w-full mx-auto py-8">
             <div className={`block ${isOpen && "hidden"}`}>
-                <div className="flex-center text-2xl pb-2">회원정보 입력</div>
-                <div className="flex flex-col py-2 justify-between gap-4">
-                    <form>
-                        <div className="flex justify-between">
-                            <div className="grow me-2">
-                                <CustomInput
-                                    label="이메일 주소"
-                                    type="email"
-                                    placeholder="wanted@captured.co.kr"
-                                    info="이메일 형식이 올바르지 않습니다."
-                                    value={email}
-                                    setValue={setEmail}
-                                    id="email"
-                                    checkPolicy={checkEmail}
-                                    disabled={isUnique}
-                                />
-                            </div>
-                            <div className="cursor-pointer whitespace-nowrap flex-center pb-3">
-                                <button
-                                    type="button"
-                                    className="border p-2 bg-light-gray rounded active:bg-deep-gray text-xs whitespace-nowrap"
-                                    disabled={email === "" || !checkEmail(email) || isUnique}
-                                    onClick={() => {
-                                        api.checkEmailDuplication(email).then((res) => {
-                                            if (res) {
-                                                setOpenSuccessModal(true);
-                                            } else {
-                                                setOpenFailureModal(true);
-                                            }
-                                        });
-                                    }}>
-                                    이메일 중복 확인
-                                </button>
-                            </div>
-                        </div>
-                        <div>
+                <div className="flex-center text-2xl pb-8">회원정보 입력</div>
+                <form className="flex flex-col gap-2">
+                    <div className="flex justify-between">
+                        <div className="grow me-2">
                             <CustomInput
-                                label="성 명"
-                                type="text"
-                                placeholder="홍길동"
-                                info="최소 2글자 이상의 한글이어야 합니다."
-                                value={name}
-                                setValue={setName}
-                                id="username"
-                                checkPolicy={checkName}
-                                autoComplete="username"
+                                label="이메일 주소"
+                                type="email"
+                                placeholder="wanted@captured.co.kr"
+                                info="이메일 형식이 올바르지 않습니다."
+                                value={email}
+                                setValue={setEmail}
+                                id="email"
+                                checkPolicy={checkEmail}
+                                disabled={isUnique}
                             />
                         </div>
-                        <div>
-                            <CustomInput
-                                label="비밀번호 입력"
-                                type="password"
-                                info="8글자 이상의 영문 숫자 조합이어야 합니다."
-                                value={password1}
-                                setValue={setPassword1}
-                                id="password1"
-                                checkPolicy={checkPasswordPolicy}
-                                autoComplete="new-password"
-                            />
-                        </div>
-                        <div>
-                            <CustomInput
-                                label="비밀번호 확인"
-                                type="password"
-                                info="비밀번호가 일치하지 않습니다."
-                                value={password2}
-                                setValue={setPassword2}
-                                id="password2"
-                                checkPolicy={(value) => checkPasswordAgain(password1, value)}
-                                autoComplete="new-password"
-                            />
-                        </div>
-                        {checkDefaultInputValidation(email, name, password1, password2) ? (
-                            <button type="button" className="black-bar w-full" onClick={() => setIsOpen(true)}>
-                                다 음
+                        <div className="cursor-pointer whitespace-nowrap flex-center pb-3">
+                            <button
+                                type="button"
+                                className="border p-2 bg-light-gray rounded active:bg-deep-gray text-xs whitespace-nowrap"
+                                disabled={email === "" || !checkEmail(email) || isUnique}
+                                onClick={() => {
+                                    api.checkEmailDuplication(email).then((res) => {
+                                        if (res) {
+                                            setOpenSuccessModal(true);
+                                        } else {
+                                            setOpenFailureModal(true);
+                                        }
+                                    });
+                                }}>
+                                이메일 중복 확인
                             </button>
-                        ) : (
-                            <button type="button" className="disabled-bar w-full" disabled>
-                                {isUnique ? "필수 항목을 입력해주세요." : "이메일 중복 여부를 확인해주세요."}
-                            </button>
-                        )}
-                    </form>
-                </div>
+                        </div>
+                    </div>
+                    <div>
+                        <CustomInput
+                            label="성 명"
+                            type="text"
+                            placeholder="홍길동"
+                            info="최소 2글자 이상의 한글이어야 합니다."
+                            value={name}
+                            setValue={setName}
+                            id="username"
+                            checkPolicy={checkName}
+                            autoComplete="username"
+                        />
+                    </div>
+                    <div>
+                        <CustomInput
+                            label="비밀번호 입력"
+                            type="password"
+                            info="8글자 이상의 영문 숫자 조합이어야 합니다."
+                            value={password1}
+                            setValue={setPassword1}
+                            id="password1"
+                            checkPolicy={checkPasswordPolicy}
+                            autoComplete="new-password"
+                        />
+                    </div>
+                    <div>
+                        <CustomInput
+                            label="비밀번호 확인"
+                            type="password"
+                            info="비밀번호가 일치하지 않습니다."
+                            value={password2}
+                            setValue={setPassword2}
+                            id="password2"
+                            checkPolicy={(value) => checkPasswordAgain(password1, value)}
+                            autoComplete="new-password"
+                        />
+                    </div>
+                    {checkDefaultInputValidation(email, name, password1, password2) ? (
+                        <button type="button" className="black-bar w-full" onClick={() => setIsOpen(true)}>
+                            다 음
+                        </button>
+                    ) : (
+                        <button type="button" className="disabled-bar w-full" disabled>
+                            {isUnique ? "필수 항목을 입력해주세요." : "이메일 중복 여부를 확인해주세요."}
+                        </button>
+                    )}
+                </form>
             </div>
             <div className={`flex flex-col ${isOpen ? "block" : "hidden"}`}>
                 <div className="flex-center text-2xl pb-2">배송지 입력</div>

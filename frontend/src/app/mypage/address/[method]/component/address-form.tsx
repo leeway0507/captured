@@ -49,7 +49,7 @@ export default function AddressForm(props: addAddressFromProps) {
 
     return (
         <>
-            <div className="flex flex-col max-w-[600px] text-xs grow">
+            <div className="flex flex-col max-w-md text-xs grow">
                 <div className="flex gap-5">
                     <div className="grow">
                         <CustomInput
@@ -113,8 +113,12 @@ export default function AddressForm(props: addAddressFromProps) {
                     <div className="text-xs">한글 주소</div>
                     <div className="flex justify-between">
                         <div className="grow me-2 flex-left">
-                            <div className="py-2 border-b border-light-gray grow text-gray-300">
-                                {krAddress === "" ? "한글 도로명 주소 입력" : krAddress}
+                            <div className="py-2 border-b border-light-gray grow text-main-black">
+                                {krAddress === "" ? (
+                                    <div className="text-sm text-gray-300">한글 도로명 주소 입력</div>
+                                ) : (
+                                    krAddress
+                                )}
                             </div>
                         </div>
                         <div className="flex">
@@ -142,8 +146,12 @@ export default function AddressForm(props: addAddressFromProps) {
                     <div className="text-xs">영문 주소</div>
                     <div className="flex justify-between">
                         <div className="grow me-2 flex-left">
-                            <div className="py-2 border-b border-light-gray grow text-gray-300">
-                                {enAddress === "" ? "영문 도로명 주소 입력" : enAddress}
+                            <div className="py-2 border-b border-light-gray grow text-main-black">
+                                {enAddress === "" ? (
+                                    <div className="text-sm text-gray-300">영문 도로명 주소 입력</div>
+                                ) : (
+                                    enAddress
+                                )}
                             </div>
                         </div>
                         <div className="flex">

@@ -1,12 +1,12 @@
 """mypage Router"""
 
-from sqlalchemy.orm import Session
+from sqlalchemy.ext.asyncio import AsyncSession
 from fastapi import APIRouter, Depends, HTTPException
 
 from model.auth_model import TokenData
 from model.db_model import UserAddressSchema, UserAddressInDBSchema
 
-from router.auth import get_current_user, reset_user_password
+from router.auth import get_current_user, update_user_password
 from router.mypage import *
 from db.connection import get_db
 from .utils import *
@@ -16,29 +16,31 @@ mypage_router = APIRouter()
 
 @mypage_router.get("/get-address")
 async def get_address(
-    user: TokenData = Depends(get_current_user), db: Session = Depends(get_db)
-) -> List[UserAddressSchema]:
-    return get_user_address(db, user)
+    user: TokenData = Depends(get_current_user), db: AsyncSession = Depends(get_db)
+) -> List[Dict]:
+    result = await get_user_address(db, user)
+    return [row.model_dump(by_alias=True) for row in result]
 
 
 @mypage_router.get("/get-address-info")
 async def get_address_info_by_id(
-    address_id: str, user: TokenData = Depends(get_current_user), db: Session = Depends(get_db)
-) -> UserAddressSchema:
-    return get_user_address_info(db, address_id)
+    address_id: str, user: TokenData = Depends(get_current_user), db: AsyncSession = Depends(get_db)
+) -> Dict:
+    result = await get_user_address_info(db, address_id)
+    return result.model_dump(by_alias=True)
 
 
 @mypage_router.post("/create-address")
 async def create_address(
     address: UserAddressSchema,
     user: TokenData = Depends(get_current_user),
-    db: Session = Depends(get_db),
+    db: AsyncSession = Depends(get_db),
 ):
     """주소 생성"""
-    address.address_id = create_new_address_id(db, user.user_id)
+    address.address_id = await create_new_address_id(db, user.user_id)
     new_address = UserAddressInDBSchema(user_id=user.user_id, **address.model_dump())
 
-    if create_user_address(db, new_address):
+    if await create_user_address(db, new_address):
         return {"message": "success"}
     else:
         raise HTTPException(status_code=406, detail="주소 등록에 실패했습니다. 다시 시도해주세요.")
@@ -48,12 +50,12 @@ async def create_address(
 async def update_address(
     address: UserAddressSchema,
     user: TokenData = Depends(get_current_user),
-    db: Session = Depends(get_db),
+    db: AsyncSession = Depends(get_db),
 ):
     """주소 수정"""
 
     user_address_db = UserAddressInDBSchema(user_id=user.user_id, **address.model_dump())
-    if update_user_address(db, user_address_db):
+    if await update_user_address(db, user_address_db):
         return {"message": "success"}
     else:
         raise HTTPException(status_code=406, detail="주소 업데이트에 실패했습니다. 다시 시도해주세요.")
@@ -63,10 +65,15 @@ async def update_address(
 async def delete_address(
     address: UserAddressSchema,
     user: TokenData = Depends(get_current_user),
-    db: Session = Depends(get_db),
+    db: AsyncSession = Depends(get_db),
 ):
     """주소 삭제"""
-    if delete_user_address(db, address.address_id):
+
+    assert address.address_id is not None, HTTPException(
+        status_code=400, detail="address_id가 존재해야합니다."
+    )
+
+    if await delete_user_address(db, address.address_id):
         return {"message": "success"}
     else:
         raise HTTPException(status_code=406, detail="주소 삭제에 실패했습니다. 다시 시도해주세요.")
@@ -74,13 +81,15 @@ async def delete_address(
 
 @mypage_router.post("/resset-password")
 async def reset_password(
-    request: dict, user: TokenData = Depends(get_current_user), db: Session = Depends(get_db)
+    request: dict, user: TokenData = Depends(get_current_user), db: AsyncSession = Depends(get_db)
 ):
     """비밀번호 변경"""
 
-    assert request.get("password"), HTTPException(status_code=406, detail="비밀번호를 전달받지 못했습니다.")
+    password = request.get("password")
 
-    if reset_user_password(db, request.get("password"), user.user_id):
+    assert password, HTTPException(status_code=406, detail="비밀번호를 전달받지 못했습니다.")
+
+    if await update_user_password(db, password, user.user_id):
         return {"message": "success"}
     else:
         raise HTTPException(status_code=406, detail="비밀번호 변경에 실패했습니다. 다시 시도해주세요.")

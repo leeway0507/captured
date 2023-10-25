@@ -1,4 +1,4 @@
-"""mypage Router"""
+"""admin Router"""
 
 from sqlalchemy.orm import Session
 from fastapi import APIRouter, Depends, HTTPException
@@ -6,8 +6,6 @@ from fastapi import APIRouter, Depends, HTTPException
 from model.auth_model import TokenData
 from model.db_model import ProductInfoSchema, ProductInfoDBSchema
 
-from router.auth import get_current_user
-from router.mypage import *
 from db.connection import get_db
 from .utils import *
 from router.product.utils import *
@@ -53,9 +51,19 @@ async def get_test(db: Session = Depends(get_db)):
 @admin_router.post("/create-product")
 async def create(product: ProductInfoSchema, db: Session = Depends(get_db)):
     """제품 생성"""
-    product.sku = create_new_sku(db)
-    searh_info = product.brand + " " + product.product_name + " " + product.product_id
-    product_info_db = ProductInfoDBSchema(search_info=searh_info, **product.model_dump())
+    product.sku = await create_new_sku(db)
+    search_info = product.brand + " " + product.product_name + " " + product.product_id
+    price = product.price
+    sku = product.sku
+    price_desc_cursor = str(price).zfill(7) + str(sku).zfill(5)
+    price_asc_cursor = str(100000000000 - int(price_desc_cursor))
+
+    product_info_db = ProductInfoDBSchema(
+        search_info=search_info,
+        price_desc_cursor=price_desc_cursor,
+        price_asc_cursor=price_asc_cursor,
+        **product.model_dump(),
+    )
 
     if create_product(db, product_info_db):
         return {"message": "success"}
@@ -66,7 +74,8 @@ async def create(product: ProductInfoSchema, db: Session = Depends(get_db)):
 @admin_router.post("/update-product")
 async def update(product_in_db: ProductInfoDBSchema, db: Session = Depends(get_db)):
     """제품 수정"""
-    if update_product(db, product_in_db):
+
+    if await update_product(db, product_in_db):
         return {"message": "success"}
     else:
         raise HTTPException(status_code=406, detail="제품 업데이트에 실패했습니다. 다시 시도해주세요.")
@@ -75,9 +84,11 @@ async def update(product_in_db: ProductInfoDBSchema, db: Session = Depends(get_d
 @admin_router.post("/delete-product")
 async def delete(product: ProductInfoSchema, db: Session = Depends(get_db)):
     """제품 삭제"""
+
     if product.sku == None:
         raise HTTPException(status_code=406, detail="제품정보에 SKU가 존재하지 않아 삭제할 수 없습니다.")
-    if delete_product(db, product.sku):
+
+    if await delete_product(db, product.sku):
         return {"message": "success"}
     else:
         raise HTTPException(status_code=406, detail="제품 삭제에 실패했습니다. 다시 시도해주세요.")

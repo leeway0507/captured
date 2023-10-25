@@ -27,7 +27,6 @@ export default function ProductCard(props: productCardProps) {
                         <div className="inline-block font-bold">{intl ? "해외배송" : "국내배송"}</div> | ₩{" "}
                         {price.toLocaleString()}
                     </div>
-                    <div className="text-2xl">{sku}</div>
                 </div>
             </div>
         </Link>

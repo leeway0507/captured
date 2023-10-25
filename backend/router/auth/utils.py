@@ -3,15 +3,16 @@
 from typing import Dict
 from datetime import datetime, timedelta
 from uuid import uuid1
-from random import choices
+import os
 
 
 import jwt
-from decouple import config
+from decouple import Config, RepositoryEnv
 from passlib.context import CryptContext
 from fastapi.security import OAuth2PasswordBearer
 from fastapi import Depends, HTTPException, status
-from sqlalchemy.orm import Session
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy import select, func, and_, update
 
 
 from model.db_model import UserSchema, UserAddressSchema, UserIndDBSchema, UserAddressInDBSchema
@@ -21,7 +22,12 @@ from logs.make_log import make_logger
 from db.tables import UserTable, UserAddressTable
 from db.connection import commit
 
-error_log = make_logger("logs/db/register.log")
+error_log = make_logger("logs/db/auth.log", "auth_router")
+
+if os.environ.get("ProductionLevel"):
+    config = Config(RepositoryEnv(".env.production"))
+else:
+    config = Config(RepositoryEnv(".env.dev"))
 
 
 JWT_SECRET = config("JWT_SECRET")
@@ -46,18 +52,29 @@ def get_password_hash(password) -> str:
     return pwd_context.hash(password)
 
 
-def authenticate_user(db: Session, login: LoginSchema) -> UserSchema | int:
+async def authenticate_user(db: AsyncSession, login: LoginSchema) -> UserSchema | int:
     """
     로그인 요청한 유저가 DB에 있는지 확인
     - args : LoginSchema(email, password)
     - return : UserSchema | bool
     """
 
-    user_db = get_user_db_by_email(db, login.email)
+    user_db = await get_user_db_by_email(db, login.email)
+
     if user_db is None:
-        return 404
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="email not found",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+
     if not verify_password(login.password, user_db.password):
-        return 401
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect email or password",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+
     return UserSchema(**user_db.model_dump())
 
 
@@ -90,7 +107,7 @@ def create_access_token_form(user_id) -> Token:
     return Token(access_token=access_token, token_type="bearer")
 
 
-async def get_current_user(token: str = Depends(oauth2_scheme)) -> TokenData:
+def get_current_user(token: str = Depends(oauth2_scheme)) -> TokenData:
     """
     JWT 토큰 decode를 통해 얻은 user_id로 유저 정보(UserSchema)를 반환
     - args : token(str)
@@ -141,52 +158,53 @@ async def get_current_user(token: str = Depends(oauth2_scheme)) -> TokenData:
 #     return current_user
 
 
-def register_auth_user(
-    auth_user_registration: RegistrationOauthSchema, db: Session
-) -> UserSchema | bool:
+async def register_auth_user(
+    auth_user_registration: RegistrationOauthSchema, db: AsyncSession
+) -> UserSchema | None:
     """네이버 카카오 회원가입 시 user 정보를 DB에 저장"""
 
     auth_user_registration.user_id = create_user_id()
     auth_user_registration.register_at = datetime.now()
 
-    query = db.add(UserTable(**auth_user_registration.model_dump()))
-    result = commit(db, query, error_log)
+    query = db.add(UserTable(**auth_user_registration.model_dump()))  # type: ignore
+    result = await commit(db, query, error_log)
 
     if result:
-        return get_user_by_user_id(db, auth_user_registration.user_id)
-    return False
+        return await get_user_by_user_id(db, auth_user_registration.user_id)
+    return None
 
 
-def register_user_and_address(
-    db: Session, user_registration: EmailRegistrationSchema, address: UserAddressSchema
-) -> UserSchema | bool:
+async def register_user_and_address(
+    db: AsyncSession, user_registration: EmailRegistrationSchema, address: UserAddressSchema
+) -> UserSchema | None:
     """
     회원가입 시 user, address 정보를 DB에 저장 | 성공 & 실패 여부에 따라 UserSchema 반환
     - args : user(EmailRegistrationSchema), address(UserAddressSchema)
     - return : UserSchema | None
     """
 
-    try:
-        # add user info
-        user_registration.user_id = create_user_id()
-        user_registration.password = get_password_hash(user_registration.password)
-        user_registration.register_at = datetime.now()
-        db.add(UserTable(**user_registration.model_dump()))
-        db.commit()
+    # add user info
+    user_registration.user_id = create_user_id()
+    user_registration.password = get_password_hash(user_registration.password)
+    user_registration.register_at = datetime.now()
+    query = db.add(UserTable(**user_registration.model_dump()))  # type: ignore
+    result = await commit(db, query, error_log)
 
-        user_address_in_db = UserAddressInDBSchema(
-            user_id=user_registration.user_id,
-            **address.model_dump(),
-        )
-        user_address_in_db.address_id = f"UA-{user_registration.user_id}-{0}"
-        db.add(UserAddressTable(**user_address_in_db.model_dump()))
-        db.commit()
-        return get_user_by_email(db, user_registration.email)
+    if result is None:
+        return None
 
-    except Exception as e:
-        error_log.error(e)
-        db.rollback()
-        return False
+    # add uer address info
+    user_address_in_db = UserAddressInDBSchema(
+        user_id=user_registration.user_id,
+        **address.model_dump(),
+    )
+    user_address_in_db.address_id = f"UA-{user_registration.user_id}-{0}"
+    query = db.add(UserAddressTable(**user_address_in_db.model_dump()))  # type: ignore
+    result = await commit(db, query, error_log)
+    if result is None:
+        return None
+
+    return await get_user_by_email(db, user_registration.email)
 
 
 def create_user_id() -> str:
@@ -194,10 +212,11 @@ def create_user_id() -> str:
     return uuid1().hex
 
 
-def get_user_by_email(db: Session, email: str) -> UserSchema | None:
+async def get_user_by_email(db: AsyncSession, email: str) -> UserSchema | None:
     """email을 통해 user정보 획득"""
 
-    result = db.query(UserTable).filter(UserTable.email == email).first()  # type: ignore
+    result = await db.execute(select(UserTable).filter(UserTable.email == email))  # type: ignore
+    result = result.scalar()
 
     if result is None:
         return None
@@ -207,10 +226,11 @@ def get_user_by_email(db: Session, email: str) -> UserSchema | None:
     return UserSchema(**result)
 
 
-def get_user_db_by_email(db: Session, email: str) -> UserIndDBSchema | None:
+async def get_user_db_by_email(db: AsyncSession, email: str) -> UserIndDBSchema | None:
     """email을 통해 user_db(user + 비밀번호) 획득"""
 
-    result = db.query(UserTable).filter(UserTable.email == email).first()  # type: ignore
+    result = await db.execute(select(UserTable).filter(UserTable.email == email))  # type: ignore
+    result = result.scalar()
 
     if result is None:
         return None
@@ -219,24 +239,42 @@ def get_user_db_by_email(db: Session, email: str) -> UserIndDBSchema | None:
     return UserIndDBSchema(**result)
 
 
-def get_user_by_user_id(db: Session, user_id: str) -> UserSchema | None:
+async def get_user_by_user_id(db: AsyncSession, user_id: str) -> UserSchema | None:
     """email을 통해 user정보 획득"""
 
-    result = db.query(UserTable).filter(UserTable.user_id == user_id).first()  # type: ignore
+    result = await db.execute(select(UserTable).filter(UserTable.user_id == user_id))  # type: ignore
+    result = result.scalar()
 
-    if not result:
-        return 404
+    if result is None:
+        return None
 
     result = result.to_dict()
     result.pop("password")
     return UserSchema(**result)
 
 
-def reset_user_password(db: Session, password: str, user_id: str) -> bool:
+async def update_user_password(db: AsyncSession, password: str, user_id: str) -> bool:
     """비밀번호 변경"""
-    query = (
-        db.query(UserTable)
+    stmt = (
+        update(UserTable)
         .filter(UserTable.user_id == user_id)
-        .update({"password": get_password_hash(password)})
+        .values({"password": get_password_hash(password)})
     )
-    return commit(db, query, error_log)
+    query = await db.execute(stmt)
+    return await commit(db, query, error_log)
+
+
+async def get_user_by_email_and_name(db: AsyncSession, name: str, email: str) -> UserSchema | None:
+    """이름과 이메일을 통해 user정보 획득"""
+
+    result = await db.execute(
+        select(UserTable).filter(and_(UserTable.kr_name == name, UserTable.email == email))
+    )
+    result = result.scalar()
+
+    if result is None:
+        return None
+
+    result = result.to_dict()
+    result.pop("password")
+    return UserSchema(**result)

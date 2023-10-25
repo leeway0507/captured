@@ -32,7 +32,7 @@ export function DomeShipment() {
                 </div>
                 <div className="basis-3/4">
                     <div className="flex flex-col px-2 my-3 py-2 border-s-2 border-sub-black">
-                        <div className="mx-1 text-xl my-1">국내배송 상품</div>
+                        <div className="mx-1 text-xl my-1">국내배송</div>
                     </div>
                 </div>
             </div>

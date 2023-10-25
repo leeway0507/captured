@@ -1,5 +1,5 @@
-from sqlalchemy.dialects.mysql import VARCHAR, INTEGER, DATE, BOOLEAN, DATETIME
-from sqlalchemy import Column, ForeignKey, func
+from sqlalchemy.dialects.mysql import VARCHAR, INTEGER, BOOLEAN, DATETIME
+from sqlalchemy import Column, ForeignKey, UniqueConstraint
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -47,6 +47,8 @@ class SizeTable(MyBase):
         nullable=False,
     )
     product = relationship("ProductInfoTable")
+
+    __table_args__ = (UniqueConstraint("sku", "size", name="_sku_size_uc"),)
 
     class Config:
         orm_mode = str
