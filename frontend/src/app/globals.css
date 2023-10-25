@@ -21,8 +21,8 @@
     .disabled-bar-xl {
         @apply disabled-bar tracking-[0.3rem] text-base;
     }
-    .custom-container {
-        @apply flex flex-col relative m-auto h-full;
+    .main-container {
+        @apply flex flex-col w-full h-full min-h-screen relative 
     }
     .flex-center {
         @apply flex items-center justify-center;
@@ -36,8 +36,11 @@
         @apply flex items-center justify-end;
     }
 
+    .brand-box-black {
+        @apply cursor-pointer opacity-80 hover:opacity-100 ease-in-out duration-300 ;
+    }
     .brand-box {
-        @apply opacity-70 grow basis-1/5;
+        @apply cursor-pointer opacity-50 hover:opacity-100 ease-in-out duration-300;
     }
     .text-xs-sm {
         @apply text-xs tb:text-sm;

@@ -33,8 +33,8 @@ export default function Page() {
 
     return (
         <>
-            {isMobile ? <NavMobile /> : <NavPcTopForAboutUs />}
-            <div className="custom-container h-full">
+            <div className="main-container">
+                {isMobile ? <NavMobile /> : <NavPcTopForAboutUs />}
                 <div className="grow flex-col flex justify-between">
                     <Main />
                     <Footer />

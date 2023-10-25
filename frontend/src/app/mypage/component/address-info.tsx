@@ -12,13 +12,15 @@ const addressInfoClass = "text-base flex-right active:text-deep-gray cursor-poin
 export default function AddressInfo() {
     const { data: session } = useSession();
 
-    const [addressArray, setAddressArray] = useState<userAddressProps[]>([]);
+    const [addressArray, setAddressArray] = useState<userAddressProps[] | undefined>(undefined);
 
     useEffect(() => {
         getAddress(session?.user.accessToken).then((data) => {
             setAddressArray(data);
         });
     }, [session]);
+
+    if (addressArray === undefined) return null;
 
     if (addressArray.length === 0)
         return (

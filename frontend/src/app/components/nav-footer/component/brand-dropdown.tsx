@@ -1,59 +1,56 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect } from "react";
+import { useState } from "react";
 
 export default function BrandDropDown() {
-    const brands = [
-        "Adidas originals",
-        "Adidas originals",
-        "Adidas originals",
-        "Adidas originals",
-        "Adidas originals",
-        "Adidas originals",
-        "Nike",
-        "Puma",
-        "Reebok",
-        "Vans",
-        "Converse",
-        "New Balance",
-        "Asics",
-        "Fila",
-        "Crocs",
-        "Birkenstock",
-        "Dr. Martens",
-        "Timberland",
-        "Skechers",
-        "Clarks",
-        "Onitsuka Tiger",
-        "Bata",
-        "Kappa",
-        "Saucony",
-        "Under Armour",
-        "Babolat",
-        "Li-Ning",
-        "Mizuno",
-        "Yonex",
-        "Wilson",
-        "Head",
-        "Prince",
-        "Casio G-Shock G-MS",
-    ];
+    const brandsArray = JSON.parse(process.env.NEXT_PUBLIC_BRAND_ARRAY!);
+
+    const [hoveredIndex, setHoveredIndex] = useState<Number | null>(null);
+
+    const handleMouseEnter = (index: Number | null) => {
+        setHoveredIndex(index);
+    };
+
+    const handleMouseLeave = () => {
+        setHoveredIndex(null);
+    };
+
+    if (brandsArray === undefined) {
+        return null;
+    }
+
     return (
-        <div className="hidden group-hover:block w-full right-0 top-100 absolute z-50 ">
+        <div className="hidden group-hover:block w-full right-0 top-100 absolute z-50">
             <div className="h-full w-full my-2 text-main-black bg-white shadow-xl ">
-                <div className="grid grid-cols-5 xl:grid-cols-6 pt-4 pb-8 gap-1">
-                    {brands.map((brandName: string, idx) => {
-                        const brandNameBar = brandName.replace(" ", "-");
+                <div className="grid grid-cols-5 lg:grid-cols-6 pt-4 pb-8 gap-2 px-8">
+                    {brandsArray.map((brandName: string, idx: number) => {
+                        const brandNameBar = brandName.replaceAll(" ", "-");
                         return (
                             <Link
                                 href={`/category/brand/${brandNameBar}`}
                                 key={idx}
-                                className="flex hover:bg-main-black hover:text-white">
-                                <div className="relative w-[35px] h-[35px]">
-                                    {/* <Image src={`/brands/${brandNameBar}-white-logo.png`} alt="main logo" fill /> */}
-                                    <Image src={`/brands/adidas-originals-white-logo.png`} alt="main logo" fill />
+                                className={`flex hover:bg-main-black hover:text-white py-1 hover:rounded-md transition-all duration-200 ease-in-out`}
+                                onMouseEnter={() => handleMouseEnter(idx)}
+                                onMouseLeave={handleMouseLeave}>
+                                <div
+                                    className={`flex-center relative w-[50px] h-[50px] m-auto  ${
+                                        idx === hoveredIndex ? "display scale-150" : "hidden"
+                                    }`}>
+                                    <Image
+                                        src={`/brands/white/${brandNameBar}-white-logo.png`}
+                                        alt={brandNameBar}
+                                        fill
+                                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                    />
                                 </div>
-                                <div className="flex-center text-xs grow ">{brandName}</div>
+                                <div
+                                    className={`flex-center grow capitalize text-center h-[50px] ${
+                                        idx === hoveredIndex ? "hidden" : "display"
+                                    }`}>
+                                    {brandName}
+                                </div>
                             </Link>
                         );
                     })}

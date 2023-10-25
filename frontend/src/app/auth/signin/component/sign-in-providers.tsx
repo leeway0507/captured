@@ -6,13 +6,9 @@ export const handleCredentials = async (email: string, password: string, openMod
         username: email,
         password: password,
         redirect: false,
-    })
-        .then((res) => {
-            res!.error ? openModalToggle() : redirect("/");
-        })
-        .catch((err) => {
-            console.log("err", err);
-        });
+    }).then((res) => {
+        res!.error && openModalToggle();
+    });
 };
 
 export const handleKakao = async () => {

@@ -2,7 +2,7 @@ import logging
 import os
 
 
-def make_logger(path, name=None):
+def make_logger(path, name):
     if not os.path.exists(path):
         dir = path.rsplit("/", 1)[0]
         os.makedirs(dir, exist_ok=True)

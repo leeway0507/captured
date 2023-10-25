@@ -18,7 +18,7 @@ export default function Main() {
     }, [router]);
 
     return (
-        <div className="flex-center flex-col max-w-[600px] m-auto py-12 gap-8 px-5">
+        <div className="flex-center flex-col max-w-md m-auto py-12 gap-8 px-5">
             <div className="text-3xl">이메일 인증</div>
             <div className="text-lg ">
                 <div>

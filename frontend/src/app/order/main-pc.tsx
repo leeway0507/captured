@@ -49,7 +49,7 @@ const MainPC = ({
                     <Logo />
                 </div>
             </div>
-            <div className="max-w-4xl flex relative py-8 h-full gap-8 justify-evenly mx-auto ">
+            <div className="grow max-w-4xl flex relative py-8 h-full gap-8 justify-evenly mx-auto ">
                 <div className="basis-[55%] pe-1 me-1 overflow-auto">
                     <div className="text-xl tracking-[0.2em] flex-center pb-4">주문요약</div>
                     <CartproductCardArr arr={arr} />
@@ -59,7 +59,7 @@ const MainPC = ({
                     <IntlShipment
                         title="해외 구매대행 상품 안내"
                         content="선택하신 상품 중 해외 구매대행 상품이 포함되어 있습니다.
-                            상품 구입을 위해 개인통관부호가 필요하며 5 ~ 15일의 배송기간이 소요 됩니다."
+                            상품 구입을 위해 개인통관부호가 필요하며 5 - 15일의 배송기간이 소요 됩니다."
                     />
                 </div>
                 {!changeAddress ? (

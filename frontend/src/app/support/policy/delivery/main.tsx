@@ -31,12 +31,12 @@ const process = (
 const shippingFee = (
     <div>
         <div className="pb-4">
-            국내배송상품
+            국내배송
             <div className="text-xs ps-1 pt-1">전체 : 3,000원</div>
         </div>
 
         <div>
-            해외배송상품
+            해외배송
             <div className="text-xs ps-1 pt-1">
                 <div>가방 악세서리 모자 : 15,000원</div>
                 <div>반팔 긴팔 셔츠 바지 반바지 : 15,000원</div>

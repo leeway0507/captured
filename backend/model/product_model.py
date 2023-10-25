@@ -1,7 +1,6 @@
 from pydantic import BaseModel, validator, ConfigDict, EmailStr
 from pydantic.alias_generators import to_camel
 from typing import List, Optional, Dict
-from model.db_model import ProductInfoSchema
 
 ## filter model
 

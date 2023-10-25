@@ -10,7 +10,7 @@ import { redirect } from "next/navigation";
 import { handleCredentials, handleKakao, handleNaver } from "./component/sign-in-providers";
 import AlertModalWithoutBtn from "@/app/components/modal/alert-modal-without-btn";
 
-const oauthClass = "flex-center relative rounded-lg text-sm py-3 border my-2 text-lg  cursor-pointer";
+const oauthClass = "flex rounded-lg relative text-sm py-3 border my-2 cursor-pointer";
 const accountFeatures = "flex-center my-1 basis-1/2";
 
 const FailureModal = ({
@@ -109,24 +109,32 @@ export default function SignIn() {
             </div>
             <div>
                 <div className={`${oauthClass}`} style={{ backgroundColor: "#03C75A" }} onClick={() => handleNaver()}>
-                    <Image
-                        src="/icons/naver.png"
-                        width={30}
-                        height={30}
-                        alt="naver oauth"
-                        className={`absolute left-3 text-white `}
-                    />
-                    <div className="text-white">네이버 로그인</div>
+                    <div className="absolute left-3 top-0 my-2">
+                        <div className={`w-[30px] h-[30px] relative`}>
+                            <Image
+                                src="/icons/naver.png"
+                                alt="naver oauth"
+                                fill
+                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                            />
+                        </div>
+                    </div>
+                    <div className="flex-center grow text-white">네이버 로그인</div>
                 </div>
                 <div className={`${oauthClass}`} style={{ backgroundColor: "#FEE500" }} onClick={() => handleKakao()}>
-                    <Image
-                        src="/icons/kakao.svg"
-                        width={20}
-                        height={20}
-                        alt="kakao oauth"
-                        className={`absolute left-4`}
-                    />
-                    <div style={{ color: "#000000 85%" }}>카카오 로그인</div>
+                    <div className="absolute left-4 top-0 my-3">
+                        <div className={`w-[22px] h-[22px] relative`}>
+                            <Image
+                                src="/icons/kakao.png"
+                                alt="kakao oauth"
+                                fill
+                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                            />
+                        </div>
+                    </div>
+                    <div style={{ color: "#000000 85%" }} className="flex-center grow">
+                        카카오 로그인
+                    </div>
                 </div>
             </div>
             <FailureModal

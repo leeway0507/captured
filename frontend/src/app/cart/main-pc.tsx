@@ -30,7 +30,7 @@ export default function MainPC({ arr }: { arr: cartProductCardProps[] }) {
                             <IntlShipment
                                 title="해외 구매대행 상품 안내"
                                 content="선택하신 상품 중 해외 구매대행 상품이 포함되어 있습니다.
-                            상품 구입을 위해 개인통관부호가 필요하며 5 ~ 15일의 배송기간이 소요 됩니다."
+                            상품 구입을 위해 개인통관부호가 필요하며 5 - 15일의 배송기간이 소요 됩니다."
                             />
                         </div>
                     </div>
