@@ -1,9 +1,8 @@
 import Thumbnail from "./component/thumbnail-mobile";
 import ProductInfo from "./component/product-info";
 import { IntlShipment, DomeShipment } from "@/app/components/notification/shipment-info";
-import AccordionComponent from "@/app/components/accordion/accordion";
+import Infos from "./component/infos";
 import RelatedProducts from "./component/recent-view-products";
-import ProductSpecificInfo from "./component/product-specific-info";
 import { productCardProps } from "@/app/type";
 import AddBasket from "./component/add-basket-client";
 
@@ -23,28 +22,16 @@ export default async function MainMobile({
                     <AddBasket data={product} defaultSizeArr={defaultSizeArr} />
                     <div className="py-4">
                         {product.intl ? (
-                            <IntlShipment
-                                title="해외배송"
-                                content="해당 제품은 해외 구매대행 상품입니다. 
-                        상품 구입을 위해 고유 통관부호가 필요하며 5 - 15일의 배송기간이 소요 됩니다."
-                            />
+                            <IntlShipment title="해외배송 상품" content="영업일 기준 5-15일의 배송기간이 소요됩니다." />
                         ) : (
-                            <DomeShipment />
+                            <DomeShipment title="국내배송 상품" content="영업일 기준  1-3일의 배송기간이 소요됩니다." />
                         )}
                     </div>
+                    <div className="py-2">
+                        <Infos />
+                    </div>
                 </div>
-                <div>
-                    <AccordionComponent
-                        title={"제품 상세 정보"}
-                        content={ProductSpecificInfo(product)}
-                        cat={"product-info"}
-                    />
-                    <AccordionComponent
-                        title={"배송 및 반품 안내"}
-                        content={"hellowsdknaldnas asdlnasd asdasd ndjs,skdn sjsn"}
-                        cat={"delivery-info"}
-                    />
-                </div>
+
                 <div className="py-4">
                     <RelatedProducts />
                 </div>

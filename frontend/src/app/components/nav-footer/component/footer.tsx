@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function Footer() {
     return (
-        <div className="flex flex-col bg-footer-gray py-2 ">
+        <div className="flex flex-col bg-footer-gray py-2 font-bold ">
             <div className="flex flex-row justify-between px-16 xl:px-24 py-3 border-b-2 text-sm tb:text-base">
                 <Link href={process.env.NEXT_PUBLIC_INSTARGRAM_URL!} className="ms-2">
                     <div className="flex-center">
@@ -33,13 +33,13 @@ export default function Footer() {
                     <div>사업자 등록 번호 : 372-55-00754</div>
                     <div>서울특별시 양천구 목동중앙로 143 101, 801</div>
                     <div>
-                        <Link href="." className="hover:text-main-black">
-                            서비스 이용 약관
+                        <Link href="/support/policy/service" className="hover:text-main-black">
+                            서비스 이용약관
                         </Link>
                     </div>
                     <div>
-                        <Link href="." className="hover:text-main-black">
-                            개인정보 처리 방침
+                        <Link href="/support/policy/privacy" className="hover:text-main-black">
+                            개인정보 처리방침
                         </Link>
                     </div>
                     <div>COPY RIGHT © 2023 Captured. ALL RIGHT RESERVED.</div>

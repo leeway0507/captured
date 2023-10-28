@@ -1,5 +1,7 @@
+import time
 from typing import Dict, Tuple, Optional, List, Any
 import json
+from functools import lru_cache
 
 from sqlalchemy.orm import Session
 from sqlalchemy import and_, func, select
@@ -9,7 +11,6 @@ from db.tables import ProductInfoTable, SizeTable
 
 from model.db_model import ProductInfoSchema
 from model.product_model import FilterMetaSchema, ProductResponseSchema, RequestFilterSchema
-import time
 from sqlalchemy.ext.asyncio import AsyncSession
 
 error_log = make_logger("logs/db/product.log", "product_router")
@@ -28,7 +29,12 @@ async def get_product(sku: int, db: AsyncSession) -> ProductInfoSchema | None:
     return ProductInfoSchema(**result[0][0].to_dict(), size=result[0][1])
 
 
+@lru_cache(maxsize=50)
 async def get_init_category(page: int, limit: int, db: AsyncSession) -> ProductResponseSchema:
+    print("------------cacheTest----------")
+    print("------------cacheTest----------")
+    print("------------cacheTest----------")
+    print("------------cacheTest----------")
     # page to cursor
     page_cursor, last_page = await get_page_cursor(page, limit, db)
 

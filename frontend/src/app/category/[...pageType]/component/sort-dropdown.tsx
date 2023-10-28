@@ -17,7 +17,7 @@ export default function SortItem() {
     };
 
     return (
-        <div className="mondaL relative w-[150px] cursor-pointer z-50">
+        <div className=" relative w-[150px] cursor-pointer z-50">
             <div onClick={openToggle} className="ps-2">
                 <div className="flex-right  tracking-wide">
                     {selected}
@@ -31,7 +31,7 @@ export default function SortItem() {
                 </div>
             </div>
             {isActive && (
-                <div className="mondaL absolute flex-center flex-col w-full bg-black shadow-xl border rounded z-50">
+                <div className=" absolute flex-center flex-col w-full bg-black shadow-xl border rounded z-50">
                     {sortList.map((item, index) => (
                         <div
                             key={index}

@@ -1,11 +1,11 @@
+"use client";
 import Image from "next/image";
-
-interface IntlShipmentProps {
+interface ShipmentProps {
     title: string;
-    content: string;
+    content: JSX.Element | string;
 }
 
-export function IntlShipment({ title, content }: IntlShipmentProps) {
+export function IntlShipment({ title, content }: ShipmentProps) {
     return (
         <div className="bg-light-gray text-sub-black tracking-tightest rounded	">
             <div className="flex">
@@ -15,7 +15,7 @@ export function IntlShipment({ title, content }: IntlShipmentProps) {
                 <div className="basis-3/4">
                     <div className="flex flex-col px-2 my-3 py-2 border-s-2 border-sub-black">
                         <div className="mx-1 text-lg my-1">{title}</div>
-                        <p className="mx-1 text-xs text-justify pe-2 tracking-tight	">{content}</p>
+                        <div className="mx-1 tracking-[0.2rem] text-sm text-justify  tracking-tight">{content}</div>
                     </div>
                 </div>
             </div>
@@ -23,16 +23,17 @@ export function IntlShipment({ title, content }: IntlShipmentProps) {
     );
 }
 
-export function DomeShipment() {
+export function DomeShipment({ title, content }: ShipmentProps) {
     return (
-        <div className="bg-light-gray text-sub-black tracking-tightest rounded	">
+        <div className="bg-light-gray text-sub-black tracking-tightest rounded-lg  ">
             <div className="flex">
-                <div className="flex-center basis-1/4">
+                <div className="flex-center basis-3/12">
                     <Image src="/icons/dome-shippment.svg" width={28} height={28} alt="dome-shipment" />
                 </div>
                 <div className="basis-3/4">
                     <div className="flex flex-col px-2 my-3 py-2 border-s-2 border-sub-black">
-                        <div className="mx-1 text-xl my-1">국내배송</div>
+                        <div className="mx-1 text-lg font-bold">{title}</div>
+                        <div className="mx-1 tracking-[0.2rem] text-sm text-justify  tracking-tight">{content}</div>
                     </div>
                 </div>
             </div>

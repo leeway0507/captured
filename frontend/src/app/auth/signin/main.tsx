@@ -5,7 +5,6 @@ import { useState } from "react";
 import CustomInput from "../../components/custom-input/cusotm-input";
 import { checkEmail } from "../../components/custom-input/check-policy";
 import { useSession } from "next-auth/react";
-import PageLoading from "@/app/components/loading/page-loading";
 import { redirect } from "next/navigation";
 import { handleCredentials, handleKakao, handleNaver } from "./component/sign-in-providers";
 import AlertModalWithoutBtn from "@/app/components/modal/alert-modal-without-btn";
@@ -43,10 +42,6 @@ export default function SignIn() {
     };
 
     const { data, status } = useSession();
-
-    if (status === "loading") {
-        return <PageLoading />;
-    }
 
     if (status === "authenticated") {
         redirect("/");
@@ -92,7 +87,7 @@ export default function SignIn() {
                 <div>
                     <button
                         type="button"
-                        className="black-bar w-full tracking-[0.1rem]"
+                        className="black-bar w-full tracking-[0.1rem] font-bold"
                         onClick={() => handleCredentials(email, password, openModalToggle)}>
                         로그인
                     </button>
@@ -119,7 +114,7 @@ export default function SignIn() {
                             />
                         </div>
                     </div>
-                    <div className="flex-center grow text-white">네이버 로그인</div>
+                    <div className="flex-center grow text-white font-bold">네이버 로그인</div>
                 </div>
                 <div className={`${oauthClass}`} style={{ backgroundColor: "#FEE500" }} onClick={() => handleKakao()}>
                     <div className="absolute left-4 top-0 my-3">
@@ -132,7 +127,7 @@ export default function SignIn() {
                             />
                         </div>
                     </div>
-                    <div style={{ color: "#000000 85%" }} className="flex-center grow">
+                    <div style={{ color: "#000000 85%" }} className="flex-center grow font-bold">
                         카카오 로그인
                     </div>
                 </div>

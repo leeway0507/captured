@@ -14,9 +14,13 @@ import AddressForm from "@/app/mypage/address/[method]/component/address-form";
 import { useRouter } from "next/navigation";
 import { userAddressProps, userProps } from "@/app/type";
 import * as api from "./component/fetch";
+import Policy from "./component/policy";
 
 export default function CreateAccount() {
     const router = useRouter();
+
+    // policy agreement
+    const [checkAllSelect, setCheckAllSelect] = useState(false);
 
     // default infos
     const [email, setEmail] = useState("");
@@ -129,7 +133,7 @@ export default function CreateAccount() {
     };
 
     return (
-        <div className="flex flex-col text-main-black px-5 max-w-md w-full mx-auto py-8">
+        <div className="flex flex-col text-main-black px-5 max-w-md w-full mx-auto py-8 relative">
             <div className={`block ${isOpen && "hidden"}`}>
                 <div className="flex-center text-2xl pb-8">회원정보 입력</div>
                 <form className="flex flex-col gap-2">
@@ -161,7 +165,7 @@ export default function CreateAccount() {
                                         }
                                     });
                                 }}>
-                                이메일 중복 확인
+                                {isUnique ? "이메일 확인 완료" : "이메일 중복 확인"}
                             </button>
                         </div>
                     </div>
@@ -202,19 +206,31 @@ export default function CreateAccount() {
                             autoComplete="new-password"
                         />
                     </div>
+                    <Policy checkAllSelect={setCheckAllSelect} />
                     {checkDefaultInputValidation(email, name, password1, password2) ? (
-                        <button type="button" className="black-bar w-full" onClick={() => setIsOpen(true)}>
+                        <button
+                            type="button"
+                            className="black-bar w-full"
+                            onClick={() => setIsOpen(true)}
+                            disabled={!checkAllSelect}>
                             다 음
                         </button>
                     ) : (
-                        <button type="button" className="disabled-bar w-full" disabled>
+                        <button type="button" className="disabled-bar w-full my-2" disabled>
                             {isUnique ? "필수 항목을 입력해주세요." : "이메일 중복 여부를 확인해주세요."}
                         </button>
                     )}
                 </form>
             </div>
             <div className={`flex flex-col ${isOpen ? "block" : "hidden"}`}>
-                <div className="flex-center text-2xl pb-2">배송지 입력</div>
+                <div className="relative pb-4">
+                    <button
+                        className="absolute top-0 left-0 flex-left text-xl font-bold w-[50px] flex-left grow cursor-pointer z-30"
+                        onClick={() => setIsOpen(false)}>
+                        ❮
+                    </button>
+                    <div className="flex-center text-2xl ">배송지 입력</div>
+                </div>
                 <div className="py-8">
                     <AddressForm
                         addressId={""}

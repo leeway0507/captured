@@ -3,7 +3,7 @@ import BrandDropDown from "./brand-dropdown";
 
 export function NavPcTop() {
     return (
-        <div className="flex justify-between items-center text-sm h-full my-auto  ">
+        <div className="flex justify-between items-center text-sm h-full my-auto font-bold ">
             <Link href="/category/latest">
                 <div className="mx-2">LATEST</div>
             </Link>
