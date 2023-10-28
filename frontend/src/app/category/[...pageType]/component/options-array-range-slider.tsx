@@ -4,7 +4,7 @@ import "./filter.css";
 import { useRef, useState } from "react";
 
 const oneItem = "bg-main-black border-main-black cursor-not-allowed text-light-gray active:text-main-black shadow-md";
-const itemBoxClass = "mondaL flex-center text-xs w-[100px] max-w-[200px] min-h-[30px] border-2 px-2 me-2 mb-2";
+const itemBoxClass = " flex-center text-xs w-[100px] max-w-[200px] min-h-[30px] border-2 px-2 me-2 mb-2";
 
 const Slider = (value: number[], setValue: (v: number[]) => void) => {
     const [localData, setlocalData] = useState<number[]>(value);

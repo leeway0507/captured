@@ -38,10 +38,10 @@ export default function NavPc() {
     return (
         <>
             <header>
-                <div className="h-[150px] w-full m-auto z-50">
+                <div className="h-[180px] w-full m-auto z-50">
                     <div className="flex h-full">
                         <div className="flex flex-col w-full h-full ">
-                            <div className="h-[50px]  bg-white px-8 tb:px-12 xl:px-16 z-50">
+                            <div className="h-[80px]  bg-white px-8 tb:px-12 xl:px-16 z-50">
                                 <NavPcTop />
                             </div>
                             <div

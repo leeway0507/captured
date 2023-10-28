@@ -7,7 +7,7 @@ export default function ProductCard(props: productCardProps) {
 
     const productImgUrl = `/product/${brand}/${productName} ${productId}/thumbnail.png`;
     return (
-        <Link href={`/product/${sku}`} className="mondaL text-sub-black text-xs font-light pb-6 z-1 " key={sku}>
+        <Link href={`/product/${sku}`} className=" text-sub-black text-xs font-light pb-6 z-1 " key={sku}>
             <div className="flex flex-col">
                 <div className="max-w-[300px] max-h-[300px] relative">
                     <Image

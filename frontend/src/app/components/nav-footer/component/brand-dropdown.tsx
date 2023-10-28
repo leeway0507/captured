@@ -31,7 +31,7 @@ export default function BrandDropDown() {
                             <Link
                                 href={`/category/brand/${brandNameBar}`}
                                 key={idx}
-                                className={`flex hover:bg-main-black hover:text-white py-1 hover:rounded-md transition-all duration-200 ease-in-out`}
+                                className={`flex hover:bg-main-black hover:text-white py-1 hover:rounded-md transition-all duration-300 ease-in`}
                                 onMouseEnter={() => handleMouseEnter(idx)}
                                 onMouseLeave={handleMouseLeave}>
                                 <div

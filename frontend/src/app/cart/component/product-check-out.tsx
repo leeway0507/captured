@@ -6,11 +6,11 @@ export default function ProductCheckOut({ arr }: { arr: cartProductCardProps[] }
     }, 0);
 
     const domesticShippingFee = arr?.reduce((result, item) => {
-        return result + (item.intl ? 0 : item.shippingFee * item.quantity);
+        return result + (item.intl === false ? item.shippingFee * item.quantity : 0);
     }, 0);
 
     const intlShippingFee = arr?.reduce((result, item) => {
-        return result + (item.intl ? item.shippingFee * item.quantity : 0);
+        return result + (item.intl === true ? item.shippingFee * item.quantity : 0);
     }, 0);
 
     const totalShippingFee = domesticShippingFee + intlShippingFee;

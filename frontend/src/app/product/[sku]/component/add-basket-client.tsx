@@ -40,7 +40,7 @@ const AddBasket = ({ data, defaultSizeArr }: { data: productCardProps; defaultSi
                         품절
                     </button>
                 ) : (
-                    <button className="black-bar-xl my-4 lg:text-xl w-full" onClick={AddBascketToggle}>
+                    <button className="black-bar-xl my-4 lg:text-xl w-full font-bold" onClick={AddBascketToggle}>
                         장바구니 담기
                     </button>
                 )}

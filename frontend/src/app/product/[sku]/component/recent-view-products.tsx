@@ -16,7 +16,7 @@ export default function RelatedProducts() {
 
     return (
         <>
-            <div className="text-xl-2xl pb-2">최근 본 아이템</div>
+            <div className="text-xl-2xl pb-2 font-bold">최근 본 아이템</div>
 
             <EmblaCarouselMultiProducts>
                 {productInfos.toReversed().map((props: productCardProps, idx: number) => {

@@ -20,12 +20,12 @@ export default function AddBascketModal(props: popUpRemoveModalProps) {
     }
     const modalButton = (
         <>
-            <button type="button" className="black-bar-modal px-6 py-2" onClick={clickYes}>
+            <button type="button" className="black-bar-modal px-4 py-2" onClick={clickYes}>
                 장바구니로 이동
             </button>
             <button
                 type="button"
-                className="bg-light-gray px-4 py-2 active:text-deep-gray active:bg-gray-200 rounded"
+                className="bg-light-gray px-4 py-2 active:text-deep-gray active:bg-gray-200 rounded text-sm"
                 onClick={closeModal}>
                 쇼핑 계속하기
             </button>

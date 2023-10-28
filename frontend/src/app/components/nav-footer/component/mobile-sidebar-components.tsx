@@ -2,7 +2,7 @@ import SignInOutButton from "./sign-btn";
 import Link from "next/link";
 import Image from "next/image";
 
-const navArr = "basis-1/5 flex-left link-animation";
+const navArr = "font-bold basis-1/5 flex-left link-animation";
 
 export function SearchBar({ search, setSearch }: { search: string; setSearch: (value: string) => void }) {
     return (
@@ -36,7 +36,7 @@ export function MyPageSignINOut() {
 
 export function NavArr() {
     return (
-        <div className="flex flex-col gap-5 text-xl py-2">
+        <div className="flex flex-col gap-5 text-xl py-2 font-bold">
             <Link href="/category/latest" className={`${navArr}`}>
                 LATEST
             </Link>

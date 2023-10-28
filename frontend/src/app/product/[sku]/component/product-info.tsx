@@ -4,7 +4,7 @@ export default function ProductInfo(props: productCardProps) {
     return (
         <div className="flex flex-col text-blue-black tracking-tidest text-sm lg:text-base">
             <div className="flex-left justify-between text-sub-black">
-                <div className="capitalize text-base lg:text-xl">{props.brand}</div>
+                <div className="capitalize text-base lg:text-xl font-bold">{props.brand}</div>
             </div>
             <div className="flex-left justify-between text-base lg:text-lg">
                 <div className="">{props.productName}</div>

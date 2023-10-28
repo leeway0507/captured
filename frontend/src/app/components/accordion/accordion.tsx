@@ -2,7 +2,15 @@
 
 import "./accordion.css";
 import { useState } from "react";
-function AccordionComponent({ title, content, cat }: { title: string; content: React.ReactNode; cat: string }) {
+function AccordionComponent({
+    title,
+    content,
+    cat,
+}: {
+    title: string;
+    content: React.ReactNode | JSX.Element;
+    cat: string;
+}) {
     const id = "accordion-" + cat;
     const [active, setActive] = useState(false);
     const openToggle = () => {
@@ -12,7 +20,7 @@ function AccordionComponent({ title, content, cat }: { title: string; content: R
         <div className="accordion">
             <input type="checkbox" id={id} className="click-effect" />
             <label htmlFor={id} className="text-xl py-3" onClick={openToggle}>
-                <div className="flex justify-between  active:bg-light-gray">
+                <div className="flex justify-between font-bold active:bg-light-gray">
                     {title}
                     <em style={{ background: "url(/icons/expand.svg)" }} />
                 </div>
