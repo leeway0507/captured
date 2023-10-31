@@ -15,7 +15,7 @@ export default function CartProductCardForm(props: cartProductCardFormProps) {
     const [openModal, setOpenModal] = useState<boolean>(false);
 
     const totalPrice = price * quantity;
-    const productImgUrl = `/product/${brand}/${productName} ${productId}/thumbnail.png`;
+    const productImgUrl = `${process.env.NEXT_PUBLIC_MOBILE_IMAGE_URL}/product/${brand}/${productName} ${productId}/thumbnail.png`;
 
     function askRemoveItemBeforeLastQuantity(sku: number, size: string) {
         if (getItemquantity(sku, size) === 1) {
@@ -47,7 +47,7 @@ export default function CartProductCardForm(props: cartProductCardFormProps) {
                                 </Link>
                             </div>
                             <div className="text-xs">{productId.toUpperCase()}</div>
-                            <div className="pt-2 text-xs flex justify-between">
+                            <div className="pt-2 text-sm flex justify-between">
                                 <div>{size}</div>
                                 <div className="underline">{intl ? "해외배송" : "국내배송"}</div>
                             </div>

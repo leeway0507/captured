@@ -1,11 +1,16 @@
 import NavFooter from "@/app/components/nav-footer/client-side/nav-footer";
-import Category from "./main";
+import Main from "./main";
+import { getOrderHistory } from "../mypage/component/order/fetch-server";
+import { getServerSession } from "next-auth/next";
+import { options } from "../api/auth/[...nextauth]/options";
 
-export default function Page() {
+export default async function Page() {
+    const session = await getServerSession(options);
+    const orderHistoryArray = await getOrderHistory(session?.user.accessToken!);
     return (
         <>
             <NavFooter>
-                <Category />
+                <Main />
             </NavFooter>
         </>
     );

@@ -1,6 +1,6 @@
 "use client";
 import { createContext, useContext, useState } from "react";
-import { cartItemProps, cartProductCardProps, productCardProps } from "@/app/type";
+import { cartProductCardProps, productCardProps } from "@/app/type";
 import { useEffect } from "react";
 import assert from "assert";
 
@@ -9,9 +9,10 @@ interface ShoppingCartContext {
     increaseCartQuantity: (sku: number, size: string, productInfo: productCardProps) => void;
     decreaseCartQuantity: (sku: number, size: string) => void;
     removeFromCart: (sku: number, size: string) => void;
+    initCart: () => void;
     isMobile: boolean | undefined;
     cartQuantity: number | undefined;
-    cartItems: cartProductCardProps[];
+    cartItems: cartProductCardProps[] | undefined;
 }
 
 export const ShoppingCartContext = createContext({} as ShoppingCartContext);
@@ -34,15 +35,16 @@ export function ShoppingCartProvider({ children }: { children: React.ReactNode }
     }, []);
 
     // save cartItems to localStorage
-    const [cartItems, setCartItems] = useState<cartProductCardProps[]>([]);
+    const [cartItems, setCartItems] = useState<cartProductCardProps[] | undefined>(undefined);
 
     useEffect(() => {
-        const storageCartItems = JSON.parse(localStorage.getItem("cartItems") || "[]");
+        const cartItems = localStorage.getItem("cartItems");
+        const storageCartItems = JSON.parse(cartItems ?? "[]");
         setCartItems(storageCartItems);
     }, []);
 
     useEffect(() => {
-        localStorage.setItem("cartItems", JSON.stringify(cartItems));
+        cartItems !== undefined && localStorage.setItem("cartItems", JSON.stringify(cartItems));
     }, [cartItems]);
 
     const cartQuantity = cartItems?.reduce((quantity, item) => item.quantity + quantity, 0);
@@ -53,12 +55,12 @@ export function ShoppingCartProvider({ children }: { children: React.ReactNode }
 
     const increaseCartQuantity = (sku: number, size: string, productInfo: productCardProps) => {
         setCartItems((currItems) => {
-            if (currItems.find((item) => item.sku === sku && item.size === size) == null) {
+            if (currItems!.find((item) => item.sku === sku && item.size === size) == null) {
                 // productInfo에 사이즈 변경, quantity 추가 후 cartItems에 저장
                 productInfo.size = size;
-                return [...currItems, { ...productInfo, quantity: 1 }];
+                return [...currItems!, { ...productInfo, quantity: 1 }];
             } else {
-                return currItems.map((item) => {
+                return currItems!.map((item) => {
                     if (item.sku === sku && item.size === size) {
                         return { ...item, quantity: item.quantity + 1 };
                     } else {
@@ -71,10 +73,10 @@ export function ShoppingCartProvider({ children }: { children: React.ReactNode }
 
     const decreaseCartQuantity = (sku: number, size: string) => {
         setCartItems((currItems) => {
-            if (currItems.find((item) => item.sku === sku && item.size === size)?.quantity === 1) {
-                return currItems.filter((item) => !(item.sku === sku && item.size === size));
+            if (currItems!.find((item) => item.sku === sku && item.size === size)?.quantity === 1) {
+                return currItems!.filter((item) => !(item.sku === sku && item.size === size));
             } else {
-                return currItems.map((item) => {
+                return currItems!.map((item) => {
                     if (item.sku === sku && item.size === size) {
                         return { ...item, quantity: item.quantity - 1 };
                     } else {
@@ -91,6 +93,9 @@ export function ShoppingCartProvider({ children }: { children: React.ReactNode }
             return currItems.filter((item) => !(item.sku === sku && item.size === size));
         });
     };
+    const initCart = () => {
+        localStorage.setItem("cartItems", "[]");
+    };
 
     return (
         <ShoppingCartContext.Provider
@@ -99,6 +104,7 @@ export function ShoppingCartProvider({ children }: { children: React.ReactNode }
                 increaseCartQuantity,
                 decreaseCartQuantity,
                 removeFromCart,
+                initCart,
                 isMobile,
                 cartItems,
                 cartQuantity,

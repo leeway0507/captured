@@ -103,6 +103,7 @@ export default function Filter({ initFilterMeta, isOpen, pageType }: FilterDropd
                     title="브랜드"
                     content={OptionArrayWithoutBox(initFilterMeta.brand, setBrand)}
                     cat="category"
+                    contentClassNames="scroll-bar max-h-[200px]"
                 />
             )}
             {initFilterMeta.category && (

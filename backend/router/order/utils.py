@@ -7,9 +7,8 @@ from sqlalchemy.dialects.mysql import insert
 from logs.make_log import make_logger
 from db.tables import OrderHistoryTable, OrderRowTable, ProductInfoTable
 from db.connection import commit
-from model.db_model import (
-    OrderHistoryInDBSchema,
-    OrderRowInDBSchmea,
+from model.db_model import OrderHistoryInDBSchema, OrderRowInDBSchmea
+from model.order_model import (
     OrderRowResponseSchema,
     OrderHistoryResponseSchema,
 )

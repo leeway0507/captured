@@ -100,7 +100,8 @@ class OrderHistoryTable(MyBase):
     order_total_price = Column(INTEGER, nullable=False)
     payment_method = Column(VARCHAR(50), nullable=False)
     payment_status = Column(VARCHAR(50), nullable=False)
-    payment_info = Column(VARCHAR(255), nullable=False)
+    payment_info = Column(VARCHAR(255), nullable=True)
+    payment_key = Column(VARCHAR(255), nullable=False)
 
     user = relationship("UserTable")
     address = relationship("UserAddressTable")
@@ -117,8 +118,8 @@ class OrderRowTable(MyBase):
     size = Column(VARCHAR(20), nullable=False)
     quantity = Column(INTEGER, nullable=False)
     delivery_status = Column(VARCHAR(10), nullable=False)
-    delivery_company = Column(VARCHAR(30), nullable=False)
-    delivery_number = Column(VARCHAR(50), nullable=False)
+    delivery_company = Column(VARCHAR(30), nullable=True)
+    delivery_number = Column(VARCHAR(50), nullable=True)
 
     order = relationship("OrderHistoryTable")
     product = relationship("ProductInfoTable")

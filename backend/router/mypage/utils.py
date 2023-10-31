@@ -32,7 +32,7 @@ async def get_user_address_info(db: AsyncSession, address_id: str) -> UserAddres
         select(UserAddressTable).filter(UserAddressTable.address_id == address_id)
     )
     result = result.scalar()
-    return UserAddressSchema(**result[0].to_dict())
+    return UserAddressSchema(**result.to_dict())
 
 
 async def create_user_address(db: AsyncSession, user_address_db: UserAddressInDBSchema) -> bool:

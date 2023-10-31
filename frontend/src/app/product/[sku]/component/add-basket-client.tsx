@@ -8,7 +8,7 @@ import AddBascketModal from "./add-bascket-modal";
 const AddBasket = ({ data, defaultSizeArr }: { data: productCardProps; defaultSizeArr: string[] }) => {
     const { brand, productName, productId, imgType, sku, size, category } = data;
 
-    const productImgUrl = `/product/${brand}/${productName} ${productId}/main.${imgType}`;
+    const productImgUrl = `${process.env.NEXT_PUBLIC_MOBILE_IMAGE_URL}/product/${brand}/${productName} ${productId}/main.${imgType}`;
 
     const { sizeType, availableSize } = {
         sizeType: category,

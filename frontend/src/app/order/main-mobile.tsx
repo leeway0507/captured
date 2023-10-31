@@ -3,23 +3,24 @@
 import CartproductCardArr from "./component/product-card-array";
 import { cartProductCardProps } from "../type";
 import ProductCheckOut from "../cart/component/product-check-out";
-import { AddressForm } from "@/app/mypage/component/address-info-form";
 import { IntlShipment } from "../components/notification/shipment-info";
 import { useEffect, useState } from "react";
 import { userAddressProps } from "@/app/type";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
-import Link from "next/link";
+import Logo from "../components/nav-footer/component/logo";
 import { DefaultAddressModule, SubAddressModule } from "./component/address-info";
+import { User } from "@/app/type";
+import CalculateOrderPrice from "./component/total-price";
+import TossPaymentsWidget from "./component/tosspayments/toss-payments-widget";
 
 const MainMobile = ({
     arr,
-    accessToken,
     addressArray,
+    userInfo,
 }: {
     arr: cartProductCardProps[];
-    accessToken: string;
     addressArray: userAddressProps[];
+    userInfo: User;
 }) => {
     const router = useRouter();
     const [changeAddress, setChangeAddress] = useState<boolean>(false);
@@ -40,17 +41,15 @@ const MainMobile = ({
         router.push("/order");
     };
 
+    //orer price
+    const { totalPrice, ...rest } = CalculateOrderPrice(arr);
+    const totalPriceNumber = parseInt(totalPrice.replace(/[^0-9]/g, ""));
+
     return (
         <div className="px-4">
-            <div className="sticky top-0 h-[100px] w-full m-auto px-4 z-50 bg-white">
-                <div className="flex h-full">
-                    <div className="flex-center basis-1/4"></div>
-                    <div className="flex-center basis-1/2">
-                        <Link href="/">
-                            <Image src="/icons/main-logo.svg" alt="main logo" width={160} height={36} />
-                        </Link>
-                    </div>
-                    <div className="flex-center basis-1/4"></div>
+            <div className="sticky top-0 h-[100px] w-full m-auto px-4 z-50 bg-white border-b">
+                <div className="flex-center h-full">
+                    <Logo />
                 </div>
             </div>
             <div
@@ -70,7 +69,7 @@ const MainMobile = ({
                             openAddressToggle={openAddressToggle}
                             addressArray={addressArray}
                             selectedAddress={selectedAddress}
-                            accessToken={accessToken}
+                            accessToken={userInfo.accessToken}
                         />
                     </div>
 
@@ -80,12 +79,14 @@ const MainMobile = ({
                         상품 구입을 위해 개인통관부호가 필요하며 5 - 15일의 배송기간이 소요 됩니다."
                     />
                 </div>
-                <div className="border-b border-deep-gray pb-4">
-                    <div className="text-2xl tracking-[0.2em] flex-center py-4 ">결제수단 선택</div>
+                <div className="py-6">
+                    <TossPaymentsWidget
+                        price={totalPriceNumber}
+                        addressId={selectedAddress.addressId}
+                        userInfo={userInfo}
+                        arr={arr}
+                    />
                 </div>
-                <button type="button" className="black-bar-xl my-8">
-                    결제하기
-                </button>
             </div>
 
             {/* 배송지 선택 */}
@@ -93,7 +94,7 @@ const MainMobile = ({
                 <SubAddressModule
                     addressArray={addressArray}
                     selectAddressToggle={selectAddressToggle}
-                    accessToken={accessToken}
+                    accessToken={userInfo.accessToken}
                     selectedAddress={selectedAddress}
                 />
                 <button

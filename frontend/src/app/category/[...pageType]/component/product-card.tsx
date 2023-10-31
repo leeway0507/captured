@@ -5,7 +5,7 @@ import { productCardProps } from "@/app/type";
 export default function ProductCard(props: productCardProps) {
     const { sku, brand, productName, price, productId, intl } = props;
 
-    const productImgUrl = `/product/${brand}/${productName} ${productId}/thumbnail.png`;
+    const productImgUrl = `${process.env.NEXT_PUBLIC_MOBILE_IMAGE_URL}/product/${brand}/${productName} ${productId}/thumbnail.png`;
     return (
         <Link href={`/product/${sku}`} className=" text-sub-black text-xs font-light pb-6 z-1 " key={sku}>
             <div className="flex flex-col">

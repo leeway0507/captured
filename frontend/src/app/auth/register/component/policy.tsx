@@ -1,6 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import PolicyComponent from "./policy-component";
 import PersonalInfo from "@/app/support/policy/privacy/agreement-personal-info/agreement-personal-info";
 import ServicePolicy from "@/app/support/policy/service/service-policy";
@@ -12,10 +12,10 @@ const Policy = ({ checkAllSelect }: { checkAllSelect: (e: boolean) => void }) =>
     const searchParams = useSearchParams();
 
     const [checkState, setCheckState] = useState([
-        { id: "privacy-policy", checked: false },
-        { id: "service-policy", checked: false },
-        { id: "third-party-policy", checked: false },
-        { id: "age", checked: false },
+        { id: "privacy-policy", checked: true },
+        { id: "service-policy", checked: true },
+        { id: "third-party-policy", checked: true },
+        { id: "age", checked: true },
     ]);
     const [openRegistration, setOpenRegistration] = useState(true);
     const [privacypolicy, setPrivacypolicy] = useState(false);
@@ -95,8 +95,8 @@ const Policy = ({ checkAllSelect }: { checkAllSelect: (e: boolean) => void }) =>
     return (
         <>
             {openRegistration && (
-                <div className="flex flex-col gap-2">
-                    <div className="flex items-center">
+                <div className="flex flex-col gap-2 relative text-main-black">
+                    <div className="flex items-center ">
                         <input
                             id="agree-all"
                             type="checkbox"
@@ -105,67 +105,81 @@ const Policy = ({ checkAllSelect }: { checkAllSelect: (e: boolean) => void }) =>
                             onChange={changeHandler}
                             checked={checkState.every((item) => item.checked)}
                         />
-                        <label htmlFor="agree-all" className="ml-2 text-sm font-medium text-gray-900">
-                            전체 동의하기
+                        <label htmlFor="agree-all" className="ml-2 text-sm ">
+                            [필수] 서비스 이용 및 정보제공 동의
                         </label>
                     </div>
-                    <div className="flex items-center">
-                        <input
-                            id="privacy-policy"
-                            type="checkbox"
-                            value=""
-                            className="w-4 h-4 text-sub-black bg-gray-100 border-gray-300 rounded focus:ring-main-black bg-white focus:ring-2"
-                            onChange={changeHandler}
-                            checked={checkState[0].checked}
-                        />
-                        <label
-                            htmlFor="privacy-policy"
-                            className="ml-2 text-sm font-medium text-gray-900 flex-center justify-between">
-                            <div>[필수] 개인정보 수집·이용 동의</div>
-                            <button onClick={openPrivacyPolicy} className="px-1 text-xs text-sub-black hover:underline">
-                                (약관보기)
-                            </button>
-                        </label>
-                    </div>
-                    <div className="flex items-center">
-                        <input
-                            id="service-policy"
-                            type="checkbox"
-                            value=""
-                            className="w-4 h-4 text-sub-black bg-gray-100 border-gray-300 rounded focus:ring-main-black bg-white focus:ring-2"
-                            onChange={changeHandler}
-                            checked={checkState[1].checked}
-                        />
-                        <label
-                            htmlFor="service-policy"
-                            className="ml-2 text-sm font-medium text-gray-900 flex-center justify-between">
-                            [필수] 서비스 이용 약관 동의
-                            <button
-                                onClick={openServicePolicy}
-                                className="px-1 text-xs text-sub-black hover:underline align-bottom	">
-                                (약관보기)
-                            </button>
-                        </label>
-                    </div>
-                    <div className="flex items-center">
-                        <input
-                            id="third-party-policy"
-                            type="checkbox"
-                            value=""
-                            className="w-4 h-4 text-sub-black bg-gray-100 border-gray-300 rounded focus:ring-main-black bg-white focus:ring-2"
-                            onChange={changeHandler}
-                            checked={checkState[2].checked}
-                        />
-                        <label
-                            htmlFor="third-party-policy"
-                            className="ml-2 text-sm font-medium text-gray-900 flex-center justify-between">
-                            [필수] 개인정보 제3자 제공 동의
-                            <button
-                                onClick={openThirdPartyPolicy}
-                                className="px-1 text-xs text-sub-black hover:underline align-middle">
-                                (약관보기)
-                            </button>
-                        </label>
+
+                    <input
+                        type="checkbox"
+                        id="show-terms"
+                        className=" absolute top-0 left-[63%] peer text-sm py-2 px-4 border-transparent checked:rotate-90 focus:ring-0 checked:ring-0 checked:bg-transparent "
+                    />
+                    <label htmlFor="show-terms" className="absolute top-0 left-[65%] text-sm peer-checked:rotate-90 ">
+                        ❯
+                    </label>
+
+                    <div className="hidden flex-col duration-1000 peer-checked:flex">
+                        <div className="flex items-center">
+                            <input
+                                id="privacy-policy"
+                                type="checkbox"
+                                value=""
+                                className="w-4 h-4 text-sub-black bg-gray-100 border-gray-300 rounded focus:ring-main-black bg-white focus:ring-2"
+                                onChange={changeHandler}
+                                checked={checkState[0].checked}
+                            />
+                            <label
+                                htmlFor="privacy-policy"
+                                className="ml-2 text-sm text-gray-900 flex-center justify-between">
+                                <div> 개인정보 수집·이용 동의</div>
+                                <button
+                                    onClick={openPrivacyPolicy}
+                                    className="px-1 text-xs text-sub-black hover:underline">
+                                    (약관보기)
+                                </button>
+                            </label>
+                        </div>
+                        <div className="flex items-center">
+                            <input
+                                id="service-policy"
+                                type="checkbox"
+                                value=""
+                                className="w-4 h-4 text-sub-black bg-gray-100 border-gray-300 rounded focus:ring-main-black bg-white focus:ring-2"
+                                onChange={changeHandler}
+                                checked={checkState[1].checked}
+                            />
+                            <label
+                                htmlFor="service-policy"
+                                className="ml-2 text-sm text-gray-900 flex-center justify-between">
+                                서비스 이용 약관 동의
+                                <button
+                                    onClick={openServicePolicy}
+                                    className="px-1 text-xs text-sub-black hover:underline align-bottom	">
+                                    (약관보기)
+                                </button>
+                            </label>
+                        </div>
+                        <div className="flex items-center">
+                            <input
+                                id="third-party-policy"
+                                type="checkbox"
+                                value=""
+                                className="w-4 h-4 text-sub-black bg-gray-100 border-gray-300 rounded focus:ring-main-black bg-white focus:ring-2"
+                                onChange={changeHandler}
+                                checked={checkState[2].checked}
+                            />
+                            <label
+                                htmlFor="third-party-policy"
+                                className="ml-2 text-sm text-gray-900 flex-center justify-between">
+                                개인정보 제3자 제공 동의
+                                <button
+                                    onClick={openThirdPartyPolicy}
+                                    className="px-1 text-xs text-sub-black hover:underline align-middle">
+                                    (약관보기)
+                                </button>
+                            </label>
+                        </div>
                     </div>
                     <div className="flex items-center">
                         <input
@@ -176,9 +190,7 @@ const Policy = ({ checkAllSelect }: { checkAllSelect: (e: boolean) => void }) =>
                             onChange={changeHandler}
                             checked={checkState[3].checked}
                         />
-                        <label
-                            htmlFor="age"
-                            className="ml-2 text-sm font-medium text-gray-900 flex-center justify-between">
+                        <label htmlFor="age" className="ml-2 text-sm text-gray-900 flex-center justify-between">
                             [필수] 만 14세 이상입니다.
                         </label>
                     </div>
@@ -188,7 +200,7 @@ const Policy = ({ checkAllSelect }: { checkAllSelect: (e: boolean) => void }) =>
                 <PolicyComponent
                     policy={
                         <>
-                            <div className="text-2xl py-2 font-bold">개인정보 수집·이용 동의</div>
+                            <div className="text-2xl py-2">개인정보 수집·이용 동의</div>
                             <PersonalInfo />
                         </>
                     }
@@ -200,7 +212,7 @@ const Policy = ({ checkAllSelect }: { checkAllSelect: (e: boolean) => void }) =>
                 <PolicyComponent
                     policy={
                         <>
-                            <div className="text-2xl py-2 font-bold">개인정보 제3자 제공 동의</div>
+                            <div className="text-2xl py-2">개인정보 제3자 제공 동의</div>
                             <ThirdPartyPolicy />
                         </>
                     }

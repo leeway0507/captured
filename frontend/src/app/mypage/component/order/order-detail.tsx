@@ -1,90 +1,77 @@
+"use client";
+
 import OrderDetailProductCardArray from "./order-product-card-array";
 import { phoneNumberAutoFormat } from "@/app/components/custom-input/check-policy";
-import { userAddressProps, orderHistoryProps } from "@/app/type";
+import { userAddressProps, orderHistoryProps, cartProductCardProps } from "@/app/type";
 import ProductCheckOut from "@/app/cart/component/product-check-out";
 import { useRouter } from "next/navigation";
-import * as api from "./fetch-client";
-import { useSession } from "next-auth/react";
 import { scrollToTop } from "@/app/components/utils/scroll";
+import { orderDetailProductCardProps } from "@/app/type";
 
 export default function OrderDetailForm({
-    orderHistory,
-    setOpenDetailOrder,
+    targetOrder,
+    orderAddress,
+    orderItemList,
 }: {
-    orderHistory: orderHistoryProps | undefined;
-    setOpenDetailOrder: (v: boolean) => void;
+    targetOrder: orderHistoryProps;
+    orderAddress: userAddressProps;
+    orderItemList: orderDetailProductCardProps[];
 }) {
     const router = useRouter();
-    const { data: session } = useSession();
-
-    if (orderHistory === undefined) return <div>loading...</div>;
-
-    const {
-        data: orderAddress,
-        error: addErr,
-        isLoading: loadingAdd,
-    } = api.GetUserAddressInfo(orderHistory.addressId, session?.user.accessToken!);
-    const {
-        data: orderItemList,
-        error: ardErr,
-        isLoading: loadingOrd,
-    } = api.GetOrderRows(orderHistory.orderId, session?.user.accessToken!);
-
-    if (addErr || ardErr) return <div>failed to load</div>;
-    if (loadingAdd || loadingOrd) return <div>loading...</div>;
-    if (session === undefined) return <div>loading...</div>;
 
     return (
-        <div className="flex flex-col px-3 ">
-            <div className="flex flex-col pb-2 ">
-                <div className="flex-left text-2xl mb-8 border-b border-main-black w-full top-0  py-4 sticky bg-white z-20">
+        <div className="flex flex-col px-3 pt-8 tb:pt-12 pb-12 tb:pb-24">
+            <div className="flex flex-col pb-8">
+                <div className="flex-left text-xl mb-4 border-b border-main-black w-full py-2 bg-white z-20">
                     상세 주문 정보
                 </div>
-                <div className="flex justify-between mb-4 text-sm-base ">
-                    <div className="flex flex-col gap-2">
+                <div className="grid grid-cols-5 text-sm">
+                    <div className="grid grid-rows-4 gap-1">
                         <div className="">주문번호</div>
-                        <div className="">결제일</div>
                         <div className="">결제방식</div>
+                        <div className="">결제일</div>
+                        <div className="">결제코드</div>
                     </div>
-                    <div className="flex flex-col gap-2">
-                        <div>{orderHistory.userOrderNumber}</div>
-                        <div className="text-xs">
-                            {orderHistory.orderedAt.split("T").map((v, idx) => {
-                                return <div key={idx}>{v}</div>;
-                            })}
-                        </div>
-                        <div>{orderHistory.paymentMethod}</div>
+                    <div className="grid col-span-2 grid-rows-4 gap-1">
+                        <div>{targetOrder.userOrderNumber}</div>
+                        <div>{targetOrder.paymentMethod}</div>
+                        <div className="text-xs-sm flex-left">{targetOrder.orderedAt.replace("T", " ")}</div>
+                        <div className="text-xs flex-left">{targetOrder.orderId}</div>
                     </div>
-                    <div className="flex flex-col gap-2">
+                    <div className="grid grid-rows-4 gap-1">
                         <div className="">결제금액</div>
-                        <div className="">주문상태</div>
                         <div className="">결제상태</div>
+                        <div className="">주문상태</div>
+                        <div className=""></div>
                     </div>
-                    <div className="flex flex-col gap-2 ">
-                        <div>{orderHistory.orderTotalPrice}</div>
-                        <div>{orderHistory.orderStatus}</div>
-                        <div>{orderHistory.paymentStatus}</div>
+                    <div className="grid grid-rows-4 gap-1">
+                        <div>{"₩" + targetOrder.orderTotalPrice.toLocaleString()}</div>
+                        <div>{targetOrder.paymentStatus}</div>
+                        <div>{targetOrder.orderStatus}</div>
+                        <div></div>
                     </div>
                 </div>
             </div>
             <div className="flex flex-col pb-8">
-                <div className="flex-left text-2xl mb-8 border-b border-main-black w-full top-0  py-4 sticky bg-white z-20">
+                <div className="flex-left text-xl mb-4 border-b border-main-black w-full py-2 bg-white z-20">
                     배송 정보
                 </div>
-                <Address {...orderAddress} />
+                <div className="text-sm">
+                    <Address {...orderAddress} />
+                </div>
             </div>
             <div className="flex flex-col pb-2 ">
-                <div className="flex-left text-2xl mb-2 border-b border-main-black w-full top-0  py-4 sticky bg-white z-20">
+                <div className="flex-left text-xl mb-2 border-b border-main-black w-full py-2  bg-white z-20">
                     상세 주문 내역
                 </div>
                 <OrderDetailProductCardArray orderItemList={orderItemList} />
             </div>
             <ProductCheckOut arr={orderItemList} />
             <div
-                className="black-bar-xl"
+                className="black-bar-xl my-4"
                 onClick={() => {
                     scrollToTop();
-                    setOpenDetailOrder(false);
+                    router.back();
                 }}>
                 확인
             </div>

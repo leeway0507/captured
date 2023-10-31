@@ -1,24 +1,25 @@
 import CartproductCardArr from "./component/product-card-array";
 import { cartProductCardProps } from "../type";
-import Link from "next/link";
 import ProductCheckOut from "../cart/component/product-check-out";
 import { useState } from "react";
 import { userAddressProps } from "../type";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { IntlShipment } from "../components/notification/shipment-info";
 import { GrFormClose } from "react-icons/gr";
 import CalculateOrderPrice from "./component/total-price";
 import { DefaultAddressModule, SubAddressModule } from "./component/address-info";
 import Logo from "../components/nav-footer/component/logo";
+import TossPaymentsWidget from "./component/tosspayments/toss-payments-widget";
+import { User } from "@/app/type";
 
 const MainPC = ({
     arr,
-    accessToken,
     addressArray,
+    userInfo,
 }: {
     arr: cartProductCardProps[];
-    accessToken: string;
     addressArray: userAddressProps[];
+    userInfo: User;
 }) => {
     const router = useRouter();
     const [changeAddress, setChangeAddress] = useState<boolean>(false);
@@ -41,15 +42,16 @@ const MainPC = ({
 
     //orer price
     const { totalPrice, ...rest } = CalculateOrderPrice(arr);
+    const totalPriceNumber = parseInt(totalPrice.replace(/[^0-9]/g, ""));
 
     return (
         <>
-            <div className="sticky top-0 h-[130px] w-full m-auto p-4 z-50 bg-white border-b">
+            <div className="sticky top-0 h-[130px] w-full mx-auto p-4 z-50 bg-white border-b">
                 <div className="flex-center h-full">
                     <Logo />
                 </div>
             </div>
-            <div className="max-w-4xl w-full flex relative pt-8 pb-16 h-full gap-8 justify-evenly mx-auto">
+            <div className="max-w-4xl w-full flex relative pt-8 pb-16 h-full gap-8 mx-auto">
                 <div className="basis-[55%] pe-1 me-1 overflow-auto">
                     <div className="text-xl tracking-[0.2em] flex-center pb-4 font-bold">주문요약</div>
                     <CartproductCardArr arr={arr} />
@@ -74,29 +76,18 @@ const MainPC = ({
                                         addressArray={addressArray}
                                         selectedAddress={selectedAddress}
                                         openAddressToggle={openAddressToggle}
-                                        accessToken={accessToken}
+                                        accessToken={userInfo.accessToken}
                                     />
                                 </div>
                             </div>
-                            <div className="flex gap-1 py-6">
-                                <div className="p-2 text-sm border border-deep-gray rounded flex-center basis-1/3">
-                                    카카오페이
-                                </div>
-                                <div className="p-2 text-sm border border-deep-gray rounded flex-center basis-1/3">
-                                    신용체크카드
-                                </div>
-                                <div className="p-2 text-sm border border-deep-gray rounded flex-center basis-1/3">
-                                    네이버페이
-                                </div>
+                            <div className="py-6">
+                                <TossPaymentsWidget
+                                    price={totalPriceNumber}
+                                    addressId={selectedAddress.addressId}
+                                    userInfo={userInfo}
+                                    arr={arr}
+                                />
                             </div>
-                            <div className="flex justify-between text-base-lg py-2">
-                                <div>총 결제금액</div>
-                                <div>{totalPrice}</div>
-                            </div>
-                            <Link href="/order" className="black-bar-xl tracking-[0.2em]">
-                                결제하기
-                            </Link>
-                            {/* 배송지 선택 */}
                         </div>
                     </div>
                 ) : (
@@ -111,7 +102,7 @@ const MainPC = ({
                         <SubAddressModule
                             addressArray={addressArray}
                             selectAddressToggle={selectAddressToggle}
-                            accessToken={accessToken}
+                            accessToken={userInfo.accessToken}
                             selectedAddress={selectedAddress}
                         />
                         <button
