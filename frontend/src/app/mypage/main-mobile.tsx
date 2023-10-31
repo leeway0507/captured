@@ -16,31 +16,33 @@ export default function MobileMain({ signUpType, orderHistory }: { signUpType: s
                             주문배송
                         </div>
                         {orderHistory}
-                        <div className="basis-full">
+                        <div className="w-full">
                             {signUpType === "email" && (
                                 <AccordionComponent
                                     title="비밀번호 변경"
-                                    content={ResetPasswordFrom()}
+                                    content={<ResetPasswordFrom />}
                                     cat="AddRemoveAddress"
                                 />
                             )}
                             <AccordionComponent
                                 title="주소 추가 및 변경"
-                                content={AddressInfoFrom()}
+                                content={<AddressInfoFrom />}
                                 cat="changePersonalInfo"
                             />
-                            <YesNoModal
-                                toggleName={
-                                    <button type="button" className="text-xl py-3 link-animation">
-                                        로그아웃
-                                    </button>
-                                }
-                                title="로그아웃"
-                                content="로그아웃 하시겠습니까?"
-                                trueCallback={() => {
-                                    signOut({ callbackUrl: "/" });
-                                }}
-                            />
+                            <div className="max-w-[100px]">
+                                <YesNoModal
+                                    toggleName={
+                                        <button type="button" className="text-xl py-3 link-animation">
+                                            로그아웃
+                                        </button>
+                                    }
+                                    title="로그아웃"
+                                    content="로그아웃 하시겠습니까?"
+                                    trueCallback={() => {
+                                        signOut({ callbackUrl: "/" });
+                                    }}
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>

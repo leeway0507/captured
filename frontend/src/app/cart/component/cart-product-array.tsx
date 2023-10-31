@@ -8,7 +8,7 @@ export default function CartProductCardArr({ arr }: { arr: cartProductCardProps[
 
     return arr?.map((item: cartProductCardProps, idx: number) => {
         const { brand, productName, productId, imgType } = item;
-        const productImgUrl = `/product/${brand}/${productName} ${productId}/main.${imgType}`;
+        const productImgUrl = `${process.env.NEXT_PUBLIC_MOBILE_IMAGE_URL}/product/${brand}/${productName} ${productId}/main.${imgType}`;
         return (
             <div key={idx} className="relative mb-5">
                 <div className="absolute top-5 right-0  text-sm underline">

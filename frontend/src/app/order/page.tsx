@@ -1,6 +1,5 @@
 import Main from "./main";
-import ContextWrapper from "../components/context/context-wrapper";
-import Footer from "../components/nav-footer/component/footer";
+
 import { getAddress } from "../mypage/component/fetch";
 import { getServerSession } from "next-auth/next";
 import { options } from "../api/auth/[...nextauth]/options";
@@ -13,14 +12,5 @@ export default async function Page() {
 
     if (session == null) return <SigninAlertModal />;
 
-    return (
-        <ContextWrapper>
-            <div className="main-container">
-                <div className="grow flex-col flex justify-between tb:px-8 xl:px-12">
-                    <Main addressArray={addressArray} />
-                </div>
-                <Footer />
-            </div>
-        </ContextWrapper>
-    );
+    return <Main addressArray={addressArray} userInfo={session.user} />;
 }

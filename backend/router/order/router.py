@@ -3,13 +3,12 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from fastapi import APIRouter, Depends, HTTPException
 
+
+from expirng_dict import ExpiringDict
+
 from model.auth_model import TokenData
-from model.db_model import (
-    OrderHistoryRequestSchema,
-    OrderRowSchmea,
-    OrderHistoryInDBSchema,
-    OrderRowInDBSchmea,
-)
+from model.db_model import OrderHistoryRequestSchema, OrderHistoryInDBSchema, OrderRowInDBSchmea
+from model.order_model import OrderInfoBeforePaymentSchema
 
 from router.auth import get_current_user
 from router.mypage import *
@@ -21,9 +20,9 @@ from .utils import (
     create_order_history_into_db,
     create_order_row_into_db,
 )
-from datetime import datetime
 
 order_router = APIRouter()
+order_cache = ExpiringDict(max_len=100, max_age_seconds=60 * 10)
 
 
 @order_router.get("/get-order-history")
@@ -53,37 +52,60 @@ async def create_order_history(
     db: AsyncSession = Depends(get_db),
     user: TokenData = Depends(get_current_user),
 ):
-    """주문 내역 생성"""
+    """
+    주문 내역 생성
+    // 결제 플로우 확인 : captured/keynote/flow
+    """
     order_count = await get_user_order_count(db)
-    order_id = f"OH-{user.user_id}-{order_count}"
-    order_history.user_id = user.user_id
+    order_info: OrderInfoBeforePaymentSchema = order_cache.get(order_history.order_id)  # type: ignore
+
+    if order_info == None:
+        raise HTTPException(status_code=400, detail="일치하는 주문정보가 없습니다.")
+
+    address_id = order_info.address_id
+    assert address_id != None, HTTPException(status_code=400, detail="주소지를 선택해주세요")
+
     order_history_in_db = OrderHistoryInDBSchema(
         **order_history.model_dump(),
-        order_id=order_id,
+        user_id=user.user_id,
+        address_id=address_id,
         user_order_number=order_count,
-        ordered_at=datetime.now(),
     )
     if await create_order_history_into_db(order_history_in_db, db):
-        return {"orderId": order_id}
+        order_rows = order_info.order_rows
+        order_rows_in_db = [
+            OrderRowInDBSchmea(**order_row.model_dump()) for order_row in order_rows
+        ]
+        if await create_order_row_into_db(order_rows_in_db, db):
+            return {"message": "success"}
+
     else:
         raise HTTPException(status_code=400, detail="주문내역 생성 실패")
 
 
-@order_router.post("/create-order-row")
-async def create_order_row(
-    order_id: str,
-    order_rows: List[OrderRowSchmea],
-    db: AsyncSession = Depends(get_db),
-    user_id: TokenData = Depends(get_current_user),
+@order_router.post("/save-order-info-before-payment")
+def save_order_info(
+    payment_info: OrderInfoBeforePaymentSchema, user: TokenData = Depends(get_current_user)
 ):
-    """
-    주문 상세내역 생성
-    주문 내역과 구분한 이유는 orderHistory가 성공적으로 생성되었는지 확인하기 위함
-    """
-    order_row_in_db_list = []
-    for order_row in order_rows:
-        order_row_in_db_list.append(OrderRowInDBSchmea(**order_row.model_dump(), order_id=order_id))
-    if await create_order_row_into_db(order_row_in_db_list, db):
-        return {"message": "success"}
-    else:
-        raise HTTPException(status_code=400, detail="주문상세내역 생성 실패")
+    """결제 전 주문 정보 저장"""
+    order_cache[payment_info.order_id] = payment_info
+
+    print("-------order_cache-------")
+    print(order_cache.get(payment_info.order_id))
+
+    return order_cache.get(payment_info.order_id)
+
+
+@order_router.get("/get-order-info-before-payment")
+def get_order_info(orderId: str):
+    """결제 전 주문 정보 조회"""
+
+    info: OrderInfoBeforePaymentSchema | None = order_cache.get(orderId)  # type: ignore
+
+    if info == None:
+        raise HTTPException(status_code=400, detail="주문 정보가 없습니다")
+
+    print("-------get_order_info-------")
+    print(info.order_total_price)
+
+    return {"orderTotalPrice": info.order_total_price}

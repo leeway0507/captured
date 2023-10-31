@@ -106,6 +106,9 @@ export const options: NextAuthOptions = {
             return session;
         },
     },
+    session: {
+        maxAge: 60 * 60 * 24 * 30,
+    },
     pages: {
         signIn: "/auth/signin",
         error: "/auth/login-fail",

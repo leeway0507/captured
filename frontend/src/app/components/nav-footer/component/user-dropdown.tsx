@@ -14,9 +14,9 @@ export default function UserDropDown() {
                     {userIcon}
                 </Link>
             ) : (
-                <div className="group relative flex-center">
+                <div className="group flex">
                     <button className=" flex px-4 py-2 ">{userIcon}</button>
-                    <div className="border hidden absolute top-full z-50 group-hover:block flex flex-col bg-white text-sm shadow-lg rounded-md">
+                    <div className="absolute right-5 top-[85%] border hidden group-hover:block flex flex-col bg-white text-sm shadow-lg rounded-md">
                         <div className="whitespace-nowrap py-3 px-4 border-b-2 border-light-gray">
                             {session?.user.krName}(
                             <span className="text-xs">

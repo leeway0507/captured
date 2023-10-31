@@ -1,5 +1,5 @@
 export const Process = (
-    <div className="flex flex-col gap-2 text-sm">
+    <div className="flex flex-col gap-2 text-sm ">
         <div>
             국내배송 상품 : 1 - 3일<span className="text-xs">(영업일 기준)</span>
         </div>
@@ -7,9 +7,9 @@ export const Process = (
         <div>
             해외배송 상품 : 5 - 15일<span className="text-xs">(영업일 기준)</span>
         </div>
+        <div className="">해외배송 절차</div>
         <div className="border rounded-md py-2">
             <div className="text-xs flex-center flex-col gap-1">
-                <div className="pb-2 font-bold">해외배송 프로세스</div>
                 <div>물품 구매 및 현지 배송 (1-5일)</div>
                 <div>⇣</div>
                 <div>국제 배송 및 통관 (3-8일)</div>
@@ -41,12 +41,12 @@ export const RefundAndExchange = (
             <div className="text-sm">구매대행 특성 상 수리 및 교환은 불가합니다.</div>
         </div>
         <div className="py-1">
-            <div className="font-bold pb-1">반품 및 환불</div>
+            <div className="font-bold pb-1">반품 및 취소 정책</div>
             <div>
                 <div className="text-sm">
                     <div>
-                        단순 변심 사유 및 기타 회사가 정한 사유로 인해 인해 반품/환불 시 국외 배송비 및 국내 배송비가
-                        발생 됩니다.
+                        단순 변심 사유 및 기타 회사가 정한 사유로 인해 인해 반품 또는 취소 시 국외 배송비 및 국내
+                        배송비가 발생 됩니다.
                     </div>
                     <div>
                         <div className="pt-2 pb-2 text-xs font-bold">단순 변심에 해당하는 사유</div>
@@ -76,12 +76,44 @@ export const RefundAndExchange = (
                         • 현지 판매처에 의한 배송지연(기상악화, 배송 급증, 현지 공휴일 등)
                     </div>
                 </div>
-                <div>
-                    <div className="font-bold pb-1 py-2">반품/환불 건에 대한 배송비 </div>
-                    <ul className="list-inside flex flex-col gap-1 text-xs ps-2">
-                        <li>• 물품 구매 및 현지 배송 : 판매처 발송 여부에 따라 무료 또는 2만원</li>
-                        <li>• 국제 배송 및 세관 통과 이후 : 5만원</li>
-                    </ul>
+            </div>
+        </div>
+        <div className="py-1 ">
+            <div className="font-bold pb-1 py-2">반품 및 취소 건에 대한 배송비 </div>
+            <ul className="list-inside flex flex-col gap-1 text-xs ps-2">
+                <li>• 물품 구매 및 현지 배송 : 판매처 발송 여부에 따라 무료 또는 2만원</li>
+                <li>• 국제 배송 및 세관 통과 이후 : 5만원</li>
+            </ul>
+        </div>
+        <div className="py-1 ">
+            <div className="font-bold pb-1">반품 및 취소 신청</div>
+            <div className="text-sm pb-1">물품 수령 후 7일 이전의 경우 반품 및 취소 신청 가능합니다. </div>
+
+            <div className="text-sm">
+                아래의 양식으로 고객센터 메일(
+                <span className="underline text-blue-500 text-sm">{process.env.NEXT_PUBLIC_USTOMER_EMAIL}</span>
+                )로 보내주시면 관련 내용 안내드리겠습니다.{" "}
+            </div>
+            <div className="border rounded-md py-3 my-2">
+                <div className="text-xs grid grid-rows-2 gap-1 ms-2">
+                    <div className="grid grid-cols-5">
+                        <div className="font-bold">주문자 성명</div>
+                        <div className="col-span-4">주문 시 기입한 성명</div>
+                    </div>
+                    <div className="grid grid-cols-5">
+                        <div className="font-bold">결제코드</div>
+                        <div className="col-span-4">
+                            마이페이지 → 주문배송 → 상세주문정보 항목에서 결제코드 확인 가능
+                        </div>
+                    </div>
+                    <div className="grid grid-cols-5">
+                        <div className="font-bold">환불 방식</div>
+                        <div className="col-span-4">희망 환불 절차(반품 또는 취소) 기입</div>
+                    </div>
+                    <div className="grid grid-cols-5">
+                        <div className="font-bold">상세 내용</div>
+                        <div className="col-span-4">반품 및 취소 사유 및 이미지 등 상세 내용 작성</div>
+                    </div>
                 </div>
             </div>
         </div>

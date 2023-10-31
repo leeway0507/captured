@@ -1,11 +1,8 @@
-import { Suspense } from "react";
-
 import * as api from "./component/fetch";
 import CateogryClient from "./client";
 import { filterRequestProps } from "./type";
 import { responseProps } from "./component/fetch";
 import ProductCardArrary from "./component/product-card-array";
-import AccordionComponent from "@/app/components/accordion/accordion";
 
 function addDefaultCategoryFilter(pageType: string[], filterMeta: filterRequestProps) {
     switch (pageType[0]) {
@@ -34,20 +31,18 @@ export const Main = async ({ searchParams, params }: { params: { pageType: strin
 
     return (
         <CateogryClient initFilterMeta={initFilterMeta} pageType={pageType}>
-            <Suspense fallback={<div>Suspense Loading.....</div>}>
-                {res.lastPage === 0 ? (
-                    <div className="flex flex-col mx-auto h-full p-16">
-                        <div className="text-3xl pb-2">요청 결과가 존재하지 않습니다.</div>
-                    </div>
-                ) : (
-                    <ProductCardArrary
-                        data={res.data}
-                        currentPage={res.currentPage}
-                        lastPage={res.lastPage}
-                        refresh={refresh}
-                    />
-                )}
-            </Suspense>
+            {res.lastPage === 0 ? (
+                <div className="flex flex-col mx-auto h-full p-16">
+                    <div className="text-3xl pb-2">요청 결과가 존재하지 않습니다.</div>
+                </div>
+            ) : (
+                <ProductCardArrary
+                    data={res.data}
+                    currentPage={res.currentPage}
+                    lastPage={res.lastPage}
+                    refresh={refresh}
+                />
+            )}
         </CateogryClient>
     );
 };
