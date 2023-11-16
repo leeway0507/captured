@@ -38,10 +38,14 @@ def conn_engine(username: str, password: str, host: str, db_name: str, **_kwargs
 
 
 def get_secret() -> Dict[str, str]:
-    if os.environ.get("ProductionLevel") == "production":
+    if os.environ.get("ProductionLevel"):
+        print("production - level -db")
         config = Config(RepositoryEnv(".env.production"))
     else:
+        print("dev - level -db")
         config = Config(RepositoryEnv(".env.dev"))
+
+    config = Config(RepositoryEnv(".env.production"))
 
     username = config.get("DB_USER_NAME")
     password = config.get("DB_PASSWORD")
