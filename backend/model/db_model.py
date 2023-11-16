@@ -31,8 +31,8 @@ class ProductInfoSchema(BaseModel):
     category: str
     category_spec: str
     img_type: str
+    deploy: Optional[int] = 0
 
-    # @validator("size", "color", pre=True)
     @validator("color", pre=True)
     def str_to_list(cls, v: str) -> str:
         """str to list to str"""
@@ -126,7 +126,7 @@ class OrderRowInDBSchmea(OrderRowRequestchmea):
 
     model_config = ConfigDict(alias_generator=to_camel, populate_by_name=True)
 
-    order_row_id: Optional[int] = Field(default=None, primary_key=True)
+    order_row_id: Optional[int] = Field(default=None)
     delivery_status: Optional[str] = "배송준비"
     delivery_company: Optional[str] = None
     delivery_number: Optional[str] = None

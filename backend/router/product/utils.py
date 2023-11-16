@@ -3,14 +3,17 @@ from typing import Dict, Tuple, Optional, List, Any
 import json
 from functools import lru_cache
 
-from sqlalchemy.orm import Session
 from sqlalchemy import and_, func, select
 
 from logs.make_log import make_logger
 from db.tables import ProductInfoTable, SizeTable
 
 from model.db_model import ProductInfoSchema
-from model.product_model import FilterMetaSchema, ProductResponseSchema, RequestFilterSchema
+from model.product_model import (
+    FilterMetaSchema,
+    ProductResponseSchema,
+    RequestFilterSchema,
+)
 from sqlalchemy.ext.asyncio import AsyncSession
 
 error_log = make_logger("logs/db/product.log", "product_router")
@@ -20,7 +23,7 @@ async def get_product(sku: int, db: AsyncSession) -> ProductInfoSchema | None:
     result = await db.execute(
         select(ProductInfoTable, func.group_concat(SizeTable.size).label("size"))
         .join(SizeTable, ProductInfoTable.sku == SizeTable.sku)
-        .filter(SizeTable.sku == sku)
+        .filter(and_(SizeTable.sku == sku, ProductInfoTable.deploy == 1))
         .group_by(SizeTable.sku)
     )
     result = result.all()
@@ -29,20 +32,16 @@ async def get_product(sku: int, db: AsyncSession) -> ProductInfoSchema | None:
     return ProductInfoSchema(**result[0][0].to_dict(), size=result[0][1])
 
 
-@lru_cache(maxsize=50)
-async def get_init_category(page: int, limit: int, db: AsyncSession) -> ProductResponseSchema:
-    print("------------cacheTest----------")
-    print("------------cacheTest----------")
-    print("------------cacheTest----------")
-    print("------------cacheTest----------")
-    # page to cursor
+async def get_init_category(
+    page: int, limit: int, db: AsyncSession
+) -> ProductResponseSchema:
     page_cursor, last_page = await get_page_cursor(page, limit, db)
 
     # query
     result = await db.execute(
         select(ProductInfoTable, func.group_concat(SizeTable.size).label("size"))
         .join(SizeTable, ProductInfoTable.sku == SizeTable.sku)
-        .filter(ProductInfoTable.sku < page_cursor)
+        .filter(and_(ProductInfoTable.sku < page_cursor, ProductInfoTable.deploy == 1))
         .group_by(SizeTable.sku)
         .order_by(ProductInfoTable.sku.desc())
         .limit(limit)
@@ -93,7 +92,9 @@ async def get_category(
         filter_query_dict = create_filter_query(request_filter)
 
         # page to cursor
-        page_cursor, last_page = await get_page_cursor(page, limit, db, query=(filter_query_dict))
+        page_cursor, last_page = await get_page_cursor(
+            page, limit, db, query=(filter_query_dict)
+        )
 
         if last_page == 0:
             """필터 결과 없음"""
@@ -107,9 +108,15 @@ async def get_category(
         if "size_array" in filter_query_dict.keys():
             print("size filter가 있는 경우")
             result = await db.execute(
-                select(ProductInfoTable, func.group_concat(SizeTable.size).label("size"))
+                select(
+                    ProductInfoTable, func.group_concat(SizeTable.size).label("size")
+                )
                 .join(SizeTable, ProductInfoTable.sku == SizeTable.sku)
-                .filter(*filter_query_dict.values(), cursor_query < page_cursor)
+                .filter(
+                    *filter_query_dict.values(),
+                    cursor_query < page_cursor,
+                    ProductInfoTable.deploy == 1,
+                )
                 .group_by(ProductInfoTable.sku)
                 .order_by(*order_by)
                 .limit(limit)
@@ -119,9 +126,12 @@ async def get_category(
             if is_only_sort_by(request_filter):
                 print("filter가 없고 오로지 sort_by만 있는 경우")
                 result = await db.execute(
-                    select(ProductInfoTable, func.group_concat(SizeTable.size).label("size"))
+                    select(
+                        ProductInfoTable,
+                        func.group_concat(SizeTable.size).label("size"),
+                    )
                     .join(SizeTable, ProductInfoTable.sku == SizeTable.sku)
-                    .filter(cursor_query < page_cursor)
+                    .filter(cursor_query < page_cursor, ProductInfoTable.deploy == 1)
                     .group_by(SizeTable.sku)
                     .order_by(*order_by)
                     .limit(limit)
@@ -130,9 +140,15 @@ async def get_category(
                 print("size filter가 없는 경우")
 
             result = await db.execute(
-                select(ProductInfoTable, func.group_concat(SizeTable.size).label("size"))
+                select(
+                    ProductInfoTable, func.group_concat(SizeTable.size).label("size")
+                )
                 .join(SizeTable, ProductInfoTable.sku == SizeTable.sku)
-                .filter(*filter_query_dict.values(), cursor_query < page_cursor)
+                .filter(
+                    *filter_query_dict.values(),
+                    cursor_query < page_cursor,
+                    ProductInfoTable.deploy == 1,
+                )
                 .group_by(SizeTable.sku)
                 .order_by(*order_by)
                 .limit(limit)
@@ -194,7 +210,9 @@ def create_filter_query(filter: RequestFilterSchema) -> Dict[str, Any]:
     # size filter 생성
     size_array = filter_dict.pop("size_array")
     if size_array:
-        filter_query_dict.update({"size_array": SizeTable.size.in_(size_array.split(","))})
+        filter_query_dict.update(
+            {"size_array": SizeTable.size.in_(size_array.split(","))}
+        )
 
     # price filter 생성
     price = filter_dict.pop("price")  # range로 처리하기
@@ -202,11 +220,17 @@ def create_filter_query(filter: RequestFilterSchema) -> Dict[str, Any]:
     if price:
         price_filter = create_price_filter(price)
         filter_query_dict.update(
-            {"price": ProductInfoTable.price.between({price_filter[0]}, {price_filter[1]})}
+            {
+                "price": ProductInfoTable.price.between(
+                    {price_filter[0]}, {price_filter[1]}
+                )
+            }
         )
 
     # category, brand, intl 생성
-    filter_dict = {k: v.split(",") for k, v in filter_dict.items() if v != None and v != ""}
+    filter_dict = {
+        k: v.split(",") for k, v in filter_dict.items() if v != None and v != ""
+    }
 
     # intl filter 수정
     if "intl" in filter_dict.keys():
@@ -281,7 +305,7 @@ async def create_page_index(
             sku_list = await db.execute(
                 select(cursor_query)
                 .join(SizeTable, ProductInfoTable.sku == SizeTable.sku)
-                .filter(*local_query.values())
+                .filter(*local_query.values(), ProductInfoTable.deploy == 1)
                 .group_by(ProductInfoTable.sku)
                 .order_by(*order_by)
             )
@@ -291,14 +315,18 @@ async def create_page_index(
         else:
             print("create_page_index : size filter가 없지만 filter는 존재하는 경우")
             sku_list = await db.execute(
-                select(cursor_query).filter(*local_query.values()).order_by(*order_by)
+                select(cursor_query)
+                .filter(*local_query.values(), ProductInfoTable.deploy == 1)
+                .order_by(*order_by)
             )
             sku_list = sku_list.all()
 
     # filter가 없는 경우
     else:
         print("create_page_index : filter가 없는 경우(order_by만 있는 경우도 포함)")
-        sku_list = await db.execute(select(cursor_query).order_by(*order_by))
+        sku_list = await db.execute(
+            select(cursor_query, ProductInfoTable.deploy == 1).order_by(*order_by)
+        )
         sku_list = sku_list.all()
 
     if not sku_list:
@@ -308,7 +336,9 @@ async def create_page_index(
     return _get_index_by_sort_type(sort_type, sku_list, limit)
 
 
-def _get_index_by_sort_type(sort_type: str, sku_list: List, limit: int) -> Dict[int, int | str]:
+def _get_index_by_sort_type(
+    sort_type: str, sku_list: List, limit: int
+) -> Dict[int, int | str]:
     if len(sku_list) % limit == 0:
         page = len(sku_list) // limit
     else:
@@ -320,7 +350,8 @@ def _get_index_by_sort_type(sort_type: str, sku_list: List, limit: int) -> Dict[
         zfill_value = 12 if sort_type == "높은 가격 순" else 11
         cursor_idx_list = list(map(lambda x: int(x[0]), sku_list))
         return {
-            i + 1: str(cursor_idx_list[i * limit] + 1).zfill(zfill_value) for i in range(0, page)
+            i + 1: str(cursor_idx_list[i * limit] + 1).zfill(zfill_value)
+            for i in range(0, page)
         }
 
     else:
