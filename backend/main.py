@@ -7,7 +7,7 @@ from router.auth import auth_router
 from router.mypage import mypage_router
 from router.product import product_router
 from router.order import order_router
-from router.admin import admin_router
+
 
 app = FastAPI()
 
@@ -33,7 +33,6 @@ app.include_router(auth_router, prefix="/api/auth", tags=["auth"])
 app.include_router(mypage_router, prefix="/api/mypage", tags=["mypage"])
 app.include_router(product_router, prefix="/api/product", tags=["product"])
 app.include_router(order_router, prefix="/api/order", tags=["order"])
-app.include_router(admin_router, prefix="/api/admin", tags=["admin"])
 
 
 # 422 error handler

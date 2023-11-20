@@ -13,6 +13,7 @@ export default function CartBtn() {
                     className="flex-right"
                     width={28}
                     height={28}
+                    priority
                 />
                 <div className="text-sm ps-1">{cartQuantity}</div>
             </Link>

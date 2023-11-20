@@ -13,6 +13,10 @@ interface ShoppingCartContext {
     isMobile: boolean | undefined;
     cartQuantity: number | undefined;
     cartItems: cartProductCardProps[] | undefined;
+    isModalOpen: boolean;
+    setModalOpen: (isOpen: boolean) => void;
+    modalContent: string | JSX.Element;
+    setModalContent: (content: string | JSX.Element) => void;
 }
 
 export const ShoppingCartContext = createContext({} as ShoppingCartContext);
@@ -97,6 +101,9 @@ export function ShoppingCartProvider({ children }: { children: React.ReactNode }
         localStorage.setItem("cartItems", "[]");
     };
 
+    const [isModalOpen, setModalOpen] = useState(false);
+    const [modalContent, setModalContent] = useState<string | JSX.Element>("");
+
     return (
         <ShoppingCartContext.Provider
             value={{
@@ -108,6 +115,10 @@ export function ShoppingCartProvider({ children }: { children: React.ReactNode }
                 isMobile,
                 cartItems,
                 cartQuantity,
+                isModalOpen,
+                setModalOpen,
+                modalContent,
+                setModalContent,
             }}>
             {children}
         </ShoppingCartContext.Provider>

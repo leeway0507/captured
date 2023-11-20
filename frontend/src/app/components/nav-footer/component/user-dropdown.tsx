@@ -5,7 +5,9 @@ import Link from "next/link";
 
 export default function UserDropDown() {
     const { data: session } = useSession();
-    const userIcon = <Image src="/icons/person.svg" alt="person" className="flex-right" width={28} height={28} />;
+    const userIcon = (
+        <Image src="/icons/person.svg" alt="person" className="flex-right" width={28} height={28} priority />
+    );
 
     return (
         <>

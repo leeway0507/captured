@@ -23,7 +23,7 @@ async def get_product(sku: int, db: AsyncSession) -> ProductInfoSchema | None:
     result = await db.execute(
         select(ProductInfoTable, func.group_concat(SizeTable.size).label("size"))
         .join(SizeTable, ProductInfoTable.sku == SizeTable.sku)
-        .filter(and_(SizeTable.sku == sku, ProductInfoTable.deploy == 1))
+        .where(and_(SizeTable.sku == sku, ProductInfoTable.deploy == 1))
         .group_by(SizeTable.sku)
     )
     result = result.all()
@@ -37,15 +37,20 @@ async def get_init_category(
 ) -> ProductResponseSchema:
     page_cursor, last_page = await get_page_cursor(page, limit, db)
 
+    print("get_init_category")
+    print(page_cursor, last_page)
+
     # query
-    result = await db.execute(
+    stmt = (
         select(ProductInfoTable, func.group_concat(SizeTable.size).label("size"))
         .join(SizeTable, ProductInfoTable.sku == SizeTable.sku)
-        .filter(and_(ProductInfoTable.sku < page_cursor, ProductInfoTable.deploy == 1))
+        .where(and_(ProductInfoTable.sku < page_cursor, ProductInfoTable.deploy == 1))
         .group_by(SizeTable.sku)
         .order_by(ProductInfoTable.sku.desc())
         .limit(limit)
     )
+
+    result = await db.execute(stmt)
 
     data = [
         ProductInfoSchema(**row[0].to_dict(), size=row[1]).model_dump(by_alias=True)
@@ -112,7 +117,7 @@ async def get_category(
                     ProductInfoTable, func.group_concat(SizeTable.size).label("size")
                 )
                 .join(SizeTable, ProductInfoTable.sku == SizeTable.sku)
-                .filter(
+                .where(
                     *filter_query_dict.values(),
                     cursor_query < page_cursor,
                     ProductInfoTable.deploy == 1,
@@ -131,7 +136,7 @@ async def get_category(
                         func.group_concat(SizeTable.size).label("size"),
                     )
                     .join(SizeTable, ProductInfoTable.sku == SizeTable.sku)
-                    .filter(cursor_query < page_cursor, ProductInfoTable.deploy == 1)
+                    .where(cursor_query < page_cursor, ProductInfoTable.deploy == 1)
                     .group_by(SizeTable.sku)
                     .order_by(*order_by)
                     .limit(limit)
@@ -144,7 +149,7 @@ async def get_category(
                     ProductInfoTable, func.group_concat(SizeTable.size).label("size")
                 )
                 .join(SizeTable, ProductInfoTable.sku == SizeTable.sku)
-                .filter(
+                .where(
                     *filter_query_dict.values(),
                     cursor_query < page_cursor,
                     ProductInfoTable.deploy == 1,
@@ -305,7 +310,7 @@ async def create_page_index(
             sku_list = await db.execute(
                 select(cursor_query)
                 .join(SizeTable, ProductInfoTable.sku == SizeTable.sku)
-                .filter(*local_query.values(), ProductInfoTable.deploy == 1)
+                .where(*local_query.values(), ProductInfoTable.deploy == 1)
                 .group_by(ProductInfoTable.sku)
                 .order_by(*order_by)
             )
@@ -316,7 +321,7 @@ async def create_page_index(
             print("create_page_index : size filter가 없지만 filter는 존재하는 경우")
             sku_list = await db.execute(
                 select(cursor_query)
-                .filter(*local_query.values(), ProductInfoTable.deploy == 1)
+                .where(*local_query.values(), ProductInfoTable.deploy == 1)
                 .order_by(*order_by)
             )
             sku_list = sku_list.all()
@@ -325,7 +330,7 @@ async def create_page_index(
     else:
         print("create_page_index : filter가 없는 경우(order_by만 있는 경우도 포함)")
         sku_list = await db.execute(
-            select(cursor_query, ProductInfoTable.deploy == 1).order_by(*order_by)
+            select(cursor_query).where(ProductInfoTable.deploy == 1).order_by(*order_by)
         )
         sku_list = sku_list.all()
 
