@@ -16,14 +16,14 @@ export default function Thumbnail({ src, brand, productName, href }: PropType) {
     return (
         <div className="bg-gray-50 flex-center flex-col relative font-bold">
             <div className="square max-w-[75%] tb:max-w-[40%] mb-4">
-                <Link href={href} className="inner flex-right flex-col hover:opacity-60">
-                    <Image src={src} alt={productName} className="mb-4" width={1000} height={1000} priority={false} />
+                <Link href={href} className="inner flex-right flex-col hover:opacity-60 relative ">
+                    <Image src={src} alt={productName} className="mb-4" fill sizes="300px" priority={true} />
                 </Link>
                 <div className="absolute bottom-0 w-full capitalize">
-                    <div className="flex-left text-sm tb:text-lg">{brand}</div>
-                    <div className="flex-left text-sm tb:text-xl mb-2">{productName}</div>
+                    <div className="flex-left tb:text-lg">{brand}</div>
+                    <div className="flex-left tb:text-xl mb-2">{productName}</div>
                     <Link href={href}>
-                        <div className="flex-center tb:text-xl text-base rounded border-2 main-black-border shadow-lg py-2 hover:bg-main-black hover:text-light-gray hover:border-blue-black hover:shadow-2xl">
+                        <div className="flex-center tb:text-xl rounded border-2 main-black-border shadow-lg py-2 hover:bg-main-black hover:text-light-gray hover:border-blue-black hover:shadow-2xl">
                             Shop Now
                         </div>
                     </Link>

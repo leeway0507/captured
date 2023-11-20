@@ -9,7 +9,9 @@ import os
 from logging import Logger
 
 
-def connect_db(username: str, password: str, host: str, db_name: str, **_kwargs) -> Session:
+def connect_db(
+    username: str, password: str, host: str, db_name: str, **_kwargs
+) -> Session:
     """
     sseion 연결
 
@@ -44,8 +46,6 @@ def get_secret() -> Dict[str, str]:
     else:
         print("dev - level -db")
         config = Config(RepositoryEnv(".env.dev"))
-
-    config = Config(RepositoryEnv(".env.production"))
 
     username = config.get("DB_USER_NAME")
     password = config.get("DB_PASSWORD")

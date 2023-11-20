@@ -19,7 +19,7 @@ function AccordionComponent({
     return (
         <div className="accordion relative">
             <input type="checkbox" id={id} className="click-effect" />
-            <label htmlFor={id} className="text-xl py-3">
+            <label htmlFor={id} className="py-3">
                 <div className={`flex justify-between active:bg-light-gray ${titleClassNames}`}>
                     {title}
                     <em style={{ background: "url(/icons/expand.svg)" }} />

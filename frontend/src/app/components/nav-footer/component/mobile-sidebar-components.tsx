@@ -36,7 +36,7 @@ export function MyPageSignINOut() {
 
 export function NavArr() {
     return (
-        <div className="flex flex-col gap-5 text-xl py-2 font-bold">
+        <div className="flex flex-col gap-5 text-xl py-2">
             <Link href="/category/latest" className={`${navArr}`}>
                 LATEST
             </Link>

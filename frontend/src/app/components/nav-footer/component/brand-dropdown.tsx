@@ -42,7 +42,7 @@ export default function BrandDropDown() {
                                         src={`/brands/white/${brandNameBar}-white-logo.png`}
                                         alt={brandNameBar}
                                         fill
-                                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                        sizes="100px"
                                     />
                                 </div>
                                 <div

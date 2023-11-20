@@ -3,7 +3,7 @@ import BrandDropDown from "./brand-dropdown";
 
 export function NavPcTop() {
     return (
-        <div className="flex justify-between items-center text-sm h-full my-auto font-bold ">
+        <div className="flex justify-between items-center text-base h-full my-auto font-bold ">
             <Link href="/category/latest">
                 <div className="mx-2">LATEST</div>
             </Link>
@@ -12,7 +12,7 @@ export function NavPcTop() {
                 <BrandDropDown />
             </div>
             <Link href="/category/shoes">
-                <div className="mx-2 ">SHOES</div>
+                <div className="mx-2">SHOES</div>
             </Link>
             <Link href="/category/clothing">
                 <div className="mx-2">CLOTHING</div>

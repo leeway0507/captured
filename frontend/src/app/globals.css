@@ -215,7 +215,7 @@ input[id="nav"] {
 input[id="nav"] + div{
     display: grid;
     grid-template-rows: 0fr;
-    transition: grid-template-rows 0.3s ease-out;
+    transition: grid-template-rows 0.2s ease-in-out;
     opacity: 100%;
     overflow: auto;
 
@@ -250,3 +250,23 @@ input[id="nav"]:checked + div {
 .scroll-bar::-webkit-scrollbar-track {
     background: var(--light-gray)  /*스크롤바 뒷 배경 색상*/
 }
+
+.grid-square-container {
+    display: grid;
+    grid-gap: 5px;
+  }
+  .grid-square-container div {
+    background-color: red;
+    aspect-ratio: 1;
+  }
+
+
+  .Toastify__toast--info {
+    /* background: var(--light-gray) !important; */
+    color: var(--main-black) !important;
+
+  }
+
+  .Toastify__progress-bar--info {
+    background: var(--main-black) !important;
+  }

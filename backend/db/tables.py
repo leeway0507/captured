@@ -29,9 +29,11 @@ class ProductInfoTable(MyBase):
     category = Column(VARCHAR(50))
     category_spec = Column(VARCHAR(50))
     img_type = Column(VARCHAR(10))
-    price_desc_cursor = Column(VARCHAR(100))
-    price_asc_cursor = Column(VARCHAR(100))
+    price_desc_cursor = Column(VARCHAR(100), index=True)
+    price_asc_cursor = Column(VARCHAR(100), index=True)
     deploy = Column(INTEGER, index=True)
+
+    __table_args__ = (UniqueConstraint("product_id", name="_product_id_uc"),)
 
     class Config:
         orm_mode = str
