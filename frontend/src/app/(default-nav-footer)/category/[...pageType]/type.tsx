@@ -38,14 +38,18 @@ export interface categorySpec {
     기타: itemArray;
     전체: itemArray;
 }
+export interface indexProps {
+    [key: string]: string[];
+}
 
 export interface initFilterMetaProps {
     sortBy: string[];
-    brand?: string[];
+    brand: string[];
     category: categorySpec;
     intl: string[];
     price: number[];
     sizeArray: string[];
+    index: indexProps;
 }
 
 export interface filterMetaProps {

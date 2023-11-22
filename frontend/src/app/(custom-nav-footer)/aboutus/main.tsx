@@ -25,7 +25,7 @@ export default function Main() {
                                 src="/icons/captured_map.png"
                                 alt="captured_map"
                                 fill
-                                sizes="1000px"
+                                sizes="100vw"
                                 className="rounded-lg"
                             />
                         </div>
@@ -38,7 +38,7 @@ export default function Main() {
                                 src="/icons/captured_logo.png"
                                 alt="captured_logo"
                                 fill
-                                sizes="1000px"
+                                sizes="100vw"
                                 className="rounded-md"
                             />
                         </div>

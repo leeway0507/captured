@@ -1,7 +1,6 @@
-"use client";
 import Image from "next/image";
 import Link from "next/link";
-import { useMemo } from "react";
+import { getFilterMeta } from "@/app/(default-nav-footer)/category/[...pageType]/component/fetch";
 
 const evenLogoCard = (brandName: string, idx: number) => {
     const brandNameBar = brandName.replaceAll(" ", "-").toLowerCase();
@@ -15,9 +14,9 @@ const evenLogoCard = (brandName: string, idx: number) => {
                 src={`/brands/white/${brandNameBar}-white-logo.png`}
                 alt={`${brandNameBar}-logo`}
                 fill
-                sizes="100px"
-                className="scale-[85%]"
+                sizes="(min-width: 1560px) 150px, (min-width: 1280px) calc(6.92vw + 43px), (min-width: 780px) calc(14.38vw - 10px), calc(20vw - 4px)"
                 priority={true}
+                className="scale-[85%]"
             />
         </Link>
     );
@@ -30,9 +29,9 @@ const oddLogoCard = (brandName: string, idx: number) => {
                 src={`/brands/black/${brandNameBar}-logo.png`}
                 alt={`${brandNameBar}-logo`}
                 fill
-                sizes="100px"
-                className="scale-[85%]"
+                sizes="(min-width: 1560px) 150px, (min-width: 1280px) calc(6.92vw + 43px), (min-width: 780px) calc(14.38vw - 10px), calc(20vw - 4px)"
                 priority={true}
+                className="scale-[85%]"
             />
         </Link>
     );
@@ -47,16 +46,14 @@ const LogoBox = ({ logoArr }: { logoArr: string[] }) => {
         }
     });
 };
-const Logo = ({ logoArr }: { logoArr: string[] }) => {
-    return useMemo(() => <LogoBox logoArr={logoArr} />, [logoArr]);
-};
 
-export default function BrandList() {
-    const logoArr = JSON.parse(process.env.NEXT_PUBLIC_BRAND_ARRAY!);
+export default async function BrandList() {
+    const data = await getFilterMeta();
+    const logoArr = data.brand;
 
     return (
         <div className="grid grid-cols-5 md:grid-cols-7 xl:grid-cols-9 gap-1">
-            <Logo logoArr={logoArr} />
+            <LogoBox logoArr={logoArr!} />
         </div>
     );
 }

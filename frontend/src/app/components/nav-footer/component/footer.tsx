@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function Footer() {
     return (
-        <div className="flex flex-col bg-footer-gray py-3 font-bold px-4 tb:px-8 xl:px-12 text-xs tb:text-base">
+        <div className="flex flex-col bg-footer-gray pt-3 pb-12 tb:py-4 font-bold px-4 tb:px-8 xl:px-12 text-xs tb:text-base">
             <div className="flex justify-between tb:justify-around">
                 <Link href="/aboutus">사이트 소개</Link>
                 <Link href={process.env.NEXT_PUBLIC_INSTARGRAM_URL!}>인스타그램</Link>

@@ -1,13 +1,36 @@
 "use client";
-import NavMobile from "./nav-mobile";
 import NavPc from "./nav-pc";
-import { useShoppingCart } from "@/app/components/context/shopping-cart-context";
-import PageLoading from "../../loading/page-loading";
+
+import Image from "next/image";
+import Link from "next/link";
 
 export default function NavMain() {
-    const { isMobile } = useShoppingCart();
+    const Logo = () => (
+        <>
+            <div className="px-4 flex justify-between h-[50px] w-full bg-white border-b">
+                <Link
+                    href="/"
+                    className="flex-left font-test text-xl py-3 text-rose-600 tracking-[0.2rem] "
+                    style={{ textShadow: "3px 2px 1px lightgrey" }}>
+                    CAPTURED
+                </Link>
+                <div className="flex-center">
+                    <Link href="/search">
+                        <Image src={"/icons/white/search-input-white.svg"} alt="search" width="28" height="28" />
+                    </Link>
+                </div>
+            </div>
+        </>
+    );
 
-    if (isMobile === undefined) return <PageLoading />;
-
-    return <>{isMobile ? <NavMobile /> : <NavPc />}</>;
+    return (
+        <>
+            <div className="display tb:hidden">
+                <Logo />
+            </div>
+            <div className="hidden tb:block">
+                <NavPc />
+            </div>
+        </>
+    );
 }

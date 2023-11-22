@@ -1,7 +1,7 @@
 "use client";
 import type { productCardProps } from "@/app/type";
 import EmblaCarouselMultiProducts from "@/app/components/carousel/EmblaCarouselMultiProducts";
-import ProductCard from "@/app/(default-nav-footer)/category/[...pageType]/component/product-card";
+import ProductCard from "@/app/(default-nav-footer)/category/[...pageType]/component/product-card/product-card";
 import { useEffect, useState } from "react";
 import PageLoading from "@/app/components/loading/page-loading";
 

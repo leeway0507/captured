@@ -17,7 +17,7 @@ const Infos = () => {
 
     return (
         <>
-            <div className="flex flex-col w-full gap-2">
+            <div className="flex flex-col w-full gap-4 my-2">
                 <button
                     className="text-main-black ps-1 pe-4 flex justify-between w-full text-xl font-bold link-animation"
                     onClick={() => setIsDeliveryOpen(true)}>

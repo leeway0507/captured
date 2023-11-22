@@ -15,16 +15,16 @@ const DeliverySideBar = ({
     return (
         <div>
             <Transition appear show={isOpen} as={Fragment}>
-                <Dialog as="div" className="relative z-50 " onClose={closeModal}>
+                <Dialog as="div" className="relative z-50" onClose={closeModal}>
                     <Transition.Child
                         as={Fragment}
-                        enter="transition-opacity duration-75"
+                        enter="opacity-0 duration-500"
                         enterFrom="opacity-0"
                         enterTo="opacity-100"
-                        leave="transition-opacity duration-150"
+                        leave="transition-opacity duration-300"
                         leaveFrom="opacity-100"
                         leaveTo="opacity-0">
-                        <div className="fixed inset-0 bg-black bg-opacity-25 h-full" />
+                        <div className="fixed inset-0 bg-black bg-opacity-30 h-full" />
                     </Transition.Child>
 
                     <div className="fixed top-0 right-0 h-full">
@@ -38,7 +38,7 @@ const DeliverySideBar = ({
                                 leaveFrom="translate-x-0"
                                 leaveTo="translate-x-full">
                                 <Dialog.Panel className="h-full w-full max-w-[500px] transform overflow-hidden bg-white border border-deep-gray shadow-2xl transition-all">
-                                    <div className="mx-auto mx-6 tb:mx-8 overflow-auto h-full">{content}</div>
+                                    <div className="mx-auto overflow-auto h-full">{content}</div>
                                 </Dialog.Panel>
                             </Transition.Child>
                         </div>

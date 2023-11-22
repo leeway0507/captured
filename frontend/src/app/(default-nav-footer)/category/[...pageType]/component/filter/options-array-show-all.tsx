@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { ItemBoxShowAllProps, ItemBoxShowAllObjectProps, SizeObject } from "../type";
+import { ItemBoxShowAllProps, ItemBoxShowAllObjectProps, SizeObject } from "../../type";
 
 export interface InlineContentShowAllProps {
     contentList: SizeObject[];

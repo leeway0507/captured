@@ -1,10 +1,9 @@
-import { ItemBoxSelectedProps } from "../type";
+import { ItemBoxSelectedProps } from "../../type";
 import { useState } from "react";
-
 // css
-const itemBoxClass = "grow flex-1 flex-center min-h-[30px] px-2 me-2 mb-2";
-const checkedItem = " cursor-pointer text-sub-black capitalize";
-const notCheckedItem = " cursor-pointer text-gray-400 capitalize link-animation";
+const itemBoxClass = "grow flex-1 flex-center text-sm min-h-[30px] border px-3 me-2 mb-2 rounded-sm";
+const checkedItem = "bg-main-black border-main-black cursor-pointer text-light-gray active:text-main-black shadow-md";
+const notCheckedItem = "border-sub-black cursor-pointer text-sub-black active:text-main-black shadow";
 
 // ItemBox Component for selected
 const ItemBoxSelected = ({ content, checked, setChecked }: ItemBoxSelectedProps) => {
@@ -17,7 +16,8 @@ const ItemBoxSelected = ({ content, checked, setChecked }: ItemBoxSelectedProps)
 };
 
 //
-export const OptionArrayWithoutBox = (contentList: Array<string>, setFilter: (v: string[]) => void) => {
+
+export const OptionArraySelected = (contentList: string[], setFilter: (v: string[]) => void) => {
     // create Array for ItemBoxSelected
     const itemBoxArray = contentList.map((content) => {
         return { content: content, checked: false };
@@ -40,7 +40,6 @@ export const OptionArrayWithoutBox = (contentList: Array<string>, setFilter: (v:
         setFilter(newContentList);
         console.log(newContentList);
 
-        // itemBox 형상관리용도로 사용
         const newObject = itemBoxSelectedArray.map((obj) => {
             if (obj["content"] === value) {
                 return { ...obj, checked: !obj["checked"] };
@@ -52,22 +51,20 @@ export const OptionArrayWithoutBox = (contentList: Array<string>, setFilter: (v:
     };
 
     return (
-        <div className="w-full overflow-auto">
-            <div className="flex flex-col">
-                {itemBoxSelectedArray.map((content, idx) => {
-                    return (
-                        <div key={idx}>
-                            <ItemBoxSelected
-                                content={content.content}
-                                checked={content.checked}
-                                setChecked={selectToggle}
-                            />
-                        </div>
-                    );
-                })}
-            </div>
+        <div className="flex flex-wrap w-full">
+            {itemBoxSelectedArray.map((content, idx) => {
+                return (
+                    <div key={idx}>
+                        <ItemBoxSelected
+                            content={content.content}
+                            checked={content.checked}
+                            setChecked={selectToggle}
+                        />
+                    </div>
+                );
+            })}
         </div>
     );
 };
 
-export default OptionArrayWithoutBox;
+export default OptionArraySelected;
