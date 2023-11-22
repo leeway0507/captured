@@ -6,7 +6,6 @@ import { productCardProps } from "@/app/type";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Spinner from "@/app/components/spinner/spinner";
-
 const ProductCardArrary = ({
     data,
     currentPage,
@@ -82,7 +81,7 @@ const ProductCardArrary = ({
             <Link
                 href={`?page=${prevPage}`}
                 className={`${Object.keys(localData).includes("1") ? "hidden" : "block"} `}>
-                <div className="border rounded-lg border-deep-gray pointer-cursor py-2 flex-center my-8 bg-main-black text-white ">
+                <div className="border rounded-lg border-deep-gray pointer-cursor py-2 flex-center my-4 tb:my-8 bg-main-black text-white">
                     이전으로
                 </div>
             </Link>
@@ -92,7 +91,7 @@ const ProductCardArrary = ({
                     const currentPage = parseInt(item[0]);
                     return (
                         <div key={idx}>
-                            <div className={`grid grid-cols-2 tb:grid-cols-3 gap-1 page-container`}>
+                            <div className={`grid grid-cols-2 lg:grid-cols-3 gap-1 page-container`}>
                                 {item[1].map((data) => {
                                     return (
                                         <div key={data.sku} className={`relative ${data.size === "" && "opacity-60"}`}>

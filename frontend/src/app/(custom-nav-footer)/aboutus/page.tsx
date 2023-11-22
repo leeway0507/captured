@@ -5,7 +5,7 @@ import Footer from "@/app/components/nav-footer/component/footer";
 import Main from "./main";
 import NavMobile from "@/app/components/nav-footer/component/nav-mobile";
 import PageLoading from "@/app/components/loading/page-loading";
-import { useState, useEffect } from "react";
+import useMobile from "@/app/components/hook/use-mobile";
 
 function NavPcTopForAboutUs() {
     return (
@@ -18,19 +18,8 @@ function NavPcTopForAboutUs() {
 }
 
 export default function Page() {
-    const [isMobile, setIsMobile] = useState<boolean | undefined>(undefined);
-
-    useEffect(() => {
-        const handleResize = () => {
-            setIsMobile(window.innerWidth <= Number(process.env.NEXT_PUBLIC_MOBILE_WIDTH));
-        };
-        window.addEventListener("resize", handleResize);
-        setIsMobile(window.innerWidth <= Number(process.env.NEXT_PUBLIC_MOBILE_WIDTH));
-        return () => window.removeEventListener("resize", handleResize);
-    }, []);
-
-    if (isMobile === undefined) return <PageLoading />;
-
+    const { isMobile, staus } = useMobile();
+    if (staus === "loading") return <PageLoading />;
     return (
         <>
             <div className="main-container">

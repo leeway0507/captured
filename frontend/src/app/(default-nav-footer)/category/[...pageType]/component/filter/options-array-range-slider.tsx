@@ -1,6 +1,6 @@
 "use client";
 import ReactSlider from "react-slider";
-import "./filter.css";
+import "./option-array-range-slider.css";
 import { useRef, useState } from "react";
 
 const oneItem = "bg-main-black border-main-black cursor-not-allowed text-light-gray active:text-main-black shadow-md";

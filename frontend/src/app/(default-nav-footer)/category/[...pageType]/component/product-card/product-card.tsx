@@ -1,22 +1,38 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import { productCardProps } from "@/app/type";
+import { useState } from "react";
 
 export default function ProductCard(props: productCardProps) {
     const { sku, brand, productName, price, productId, intl } = props;
+
+    const [isLoaded, setIsLoaded] = useState(false);
 
     const productImgUrl = `${process.env.NEXT_PUBLIC_MOBILE_IMAGE_URL}/product/${brand}/${productName} ${productId}/thumbnail.png`;
     return (
         <Link href={`/product/${sku}`} className=" text-sub-black text-xs font-light pb-6 z-1 " key={sku}>
             <div className="flex flex-col">
                 <div className="max-w-[300px] max-h-[300px] relative">
-                    <Image
-                        src={productImgUrl}
-                        alt={sku.toLocaleString()}
-                        className="rounded-md"
-                        width={1000}
-                        height={1000}
-                    />
+                    {isLoaded ? (
+                        <Image
+                            src={productImgUrl}
+                            alt={String(sku)}
+                            width="300"
+                            height="300"
+                            className="rounded-lg"
+                            onError={() => setIsLoaded(false)}
+                        />
+                    ) : (
+                        <Image
+                            src={"/icons/skeleton.png"}
+                            alt="default"
+                            width="300"
+                            height="300"
+                            className="rounded-lg"
+                            onLoadingComplete={() => setIsLoaded(true)}
+                        />
+                    )}
                 </div>
                 <div className="flex flex-col text-sub-black">
                     <div className="flex justify-between">

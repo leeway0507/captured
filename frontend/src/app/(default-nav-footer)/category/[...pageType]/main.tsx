@@ -2,8 +2,8 @@ import * as api from "./component/fetch";
 import CateogryClient from "./client";
 import { filterRequestProps } from "./type";
 import { responseProps } from "./component/fetch";
-import ProductCardArrary from "./component/product-card-array";
-
+import ProductCardArrary from "./component/product-card/product-card-array";
+import Image from "next/image";
 function addCategoryFilterToFilterDict(pageType: string[], filterMeta: filterRequestProps) {
     switch (pageType[0]) {
         case "clothing":
@@ -30,8 +30,8 @@ export const Main = async ({ searchParams, params }: { params: { pageType: strin
     return (
         <CateogryClient initFilterMeta={initFilterMeta} pageType={pageType}>
             {res.lastPage === 0 ? (
-                <div className="flex flex-col mx-auto h-full p-16">
-                    <div className="text-3xl pb-2">요청 결과가 존재하지 않습니다.</div>
+                <div className="flex flex-col mx-auto h-full tb:p-16 ">
+                    <div className="text-xl tb:text-3xl pb-2 m-auto">요청 결과가 존재하지 않습니다.</div>
                 </div>
             ) : (
                 <ProductCardArrary

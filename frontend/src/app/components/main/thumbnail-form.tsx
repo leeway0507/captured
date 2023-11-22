@@ -17,7 +17,14 @@ export default function Thumbnail({ src, brand, productName, href }: PropType) {
         <div className="bg-gray-50 flex-center flex-col relative font-bold">
             <div className="square max-w-[75%] tb:max-w-[40%] mb-4">
                 <Link href={href} className="inner flex-right flex-col hover:opacity-60 relative ">
-                    <Image src={src} alt={productName} className="mb-4" fill sizes="300px" priority={true} />
+                    <Image
+                        src={src}
+                        alt={productName}
+                        className="mb-4"
+                        fill
+                        sizes="(min-width: 1520px) 554px, (min-width: 780px) calc(35.56vw + 21px), 75vw"
+                        priority={true}
+                    />
                 </Link>
                 <div className="absolute bottom-0 w-full capitalize">
                     <div className="flex-left tb:text-lg">{brand}</div>

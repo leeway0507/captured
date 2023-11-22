@@ -23,25 +23,21 @@ export function SearchBar({ search, setSearch }: { search: string; setSearch: (v
 
 export function MyPageSignINOut() {
     return (
-        <div className="bg-light-gray flex px-6 basis-1/12 w-full justify-between items-center">
-            <Link href="/mypage" className="link-animation">
-                마이페이지
-            </Link>
-            <div>
-                <SignInOutButton />
-            </div>
+        <div className="w-full flex bg-light-gray justify-between px-2 py-3">
+            <Link href="/mypage">마이페이지</Link>
+            <SignInOutButton />
         </div>
     );
 }
 
 export function NavArr() {
     return (
-        <div className="flex flex-col gap-5 text-xl py-2">
+        <div className="flex flex-col gap-5 text-base py-2">
             <Link href="/category/latest" className={`${navArr}`}>
                 LATEST
             </Link>
             <Link href="/brands" className={`${navArr}`}>
-                BRANDS
+                BRAND
             </Link>
             <Link href="/category/shoes" className={`${navArr}`}>
                 SHOES
@@ -62,7 +58,7 @@ export function Instagram() {
             <Link href={process.env.NEXT_PUBLIC_INSTARGRAM_URL!} className="link-animation">
                 <div className="flex-left py-1 m-auto">
                     <div className="">
-                        <Image src="/icons/instagram.svg" width={12} height={12} alt="instagram" />
+                        <Image src="/icons/instagram.svg" width={12} height={12} alt="instagram" priority />
                     </div>
                     <div className="ms-1">인스타그램</div>
                 </div>
@@ -76,7 +72,7 @@ export function Custom() {
             <Link href={process.env.NEXT_PUBLIC_CUSTOM_ID_URL!} className="link-animation">
                 <div className="flex-left py-1">
                     <div className=" flex-center">
-                        <Image src="/icons/approval.svg" width={16} height={16} alt="instagram" />
+                        <Image src="/icons/approval.svg" width={16} height={16} alt="instagram" priority />
                     </div>
                     <div className="ms-1">개인통관부호</div>
                 </div>

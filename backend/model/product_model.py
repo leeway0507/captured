@@ -24,6 +24,7 @@ class FilterMetaSchema(BaseModel):
     brand: List[str]
     intl: List[str]
     price: List[int]
+    index: Dict[str, List[str]]
 
 
 class RequestFilterSchema(BaseModel):

@@ -1,3 +1,4 @@
+"use client";
 import { phoneNumberAutoFormat } from "@/app/components/custom-input/check-policy";
 import { useState } from "react";
 import { userAddressProps } from "@/app/type";
@@ -8,6 +9,7 @@ import AddressForm, { addAddressFromProps } from "./component/address-form";
 import { updateAddress, createAddress } from "./component/fetch";
 import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
+import { ConfirmPopUpModal } from "@/app/components/modal/new-yes-no-modal";
 
 const Main = (props: userAddressProps) => {
     const {
@@ -61,34 +63,40 @@ const Main = (props: userAddressProps) => {
         });
     }
 
+    const AddButton = () => {
+        const callback = () =>
+            createAddress(address, session?.user.accessToken)
+                .then(router.back)
+                .catch(() => setOpenFailureModal(true));
+
+        const handler = ConfirmPopUpModal("주소 추가", "해당 주소를 등록하시겠습니까?", callback);
+        return (
+            <button onClick={handler} className="basis-3/4 black-bar">
+                {" "}
+                추가하기
+            </button>
+        );
+    };
+
+    const ModificationButton = () => {
+        const callback = () =>
+            updateAddress(address, session?.user.accessToken)
+                .then(router.back)
+                .catch(() => setOpenFailureModal(true));
+
+        const handler = ConfirmPopUpModal("주소 수정", "해당 주소를 수정하시겠습니까?", callback);
+        return (
+            <button onClick={handler} className="basis-3/4 black-bar">
+                {" "}
+                수정하기
+            </button>
+        );
+    };
+
     const trueButton = () => {
         return (
             <div className="flex gap-5 grow">
-                {method === "create" ? (
-                    <YesNoModal
-                        toggleName={<div>{"추가하기"}</div>}
-                        title="주소 추가"
-                        content="해당 주소를 등록하시겠습니까?"
-                        buttonClassName="basis-3/4 black-bar"
-                        trueCallback={() =>
-                            createAddress(address, session?.user.accessToken)
-                                .then(router.back)
-                                .catch(() => setOpenFailureModal(true))
-                        }
-                    />
-                ) : (
-                    <YesNoModal
-                        toggleName={<div>{"수정하기"}</div>}
-                        title="주소 수정"
-                        content="해당 주소를 수정하시겠습니까?"
-                        buttonClassName="basis-3/4 black-bar"
-                        trueCallback={() =>
-                            updateAddress(address, session?.user.accessToken)
-                                .then(router.back)
-                                .catch(() => setOpenFailureModal(true))
-                        }
-                    />
-                )}
+                {method === "create" ? <AddButton /> : <ModificationButton />}
                 <button type="button" className="black-bar basis-1/4 tracking-[0.2em]" onClick={() => router.back()}>
                     취소
                 </button>

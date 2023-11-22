@@ -1,7 +1,11 @@
 import Banner from "../components/main/main-banner";
 import BrandList from "../components/main/brand-list";
+import Link from "next/link";
+import Image from "next/image";
+import Footer from "../components/nav-footer/component/footer";
+import { BottomNavBar } from "../components/nav-footer/bottom-nav-bar";
 
-export default function Home() {
+export default function page() {
     const thumbnailInfos = [
         {
             src: "/product/nike/jacquemus force black DR0424-001/thumbnail.png",
@@ -26,11 +30,11 @@ export default function Home() {
     return (
         <>
             <Banner thumbnailInfos={thumbnailInfos} />
-            <div className="py-4"></div>
-            <div>
-                <BrandList />
-            </div>
-            <div className="py-5"></div>
+            <div className="pt-8"></div>
+            <BrandList />
+            <div className="pt-8"></div>
+            <Footer />
+            <BottomNavBar nav="home" />
         </>
     );
 }

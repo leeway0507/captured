@@ -86,10 +86,13 @@
 }
 
 /* For webkit-based browsers (Chrome, Safari) */
+
 *::-webkit-scrollbar {
     width: 0px;
-    background: transparent; /* make scrollbar transparent */
+    height: 0px;
+    background: transparent; 
 }
+
 .triangle-right {
     width: 0;
     height: 0;
@@ -232,9 +235,14 @@ input[id="nav"]:checked + div {
 /* scroll-bar */
 
 .scroll-bar {
-    overflow-y: auto;
     overflow-x: hidden;
+    overflow-y: auto;
 
+}
+
+.scroll-bar-x {
+    overflow-x: auto;
+    overflow-y: hidden
 }
 
 /* 스크롤바의 폭 너비 */
@@ -270,3 +278,9 @@ input[id="nav"]:checked + div {
   .Toastify__progress-bar--info {
     background: var(--main-black) !important;
   }
+
+
+/* for mobile viewport  */
+.min-h-s-screen {
+    min-height: 100svh;
+}

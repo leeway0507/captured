@@ -27,7 +27,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     hideProgressBar={false}
                     newestOnTop={false}
                     transition={Flip}
-                    toastClassName="text-lg shadow-lg top-20"
+                    toastClassName="text-lg shadow-lg top-[50px]"
                 />
             </body>
         </html>

@@ -14,7 +14,7 @@ export default async function MainMobile({
     defaultSizeArr: string[];
 }) {
     return (
-        <div className="flex flex-col justify-between w-full gap-2">
+        <div className="flex flex-col justify-between w-full gap-2 pb-16">
             <Thumbnail {...product} />
             <ProductInfo {...product} />
             <SizeBox data={product} defaultSizeArr={defaultSizeArr} />

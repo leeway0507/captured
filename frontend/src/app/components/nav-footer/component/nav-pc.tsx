@@ -34,23 +34,23 @@ export default function NavPc() {
     return (
         <>
             <header>
-                <div className="min-h-[80px] max-h-[180px] w-full m-auto relative ">
+                <div className="min-h-[60px] max-h-[160px] w-full m-auto relative ">
                     <div className="flex h-full">
-                        <div className="flex flex-col w-full h-full ">
-                            <div className="h-[80px] bg-white px-8 tb:px-12 xl:px-16 ">
+                        <div className="flex flex-col w-full h-full bg-white ">
+                            <div className="h-[60px] px-8 tb:px-12 xl:px-16 flex-center">
                                 <NavPcTop />
                             </div>
-                            <div className="absolute top-[80px] w-full border-b shadow-sm">
-                                <input type="checkbox" id="nav" checked={checked} />
+                            <div className="absolute top-[60px] w-full border-b shadow-sm">
+                                <input type="checkbox" id="nav" checked={checked} readOnly />
                                 <div className=" do not remove this div">
-                                    <div className="flex w-full overflow-hidden bg-white px-8">
-                                        <div className="basis-3/12 flex-left ">
+                                    <div className="grid grid-cols-5 text-center w-full overflow-hidden bg-white px-12 xl:px-16">
+                                        <div className="col-span-1 flex-center ">
                                             <SearchBar search={search} setSearch={setSearch} />
                                         </div>
-                                        <div className="basis-6/12 flex-center h-[100px]">
+                                        <div className="col-span-3 flex-center h-[100px]">
                                             <Logo />
                                         </div>
-                                        <div className="basis-3/12 flex-right ">
+                                        <div className="col-span-1 flex-right ">
                                             <UserDropDown />
                                             <CartBtn />
                                         </div>

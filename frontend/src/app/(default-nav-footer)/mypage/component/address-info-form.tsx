@@ -3,6 +3,7 @@ import { phoneNumberAutoFormat } from "@/app/components/custom-input/check-polic
 import Link from "next/link";
 import YesNoModal from "@/app/components/modal/yes-no-modal";
 import { deleteAddress } from "./fetch";
+import { ConfirmPopUpModal } from "@/app/components/modal/new-yes-no-modal";
 
 export interface addressInfoFormProps extends userAddressProps {
     onDelete?: boolean | undefined;
@@ -11,24 +12,27 @@ export interface addressInfoFormProps extends userAddressProps {
 
 export const AddressForm = (props: addressInfoFormProps) => {
     const { onDelete, accessToken, ...address } = props;
-    const isMain = address.addressId.split("-")[2] === "0";
-    const deleteAddressButton = <div className="active:text-deep-gray">삭제</div>;
+    const isMainAddress = address.addressId.split("-")[2] === "0";
+
+    const DeleteButton = () => {
+        const callback = () => {
+            deleteAddress(address, accessToken).then(() => location.reload());
+        };
+
+        const handler = ConfirmPopUpModal("주소 삭제", "해당 주소를 삭제하시겠습니까?", callback);
+        return (
+            <button onClick={handler} className="active:text-deep-gray">
+                삭제
+            </button>
+        );
+    };
 
     return (
         <div
-            className={`relative flex flex-col text-xs bg-light-gray border border-gray-50 rounded-md shadow p-4 w-full gap-2 mb-3`}
+            className={`relative flex flex-col text-sm bg-light-gray border border-gray-50 rounded-md shadow p-4 w-full gap-2 mb-3`}
             key={address.addressId}>
             <div className="absolute underline text-sub-black right-0 px-4 flex cursor-pointer">
-                {onDelete && !isMain && (
-                    <YesNoModal
-                        toggleName={deleteAddressButton}
-                        title="주소 삭제"
-                        content="해당 주소를 삭제하시겠습니까?"
-                        trueCallback={() => {
-                            deleteAddress(address, accessToken).then(() => location.reload());
-                        }}
-                    />
-                )}
+                {onDelete && !isMainAddress && <DeleteButton />}
                 <Link
                     href={{
                         pathname: "/mypage/address/update",

@@ -4,14 +4,10 @@ import React from "react";
 function SignInOutButton() {
     const { data: session } = useSession();
 
-    return (
-        <div className="w-full h-full link-animation">
-            {session && session.user ? (
-                <div onClick={() => signOut({ callbackUrl: "/" })}>로그아웃</div>
-            ) : (
-                <div onClick={() => signIn()}>로그인 / 회원가입</div>
-            )}
-        </div>
+    return session && session.user ? (
+        <button onClick={() => signOut({ callbackUrl: "/" })}>로그아웃</button>
+    ) : (
+        <button onClick={() => signIn()}>로그인 / 회원가입</button>
     );
 }
 

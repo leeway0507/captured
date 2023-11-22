@@ -1,10 +1,10 @@
-import { ItemBoxSelectedProps } from "../type";
+import { ItemBoxSelectedProps } from "../../type";
 import { useState } from "react";
 
 // css
-const itemBoxClass = "grow  flex-1 flex-center text-base min-h-[30px] px-2 me-2 mb-2";
-const checkedItem = " cursor-pointer text-sub-black capitalize";
-const notCheckedItem = " cursor-pointer text-gray-400 capitalize link-animation";
+const itemBoxClass = "grow flex-center text-base min-h-[30px] px-2 me-2 mb-2";
+const checkedItem = " cursor-pointer text-main-black capitalize font-bold";
+const notCheckedItem = " cursor-pointer text-gray-500 capitalize link-animation";
 
 // ItemBox Component for selected
 const ItemBoxSelected = ({ content, checked, setChecked }: ItemBoxSelectedProps) => {
@@ -45,20 +45,18 @@ export const OptionArraySortBy = (contentList: Array<string>, setFilter: (v: str
     };
 
     return (
-        <div className="w-full overflow-auto">
-            <div className="flex flex-col">
-                {itemBoxSelectedArray.map((content, idx) => {
-                    return (
-                        <div key={idx}>
-                            <ItemBoxSelected
-                                content={content.content}
-                                checked={content.checked}
-                                setChecked={selectToggle}
-                            />
-                        </div>
-                    );
-                })}
-            </div>
+        <div className="flex flex-col">
+            {itemBoxSelectedArray.map((content, idx) => {
+                return (
+                    <div key={idx}>
+                        <ItemBoxSelected
+                            content={content.content}
+                            checked={content.checked}
+                            setChecked={selectToggle}
+                        />
+                    </div>
+                );
+            })}
         </div>
     );
 };

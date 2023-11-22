@@ -8,9 +8,6 @@ export default function AddBascketModal(data: cartProductCardProps) {
     const router = useRouter();
     const { setModalOpen } = useShoppingCart();
 
-    const title = "장바구니에 추가되었습니다.";
-    const content = <ProductCardModal {...data} />;
-
     function closeModal() {
         setModalOpen(false);
     }

@@ -4,7 +4,20 @@ import ResetPasswordFrom from "./component/reset-password-form";
 import AddressInfoFrom from "./component/address-info";
 
 import { signOut } from "next-auth/react";
-import YesNoModal from "../../components/modal/yes-no-modal";
+import { ConfirmPopUpModal } from "@/app/components/modal/new-yes-no-modal";
+
+const LogOutButton = () => {
+    const callback = () => {
+        signOut({ callbackUrl: "/" });
+    };
+
+    const handler = ConfirmPopUpModal("로그아웃", "로그아웃 하시겠습니까?", callback);
+    return (
+        <button onClick={handler} className="link-animation py-3">
+            로그아웃
+        </button>
+    );
+};
 
 export default function MobileMain({ signUpType, orderHistory }: { signUpType: string; orderHistory: JSX.Element }) {
     return (
@@ -30,18 +43,7 @@ export default function MobileMain({ signUpType, orderHistory }: { signUpType: s
                                 cat="changePersonalInfo"
                             />
                             <div className="max-w-[100px]">
-                                <YesNoModal
-                                    toggleName={
-                                        <button type="button" className="text-xl py-3 link-animation">
-                                            로그아웃
-                                        </button>
-                                    }
-                                    title="로그아웃"
-                                    content="로그아웃 하시겠습니까?"
-                                    trueCallback={() => {
-                                        signOut({ callbackUrl: "/" });
-                                    }}
-                                />
+                                <LogOutButton />
                             </div>
                         </div>
                     </div>
