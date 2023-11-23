@@ -1,7 +1,5 @@
-import { setBackendEnvAPI } from "@/app/components/utils/env-utiils";
-
 export const getOrderHistory = async (accessToken: string) => {
-    const res = await fetch(`${setBackendEnvAPI()}/api/order/get-order-history`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/order/get-order-history`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -13,7 +11,7 @@ export const getOrderHistory = async (accessToken: string) => {
 };
 
 export const getUserAddressInfo = async (addressId: string, accessToken: string) => {
-    const res = await fetch(`${setBackendEnvAPI()}/api/mypage/get-address-info?address_id=${addressId}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/mypage/get-address-info?address_id=${addressId}`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -25,7 +23,7 @@ export const getUserAddressInfo = async (addressId: string, accessToken: string)
 };
 
 export const getOrderRows = async (ordreId: string, accessToken: string) => {
-    const res = await fetch(`${setBackendEnvAPI()}/api/order/get-order-row?order_id=${ordreId}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/order/get-order-row?order_id=${ordreId}`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",

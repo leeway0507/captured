@@ -16,7 +16,7 @@ interface itemBoxProps {
 
 // css
 const itemBoxClass = "flex-center text-sm min-w-[55px] max-w-[150px] h-[30px] border rounded-sm";
-const checkedItem = "bg-main-black border-main-black cursor-pointer text-light-gray active:text-main-black shadow-md";
+const checkedItem = "bg-main-black border-main-black cursor-pointer text-light-gray shadow-md";
 const notCheckedItem = "border-sub-black cursor-pointer text-sub-black border-1 shadow-md";
 const notSelctableItem = "border-deep-gray cursor-not-allowed line-through decoration-[2px] text-deep-gray shadow-md";
 

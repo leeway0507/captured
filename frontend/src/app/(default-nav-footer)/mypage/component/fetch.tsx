@@ -1,12 +1,11 @@
 import { userAddressProps } from "@/app/type";
-import { setBackendEnvAPI } from "@/app/components/utils/env-utiils";
 
 export const getAddress = async (accessToken: string | undefined) => {
     if (accessToken == undefined) {
         return [];
     }
 
-    const res = await fetch(`${setBackendEnvAPI()}/api/mypage/get-address`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/mypage/get-address`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -22,7 +21,7 @@ export const deleteAddress = async (address: userAddressProps, accessToken: stri
         return;
     }
 
-    const res = await fetch(`${setBackendEnvAPI()}/api/mypage/delete-address`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/mypage/delete-address`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -39,7 +38,7 @@ export const resetPassword = async (password: string, accessToken: string | unde
         return;
     }
 
-    const res = await fetch(`${setBackendEnvAPI()}/api/mypage/resset-password`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/mypage/resset-password`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

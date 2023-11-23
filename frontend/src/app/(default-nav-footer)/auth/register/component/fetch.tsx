@@ -1,5 +1,4 @@
 import { userAddressProps, userProps } from "@/app/type";
-import { setBackendEnvAPI } from "@/app/components/utils/env-utiils";
 
 interface register {
     userData: userProps;
@@ -9,7 +8,7 @@ interface register {
 export const register = async (props: register) => {
     const { userData, addressData } = props;
 
-    const res = await fetch(`${setBackendEnvAPI()}/api/auth/register`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/register`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -23,7 +22,7 @@ export const register = async (props: register) => {
 };
 
 export const checkEmailDuplication = async (email: string) => {
-    const res = await fetch(`${setBackendEnvAPI()}/api/auth/email-check?email=${email}`);
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/email-check?email=${email}`);
     const data = await res.json();
     return data.isUnique;
 };

@@ -91,18 +91,18 @@
 
 .embla-multi {
     --slide-spacing: 1rem;
-    --slide-size: 50%;
+    --slide-size: 40%;
     position: relative;
 }
 
 @media (min-width: 768px) {
     .embla-multi {
-        --slide-size: 33.3333%;
+        --slide-size: 28%;
     }
 }
 
 @media (min-width: 1024px) {
     .embla-multi {
-        --slide-size: 25%;
+        --slide-size: 22%;
     }
 }

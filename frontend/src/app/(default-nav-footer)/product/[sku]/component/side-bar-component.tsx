@@ -28,20 +28,18 @@ const DeliverySideBar = ({
                     </Transition.Child>
 
                     <div className="fixed top-0 right-0 h-full">
-                        <div className="flex h-full w-full max-w-[1440px]">
-                            <Transition.Child
-                                as={Fragment}
-                                enter="transition duration-500 ease-out transform"
-                                enterFrom="translate-x-full"
-                                enterTo="translate-x-0"
-                                leave="transition duration-500 ease-out transform"
-                                leaveFrom="translate-x-0"
-                                leaveTo="translate-x-full">
-                                <Dialog.Panel className="h-full w-full max-w-[500px] transform overflow-hidden bg-white border border-deep-gray shadow-2xl transition-all">
-                                    <div className="mx-auto overflow-auto h-full">{content}</div>
-                                </Dialog.Panel>
-                            </Transition.Child>
-                        </div>
+                        <Transition.Child
+                            as={Fragment}
+                            enter="transition duration-500 ease-in-out transform"
+                            enterFrom="translate-x-full"
+                            enterTo="translate-x-0"
+                            leave="transition duration-500 ease-in-out transform"
+                            leaveFrom="translate-x-0"
+                            leaveTo="translate-x-full">
+                            <Dialog.Panel className="ms-auto h-full w-[85%] max-w-[500px] overflow-hidden bg-white ">
+                                <div className="mx-auto overflow-auto h-full">{content}</div>
+                            </Dialog.Panel>
+                        </Transition.Child>
                     </div>
                 </Dialog>
             </Transition>

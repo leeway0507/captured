@@ -1,4 +1,3 @@
-import { setBackendEnvAPI } from "@/app/components/utils/env-utiils";
 import { orderHistoryRequestProps, orderRowRequestProps } from "@/app/type";
 
 export async function setPaymentVerification(
@@ -8,7 +7,7 @@ export async function setPaymentVerification(
     arr: orderRowRequestProps[],
     accessToken: string
 ) {
-    await fetch(`${setBackendEnvAPI()}/api/order/save-order-info-before-payment`, {
+    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/order/save-order-info-before-payment`, {
         method: "POST",
         headers: {
             Authorization: `bearer ${accessToken}`,
@@ -24,12 +23,15 @@ export async function setPaymentVerification(
 }
 
 export async function getPaymentVerification(OrderId: string, accessToken: string) {
-    const response = await fetch(`${setBackendEnvAPI()}/api/order/get-order-info-before-payment?orderId=${OrderId}`, {
-        method: "GET",
-        headers: {
-            Authorization: `bearer ${accessToken}`,
-        },
-    });
+    const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/order/get-order-info-before-payment?orderId=${OrderId}`,
+        {
+            method: "GET",
+            headers: {
+                Authorization: `bearer ${accessToken}`,
+            },
+        }
+    );
 
     const data = await response.json();
 
@@ -54,7 +56,7 @@ export async function confirmPayment(secretKey: string, paymentKey: string, amou
 }
 
 export async function createOrderHistory(orderHistory: orderHistoryRequestProps, accessToken: string) {
-    const response = await fetch(`${setBackendEnvAPI()}/api/order/create-order-history`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/order/create-order-history`, {
         method: "POST",
         headers: {
             Authorization: `bearer ${accessToken}`,

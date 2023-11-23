@@ -11,7 +11,7 @@ export default function MainMobile({ arr }: { arr: cartProductCardProps[] }) {
 
     if (cartQuantity === undefined) return null;
     return cartQuantity === 0 ? (
-        <CartEmptyGuide fontSize="2xl" />
+        <CartEmptyGuide fontSize="xl" />
     ) : (
         <div className="tb:hidden flex flex-col grow ">
             <div className="flex-center text-3xl tb:text-4xl py-4 tb:py-8 text-sub-black tracking-[.15em]">CART</div>

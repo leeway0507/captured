@@ -18,8 +18,8 @@ function NavPcTopForAboutUs() {
 }
 
 export default function Page() {
-    const { isMobile, staus } = useMobile();
-    if (staus === "loading") return <PageLoading />;
+    const { isMobile } = useMobile();
+    if (isMobile === undefined) return <PageLoading />;
     return (
         <>
             <div className="main-container">

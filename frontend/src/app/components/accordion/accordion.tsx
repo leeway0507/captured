@@ -1,7 +1,4 @@
-"use client";
-
 import "./accordion.css";
-import { useState } from "react";
 function AccordionComponent({
     title,
     content,

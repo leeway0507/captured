@@ -48,8 +48,10 @@ const LogoBox = ({ logoArr }: { logoArr: string[] }) => {
 };
 
 export default async function BrandList() {
-    const data = await getFilterMeta();
-    const logoArr = data.brand;
+    // const data = await getFilterMeta();
+    // const logoArr = data.brand;
+    const data = process.env.NEXT_PUBLIC_BRAND_ARRAY!;
+    const logoArr = JSON.parse(data);
 
     return (
         <div className="grid grid-cols-5 md:grid-cols-7 xl:grid-cols-9 gap-1">
