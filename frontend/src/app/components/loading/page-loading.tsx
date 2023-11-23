@@ -1,16 +1,8 @@
 import "./loading.css";
 const PageLoading = () => {
     return (
-        <div className="absolute w-full h-screen top-0 left-0 right-0 z-50">
-            <div className="w-full h-full bg-white flex-center">
-                <div className="flex space-x-2 p-5 rounded-full justify-center items-center">
-                    <div className="snippet" data-title="dot-pulse">
-                        <div className="stage">
-                            <div className="dot-pulse"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div className="flex-center bg-white fixed w-full h-screen top-0 left-0 right-0 z-50">
+            <div className="dot-pulse "></div>
         </div>
     );
 };

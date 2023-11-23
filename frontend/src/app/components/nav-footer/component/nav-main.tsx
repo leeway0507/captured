@@ -16,7 +16,13 @@ export default function NavMain() {
                 </Link>
                 <div className="flex-center">
                     <Link href="/search">
-                        <Image src={"/icons/white/search-input-white.svg"} alt="search" width="28" height="28" />
+                        <Image
+                            src={"/icons/white/search-input-white.svg"}
+                            alt="search"
+                            width="28"
+                            height="28"
+                            priority
+                        />
                     </Link>
                 </div>
             </div>

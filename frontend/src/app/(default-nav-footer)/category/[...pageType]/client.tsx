@@ -8,6 +8,8 @@ import Link from "next/link";
 import useProductFilter, { useProductFilterProps } from "./component/filter/hook/use-product-filter";
 import { useOutsideAlerter } from "@/app/components/hook/use-outside-alerter";
 
+const customUnderLine = "font-bold  underline underline-offset-8 decoration-2";
+
 function MobileFilterHeader({
     isOpen,
     openToggle,
@@ -32,7 +34,7 @@ function MobileFilterHeader({
                         />
                     ) : (
                         <Image
-                            src={"/icons/filter.svg"}
+                            src={"/icons/white/filter-white.svg"}
                             alt="search"
                             width="20"
                             height="20"
@@ -43,16 +45,16 @@ function MobileFilterHeader({
                 </button>
             </div>
             <div className="flex grow justify-between items-center text-sm h-full">
-                <Link href="/category/latest" className={`ps-0 p-2 ${pageType === "latest" && "underline"}`}>
+                <Link href="/category/latest" className={`ps-0 p-2 ${pageType === "latest" && customUnderLine}`}>
                     All
                 </Link>
-                <Link href="/category/shoes" className={`p-2 ${pageType === "shoes" && "underline"}`}>
+                <Link href="/category/shoes" className={`p-2 ${pageType === "shoes" && customUnderLine}`}>
                     SHOES
                 </Link>
-                <Link href="/category/clothing" className={`p-2 ${pageType === "clothing" && "underline"}`}>
+                <Link href="/category/clothing" className={`p-2 ${pageType === "clothing" && customUnderLine}`}>
                     CLOTHING
                 </Link>
-                <Link href="/category/accessory" className={`pe-0 p-2 ${pageType === "accessory" && "underline"}`}>
+                <Link href="/category/accessory" className={`pe-0 p-2 ${pageType === "accessory" && customUnderLine}`}>
                     ACCESSORY
                 </Link>
             </div>

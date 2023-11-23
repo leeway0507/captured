@@ -1,5 +1,5 @@
 "use client";
-import { useShoppingCart } from "@/app/components/context/shopping-cart-context";
+import useMobile from "@/app/components/hook/use-mobile";
 import { productCardProps } from "@/app/type";
 import { useEffect } from "react";
 
@@ -12,7 +12,7 @@ export default function Client({
     Pc: React.ReactNode;
     data: productCardProps;
 }) {
-    const { isMobile } = useShoppingCart();
+    const { isMobile } = useMobile();
 
     // Add recentView Item
     useEffect(() => {

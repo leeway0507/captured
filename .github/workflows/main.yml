@@ -6,6 +6,7 @@ on:
     branches: [ main ]
 
 env:
+  STAGING_DOCKER_DIR: /Users/yangwoolee/repo/captured/docker/staging
   DOCKER_LOCAL: docker-compose -f docker_compose_staging_build.yml
   DOCKER_SERVER: docker-compose -f docker_compose_staging_server.yml
 
@@ -15,12 +16,12 @@ jobs:
     runs-on: self-hosted
 
     steps:
-      - name: docker-compose build and push
+      - name: LOCAL build and push
         run: |
-             cd /Users/yangwoolee/repo/captured/docker 
-             docker-compose -f docker_compose_staging_build.yml build
+             cd ${{ env.STAGING_DOCKER_DIR }}
+             ${{ env.DOCKER_LOCAL }} build
              ${{ env.DOCKER_LOCAL }} push
-      - name: docker-compose 
+      - name: SERVER push
         run: |
               ssh -i ~/.ssh/dodo-instance.pem ubuntu@13.124.238.182 "cd captured
               ${{ env.DOCKER_SERVER }} down

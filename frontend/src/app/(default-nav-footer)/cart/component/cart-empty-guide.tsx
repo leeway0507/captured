@@ -12,7 +12,7 @@ const CartEmptyGuide = ({ fontSize }: { fontSize: string }) => {
         <div className={`grow flex-center flex-col h-[60vh] text-${fontSize}`}>
             <div>장바구니가 비었습니다.</div>
             <div
-                className={`underline text-deep-gray text-${availableFontSize[fontsizeidx - 1]} pt-5`}
+                className={`underline text-gray-400 text-${availableFontSize[fontsizeidx - 1]} pt-5`}
                 onClick={() => {
                     router.back();
                 }}>

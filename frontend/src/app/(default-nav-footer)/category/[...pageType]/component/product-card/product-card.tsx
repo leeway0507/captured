@@ -7,7 +7,7 @@ import { useState } from "react";
 export default function ProductCard(props: productCardProps) {
     const { sku, brand, productName, price, productId, intl } = props;
 
-    const [isLoaded, setIsLoaded] = useState(false);
+    const [isLoaded, setIsLoaded] = useState(true);
 
     const productImgUrl = `${process.env.NEXT_PUBLIC_MOBILE_IMAGE_URL}/product/${brand}/${productName} ${productId}/thumbnail.png`;
     return (
@@ -30,7 +30,6 @@ export default function ProductCard(props: productCardProps) {
                             width="300"
                             height="300"
                             className="rounded-lg"
-                            onLoadingComplete={() => setIsLoaded(true)}
                         />
                     )}
                 </div>

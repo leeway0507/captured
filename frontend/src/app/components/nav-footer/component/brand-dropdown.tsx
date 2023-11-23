@@ -2,10 +2,18 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { getFilterMeta } from "@/app/(default-nav-footer)/category/[...pageType]/component/fetch";
 
 export default function BrandDropDown() {
-    const brandsArray = JSON.parse(process.env.NEXT_PUBLIC_BRAND_ARRAY!);
+    const [brandArray, setBrandArray] = useState<string[] | undefined>(undefined);
+
+    useEffect(() => {
+        getFilterMeta().then((data) => {
+            const brandArray: string[] = data.brand;
+            setBrandArray(brandArray);
+        });
+    }, []);
 
     const [hoveredIndex, setHoveredIndex] = useState<Number | null>(null);
 
@@ -17,15 +25,15 @@ export default function BrandDropDown() {
         setHoveredIndex(null);
     };
 
-    if (brandsArray === undefined) {
-        return null;
+    if (brandArray === undefined) {
+        return <></>;
     }
 
     return (
         <div className="hidden group-hover:block w-full right-0 top-100 absolute z-50">
             <div className="h-full w-full my-2 text-main-black bg-white shadow-xl ">
                 <div className="grid grid-cols-5 lg:grid-cols-6 pt-4 pb-8 gap-2 px-8">
-                    {brandsArray.map((brandName: string, idx: number) => {
+                    {brandArray.map((brandName: string, idx: number) => {
                         const brandNameBar = brandName.replaceAll(" ", "-");
                         return (
                             <Link
