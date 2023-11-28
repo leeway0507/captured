@@ -17,7 +17,7 @@ const ItemBoxSelected = ({ content, checked, setChecked }: ItemBoxSelectedProps)
 };
 
 //
-export const OptionArraySortBy = (contentList: Array<string>, setFilter: (v: string) => void) => {
+export const OptionArraySortBy = (filterValue: string[] | undefined, setFilter: (v: string) => void) => {
     // create Array for ItemBoxSelected
     const itemBoxArray = [
         { content: "최신순", checked: true },
@@ -25,10 +25,23 @@ export const OptionArraySortBy = (contentList: Array<string>, setFilter: (v: str
         { content: "낮은 가격 순", checked: false },
         { content: "높은 가격 순", checked: false },
     ];
+    const setDefaultValue = (filterValue: any) => {
+        if (filterValue === undefined) return itemBoxArray;
+
+        const newObject = itemBoxArray.map((obj) => {
+            if (obj["content"] === filterValue[0]) {
+                return { ...obj, checked: true };
+            } else {
+                return { ...obj, checked: false };
+            }
+        });
+        return newObject;
+    };
 
     // create useState for ItemBoxSelected
-    const [itemBoxSelectedArray, setItemBoxSelectedArray] =
-        useState<Array<{ content: string; checked: boolean }>>(itemBoxArray);
+    const [itemBoxSelectedArray, setItemBoxSelectedArray] = useState<{ content: string; checked: boolean }[]>(() =>
+        setDefaultValue(filterValue)
+    );
 
     // create Toggle
     const selectToggle = (newValue: string) => {

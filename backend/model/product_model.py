@@ -29,7 +29,7 @@ class FilterMetaSchema(BaseModel):
 
 class RequestFilterSchema(BaseModel):
     model_config = ConfigDict(alias_generator=to_camel, populate_by_name=True)
-    sort_by: Optional[str] = None
+    sort_by: str = "최신순"
     category: Optional[str] = None
     category_spec: Optional[str] = None
     brand: Optional[str] = None

@@ -1,17 +1,14 @@
 "use client";
-
 import CartproductCardArr from "./component/product-card-array";
 import { cartProductCardProps } from "../../type";
 import ProductCheckOut from "../../(default-nav-footer)/cart/component/product-check-out";
-import { IntlShipment } from "../../components/notification/shipment-info";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { userAddressProps } from "@/app/type";
 import { useRouter } from "next/navigation";
-import Logo from "../../components/nav-footer/component/logo";
 import { DefaultAddressModule, SubAddressModule } from "./component/address-info";
 import { User } from "@/app/type";
 import CalculateOrderPrice from "./component/total-price";
-import TossPaymentsWidget from "./component/tosspayments/toss-payments-widget";
+import TossPaymentsWidgetMobile from "./component/tosspayments/toss-payments-widget-mobile";
 
 const MainMobile = ({
     arr,
@@ -46,25 +43,22 @@ const MainMobile = ({
     const totalPriceNumber = parseInt(totalPrice.replace(/[^0-9]/g, ""));
 
     return (
-        <div className="px-4">
-            <div className="sticky top-0 h-[100px] w-full m-auto px-4 z-50 bg-white border-b">
-                <div className="flex-center h-full">
-                    <Logo />
-                </div>
-            </div>
+        <div className="bg-light-gray">
             <div
-                className={`m-auto flex flex-col relative absolute top-0 lef-0 h-full w-full bg-white overflow-hidden ${
+                className={`m-auto flex flex-col relative absolute top-0 lef-0 h-full w-full overflow-hidden ${
                     !changeAddress ? "block" : "hidden"
                 }`}>
-                <div className="border-b border-deep-gray py-2">
+                <div className="border-b border-deep-gray bg-white px-2">
                     <div className="text-2xl tracking-[0.2em] flex-center py-4 ">주문요약</div>
                     <CartproductCardArr arr={arr} />
-                    <div className="py-2"></div>
+                </div>
+
+                <div className="mt-2 bg-white border-y border-deep-gray py-4 px-2">
                     <ProductCheckOut arr={arr} />
                 </div>
-                <div className="border-b border-deep-gray py-4 my-4">
+                <div className="mt-2 border-y border-deep-gray bg-white">
                     <div className="text-2xl tracking-[0.2em] flex-center py-4">배송지 정보</div>
-                    <div className="overflow-auto pt-2">
+                    <div className="overflow-auto pt-2 px-2">
                         <DefaultAddressModule
                             openAddressToggle={openAddressToggle}
                             addressArray={addressArray}
@@ -72,15 +66,9 @@ const MainMobile = ({
                             accessToken={userInfo.accessToken}
                         />
                     </div>
-
-                    <IntlShipment
-                        title="해외 구매대행 상품 안내"
-                        content="선택하신 상품 중 해외 구매대행 상품이 포함되어 있습니다.
-                        상품 구입을 위해 개인통관부호가 필요하며 5 - 15일의 배송기간이 소요 됩니다."
-                    />
                 </div>
-                <div className="py-6">
-                    <TossPaymentsWidget
+                <div className="py-2 border-y border-deep-gray">
+                    <TossPaymentsWidgetMobile
                         price={totalPriceNumber}
                         addressId={selectedAddress.addressId}
                         userInfo={userInfo}

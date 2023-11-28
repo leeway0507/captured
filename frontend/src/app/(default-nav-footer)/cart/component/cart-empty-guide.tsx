@@ -12,11 +12,11 @@ const CartEmptyGuide = ({ fontSize }: { fontSize: string }) => {
         <div className={`grow flex-center flex-col h-[60vh] text-${fontSize}`}>
             <div>장바구니가 비었습니다.</div>
             <div
-                className={`underline text-gray-400 text-${availableFontSize[fontsizeidx - 1]} pt-5`}
+                className={`link-animation underline text-gray-400 text-${availableFontSize[fontsizeidx - 1]} pt-5`}
                 onClick={() => {
-                    router.back();
+                    router.push("/category/latest");
                 }}>
-                이전페이지로 돌아가기
+                구매하러 가기
             </div>
         </div>
     );

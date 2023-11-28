@@ -1,38 +1,35 @@
 import Banner from "../components/main/main-banner";
 import BrandList from "../components/main/brand-list";
-import Link from "next/link";
-import Image from "next/image";
+import NewestItem from "../components/main/newest-item";
 import Footer from "../components/nav-footer/component/footer";
 import { BottomNavBar } from "../components/nav-footer/bottom-nav-bar";
+import CategoryList from "../components/main/category-list";
 
-export default function page() {
+export default async function page() {
     const thumbnailInfos = [
         {
-            src: "/product/nike/jacquemus force black DR0424-001/thumbnail.png",
-            brand: "nike",
-            productName: "jacquemus force black",
-            href: "/product/1",
+            src: "/banner/new_balance.jpg",
+            linkName: "jacquemus force black",
+            href: "/product/3",
         },
-        // {
-        //     src: "/product/adidas originals/tobacco pantone mesa gy7396/thumbnail.png",
-        //     brand: "adidas originals",
-        //     productName: "tobacco pantone mesa",
-        //     href: "/product/2",
-        // },
-        // {
-        //     src: "/product/adidas originals/handball spezial black db3021/thumbnail.png",
-        //     brand: "adidas originals",
-        //     productName: "handball spezial black",
-        //     href: "/product/3",
-        // },
+        {
+            src: "/banner/main1.jpeg",
+            linkName: "jacquemus force black",
+            href: "/product/3",
+        },
     ];
 
     return (
         <>
+            <div className="tb:pt-8"></div>
             <Banner thumbnailInfos={thumbnailInfos} />
-            <div className="pt-8"></div>
+            <div className="pt-16"></div>
+            <NewestItem />
+            <div className="pt-16"></div>
             <BrandList />
-            <div className="pt-8"></div>
+            <div className="pt-16"></div>
+            <CategoryList />
+            <div className="pt-16"></div>
             <Footer />
             <BottomNavBar nav="home" />
         </>

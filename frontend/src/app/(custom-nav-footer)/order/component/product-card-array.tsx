@@ -1,9 +1,17 @@
 import { cartProductCardProps } from "@/app/type";
-import CartproductCardForm from "@/app/components/product-card/cart-product-card-form";
+import CartProductCardForm from "@/app/components/product-card/cart-product-card-form";
 
 const CartproductCardArr = ({ arr }: { arr: cartProductCardProps[] }) => {
     return arr?.map((item: cartProductCardProps) => {
-        return CartproductCardForm({ ...item, countEnable: false });
+        const cartProductCardForm = { ...item, countEnable: false };
+        return (
+            <CartProductCardForm
+                key={`${item.sku}-${item.size}`}
+                props={cartProductCardForm}
+                onDelete={false}
+                countEnable={false}
+            />
+        );
     });
 };
 

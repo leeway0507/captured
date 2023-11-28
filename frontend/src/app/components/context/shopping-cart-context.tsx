@@ -10,7 +10,6 @@ interface ShoppingCartContext {
     decreaseCartQuantity: (sku: number, size: string) => void;
     removeFromCart: (sku: number, size: string) => void;
     initCart: () => void;
-    isMobile: boolean | undefined;
     cartQuantity: number | undefined;
     cartItems: cartProductCardProps[] | undefined;
     isModalOpen: boolean;
@@ -26,18 +25,6 @@ export function useShoppingCart() {
 }
 
 export function ShoppingCartProvider({ children }: { children: React.ReactNode }) {
-    // mobile check
-    const [isMobile, setIsMobile] = useState<boolean | undefined>(undefined);
-
-    useEffect(() => {
-        const handleResize = () => {
-            setIsMobile(window.innerWidth <= Number(process.env.NEXT_PUBLIC_MOBILE_WIDTH));
-        };
-        window.addEventListener("resize", handleResize);
-        setIsMobile(window.innerWidth <= Number(process.env.NEXT_PUBLIC_MOBILE_WIDTH));
-        return () => window.removeEventListener("resize", handleResize);
-    }, []);
-
     // save cartItems to localStorage
     const [cartItems, setCartItems] = useState<cartProductCardProps[] | undefined>(undefined);
 
@@ -112,7 +99,6 @@ export function ShoppingCartProvider({ children }: { children: React.ReactNode }
                 decreaseCartQuantity,
                 removeFromCart,
                 initCart,
-                isMobile,
                 cartItems,
                 cartQuantity,
                 isModalOpen,

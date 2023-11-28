@@ -6,7 +6,6 @@ export default function OrderLayout({ children }: { children: React.ReactNode })
         <ContextWrapper>
             <div className="main-container">
                 <div className="grow flex-col flex tb:px-4 xl:px-6">{children}</div>
-                <Footer />
             </div>
         </ContextWrapper>
     );

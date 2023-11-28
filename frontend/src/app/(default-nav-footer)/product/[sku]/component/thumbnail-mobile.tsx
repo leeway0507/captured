@@ -14,7 +14,9 @@ export default function Thumbnail({ brand, productName, productId, imgType }: Th
                         alt={`${productName} ${productId}`}
                         width={400}
                         height={400}
+                        sizes="50vw"
                         className="embla__slide__img"
+                        priority={imageName === "main" ? true : false}
                     />
                 </div>
             ))}

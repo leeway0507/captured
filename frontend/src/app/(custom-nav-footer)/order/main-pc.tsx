@@ -9,7 +9,7 @@ import { GrFormClose } from "react-icons/gr";
 import CalculateOrderPrice from "./component/total-price";
 import { DefaultAddressModule, SubAddressModule } from "./component/address-info";
 import Logo from "../../components/nav-footer/component/logo";
-import TossPaymentsWidget from "./component/tosspayments/toss-payments-widget";
+import TossPaymentsWidgetPc from "./component/tosspayments/toss-payments-widget-pc";
 import { User } from "@/app/type";
 
 const MainPC = ({
@@ -28,16 +28,13 @@ const MainPC = ({
     // 주소 오픈/클로즈 토글
     const openAddressToggle = () => {
         setChangeAddress(!changeAddress);
-        window.location.href.includes("?chooseAddress=true")
-            ? router.push("/order")
-            : router.push("/order?chooseAddress=true");
     };
 
     //주소 선택 토글
     const selectAddressToggle = (address: userAddressProps) => {
         setSelectedAddress(address);
         setChangeAddress(false);
-        router.push("/order");
+        router.replace("/order");
     };
 
     //orer price
@@ -46,29 +43,22 @@ const MainPC = ({
 
     return (
         <>
-            <div className="sticky top-0 h-[130px] w-full mx-auto p-4 z-50 bg-white border-b">
+            <div className="sticky top-0 h-[100px] w-full mx-auto p-4 z-50 bg-white border-b">
                 <div className="flex-center h-full">
                     <Logo />
                 </div>
             </div>
-            <div className="max-w-4xl w-full flex relative pt-8 pb-16 h-full gap-8 mx-auto">
+            <div className="max-w-5xl w-full flex relative pt-8 pb-16 h-full gap-8 mx-auto">
                 <div className="basis-[55%] pe-1 me-1 overflow-auto">
                     <div className="text-xl tracking-[0.2em] flex-center pb-4 font-bold">주문요약</div>
                     <CartproductCardArr arr={arr} />
                     <div className="py-2"></div>
                     <ProductCheckOut arr={arr} />
                     <div className="py-2"></div>
-                    {arr.filter((item) => item.intl === true).length > 0 && (
-                        <IntlShipment
-                            title="해외 구매대행 상품 안내"
-                            content="선택하신 상품 중 해외 구매대행 상품이 포함되어 있습니다.
-                            상품 구입을 위해 개인통관부호가 필요하며 5 - 15일의 배송기간이 소요 됩니다."
-                        />
-                    )}
                 </div>
                 {!changeAddress ? (
                     <div className="basis-[45%] max-w-[380px] relative ">
-                        <div className={`sticky top-[150px] `}>
+                        <div className={`sticky top-[100px] `}>
                             <div className="border-b border-deep-gray">
                                 <div className="text-xl tracking-[0.2em] flex-center pb-4 font-bold">배송지 선택</div>
                                 <div className="overflow-auto">
@@ -81,7 +71,7 @@ const MainPC = ({
                                 </div>
                             </div>
                             <div className="py-6">
-                                <TossPaymentsWidget
+                                <TossPaymentsWidgetPc
                                     price={totalPriceNumber}
                                     addressId={selectedAddress.addressId}
                                     userInfo={userInfo}
@@ -94,7 +84,7 @@ const MainPC = ({
                     <div className={`basis-[45%] max-w-[380px]  bg-white overflow-hidden`}>
                         <div className="text-xl tracking-[0.2em] flex-center pb-4 flex ">
                             <div className="basis-1/4"></div>
-                            <div className="basis-1/2 flex-center">배송지 변경</div>
+                            <div className="basis-1/2 flex-center font-bold">배송지 변경</div>
                             <div className="basis-1/4 link-animation flex-right text-2xl" onClick={openAddressToggle}>
                                 <GrFormClose />
                             </div>

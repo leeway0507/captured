@@ -10,12 +10,12 @@ const ProductCardArrary = ({
     data,
     currentPage,
     lastPage,
-    refresh,
+    isNewFilter,
 }: {
     data: productCardProps[];
     currentPage: number;
     lastPage: number;
-    refresh: boolean;
+    isNewFilter: boolean;
 }) => {
     const router = useRouter();
     const ref = useRef(null);
@@ -33,16 +33,14 @@ const ProductCardArrary = ({
         const triggers = document.querySelectorAll(".page-observer");
 
         // Obersever 생성 및 트리거 시 수행할 함수 작성(router.push로 page params 업데이트)
-        const nextPageObserver = new IntersectionObserver((entries) => {
+        const nextPageObserver = new IntersectionObserver((entries, observer) => {
             entries.forEach((entry) => {
                 if (entry.isIntersecting) {
-                    const url = window.location.href.split(/[?&]page=/)[0];
-                    const nextPageInfo = entry.target.getAttribute("data-next");
-                    const nextPageQuery = url.includes("?") ? `&${nextPageInfo}` : `?${nextPageInfo}`;
-
-                    router.push(`${url}${nextPageQuery}`, {
-                        scroll: false,
-                    });
+                    const nextPageNum = entry.target.getAttribute("data-next");
+                    var params = new URLSearchParams(window.location.search);
+                    nextPageNum && params.set("page", nextPageNum);
+                    observer.unobserve(entry.target);
+                    Number(nextPageNum) > 1 && router.push(`\?${params.toString()}`, { scroll: false });
                 }
             });
         }, {});
@@ -52,35 +50,19 @@ const ProductCardArrary = ({
             nextPageObserver.observe(tirgger);
         });
 
-        refresh
+        isNewFilter
             ? (setLocalData({ [currentPage]: data }),
               nextPageObserver.disconnect(),
-              router.push(window.location.search.split("&refresh")[0]))
+              router.replace(window.location.search.split("&isNewFilter")[0]))
             : setLocalData((localData) => ({ ...localData, [currentPage]: data }));
-
-        // 더보기 실행을 위한 추가 observer 작성
-        // router.refresh 됨에 따라 useEffect를 다시 작동시켜 페이지를 불러오는 방식
-        const loadMoreObserver = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    entry.isIntersecting && router.refresh();
-                });
-            },
-            { rootMargin: "200px" }
-        );
-
-        // 마지막 페이지 도달 시 더보기 실행 방지
-        currentPage < lastPage ? loadMoreObserver.observe(ref.current!) : loadMoreObserver.unobserve(ref.current!);
-    }, [data, currentPage, router, refresh, lastPage]);
+    }, [data, currentPage, router, isNewFilter, lastPage]);
 
     const nextPage = currentPage + 1;
     const prevPage = currentPage - 1;
 
     return (
         <>
-            <Link
-                href={`?page=${prevPage}`}
-                className={`${Object.keys(localData).includes("1") ? "hidden" : "block"} `}>
+            <Link href={`?${prevPage}`} className={`${Object.keys(localData).includes("1") ? "hidden" : "block"} `}>
                 <div className="border rounded-lg border-deep-gray pointer-cursor py-2 flex-center my-4 tb:my-8 bg-main-black text-white">
                     이전으로
                 </div>
@@ -91,26 +73,26 @@ const ProductCardArrary = ({
                     const currentPage = parseInt(item[0]);
                     return (
                         <div key={idx}>
-                            <div className={`grid grid-cols-2 lg:grid-cols-3 gap-1 page-container`}>
+                            <div className={`grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 page-container`}>
                                 {item[1].map((data) => {
                                     return (
                                         <div key={data.sku} className={`relative ${data.size === "" && "opacity-60"}`}>
                                             {data.size === "" && (
-                                                <div className="absolute top-[5%] left-0 text-main-black ">SoldOut</div>
+                                                <div className="absolute top-[5%] left-0 text-main-black">SoldOut</div>
                                             )}
-                                            <ProductCard {...data} />
+                                            <ProductCard props={data} />
                                         </div>
                                     );
                                 })}
                             </div>
                             <div
                                 className="page-observer h-[50px] w-full"
-                                data-next={`page=${currentPage + 1 <= lastPage ? currentPage + 1 : lastPage} `}></div>
+                                data-next={`${currentPage + 1 <= lastPage ? currentPage + 1 : lastPage}`}></div>
                         </div>
                     );
                 })}
             </div>
-            <Link ref={ref} href={`?page=${nextPage}`} className={`${nextPage < lastPage + 1 ? "block" : "hidden"}`}>
+            <Link ref={ref} href={`?${nextPage}`} className={`${nextPage < lastPage + 1 ? "block" : "hidden"}`}>
                 <Spinner />
             </Link>
         </>

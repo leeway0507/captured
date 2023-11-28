@@ -62,32 +62,32 @@ const Policy = ({ checkAllSelect }: { checkAllSelect: (e: boolean) => void }) =>
     };
 
     const openPrivacyPolicy = () => {
-        router.push("/auth/register?policy=privacy");
+        router.replace("/auth/register?policy=privacy");
         setPrivacypolicy(true);
         setOpenRegistration(false);
     };
     const openServicePolicy = () => {
-        router.push("/auth/register?policy=service");
+        router.replace("/auth/register?policy=service");
         setServicePolicy(true);
         setOpenRegistration(false);
     };
     const openThirdPartyPolicy = () => {
-        router.push("/auth/register?policy=third-party");
+        router.replace("/auth/register?policy=third-party");
         setThirdPartyPolicy(true);
         setOpenRegistration(false);
     };
     const closepPivacyPolicy = () => {
-        router.push("/auth/register");
+        router.replace("/auth/register");
         setPrivacypolicy(false);
         setOpenRegistration(true);
     };
     const closeServicePoicy = () => {
-        router.push("/auth/register");
+        router.replace("/auth/register");
         setServicePolicy(false);
         setOpenRegistration(true);
     };
     const closeThirdPartyPolicy = () => {
-        router.push("/auth/register");
+        router.replace("/auth/register");
         setThirdPartyPolicy(false);
         setOpenRegistration(true);
     };
@@ -119,7 +119,7 @@ const Policy = ({ checkAllSelect }: { checkAllSelect: (e: boolean) => void }) =>
                         ❯
                     </label>
 
-                    <div className="hidden flex-col duration-1000 peer-checked:flex">
+                    <div className="hidden flex-col duration-1000 peer-checked:flex gap-1">
                         <div className="flex items-center">
                             <input
                                 id="privacy-policy"

@@ -1,14 +1,36 @@
 "use client";
-
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
-import Filter from "./component/filter/filter";
-import { initFilterMetaProps } from "./type";
 import Link from "next/link";
-import useProductFilter, { useProductFilterProps } from "./component/filter/hook/use-product-filter";
 import { useOutsideAlerter } from "@/app/components/hook/use-outside-alerter";
+import { useProductFilterProps } from "./hook/use-product-filter";
+import { useParams } from "next/navigation";
 
-const customUnderLine = "font-bold  underline underline-offset-8 decoration-2";
+const customUnderLine = "font-bold underline underline-offset-[11px] decoration-2";
+
+const LatestPageNav = ({ pageType }: { pageType: string }) => {
+    return (
+        <>
+            <Link href="/category/latest" className={`ps-0 p-2 ${pageType === "latest" && customUnderLine}`}>
+                All
+            </Link>
+            <Link href="/category/shoes" className={`p-2 ${pageType === "shoes" && customUnderLine}`}>
+                SHOES
+            </Link>
+            <Link href="/category/clothing" className={`p-2 ${pageType === "clothing" && customUnderLine}`}>
+                CLOTHING
+            </Link>
+            <Link href="/category/accessory" className={`pe-0 p-2 ${pageType === "accessory" && customUnderLine}`}>
+                ACCESSORY
+            </Link>
+        </>
+    );
+};
+const BrandPageNav = () => {
+    const params = useParams();
+    const brandName = params.pageType[1].replace("-", " ").replace("%20", " ");
+    return <div className="p-2 flex-left w-full font-bold uppercase">{brandName}</div>;
+};
 
 function MobileFilterHeader({
     isOpen,
@@ -20,8 +42,8 @@ function MobileFilterHeader({
     pageType: string;
 }) {
     return (
-        <div className="tb:hidden h-[50px] px-2 flex items-center gap-2 w-full whitespace-nowrap scroll-bar-x bg-white">
-            <div className="basis-1/5 ">
+        <div className="tb:hidden h-[50px] px-2 flex items-center  w-full whitespace-nowrap scroll-bar-x bg-white">
+            <div className="basis-1/5 border-b">
                 <button className=" flex-left" onClick={openToggle}>
                     {isOpen ? (
                         <Image
@@ -44,19 +66,8 @@ function MobileFilterHeader({
                     )}
                 </button>
             </div>
-            <div className="flex grow justify-between items-center text-sm h-full">
-                <Link href="/category/latest" className={`ps-0 p-2 ${pageType === "latest" && customUnderLine}`}>
-                    All
-                </Link>
-                <Link href="/category/shoes" className={`p-2 ${pageType === "shoes" && customUnderLine}`}>
-                    SHOES
-                </Link>
-                <Link href="/category/clothing" className={`p-2 ${pageType === "clothing" && customUnderLine}`}>
-                    CLOTHING
-                </Link>
-                <Link href="/category/accessory" className={`pe-0 p-2 ${pageType === "accessory" && customUnderLine}`}>
-                    ACCESSORY
-                </Link>
+            <div className="flex grow justify-between items-center text-sm border-b">
+                {pageType === "brand" ? <BrandPageNav /> : <LatestPageNav pageType={pageType} />}
             </div>
         </div>
     );
@@ -89,7 +100,7 @@ const FilterOptions = ({ productFilter, filterType }: { productFilter: useProduc
         )
     );
 };
-const MobileFilterPage = ({ productFilter }: { productFilter: useProductFilterProps }) => {
+const MobileFilterPage = ({ productFilter, pageType }: { productFilter: useProductFilterProps; pageType: string }) => {
     const [data, setData] = useState<string>("");
     const pill = "rounded-lg mx-1 h-[36px] px-4 text-sm flex-center cursor-pointer ";
     const selected = "bg-main-black text-white";
@@ -102,7 +113,11 @@ const MobileFilterPage = ({ productFilter }: { productFilter: useProductFilterPr
 
     const AlertRef = useOutsideAlerter(() => setData(""));
 
-    const filterArr = ["정렬순", "브랜드", "카테고리", "사이즈", "배송", "가격"];
+    var filterArr = ["정렬순", "브랜드", "카테고리", "사이즈", "배송", "가격"];
+
+    // brand 페이지에서는 브랜드 표시 X
+    if ("brand" === (pageType as string)) filterArr = filterArr.filter((item) => item !== "브랜드");
+
     return (
         <div ref={AlertRef} className="h-full">
             <div className="h-full items-center flex whitespace-nowrap scroll-bar-x gap-1">
@@ -122,7 +137,7 @@ const MobileFilterPage = ({ productFilter }: { productFilter: useProductFilterPr
     );
 };
 
-const MobileFilter = ({ productFilter, pageType }: { productFilter: any; pageType: string }) => {
+const MobileFilter = ({ productFilter, pageType }: { productFilter: useProductFilterProps; pageType: string }) => {
     const [openFilter, setOpenFilter] = useState<boolean>(false);
     const filterToggle = () => {
         setOpenFilter(!openFilter);
@@ -132,50 +147,10 @@ const MobileFilter = ({ productFilter, pageType }: { productFilter: any; pageTyp
         <>
             <MobileFilterHeader isOpen={openFilter} openToggle={filterToggle} pageType={pageType} />
             <div className={`${openFilter ? "block" : "hidden"} h-[50px] bg-light-gray tb:hidden `}>
-                <MobileFilterPage productFilter={productFilter} />
+                <MobileFilterPage productFilter={productFilter} pageType={pageType} />
             </div>
         </>
     );
 };
 
-function FilterPage({ initFilterMeta, pageType }: { initFilterMeta: initFilterMetaProps; pageType: string }) {
-    const productFilter = useProductFilter(initFilterMeta, pageType);
-    return (
-        <>
-            <MobileFilter productFilter={productFilter} pageType={pageType} />
-            <div className="hidden tb:block tb:sticky tb:top-[80px] tb:z-10">
-                <Filter
-                    initFilterMeta={initFilterMeta}
-                    productFilter={productFilter}
-                    isOpen={true}
-                    pageType={pageType}
-                />
-            </div>
-            {/* <button
-                className={`${openFilter ? "block" : "hidden"} black-bar-xl text-center my-4 tb:hidden w-full`}
-                onClick={filterToggle}>
-                적용하기
-            </button> */}
-        </>
-    );
-}
-
-export default function CateogryClient({
-    children,
-    initFilterMeta,
-    pageType,
-}: {
-    children: React.ReactNode;
-
-    initFilterMeta: initFilterMetaProps;
-    pageType: string[];
-}) {
-    return (
-        <div className="flex flex-col tb:flex-row justify-between w-full px-2 tb:gap-8 tb:pt-8 ">
-            <div className="tb:basis-1/3 lg:basis-1/4 sticky top-[50px] tb:mb-4 tb:top-[80px] bg-white z-10 tb:z-0">
-                <FilterPage initFilterMeta={initFilterMeta} pageType={pageType[0]} />
-            </div>
-            <div className={`w-full flex-grow tb:block tb:basis-2/3 lg:basis-3/4`}>{children}</div>
-        </div>
-    );
-}
+export default MobileFilter;

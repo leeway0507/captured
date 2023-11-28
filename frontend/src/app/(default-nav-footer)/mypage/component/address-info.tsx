@@ -5,6 +5,8 @@ import { getAddress } from "./fetch";
 import { userAddressProps } from "@/app/type";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
+import { AddressSkeleton } from "./address-skeleton";
+import { PopUpModal } from "@/app/components/modal/new-modal";
 
 //css
 const addressInfoClass = "text-base flex-right active:text-deep-gray cursor-pointer";
@@ -15,14 +17,17 @@ export default function AddressInfo() {
     const [addressArray, setAddressArray] = useState<userAddressProps[] | undefined>(undefined);
 
     useEffect(() => {
+        if (session === undefined) return;
         getAddress(session?.user.accessToken).then((data) => {
             setAddressArray(data);
         });
     }, [session]);
 
-    if (addressArray === undefined) return null;
+    const modalHandler = () => alert("최대 3개의 주소만 등록할 수 있습니다.");
 
-    if (addressArray.length === 0)
+    if (addressArray === undefined) return <AddressSkeleton />;
+
+    if (addressArray.length === 0) {
         return (
             <div className="flex-center flex-col py-8 text-xl">
                 <div className="text-2xl">등록된 주소가 없습니다.</div>
@@ -31,6 +36,7 @@ export default function AddressInfo() {
                 </Link>
             </div>
         );
+    }
 
     return (
         <div className="text-sm overflow-auto max-w-[500px] mx-auto px-2">
@@ -39,13 +45,10 @@ export default function AddressInfo() {
                     + 신규 주소 추가
                 </Link>
             ) : (
-                <div className="flex-right grow">
-                    <AlertModal
-                        title="주소 추가 실패"
-                        content="최대 3개의 주소만 등록할 수 있습니다."
-                        buttonClassName={`${addressInfoClass}`}>
-                        <div>+ 신규 주소 추가</div>
-                    </AlertModal>
+                <div className="w-full flex-right">
+                    <button onClick={modalHandler} className={`${addressInfoClass}`}>
+                        + 신규 주소 추가
+                    </button>
                 </div>
             )}
             <div className="overflow-auto pt-2">

@@ -5,25 +5,33 @@ import { cartProductCardProps } from "../../type";
 import { useShoppingCart } from "@/app/components/context/shopping-cart-context";
 import CartEmptyGuide from "./component/cart-empty-guide";
 import Link from "next/link";
+import useSizeDetect from "@/app/components/hook/use-size-detect-hook";
 
 export default function MainMobile({ arr }: { arr: cartProductCardProps[] }) {
     const { cartQuantity } = useShoppingCart();
+    const { innerHeight, maxHeight } = useSizeDetect();
 
     if (cartQuantity === undefined) return null;
     return cartQuantity === 0 ? (
-        <CartEmptyGuide fontSize="xl" />
+        <div className="tb:hidden">
+            <CartEmptyGuide fontSize="xl" />
+        </div>
     ) : (
-        <div className="tb:hidden flex flex-col grow ">
-            <div className="flex-center text-3xl tb:text-4xl py-4 tb:py-8 text-sub-black tracking-[.15em]">CART</div>
-            <div className="mx-2 h-full flex flex-col grow justify-between">
-                <CartProductCardArr arr={arr} />
-                <div className="py-1">
-                    <ProductCheckOut arr={arr} />
-                    <Link href="/order" className="black-bar-xl m-3 tracking-[0.2em]">
-                        주문하기
-                    </Link>
+        <>
+            <div className="tb:hidden flex flex-col grow pb-[280px]">
+                <div className="mx-2 h-full flex flex-col grow">
+                    <CartProductCardArr arr={arr} />
                 </div>
             </div>
-        </div>
+            <div
+                className={`${
+                    maxHeight > 0 && maxHeight == innerHeight && "pb-[20px]"
+                } h-[250px] fixed bottom-0 w-full bg-gray-50 px-4 pt-6 border-t shadow-inner tb:hidden`}>
+                <ProductCheckOut arr={arr} />
+                <Link href="/order" className="black-bar-xl m-3 tracking-[0.2em]">
+                    주문하기
+                </Link>
+            </div>
+        </>
     );
 }

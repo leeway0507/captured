@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { AddressForm } from "@/app/(default-nav-footer)/mypage/component/address-info-form";
 import { userAddressProps } from "@/app/type";
+import Image from "next/image";
 
 export const DefaultAddressModule = ({
     addressArray,
@@ -24,9 +25,11 @@ export const DefaultAddressModule = ({
                 </div>
             ) : (
                 <>
-                    <div className="text-sm flex-right link-animation" onClick={openAddressToggle}>
+                    <div className="text-sm flex-right link-animation py-2" onClick={openAddressToggle}>
                         다른 배송지 선택하기
+                        <Image src="/icons/white/right-arrow.svg" alt="right-arrow" priority width={20} height={20} />
                     </div>
+
                     <AddressForm {...selectedAddress} accessToken={accessToken} onDelete={false} />
                 </>
             )}

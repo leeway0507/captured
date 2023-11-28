@@ -7,7 +7,11 @@ from fastapi import APIRouter, Depends, HTTPException
 from expirng_dict import ExpiringDict
 
 from model.auth_model import TokenData
-from model.db_model import OrderHistoryRequestSchema, OrderHistoryInDBSchema, OrderRowInDBSchmea
+from model.db_model import (
+    OrderHistoryRequestSchema,
+    OrderHistoryInDBSchema,
+    OrderRowInDBSchmea,
+)
 from model.order_model import OrderInfoBeforePaymentSchema
 
 from router.auth import get_current_user
@@ -85,7 +89,8 @@ async def create_order_history(
 
 @order_router.post("/save-order-info-before-payment")
 def save_order_info(
-    payment_info: OrderInfoBeforePaymentSchema, user: TokenData = Depends(get_current_user)
+    payment_info: OrderInfoBeforePaymentSchema,
+    user: TokenData = Depends(get_current_user),
 ):
     """결제 전 주문 정보 저장"""
     order_cache[payment_info.order_id] = payment_info
@@ -103,7 +108,7 @@ def get_order_info(orderId: str):
     info: OrderInfoBeforePaymentSchema | None = order_cache.get(orderId)  # type: ignore
 
     if info == None:
-        raise HTTPException(status_code=400, detail="주문 정보가 없습니다")
+        raise HTTPException(status_code=403, detail="주문 정보가 없습니다")
 
     print("-------get_order_info-------")
     print(info.order_total_price)

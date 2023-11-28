@@ -11,12 +11,14 @@ export const ProductCardModal = (props: cartProductCardProps) => {
                     <Image src={productImgUrl} width={150} height={150} alt={productId} />
                 </div>
                 <div className="basis-2/3">
-                    <div className="flex flex-col ps-2 my-2 text-blue-black w-full ">
+                    <div className="flex flex-col ps-2 my-2 text-blue-black ">
                         <div className="uppercase text-sub-black me-auto">{brand}</div>
                         <div className="me-auto">{productName}</div>
                         <div className="uppercase me-auto">{productId}</div>
-                        <div className="underline ">{intl ? "해외배송" : "국내배송"}</div>
-                        <div className="me-auto">{size}</div>
+                        <div className="flex justify-between grow">
+                            <div>{size}</div>
+                            <div className="underline ">{intl ? "해외배송" : "국내배송"}</div>
+                        </div>
                     </div>
                 </div>
             </div>

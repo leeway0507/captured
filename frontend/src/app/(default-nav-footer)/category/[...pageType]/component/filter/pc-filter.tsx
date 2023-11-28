@@ -11,7 +11,7 @@ interface FilterDropdownProps {
     pageType: string;
 }
 
-export default function Filter({ initFilterMeta, productFilter, isOpen, pageType }: FilterDropdownProps) {
+export default function PcFilter({ initFilterMeta, productFilter, isOpen, pageType }: FilterDropdownProps) {
     const { sortBy, brand, category, size, intl, price } = productFilter;
 
     if (initFilterMeta === undefined) return <></>;
@@ -36,7 +36,6 @@ export default function Filter({ initFilterMeta, productFilter, isOpen, pageType
                 />
             )}
             {initFilterMeta.category && (
-                // category page에서는 표시 x
                 <AccordionComponent title="카테고리" content={category} cat="category" titleClassNames="text-lg" />
             )}
 

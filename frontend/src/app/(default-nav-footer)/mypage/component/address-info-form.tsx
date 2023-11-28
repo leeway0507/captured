@@ -1,7 +1,6 @@
 import { userAddressProps } from "@/app/type";
 import { phoneNumberAutoFormat } from "@/app/components/custom-input/check-policy";
 import Link from "next/link";
-import YesNoModal from "@/app/components/modal/yes-no-modal";
 import { deleteAddress } from "./fetch";
 import { ConfirmPopUpModal } from "@/app/components/modal/new-yes-no-modal";
 
@@ -29,7 +28,7 @@ export const AddressForm = (props: addressInfoFormProps) => {
 
     return (
         <div
-            className={`relative flex flex-col text-sm bg-light-gray border border-gray-50 rounded-md shadow p-4 w-full gap-2 mb-3`}
+            className={`relative flex flex-col text-sm bg-light-gray border border-gray-50 rounded-xl shadow p-4 w-full gap-2 mb-3`}
             key={address.addressId}>
             <div className="absolute underline text-sub-black right-0 px-4 flex cursor-pointer">
                 {onDelete && !isMainAddress && <DeleteButton />}

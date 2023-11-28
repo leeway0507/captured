@@ -74,7 +74,7 @@ export default function ResetPassword() {
     };
 
     return (
-        <div className="max-w-md mx-auto w-full py-8">
+        <div className="max-w-md mx-auto w-full py-8 px-5">
             <div className="flex-center text-2xl pb-8">비밀번호 찾기</div>
             <div className={`flex flex-col justify-between gap-6 ${isEmailValid && "hidden"}`}>
                 <CustomInput
