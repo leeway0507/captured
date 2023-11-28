@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useOutsideAlerter } from "@/app/components/hook/use-outside-alerter";
 import { useProductFilterProps } from "./hook/use-product-filter";
 import { useParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 const customUnderLine = "font-bold underline underline-offset-[11px] decoration-2";
 
@@ -27,8 +28,7 @@ const LatestPageNav = ({ pageType }: { pageType: string }) => {
     );
 };
 const BrandPageNav = () => {
-    const params = useParams();
-    const brandName = params.pageType[1].replace("-", " ").replace("%20", " ");
+    const brandName = useSearchParams().get("brand")!.replace("-", " ").replace("%20", " ");
     return <div className="p-2 flex-left w-full font-bold uppercase">{brandName}</div>;
 };
 

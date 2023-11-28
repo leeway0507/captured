@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import { useShoppingCart } from "../context/shopping-cart-context";
+import { useShoppingCart } from "@/app/components/context/shopping-cart-context";
 
 const wrapperClass = "flex-center flex-col ";
 const nameClass = "text-[0.5rem] ";

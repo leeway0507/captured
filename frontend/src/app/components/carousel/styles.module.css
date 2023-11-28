@@ -58,7 +58,7 @@
     height: 0.3rem;
     content: "";
 }
-.embla__dot--selected:after {
+.embla__dot__selected:after {
     background-color: var(--main-black);
 }
 
@@ -87,22 +87,22 @@
     left: -100%;
 }
 
-/* embla-multi */
+/* embla_multi */
 
-.embla-multi {
+.embla_multi {
     --slide-spacing: 1rem;
     --slide-size: 40%;
     position: relative;
 }
 
 @media (min-width: 768px) {
-    .embla-multi {
+    .embla_multi {
         --slide-size: 28%;
     }
 }
 
 @media (min-width: 1024px) {
-    .embla-multi {
+    .embla_multi {
         --slide-size: 22%;
     }
 }

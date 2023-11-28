@@ -1,9 +1,8 @@
-"use client";
 import { PopUpModal } from "./new-modal";
 import { useShoppingCart } from "../context/shopping-cart-context";
 import Image from "next/image";
 
-const ConfirmForm = (title: string, content: string | JSX.Element, callBack: CallableFunction) => {
+const AlertForm = (title: string, content: string | JSX.Element, buttonClass: string, callBack: CallableFunction) => {
     const { setModalOpen } = useShoppingCart();
 
     const ConfirmHandler = () => {
@@ -24,17 +23,19 @@ const ConfirmForm = (title: string, content: string | JSX.Element, callBack: Cal
             </div>
             <div className="text-sub-black">{content}</div>
             <div className="flex gap-4">
-                <button className="px-5 py-3 black-bar" onClick={ConfirmHandler}>
-                    예
-                </button>
-                <button className="px-5 py-3 black-bar bg-light-gray text-main-black " onClick={CancelHandler}>
-                    아니오
+                <button className={`${buttonClass}`} onClick={ConfirmHandler}>
+                    확인
                 </button>
             </div>
         </div>
     );
 };
 
-export const ConfirmPopUpModal = (title: string, content: string | JSX.Element, callBack: CallableFunction) => {
-    return PopUpModal(ConfirmForm(title, content, callBack));
+export const AlertPopUpModal = (
+    title: string,
+    content: string | JSX.Element,
+    buttonClass: string,
+    callBack: CallableFunction
+) => {
+    return PopUpModal(AlertForm(title, content, buttonClass, callBack));
 };

@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import { getFilterMeta } from "@/app/(default-nav-footer)/category/[...pageType]/component/fetch";
 
 const linkClass = "opacity-80 brand-box-black rounded-full tb:rounded-2xl aspect-square tb:aspect-[2/1]";
 const divClass = "relative h-[50px] tb:h-[100px] xl:h-[150px] aspect-square ";
@@ -8,13 +7,13 @@ const ImageClass = "scale-[100%] tb:scale-[100%] ";
 const evenLogoCard = (brandName: string, idx: number) => {
     const brandNameBar = brandName.replaceAll(" ", "-").toLowerCase();
     return (
-        <Link key={idx} href={`/category/brand/${brandName}`} className={`${linkClass} bg-main-black flex-center`}>
+        <Link key={idx} href={`/category/brand/${brandNameBar}`} className={`${linkClass} bg-main-black flex-center`}>
             <div className={`${divClass}`}>
                 <Image
                     src={`/brands/white/${brandNameBar}-white-logo.png`}
                     alt={`${brandNameBar}-logo`}
                     fill
-                    sizes="(min-width: 1560px) 150px, (min-width: 1280px) calc(6.92vw + 43px), (min-width: 780px) calc(14.38vw - 10px), calc(20vw - 4px)"
+                    sizes="(min-width: 1280px) 150px, (min-width: 780px) 100px, 50px"
                     className={ImageClass}
                 />
             </div>
@@ -24,13 +23,13 @@ const evenLogoCard = (brandName: string, idx: number) => {
 const oddLogoCard = (brandName: string, idx: number) => {
     const brandNameBar = brandName.replaceAll(" ", "-").toLowerCase();
     return (
-        <Link key={idx} href={`/category/brand/${brandName}`} className={`${linkClass} bg-gray-300 flex-center`}>
+        <Link key={idx} href={`/category/brand/${brandNameBar}`} className={`${linkClass} bg-gray-300 flex-center`}>
             <div className={`${divClass}`}>
                 <Image
                     src={`/brands/black/${brandNameBar}-logo.png`}
                     alt={`${brandNameBar}-logo`}
                     fill
-                    sizes="(min-width: 1560px) 150px, (min-width: 1280px) calc(6.92vw + 43px), (min-width: 780px) calc(14.38vw - 10px), calc(20vw - 4px)"
+                    sizes="(min-width: 1280px) 150px, (min-width: 780px) 100px, 50px"
                     className={ImageClass}
                 />
             </div>
@@ -49,8 +48,6 @@ const LogoBox = ({ logoArr }: { logoArr: string[] }) => {
 };
 
 export default async function BrandList() {
-    // const data = await getFilterMeta();
-    // const logoArr = data.brand;
     const logoArr = [
         "adidas originals",
         "arc'teryx",
@@ -64,7 +61,7 @@ export default async function BrandList() {
     ];
 
     return (
-        <>
+        <div className="tb:px-4">
             <div className="text-xl font-bold px-2 pb-4">인기 브랜드</div>
             <div className="grid grid-cols-5 gap-2 tb:gap-3 px-2">
                 <LogoBox logoArr={logoArr!} />
@@ -74,6 +71,6 @@ export default async function BrandList() {
                     <div className="flex-center h-full font-bold tb:text-lg xl:text-xl">더보기</div>
                 </Link>
             </div>
-        </>
+        </div>
     );
 }

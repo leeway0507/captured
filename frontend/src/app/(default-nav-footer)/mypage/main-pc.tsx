@@ -11,6 +11,20 @@ function classNames(...classes: any[]) {
     return classes.filter(Boolean).join(" ");
 }
 
+export const LogOutButton = () => {
+    const url = window.location.origin;
+    const callback = () => {
+        signOut({ callbackUrl: url });
+    };
+
+    const handler = ConfirmPopUpModal("로그아웃", <div className="py-4">로그아웃 하시겠습니까?</div>, callback);
+    return (
+        <button onClick={handler} className="link-animation py-3">
+            로그아웃
+        </button>
+    );
+};
+
 export default function MainPc({ signUpType, orderHistory }: { signUpType: string; orderHistory: JSX.Element }) {
     const router = useRouter();
     const searchParams = useSearchParams();
@@ -24,23 +38,10 @@ export default function MainPc({ signUpType, orderHistory }: { signUpType: strin
         }
     }, [pageIdx]);
 
-    const LogOutButton = () => {
-        const callback = () => signOut({ callbackUrl: "/" });
-
-        const handler = ConfirmPopUpModal("로그아웃", "로그아웃 하시겠습니까?", callback);
-        return (
-            <button
-                onClick={handler}
-                className="py-4 w-full tracking-[0.1em] cursor-pointer focus:outline-none active:bg-main-black active:text-white ">
-                로그아웃
-            </button>
-        );
-    };
-
     return (
-        <div className="flex grow">
+        <div className="flex grow max-w-5xl mx-auto justify-between">
             <Tab.Group vertical selectedIndex={selectedIndex} onChange={setSelectedIndex}>
-                <Tab.List className="basis-1/3 border-e max-w-[350px] my-8">
+                <Tab.List className="basis-1/3 border-e max-w-[300px] my-4">
                     <Tab.List className={"flex flex-col min-h-[600px] text-xl sticky top-0 py-2"}>
                         <Tab
                             onClick={() => router.push("/mypage?pageindex=0")}

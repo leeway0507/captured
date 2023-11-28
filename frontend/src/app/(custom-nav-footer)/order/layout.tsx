@@ -1,5 +1,5 @@
 import ContextWrapper from "../../components/context/context-wrapper";
-import Footer from "../../components/nav-footer/component/footer";
+import BaseModal from "@/app/components/modal/new-modal";
 
 export default function OrderLayout({ children }: { children: React.ReactNode }) {
     return (
@@ -7,6 +7,7 @@ export default function OrderLayout({ children }: { children: React.ReactNode })
             <div className="main-container">
                 <div className="grow flex-col flex tb:px-4 xl:px-6">{children}</div>
             </div>
+            <BaseModal />
         </ContextWrapper>
     );
 }

@@ -1,10 +1,8 @@
-"use client";
 import ProductCard from "@/app/(default-nav-footer)/category/[...pageType]/component/product-card/product-card";
-import { useEffect, useState } from "react";
-import { getCategory } from "@/app/(default-nav-footer)/category/[...pageType]/component/fetch";
+
 import Link from "next/link";
 import { productCardProps } from "@/app/type";
-import { RelatedProductsSkeleton } from "@/app/(default-nav-footer)/search/skeleton";
+import { getCategoryProxy } from "./fetch";
 
 const ItemList = ({ data }: { data: productCardProps[] }) => {
     return data.slice(0, 12).map((item) => (
@@ -24,25 +22,17 @@ const ItemListSkeleton = () => {
     ));
 };
 
-const NewestItem = () => {
-    const [data, setData] = useState<productCardProps[]>([]);
-    useEffect(() => {
-        const filter = {
-            sortBy: "최신순",
-            category: undefined,
-            categorySpec: undefined,
-            brand: undefined,
-            intl: undefined,
-            price: undefined,
-            sizeArray: undefined,
-        };
-        getCategory(filter, 1).then((res) => {
-            setData(res.data);
-        });
-    }, []);
+const NewestItem = async () => {
+    const filter = {
+        sortBy: "최신순",
+    };
+
+    const data = await getCategoryProxy(filter, 1).then((res) => {
+        return res.data;
+    });
 
     return (
-        <div>
+        <div className="tb:px-4">
             <div className="text-xl font-bold px-2">신규 아이템</div>
             <div className="flex w-full overflow-auto gap-2 px-2 py-2 tb:gap-4 tb:py-4">
                 {data.length === 0 ? <ItemListSkeleton /> : <ItemList data={data} />}

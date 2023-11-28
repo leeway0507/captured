@@ -4,12 +4,20 @@ import { NextRequest, NextResponse } from 'next/server'
 
 
 export function middleware(request: NextRequest) {
-    if (request.nextUrl.pathname.startsWith('/asd')) {
+    if (request.nextUrl.pathname.startsWith('/category/')) {
       const allowedKeywords = new Set(process.env.ALLOWRED_KEYWORDS_IN_CATEGORY!.split(','))
       
       const path = request.nextUrl.pathname.split('/')[2]
 
-      if (!allowedKeywords.has(path)) return  NextResponse.redirect(new URL('/page-not-found', request.url))
+      if (path === 'brand') {
+        const searchParams = new URLSearchParams(request.nextUrl.search) 
+        const brand = searchParams.get('brand')
+
+        if (brand === null) return  NextResponse.redirect(new URL('/page-not-found', request.url)
+        )
+      }
+
+      else if (!allowedKeywords.has(path)) return  NextResponse.redirect(new URL('/page-not-found', request.url))
     
     
   }

@@ -19,8 +19,9 @@ export const getCategory = async (filter: filterRequestProps | undefined, page: 
     return result;
 };
 
-export const getFilterMeta = async () => {
-    const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/product/get-filter-meta`);
-    const result: initFilterMetaProps = await req.json();
+export const getFilterMetaProxy = async () => {
+    const dynamicUrl = typeof window !== "undefined" ? window.location.origin : "http://127.0.0.1:3000";
+    const req = await fetch(`${dynamicUrl}/api/get-filter-meta`);
+    const result = await req.json();
     return result;
 };

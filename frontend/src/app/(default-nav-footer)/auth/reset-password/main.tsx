@@ -8,69 +8,74 @@ import {
     checkPasswordPolicy,
     checkPasswordAgain,
 } from "@/app/components/custom-input/check-policy";
-import { CheckEmailAndName } from "./fetch";
-import AlertModalWithoutBtn from "@/app/components/modal/alert-modal-without-btn";
-import { resetPassword } from "@/app/(default-nav-footer)/mypage/component/fetch";
+import { CheckEmailAndNameProxy } from "./fetch";
+import { resetPasswordProxy } from "@/app/(default-nav-footer)/mypage/component/fetch";
 import { useRouter } from "next/navigation";
+import { AlertPopUpModal } from "@/app/components/modal/new-alert-modal";
 
 export default function ResetPassword() {
     const router = useRouter();
-
     const [email, setEmail] = useState("");
     const [password1, setPassword1] = useState("");
     const [password2, setPassword2] = useState("");
     const [name, setName] = useState("");
     const [token, setToken] = useState("");
-
     const [isEmailValid, setIsEmailValid] = useState(false);
-    const [openSuccessModal, setOpenSuccessModal] = useState(false);
-    const [openFailureModal, setOpenFailureModal] = useState(false);
 
-    const FailureModal = () => {
-        return AlertModalWithoutBtn({
-            title: "인증 실패",
-            content: "일치하는 정보가 없습니다.",
-            isOpen: openFailureModal,
-            setIsOpen: setOpenFailureModal,
-            checkColor: "red",
-        });
-    };
-    const SuccessModal = () => {
-        return AlertModalWithoutBtn({
-            title: "인증 성공",
-            content: "비밀번호 변경페이지로 이동합니다.",
-            isOpen: openSuccessModal,
-            setIsOpen: setOpenSuccessModal,
-            trueCallback: () => {
-                setIsEmailValid(true);
-            },
-            checkColor: "green",
-        });
+    const verificationSuccessHandler = AlertPopUpModal(
+        "인증 성공",
+        <div className="py-4">비밀번호 변경페이지로 이동합니다.</div>,
+        "black-bar bg-green-700 w-full",
+        () => {
+            setIsEmailValid(true);
+        }
+    );
+    const verificationFailureHandler = AlertPopUpModal(
+        "인증 실패",
+        <div className="py-4">일치하는 정보가 없습니다.</div>,
+        "black-bar bg-rose-700 w-full",
+        () => {}
+    );
+
+    const successHandler = AlertPopUpModal(
+        "변경 성공",
+        <div className="py-4">비밀번호가 변경되었습니다.</div>,
+        "black-bar bg-green-700 w-full",
+        () => {
+            router.push("/auth/signin");
+        }
+    );
+    const failureHandler = AlertPopUpModal(
+        "변경 실패",
+        <div className="py-4">비밀번호 변경에 실패하였습니다.</div>,
+        "black-bar bg-rose-700 w-full",
+        () => {}
+    );
+
+    const changeHandler = () => {
+        resetPasswordProxy(password1, token)
+            .then((res) => {
+                if (res.message == "success") {
+                    successHandler();
+                } else {
+                    failureHandler();
+                }
+            })
+            .catch(failureHandler);
     };
 
-    const [openChangeSuccessModal, setOpenChangeSuccessModal] = useState(false);
-    const [openChangeFailureModal, setOpenChangeFailureModal] = useState(false);
-
-    const ChangeFailureModal = () => {
-        return AlertModalWithoutBtn({
-            title: "변경 실패",
-            content: "비밀번호 변경에 실패했습니다",
-            isOpen: openChangeFailureModal,
-            setIsOpen: setOpenChangeFailureModal,
-            checkColor: "red",
-        });
-    };
-    const ChangeSuccessModal = () => {
-        return AlertModalWithoutBtn({
-            title: "변경 성공",
-            content: "비밀번호 변경에 성공했습니다.",
-            isOpen: openChangeSuccessModal,
-            setIsOpen: setOpenChangeSuccessModal,
-            trueCallback: () => {
-                router.push("/auth/signin");
-            },
-            checkColor: "green",
-        });
+    const checkEmailAndNameHandler = () => {
+        CheckEmailAndNameProxy(email, name)
+            .then((res) => {
+                console.log(res);
+                if (res.status == 200) {
+                    setToken(res.data.token);
+                    verificationSuccessHandler();
+                } else {
+                    verificationFailureHandler();
+                }
+            })
+            .catch(verificationFailureHandler);
     };
 
     return (
@@ -86,6 +91,7 @@ export default function ResetPassword() {
                     setValue={setEmail}
                     id="email"
                     checkPolicy={checkEmail}
+                    maxLength={50}
                 />
 
                 <CustomInput
@@ -97,21 +103,13 @@ export default function ResetPassword() {
                     setValue={setName}
                     id="name"
                     checkPolicy={checkName}
+                    maxLength={10}
                 />
 
                 <button
                     className="black-bar "
                     disabled={email === "" || !checkEmail(email) || name === "" || !checkName(name)}
-                    onClick={() => {
-                        CheckEmailAndName(email, name).then((res) => {
-                            if (res.token) {
-                                setToken(res.token);
-                                setOpenSuccessModal(true);
-                            } else {
-                                setOpenFailureModal(true);
-                            }
-                        });
-                    }}>
+                    onClick={checkEmailAndNameHandler}>
                     이메일 확인
                 </button>
             </div>
@@ -126,6 +124,7 @@ export default function ResetPassword() {
                         setValue={setPassword1}
                         id="password1"
                         checkPolicy={checkPasswordPolicy}
+                        maxLength={20}
                     />
                 </div>
                 <div>
@@ -137,26 +136,13 @@ export default function ResetPassword() {
                         setValue={setPassword2}
                         id="password2"
                         checkPolicy={(value) => checkPasswordAgain(password1, value)}
+                        maxLength={20}
                     />
                 </div>
-                <button
-                    className="black-bar"
-                    onClick={() =>
-                        resetPassword(password1, token).then((res) => {
-                            if (res.message === "success") {
-                                setOpenChangeSuccessModal(true);
-                            } else {
-                                setOpenChangeFailureModal(true);
-                            }
-                        })
-                    }>
+                <button onClick={changeHandler} className="black-bar w-full">
                     변경하기
                 </button>
             </div>
-            <FailureModal />
-            <SuccessModal />
-            <ChangeFailureModal />
-            <ChangeSuccessModal />
         </div>
     );
 }

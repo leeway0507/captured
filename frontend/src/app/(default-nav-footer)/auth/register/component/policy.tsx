@@ -113,9 +113,11 @@ const Policy = ({ checkAllSelect }: { checkAllSelect: (e: boolean) => void }) =>
                     <input
                         type="checkbox"
                         id="show-terms"
-                        className=" absolute top-0 left-[63%] peer text-sm py-2 px-4 border-transparent checked:rotate-90 focus:ring-0 checked:ring-0 checked:bg-transparent "
+                        className="peer absolute top-0 left-[14rem]  text-sm py-2 px-4 border-transparent checked:rotate-90 focus:ring-0 checked:ring-0 checked:bg-transparent "
                     />
-                    <label htmlFor="show-terms" className="absolute top-0 left-[65%] text-sm peer-checked:rotate-90 ">
+                    <label
+                        htmlFor="show-terms"
+                        className="absolute top-0 left-[14.5rem] text-sm peer-checked:rotate-90 ">
                         ❯
                     </label>
 

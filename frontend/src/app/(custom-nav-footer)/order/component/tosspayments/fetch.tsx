@@ -1,23 +1,24 @@
 import { orderHistoryRequestProps, orderRowRequestProps } from "@/app/type";
 
-export async function setPaymentVerification(
+export async function setPaymentVerificationProxy(
     orderId: string,
     addressId: string,
     amount: number,
     arr: orderRowRequestProps[],
     accessToken: string
 ) {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/order/save-order-info-before-payment`, {
+    const dynamicUrl = typeof window !== "undefined" ? window.location.origin : "http://127.0.0.1:3000";
+    const res = await fetch(`${dynamicUrl}/api/save-order-info-before-payment`, {
         method: "POST",
         headers: {
-            Authorization: `bearer ${accessToken}`,
             "Content-Type": "application/json",
         },
         body: JSON.stringify({
             orderId,
             addressId,
-            orderTotalPrice: amount,
-            orderRows: arr,
+            amount,
+            arr,
+            accessToken,
         }),
     });
 

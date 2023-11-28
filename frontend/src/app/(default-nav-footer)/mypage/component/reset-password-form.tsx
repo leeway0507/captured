@@ -3,46 +3,43 @@ import CustomInput from "@/app/components/custom-input/cusotm-input";
 import { checkPasswordPolicy, checkPasswordAgain } from "@/app/components/custom-input/check-policy";
 import { useState, useMemo } from "react";
 import { useSession } from "next-auth/react";
-import { resetPassword } from "./fetch";
-import AlertModalWithoutBtn from "@/app/components/modal/alert-modal-without-btn";
-import { useRouter } from "next/navigation";
+import { resetPasswordProxy } from "./fetch";
 
-const FailureModal = ({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: (v: boolean) => void }) => {
-    return AlertModalWithoutBtn({
-        title: "변경 실패",
-        content: "비밀번호 변경에 실패하였습니다.",
-        isOpen: isOpen,
-        setIsOpen: setIsOpen,
-        checkColor: "red",
-    });
-};
-const SuccessModal = ({
-    isOpen,
-    setIsOpen,
-    trueCallback,
-}: {
-    isOpen: boolean;
-    setIsOpen: (v: boolean) => void;
-    trueCallback: () => void;
-}) => {
-    return AlertModalWithoutBtn({
-        title: "변경 성공",
-        content: "비밀번호가 변경되었습니다.",
-        isOpen: isOpen,
-        setIsOpen: setIsOpen,
-        trueCallback: trueCallback,
-        checkColor: "green",
-    });
-};
+import { useRouter } from "next/navigation";
+import { AlertPopUpModal } from "@/app/components/modal/new-alert-modal";
 
 export default function ResetPasswordFrom() {
+    const successHandler = AlertPopUpModal(
+        "변경 성공",
+        <div className="py-4">비밀번호가 변경되었습니다.</div>,
+        "black-bar bg-green-700 w-full",
+        () => {
+            router.push("/mypage?pageindex=0");
+        }
+    );
+    const failureHandler = AlertPopUpModal(
+        "변경 실패",
+        <div className="py-4">비밀번호 변경에 실패하였습니다.</div>,
+        "black-bar bg-rose-700 w-full",
+        () => {}
+    );
+
     const router = useRouter();
     const { data: session } = useSession();
     const [password1, setPassword1] = useState("");
     const [password2, setPassword2] = useState("");
 
-    const [openSuccessModal, setOpenSuccessModal] = useState(false);
-    const [openFailureModal, setOpenFailureModal] = useState(false);
+    const changeHandler = () => {
+        resetPasswordProxy(password1, session?.user.accessToken)
+            .then((res) => {
+                if (res.message == "success") {
+                    successHandler();
+                } else {
+                    failureHandler();
+                }
+            })
+            .catch(failureHandler);
+    };
 
     return (
         <div className="flex flex-col my-8 text-sm max-h-[600px] max-w-[500px] mx-auto">
@@ -65,6 +62,7 @@ export default function ResetPasswordFrom() {
                             setValue={setPassword1}
                             id="password1"
                             checkPolicy={checkPasswordPolicy}
+                            maxLength={20}
                         />
                     </div>
                     <div className="flex flex-col basis-1/2">
@@ -76,29 +74,16 @@ export default function ResetPasswordFrom() {
                             setValue={setPassword2}
                             id="password2"
                             checkPolicy={(value) => checkPasswordAgain(password1, value)}
+                            maxLength={20}
                         />
                     </div>
                 </div>
-                {password1.length != 0 &&
+                {password1.length > 0 &&
                 checkPasswordPolicy(password1) &&
-                password2.length != 0 &&
+                password2.length > 0 &&
                 checkPasswordPolicy(password2) &&
                 checkPasswordAgain(password1, password2) ? (
-                    <button
-                        className="black-bar"
-                        onClick={() => {
-                            resetPassword(password1, session?.user.accessToken)
-                                .then((res) => {
-                                    if (res.message == "success") {
-                                        setOpenSuccessModal(true);
-                                    } else {
-                                        setOpenFailureModal(true);
-                                    }
-                                })
-                                .catch((err) => {
-                                    setOpenFailureModal(true);
-                                });
-                        }}>
+                    <button onClick={changeHandler} className="black-bar w-full">
                         변경하기
                     </button>
                 ) : (
@@ -107,14 +92,6 @@ export default function ResetPasswordFrom() {
                     </button>
                 )}
             </div>
-            <FailureModal isOpen={openFailureModal} setIsOpen={setOpenFailureModal} />
-            <SuccessModal
-                isOpen={openSuccessModal}
-                setIsOpen={setOpenSuccessModal}
-                trueCallback={() => {
-                    router.push("/mypage?pageindex=0");
-                }}
-            />
         </div>
     );
 }

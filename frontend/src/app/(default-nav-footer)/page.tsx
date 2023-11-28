@@ -2,7 +2,7 @@ import Banner from "../components/main/main-banner";
 import BrandList from "../components/main/brand-list";
 import NewestItem from "../components/main/newest-item";
 import Footer from "../components/nav-footer/component/footer";
-import { BottomNavBar } from "../components/nav-footer/bottom-nav-bar";
+import { BottomNavBar } from "../components/nav-footer/component/bottom-nav-bar";
 import CategoryList from "../components/main/category-list";
 
 export default async function page() {
@@ -21,7 +21,6 @@ export default async function page() {
 
     return (
         <>
-            <div className="tb:pt-8"></div>
             <Banner thumbnailInfos={thumbnailInfos} />
             <div className="pt-16"></div>
             <NewestItem />
