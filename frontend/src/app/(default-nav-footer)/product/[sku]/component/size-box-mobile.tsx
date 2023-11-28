@@ -40,8 +40,8 @@ const SizeBoxMobile = ({ data, defaultSizeArr }: { data: productCardProps; defau
             />
             <div
                 className={`${
-                    maxHeight > 0 && maxHeight == innerHeight ? "pb-[30px]" : ""
-                } h-[100px] bg-white fixed left-0 px-4 bottom-0 flex gap-4 w-full  border-t-2 items-center justify-between z-10`}>
+                    maxHeight > 0 && maxHeight == innerHeight ? "h-[110px] pb-[30px]" : "h-[80px]"
+                }  bg-white fixed left-0 px-4 bottom-0 flex gap-4 w-full  border-t-2 items-center justify-between z-10`}>
                 <div className="flex flex-col basis-1/5">
                     <div className=" text-left">결제금액</div>
                     <div>{"₩" + data.price.toLocaleString()}</div>

@@ -30,8 +30,9 @@ export default function ProductCard({
                         <Image
                             src={productImgUrl}
                             alt={String(sku)}
-                            width="300"
-                            height="300"
+                            width={300}
+                            height={300}
+                            sizes="(min-width: 1520px) 329px, (min-width: 780px) 22.36vw, calc(50vw - 13px)"
                             className="rounded-lg"
                             onError={() => setIsLoaded(false)}
                             priority={idx < prorityNumber ? true : false}
@@ -40,8 +41,9 @@ export default function ProductCard({
                         <Image
                             src={"/icons/skeleton.png"}
                             alt="default"
-                            width="300"
-                            height="300"
+                            width={300}
+                            height={300}
+                            sizes="(min-width: 1520px) 329px, (min-width: 780px) 22.36vw, calc(50vw - 13px)"
                             className="rounded-lg"
                         />
                     )}

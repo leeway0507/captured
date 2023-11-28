@@ -61,6 +61,7 @@ export default function AddressForm(props: addAddressFromProps) {
                             setValue={setKrName}
                             id="krName"
                             checkPolicy={checkName}
+                            maxLength={10}
                         />
                     </div>
                     <div className="grow">
@@ -73,6 +74,7 @@ export default function AddressForm(props: addAddressFromProps) {
                             setValue={setEnName}
                             id="enName"
                             checkPolicy={checkEnName}
+                            maxLength={20}
                         />
                     </div>
                 </div>
@@ -139,6 +141,7 @@ export default function AddressForm(props: addAddressFromProps) {
                             setValue={setKrAddressDetail}
                             id="setKrAddress"
                             checkPolicy={() => true}
+                            maxLength={50}
                         />
                     </div>
                 </div>
@@ -172,6 +175,7 @@ export default function AddressForm(props: addAddressFromProps) {
                             setValue={setEnAddressDetail}
                             id="setEnAddress"
                             checkPolicy={() => true}
+                            maxLength={50}
                         />
                     </div>
                 </div>

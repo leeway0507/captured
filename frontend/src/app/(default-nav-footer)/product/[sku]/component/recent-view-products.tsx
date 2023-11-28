@@ -4,6 +4,7 @@ import EmblaCarouselMultiProducts from "@/app/components/carousel/EmblaCarouselM
 import ProductCard from "@/app/(default-nav-footer)/category/[...pageType]/component/product-card/product-card";
 import { useEffect, useState } from "react";
 import { RelatedProductsSkeleton } from "@/app/(default-nav-footer)/search/skeleton";
+import styles from "@/app/components/carousel/styles.module.css";
 
 const RecentViewProducts = () => {
     const [productInfos, setProductInfos] = useState<productCardProps[] | undefined>(undefined);
@@ -28,7 +29,7 @@ export default function RelatedProducts() {
                 <EmblaCarouselMultiProducts>
                     {productInfos.toReversed().map((props: productCardProps, idx: number) => {
                         return (
-                            <div key={idx} className="embla__slide flex-center">
+                            <div key={idx} className={`${styles.embla__slide} flex-center`}>
                                 <ProductCard props={props} isIntl={false} idx={idx} />
                             </div>
                         );

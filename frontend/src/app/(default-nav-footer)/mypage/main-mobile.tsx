@@ -2,22 +2,7 @@
 import AccordionComponent from "@/app/components/accordion/accordion";
 import ResetPasswordFrom from "./component/reset-password-form";
 import AddressInfoFrom from "./component/address-info";
-
-import { signOut } from "next-auth/react";
-import { ConfirmPopUpModal } from "@/app/components/modal/new-yes-no-modal";
-
-const LogOutButton = () => {
-    const callback = () => {
-        signOut({ callbackUrl: "/" });
-    };
-
-    const handler = ConfirmPopUpModal("로그아웃", "로그아웃 하시겠습니까?", callback);
-    return (
-        <button onClick={handler} className="link-animation py-3">
-            로그아웃
-        </button>
-    );
-};
+import { LogOutButton } from "./main-pc";
 
 export default function MobileMain({ signUpType, orderHistory }: { signUpType: string; orderHistory: JSX.Element }) {
     return (

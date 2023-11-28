@@ -1,11 +1,12 @@
 "use client";
-import { useEffect, useState, useRef, useCallback } from "react";
+import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import RelatedProducts from "../product/[sku]/component/recent-view-products";
 import Link from "next/link";
 import useMobile from "@/app/components/hook/use-mobile";
 import { SearchResultSkeleton } from "./skeleton";
+import { getFilterMetaProxy } from "../category/[...pageType]/component/fetch";
 
 const Main = () => {
     const [searchResult, setSearchResult] = useState<string[]>([]);
@@ -55,7 +56,7 @@ const Main = () => {
                     width={18}
                     height={18}
                     alt="search-input"
-                    className="absolute ms-2 top-0 bottom-0 h-full opacity-50"
+                    className="absolute ms-2 top-0 bottom-0 opacity-50 my-auto"
                     priority
                 />
                 <input
@@ -90,8 +91,13 @@ const Main = () => {
     };
 
     const BrandHorizontalArr = () => {
-        const data = process.env.NEXT_PUBLIC_BRAND_ARRAY!;
-        const logoArr = JSON.parse(data);
+        const [logoArr, setLogoArr] = useState<string[]>([]);
+        useEffect(() => {
+            getFilterMetaProxy().then((res) => {
+                setLogoArr(res.brand);
+            });
+        }, []);
+
         return (
             <div className="flex gap-4 overflow-auto">
                 {logoArr.map((brandName: string, idx: number) => (

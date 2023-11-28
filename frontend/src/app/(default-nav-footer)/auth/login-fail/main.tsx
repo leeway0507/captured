@@ -1,5 +1,5 @@
 "use client";
-import AlertModalWithoutBtn from "@/app/components/modal/alert-modal-without-btn";
+import { AlertPopUpModal } from "@/app/components/modal/new-alert-modal";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 
@@ -18,21 +18,9 @@ export default function LoginFail() {
             </div>
         );
 
-    // useEffect(() => {
-    //     setTimeout(() => {
-    //         router.push("/auth/signin");
-    //     }, 5000);
-    // }, [router]);
-
-    return (
-        <>
-            <AlertModalWithoutBtn
-                title="로그인 실패"
-                content={content}
-                isOpen={true}
-                setIsOpen={() => {}}
-                trueCallback={() => router.push("/auth/signin")}
-            />
-        </>
+    const failureHandler = AlertPopUpModal("로그인 실패", content, "black-bar bg-rose-700 w-full", () =>
+        router.push("/auth/signin")
     );
+
+    return failureHandler();
 }

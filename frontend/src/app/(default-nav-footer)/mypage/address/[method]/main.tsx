@@ -3,12 +3,12 @@ import { phoneNumberAutoFormat } from "@/app/components/custom-input/check-polic
 import { useState } from "react";
 import { userAddressProps } from "@/app/type";
 import { useRouter } from "next/navigation";
-import AlertModalWithoutBtn from "@/app/components/modal/alert-modal-without-btn";
 import AddressForm, { addAddressFromProps } from "./component/address-form";
 import { updateAddress, createAddress } from "./component/fetch";
 import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
 import { ConfirmPopUpModal } from "@/app/components/modal/new-yes-no-modal";
+import { AlertPopUpModal } from "@/app/components/modal/new-alert-modal";
 
 const Main = (props: userAddressProps) => {
     const {
@@ -50,25 +50,22 @@ const Main = (props: userAddressProps) => {
 
     //modal
 
-    const [openFailureModal, setOpenFailureModal] = useState(false);
-
-    function FailureModal() {
-        return AlertModalWithoutBtn({
-            title: "요청 실패",
-            content: "주소 생성/요청에 실패하였습니다.",
-            isOpen: openFailureModal,
-            setIsOpen: setOpenFailureModal,
-            checkColor: "red",
-        });
-    }
+    const failureHandler = AlertPopUpModal(
+        "요청 실패",
+        <div className="py-4">주소 생성/요청에 실패하였습니다.</div>,
+        "black-bar bg-rose-700 w-full",
+        () => {}
+    );
 
     const AddButton = () => {
         const callback = () =>
-            createAddress(address, session?.user.accessToken)
-                .then(router.back)
-                .catch(() => setOpenFailureModal(true));
+            createAddress(address, session?.user.accessToken).then(router.back).catch(failureHandler);
 
-        const handler = ConfirmPopUpModal("주소 추가", "해당 주소를 등록하시겠습니까?", callback);
+        const handler = ConfirmPopUpModal(
+            "주소 추가",
+            <div className="py-4">해당 주소를 등록하시겠습니까?</div>,
+            callback
+        );
         return (
             <button onClick={handler} className="basis-3/4 black-bar">
                 {" "}
@@ -79,11 +76,13 @@ const Main = (props: userAddressProps) => {
 
     const ModificationButton = () => {
         const callback = () =>
-            updateAddress(address, session?.user.accessToken)
-                .then(router.back)
-                .catch(() => setOpenFailureModal(true));
+            updateAddress(address, session?.user.accessToken).then(router.back).catch(failureHandler);
 
-        const handler = ConfirmPopUpModal("주소 수정", "해당 주소를 수정하시겠습니까?", callback);
+        const handler = ConfirmPopUpModal(
+            "주소 수정",
+            <div className="py-4">해당 주소를 수정하시겠습니까?</div>,
+            callback
+        );
         return (
             <button onClick={handler} className="basis-3/4 black-bar">
                 {" "}
@@ -134,7 +133,6 @@ const Main = (props: userAddressProps) => {
     return (
         <div className="flex-center w-full py-16 px-4">
             <AddressForm {...addressFromObject} />
-            <FailureModal />
         </div>
     );
 };

@@ -3,13 +3,13 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { useState, useEffect } from "react";
-import { getFilterMeta } from "@/app/(default-nav-footer)/category/[...pageType]/component/fetch";
+import { getFilterMetaProxy } from "@/app/(default-nav-footer)/category/[...pageType]/component/fetch";
 
 export default function BrandDropDown() {
     const [brandArray, setBrandArray] = useState<string[] | undefined>(undefined);
 
     useEffect(() => {
-        getFilterMeta().then((data) => {
+        getFilterMetaProxy().then((data) => {
             const brandArray: string[] = data.brand;
             setBrandArray(brandArray);
         });

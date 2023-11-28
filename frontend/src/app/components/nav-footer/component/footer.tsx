@@ -6,10 +6,10 @@ export default function Footer() {
         <div className="flex flex-col bg-footer-gray pt-3 pb-12 tb:py-4 font-bold px-4 tb:px-8 xl:px-12 text-xs tb:text-base">
             <div className="flex justify-between tb:justify-around">
                 <Link href="/aboutus">사이트 소개</Link>
-                <Link href={process.env.NEXT_PUBLIC_INSTARGRAM_URL!}>인스타그램</Link>
+                <Link href="/support/faq">자주 묻는 질문</Link>
 
                 <Link href="/mypage">주문조회</Link>
-                <Link href="/support/faq">자주 묻는 질문</Link>
+                <Link href={process.env.NEXT_PUBLIC_INSTARGRAM_URL!}>인스타그램</Link>
                 <Link href={process.env.NEXT_PUBLIC_CUSTOM_ID_URL!} className="tracking-tight">
                     통관부호 발급
                 </Link>

@@ -3,7 +3,7 @@ import { useRef, useEffect } from "react";
 import { PaymentWidgetInstance, loadPaymentWidget } from "@tosspayments/payment-widget-sdk";
 import { nanoid } from "nanoid";
 import { User, cartProductCardProps, orderRowRequestProps } from "@/app/type";
-import { setPaymentVerification } from "./fetch";
+import { setPaymentVerificationProxy } from "./fetch";
 import useSizeDetect from "@/app/components/hook/use-size-detect-hook";
 // 결제 플로우 확인 : captured/keynote/flow
 
@@ -73,7 +73,7 @@ export default function TossPaymentsWidget({
             </div>
             <div
                 className={`${
-                    maxHeight > 0 && maxHeight == innerHeight ? "h-[120px] pb-[30px]" : "h-[100px]"
+                    maxHeight > 0 && maxHeight == innerHeight ? "h-[110px] pb-[30px]" : "h-[80px]"
                 }  bg-white fixed left-0 bottom-0 px-4  flex px-4 gap-4 w-full  border-t-2 items-center justify-between z-10`}>
                 <div className="flex flex-col basis-1/5">
                     <div className="text-sm text-left">총 결제금액</div>
@@ -88,7 +88,7 @@ export default function TossPaymentsWidget({
                         // ------ '결제하기' 버튼 누르면 결제창 띄우기 ------
                         // https://docs.tosspayments.com/reference/widget-sdk#requestpayment결제-정보
 
-                        await setPaymentVerification(orderId, addressId, price, orderRows, userInfo.accessToken);
+                        await setPaymentVerificationProxy(orderId, addressId, price, orderRows, userInfo.accessToken);
                         await paymentWidget
                             ?.requestPayment({
                                 orderId: orderId,
@@ -96,9 +96,9 @@ export default function TossPaymentsWidget({
                                 customerName: userInfo.krName,
                                 customerEmail: userInfo.email && userInfo.email,
                                 // SUCCESS : https://{ORIGIN}/success?paymentKey={PAYMENT_KEY}&orderId={ORDER_ID}&amount={AMOUNT}&paymentType={PAYMENT_TYPE}
-                                successUrl: `${process.env.NEXT_PUBLIC_FRONTEND_URL}/order/success`,
+                                successUrl: `${window.location.origin}/order/success`,
                                 // FAIL : https://{ORIGIN}/fail?code={ERROR_CODE}&message={ERROR_MESSAGE}&orderId={ORDER_ID}
-                                failUrl: `${process.env.NEXT_PUBLIC_FRONTEND_URL}/order/fail`,
+                                failUrl: `${window.location.origin}/order/fail`,
                             })
                             .catch(function (error) {
                                 if (error.code === "INVALID_ORDER_NAME") {

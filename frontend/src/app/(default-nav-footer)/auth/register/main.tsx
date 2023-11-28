@@ -9,12 +9,12 @@ import {
     checkDefaultInputValidation,
 } from "@/app/components/custom-input/check-policy";
 import { ConfirmPopUpModal } from "@/app/components/modal/new-yes-no-modal";
-import AlertModalWithoutBtn from "@/app/components/modal/alert-modal-without-btn";
 import AddressForm from "@/app/(default-nav-footer)/mypage/address/[method]/component/address-form";
 import { useRouter } from "next/navigation";
 import { userAddressProps, userProps } from "@/app/type";
 import * as api from "./component/fetch";
 import Policy from "./component/policy";
+import { AlertPopUpModal } from "@/app/components/modal/new-alert-modal";
 
 export default function CreateAccount() {
     const router = useRouter();
@@ -30,30 +30,21 @@ export default function CreateAccount() {
 
     //email_duplication_check
     const [isUnique, setIsUnique] = useState(false);
-    const [openSuccessModal, setOpenSuccessModal] = useState(false);
-    const [openFailureModal, setOpenFailureModal] = useState(false);
 
-    const FailureModal = () => {
-        return AlertModalWithoutBtn({
-            title: "중복 이메일",
-            content: "중복된 이메일입니다.",
-            isOpen: openFailureModal,
-            setIsOpen: setOpenFailureModal,
-            checkColor: "red",
-        });
-    };
-    const SuccessModal = () => {
-        return AlertModalWithoutBtn({
-            title: "사용 가능한 이메일",
-            content: "사용 가능한 이메일입니다.",
-            isOpen: openSuccessModal,
-            setIsOpen: setOpenSuccessModal,
-            trueCallback: () => {
-                setIsUnique(true);
-            },
-            checkColor: "green",
-        });
-    };
+    const failureHandler = AlertPopUpModal(
+        "이메일 중복",
+        <div className="py-4">이미 가입된 이메일입니다.</div>,
+        "black-bar bg-rose-700 w-full",
+        () => {}
+    );
+    const successHandler = AlertPopUpModal(
+        "사용 가능한 이메일",
+        <div className="py-4">사용 가능한 이메일입니다.</div>,
+        "black-bar bg-green-700 w-full",
+        () => {
+            setIsUnique(true);
+        }
+    );
 
     //openAddressForm
     const [isOpen, setIsOpen] = useState(false);
@@ -144,6 +135,7 @@ export default function CreateAccount() {
                                 id="email"
                                 checkPolicy={checkEmail}
                                 disabled={isUnique}
+                                maxLength={50}
                             />
                         </div>
                         <div className="cursor-pointer whitespace-nowrap flex-center pb-3">
@@ -154,9 +146,9 @@ export default function CreateAccount() {
                                 onClick={() => {
                                     api.checkEmailDuplication(email).then((res) => {
                                         if (res) {
-                                            setOpenSuccessModal(true);
+                                            successHandler();
                                         } else {
-                                            setOpenFailureModal(true);
+                                            failureHandler();
                                         }
                                     });
                                 }}>
@@ -175,6 +167,7 @@ export default function CreateAccount() {
                             id="username"
                             checkPolicy={checkName}
                             autoComplete="username"
+                            maxLength={10}
                         />
                     </div>
                     <div>
@@ -187,6 +180,7 @@ export default function CreateAccount() {
                             id="password1"
                             checkPolicy={checkPasswordPolicy}
                             autoComplete="new-password"
+                            maxLength={20}
                         />
                     </div>
                     <div>
@@ -199,6 +193,7 @@ export default function CreateAccount() {
                             id="password2"
                             checkPolicy={(value) => checkPasswordAgain(password1, value)}
                             autoComplete="new-password"
+                            maxLength={20}
                         />
                     </div>
                     <Policy checkAllSelect={setCheckAllSelect} />
@@ -251,8 +246,6 @@ export default function CreateAccount() {
                     />
                 </div>
             </div>
-            <FailureModal />
-            <SuccessModal />
         </div>
     );
 }

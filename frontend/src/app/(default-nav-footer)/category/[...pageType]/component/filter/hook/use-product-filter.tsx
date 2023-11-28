@@ -68,13 +68,14 @@ const useProductFilter = (
     };
 
     useEffect(() => {
+        const filterUpdated = !(JSON.stringify(queryMeta) == JSON.stringify(filterValue));
         const adooptFilter = (queryMeta: filterMetaProps) => {
             const queryParams = Object.entries(queryMeta).filter((obj, idx) => obj[1].length > 0);
             const query = new URLSearchParams(queryParams as any).toString();
             router.push(`\?${query}&isNewFilter=true`);
         };
 
-        adooptFilter(queryMeta);
+        filterUpdated && adooptFilter(queryMeta);
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [queryMeta]);

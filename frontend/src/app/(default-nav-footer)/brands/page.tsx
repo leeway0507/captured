@@ -1,45 +1,18 @@
-"use client";
 import Link from "next/link";
-import { getFilterMeta } from "@/app/(default-nav-footer)/category/[...pageType]/component/fetch";
 import { indexProps } from "../category/[...pageType]/type";
-
+import { getFilterMetaProxy } from "../category/[...pageType]/component/fetch";
 import Footer from "@/app/components/nav-footer/component/footer";
-import { BottomNavBar } from "@/app/components/nav-footer/bottom-nav-bar";
-import { useEffect, useState } from "react";
+import { BottomNavBar } from "@/app/components/nav-footer/component/bottom-nav-bar";
 
-export default function Brands() {
-    // const [index, setIndex] = useState<indexProps | undefined>(undefined);
-
-    // useEffect(() => {
-    //     getFilterMeta().then((data) => {
-    //         const dataIndex: indexProps = data.index;
-    //         setIndex(dataIndex);
-    //     });
-    // }, []);
-
-    // if (index === undefined) {
-    //     return <></>;
-    // }
-
-    const index = {
-        A: ["acne studios", "adidas originals", "ami", "a.p.c", "arc'teryx", "asics"],
-        B: ["Barbour"],
-        C: ["c.p. company", "comme des garcons"],
-        H: ["human made"],
-        K: ["keen"],
-        M: ["maison kitsuné"],
-        N: ["needles", "new balance", "nike"],
-        O: ["our legacy"],
-        P: ["patagonia", "polo", "porter"],
-        S: ["salomon", "stone island"],
-        T: ["the north face"],
-        V: ["vans", "vivienne westwood"],
-    };
+export default async function Brands() {
+    const index: indexProps = await getFilterMetaProxy().then((data) => {
+        return data.index;
+    });
 
     const brandsComponent = (brandName: string) => {
         const brandNameBar = brandName.replaceAll(" ", "-");
         return (
-            <Link href={`category/brand/${brandNameBar}`} className="link-animation" key={brandName}>
+            <Link href={`category/brand?brand=${brandName}`} className="link-animation" key={brandName}>
                 <div className="uppercase text-base">{brandName}</div>
             </Link>
         );

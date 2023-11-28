@@ -7,41 +7,24 @@ import { checkEmail } from "../../../components/custom-input/check-policy";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 import { handleCredentials, handleKakao, handleNaver } from "./component/sign-in-providers";
-import AlertModalWithoutBtn from "@/app/components/modal/alert-modal-without-btn";
+import { AlertPopUpModal } from "@/app/components/modal/new-alert-modal";
 import Footer from "@/app/components/nav-footer/component/footer";
 
 const oauthClass = "flex rounded-lg relative text-sm py-3 border my-2 cursor-pointer";
 const accountFeatures = "flex-center my-1 basis-1/2";
 
-const FailureModal = ({
-    title,
-    content,
-    openFailureModal,
-    setOpenFailureModal,
-}: {
-    title: string;
-    content: string;
-    openFailureModal: boolean;
-    setOpenFailureModal: () => void;
-}) => {
-    return AlertModalWithoutBtn({
-        title: title,
-        content: content,
-        isOpen: openFailureModal,
-        setIsOpen: setOpenFailureModal,
-        checkColor: "red",
-    });
-};
-
 export default function Page() {
+    const failureHandler = AlertPopUpModal(
+        "로그인 실패",
+        <div className="py-4">
+            <div>아이디 또는 비밀번호를 확인해주세요.</div>
+        </div>,
+        "black-bar bg-rose-700 w-full",
+        () => {}
+    );
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [openFailureModal, setOpenFailureModal] = useState(false);
-
-    const openModalToggle = () => {
-        setOpenFailureModal(!openFailureModal);
-    };
-
     const { data, status } = useSession();
 
     if (status === "authenticated") {
@@ -50,8 +33,17 @@ export default function Page() {
 
     const handleOnKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter") {
-            handleCredentials(email, password, openModalToggle);
+            if (email === "" || password === "") {
+                return alert("아이디 또는 비밀번호를 입력해주세요.");
+            }
+            handleCredentials(email, password, failureHandler);
         }
+    };
+    const loginHandler = () => {
+        if (email === "" || password === "") {
+            return alert("아이디 또는 비밀번호를 입력해주세요.");
+        }
+        handleCredentials(email, password, failureHandler);
     };
 
     return (
@@ -90,7 +82,7 @@ export default function Page() {
                         <button
                             type="button"
                             className="black-bar w-full tracking-[0.1rem] font-bold"
-                            onClick={() => handleCredentials(email, password, openModalToggle)}>
+                            onClick={loginHandler}>
                             로그인
                         </button>
                         <div className="flex justify-between py-2 text-sm">
@@ -126,12 +118,6 @@ export default function Page() {
                         </div>
                     </div>
                 </div>
-                <FailureModal
-                    title="로그인 실패"
-                    content="아이디 또는 비밀번호를 확인해주세요."
-                    openFailureModal={openFailureModal}
-                    setOpenFailureModal={openModalToggle}
-                />
             </div>
             <div className="hidden tb:block">
                 <Footer />

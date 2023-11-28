@@ -1,9 +1,26 @@
 import UserDropDown from "./user-dropdown";
 import CartBtn from "./cart-btn";
 import Logo from "./logo";
-import { SearchBar } from "./mobile-sidebar-components";
+
 import { useEffect, useState } from "react";
 import { NavPcTop } from "./nav-pc-top";
+
+export function SearchBar({ search, setSearch }: { search: string; setSearch: (value: string) => void }) {
+    return (
+        <>
+            <input
+                type="text"
+                placeholder="검색"
+                value={search}
+                onChange={(e) => {
+                    setSearch(e.target.value);
+                }}
+                className={`search-bar`}
+                autoFocus={false}
+            />
+        </>
+    );
+}
 
 export default function NavPc() {
     const [search, setSearch] = useState("");

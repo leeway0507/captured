@@ -40,7 +40,7 @@ const ProductCardArrary = ({
                     var params = new URLSearchParams(window.location.search);
                     nextPageNum && params.set("page", nextPageNum);
                     observer.unobserve(entry.target);
-                    Number(nextPageNum) > 1 && router.push(`\?${params.toString()}`, { scroll: false });
+                    router.replace(`\?${params.toString()}`, { scroll: false });
                 }
             });
         }, {});

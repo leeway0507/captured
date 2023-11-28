@@ -1,12 +1,11 @@
+"use client";
 import Link from "next/link";
-import AlertModal from "@/app/components/modal/alert-modal";
 import { AddressForm } from "./address-info-form";
-import { getAddress } from "./fetch";
+import { getAddressProxy } from "./fetch";
 import { userAddressProps } from "@/app/type";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { AddressSkeleton } from "./address-skeleton";
-import { PopUpModal } from "@/app/components/modal/new-modal";
 
 //css
 const addressInfoClass = "text-base flex-right active:text-deep-gray cursor-pointer";
@@ -18,7 +17,7 @@ export default function AddressInfo() {
 
     useEffect(() => {
         if (session === undefined) return;
-        getAddress(session?.user.accessToken).then((data) => {
+        getAddressProxy(session?.user.accessToken).then((data) => {
             setAddressArray(data);
         });
     }, [session]);

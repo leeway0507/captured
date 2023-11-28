@@ -3,7 +3,7 @@ import CategoryFilter from "./cateogry-filter";
 import { filterRequestProps } from "./type";
 import { responseProps } from "./component/fetch";
 import ProductCardArrary from "./component/product-card/product-card-array";
-import { BottomNavBar } from "@/app/components/nav-footer/bottom-nav-bar";
+import { BottomNavBar } from "@/app/components/nav-footer/component/bottom-nav-bar";
 import Footer from "@/app/components/nav-footer/component/footer";
 
 function createFilterValue(filterParams: any) {
@@ -24,13 +24,11 @@ function addCategoryFilterToFilterDict(pageType: string[], filterMeta: filterReq
             return (filterMeta.category = "신발");
         case "accessory":
             return (filterMeta.category = "기타");
-        case "brand":
-            return (filterMeta.brand = pageType[1].replace("-", " "));
     }
 }
 
 export default async function page({ searchParams, params }: { params: { pageType: string[] }; searchParams: any }) {
-    const initFilterMeta = await api.getFilterMeta();
+    const initFilterMeta = await api.getFilterMetaProxy();
 
     const { isNewFilter, page, ...filterParams } = searchParams;
     const { pageType } = params;
