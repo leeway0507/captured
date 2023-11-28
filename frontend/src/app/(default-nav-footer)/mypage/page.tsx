@@ -2,9 +2,9 @@ import Main from "./main";
 import OrderHistory from "./component/order/order-history";
 import { getServerSession } from "next-auth/next";
 import { options } from "../../api/auth/[...nextauth]/options";
-import SigninAlertModal from "../../components/modal/signin-alert-modal-without-btn";
 import Footer from "../../components/nav-footer/component/footer";
 import { BottomNavBar } from "../../components/nav-footer/bottom-nav-bar";
+import { redirect } from "next/navigation";
 
 export default async function Page({
     params,
@@ -15,7 +15,7 @@ export default async function Page({
 }) {
     const session = await getServerSession(options);
 
-    if (session === null) return <SigninAlertModal />;
+    if (session == null) return redirect("/auth/signin");
 
     return (
         <>

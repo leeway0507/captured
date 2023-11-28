@@ -10,18 +10,19 @@ import { IntlShipment } from "../../components/notification/shipment-info";
 export default function MainPC({ arr }: { arr: cartProductCardProps[] }) {
     const { cartQuantity } = useShoppingCart();
     return cartQuantity === 0 ? (
-        <CartEmptyGuide fontSize="3xl" />
+        <div className="hidden tb:block">
+            <CartEmptyGuide fontSize="3xl" />
+        </div>
     ) : (
-        <div className="flex-col w-full pt-8">
+        <div className="flex-col max-w-5xl w-full pt-8 mx-auto">
             <div className="flex relative mb-10 h-full gap-8 justify-evenly">
                 <div className="basis-[60%] overflow-auto">
                     <div className="me-4">
                         <CartProductCardArr arr={arr} />
                     </div>
                 </div>
-                {/* <div className="border-e border-gray-200"></div> */}
-                <div className="basis-[40%] max-w-[380px] relative ">
-                    <div className="sticky top-5">
+                <div className="basis-[40%] max-w-[380px]">
+                    <div className="sticky top-[80px]">
                         <ProductCheckOut arr={arr} />
                         <Link href="/order" className="black-bar-xl m-3 tracking-[0.2em]">
                             주문하기

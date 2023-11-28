@@ -7,7 +7,7 @@ import { setPaymentVerification } from "./fetch";
 
 // 결제 플로우 확인 : captured/keynote/flow
 
-export default function TossPaymentsWidget({
+export default function TossPaymentsWidgetPc({
     price,
     userInfo,
     addressId,
@@ -76,23 +76,28 @@ export default function TossPaymentsWidget({
                 onClick={async () => {
                     const paymentWidget = paymentWidgetRef.current;
 
-                    try {
-                        // ------ '결제하기' 버튼 누르면 결제창 띄우기 ------
-                        // https://docs.tosspayments.com/reference/widget-sdk#requestpayment결제-정보
+                    // ------ '결제하기' 버튼 누르면 결제창 띄우기 ------
+                    // https://docs.tosspayments.com/reference/widget-sdk#requestpayment결제-정보
 
-                        await setPaymentVerification(orderId, addressId, price, orderRows, userInfo.accessToken);
-                        await paymentWidget?.requestPayment({
+                    await setPaymentVerification(orderId, addressId, price, orderRows, userInfo.accessToken);
+                    await paymentWidget
+                        ?.requestPayment({
                             orderId: orderId,
                             orderName: orderName,
                             customerName: userInfo.krName,
                             customerEmail: userInfo.email && userInfo.email,
+                            // SUCCESS : https://{ORIGIN}/success?paymentKey={PAYMENT_KEY}&orderId={ORDER_ID}&amount={AMOUNT}&paymentType={PAYMENT_TYPE}
                             successUrl: `${process.env.NEXT_PUBLIC_FRONTEND_URL}/order/success`,
-                            failUrl: `${process.env.NEXT_PUBLIC_FRONTEND_URL}/order//fail`,
+                            // FAIL : https://{ORIGIN}/fail?code={ERROR_CODE}&message={ERROR_MESSAGE}&orderId={ORDER_ID}
+                            failUrl: `${process.env.NEXT_PUBLIC_FRONTEND_URL}/order/fail`,
+                        })
+                        .catch(function (error) {
+                            if (error.code === "INVALID_ORDER_NAME") {
+                                alert(error.message);
+                            } else if (error.code === "INVALID_ORDER_ID") {
+                                alert(error.message);
+                            }
                         });
-                    } catch (error) {
-                        // 에러 처리하기
-                        console.error(error);
-                    }
                 }}>
                 결제하기
             </button>

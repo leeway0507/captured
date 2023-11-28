@@ -17,19 +17,35 @@ const ItemBoxSelected = ({ content, checked, setChecked }: ItemBoxSelectedProps)
 };
 
 //
-export const OptionArrayWithoutBox = (contentList: Array<string>, setFilter: (v: string[]) => void) => {
+export const OptionArrayWithoutBox = (
+    filterValue: string[] | undefined,
+    contentList: string[],
+    setFilter: (v: string[]) => void
+) => {
     // create Array for ItemBoxSelected
     const itemBoxArray = contentList.map((content) => {
         return { content: content, checked: false };
     });
 
+    const setDefaultValue = (filterValue: any) => {
+        if (filterValue === undefined) return itemBoxArray;
+        return itemBoxArray.map((obj) => {
+            if (filterValue.includes(obj["content"])) {
+                return { ...obj, checked: true };
+            } else {
+                return obj;
+            }
+        });
+    };
+
     // create useState for ItemBoxSelected
-    const [itemBoxSelectedArray, setItemBoxSelectedArray] =
-        useState<Array<{ content: string; checked: boolean }>>(itemBoxArray);
+    const [itemBoxSelectedArray, setItemBoxSelectedArray] = useState<{ content: string; checked: boolean }[]>(
+        setDefaultValue(filterValue)
+    );
 
     // 내부 아이템 변동사항 보존용, initMeta는 건드려서는 안되고, set Filter로 내부 아이템을 건드리는 것은 한계가 있음.
     // 따라서 변동사항 보존용 state를 통해 이를 보존하고, 이를 setFilter로 넘겨주는 방식으로 구현함.
-    const [selectedItems, setSelectedItems] = useState<string[]>([]);
+    const [selectedItems, setSelectedItems] = useState<string[]>(filterValue || []);
 
     // create Toggle
     const selectToggle = (value: string) => {

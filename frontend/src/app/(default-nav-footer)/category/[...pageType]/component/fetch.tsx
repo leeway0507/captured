@@ -8,10 +8,6 @@ export interface responseProps {
 }
 
 export const getCategory = async (filter: filterRequestProps | undefined, page: string | number) => {
-    // console.log("----------getCategory----------");
-    // console.log(filter);
-    // console.log(page);
-
     const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/product/get-category?page=${page}`, {
         method: "POST",
         headers: {

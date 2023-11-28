@@ -4,8 +4,10 @@ import { useState, useEffect, useRef } from "react";
 import { useShoppingCart } from "@/app/components/context/shopping-cart-context";
 import { toast } from "react-toastify";
 import ProductSizeTable from "./product-size-table";
+import useSizeDetect from "@/app/components/hook/use-size-detect-hook";
 
 const SizeBoxMobile = ({ data, defaultSizeArr }: { data: productCardProps; defaultSizeArr: string[] }) => {
+    const { maxHeight, innerHeight } = useSizeDetect();
     const { sku, size, category } = data;
     const { sizeType, availableSize } = {
         sizeType: category,
@@ -27,26 +29,6 @@ const SizeBoxMobile = ({ data, defaultSizeArr }: { data: productCardProps; defau
         });
     };
 
-    const [innerHeight, setInnerHeight] = useState<number>(0);
-    const [defaultHeight, setDefaultHeight] = useState<number>(0);
-
-    const timerRef = useRef<any>(null);
-
-    useEffect(() => {
-        const handleResize = () => {
-            clearTimeout(timerRef.current);
-            timerRef.current = setTimeout(() => {
-                setInnerHeight(window.innerHeight);
-            }, 300);
-        };
-
-        setDefaultHeight(window.innerHeight);
-        window.addEventListener("resize", handleResize);
-
-        return () => window.removeEventListener("resize", handleResize);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
     return (
         <>
             <ProductSizeTable
@@ -57,13 +39,15 @@ const SizeBoxMobile = ({ data, defaultSizeArr }: { data: productCardProps; defau
                 defaultSizeArr={defaultSizeArr}
             />
             <div
-                ref={timerRef}
                 className={`${
-                    defaultHeight < innerHeight ? "h-[110px] pb-[30px]" : "h-[80px]"
-                } bg-white fixed bottom-0 flex px-4 gap-4 w-full  border-t-2 items-center justify-between z-10`}>
-                <div className="basis-2/5 text-left text-lg font-bold">₩ {data.price.toLocaleString()}</div>
+                    maxHeight > 0 && maxHeight == innerHeight ? "pb-[30px]" : ""
+                } h-[100px] bg-white fixed left-0 px-4 bottom-0 flex gap-4 w-full  border-t-2 items-center justify-between z-10`}>
+                <div className="flex flex-col basis-1/5">
+                    <div className=" text-left">결제금액</div>
+                    <div>{"₩" + data.price.toLocaleString()}</div>
+                </div>
                 <button
-                    className="basis-3/5 rounded-lg bg-main-black text-white text-lg tracking-wider px-2 py-3 w-full"
+                    className="basis-1/2 rounded-lg bg-main-black text-white text-lg tracking-wider px-4 py-3 w-full"
                     disabled={!isSize}
                     onClick={handleModal}>
                     {isSize ? "장바구니 담기" : "품절"}

@@ -71,9 +71,9 @@ export default function OrderDetailForm({
                 className="black-bar-xl my-4"
                 onClick={() => {
                     scrollToTop();
-                    router.back();
+                    router.push("/mypage");
                 }}>
-                확인
+                돌아가기
             </div>
         </div>
     );

@@ -1,5 +1,5 @@
 "use client";
-import useMobile from "@/app/components/hook/use-mobile";
+
 import { productCardProps } from "@/app/type";
 import { useEffect } from "react";
 
@@ -12,8 +12,6 @@ export default function Client({
     Pc: React.ReactNode;
     data: productCardProps;
 }) {
-    const { isMobile } = useMobile();
-
     // Add recentView Item
     useEffect(() => {
         const recentViewArr = JSON.parse(localStorage.getItem("recentView") || "[]");
@@ -23,5 +21,10 @@ export default function Client({
         localStorage.setItem("recentView", JSON.stringify(newRecentViewArr));
     }, [data]);
 
-    return <div>{isMobile ? <div className="px-2">{Mobile}</div> : <div className="px-2">{Pc}</div>}</div>;
+    return (
+        <>
+            <div className="block tb:hidden">{Mobile}</div>
+            <div className="hidden tb:block px-2">{Pc}</div>
+        </>
+    );
 }

@@ -6,7 +6,7 @@ import { useRef, useState } from "react";
 const oneItem = "bg-main-black border-main-black cursor-not-allowed text-light-gray active:text-main-black shadow-md";
 const itemBoxClass = " flex-center text-xs w-[100px] max-w-[200px] min-h-[30px] border-2 px-2 me-2 mb-2";
 
-const Slider = (value: number[], setValue: (v: number[]) => void) => {
+const Slider = (filterValue: number[] | undefined, value: number[], setValue: (v: number[]) => void) => {
     const [localData, setlocalData] = useState<number[]>(value);
 
     // localValue  =>  setValue With 500ms delay
@@ -34,7 +34,7 @@ const Slider = (value: number[], setValue: (v: number[]) => void) => {
                 className="horizontal-slider"
                 trackClassName="example-track"
                 thumbClassName="example-thumb"
-                defaultValue={value}
+                defaultValue={filterValue || value}
                 min={value[0]}
                 max={value[1]}
                 step={10000}

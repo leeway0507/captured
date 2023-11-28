@@ -8,7 +8,7 @@ import {
     checkPasswordAgain,
     checkDefaultInputValidation,
 } from "@/app/components/custom-input/check-policy";
-import YesNoModal from "@/app/components/modal/yes-no-modal";
+import { ConfirmPopUpModal } from "@/app/components/modal/new-yes-no-modal";
 import AlertModalWithoutBtn from "@/app/components/modal/alert-modal-without-btn";
 import AddressForm from "@/app/(default-nav-footer)/mypage/address/[method]/component/address-form";
 import { useRouter } from "next/navigation";
@@ -95,27 +95,22 @@ export default function CreateAccount() {
         },
     };
 
-    // address buttons
     const trueButton = () => {
+        const callback = () =>
+            api.register(reqData).then((res) => {
+                if (res) {
+                    console.log(res);
+                    router.push("/auth/verification");
+                } else {
+                    alert("회원가입에 실패하였습니다.");
+                }
+            });
+
+        const handler = ConfirmPopUpModal("회원가입", "회원가입하시겠습니까", callback);
         return (
-            <div className="flex-center grow">
-                <YesNoModal
-                    toggleName="가입하기"
-                    title="회원가입"
-                    content="회원가입하시겠습니까?"
-                    buttonClassName="black-bar w-full"
-                    trueCallback={() =>
-                        api.register(reqData).then((res) => {
-                            if (res) {
-                                console.log(res);
-                                router.push("/auth/verification");
-                            } else {
-                                alert("회원가입에 실패하였습니다.");
-                            }
-                        })
-                    }
-                />
-            </div>
+            <button onClick={handler} className="black-bar w-full">
+                가입하기
+            </button>
         );
     };
 

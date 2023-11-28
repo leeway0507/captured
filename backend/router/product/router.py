@@ -1,11 +1,10 @@
 """product Router"""
 
-from typing import Optional
+from typing import Any
 
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from model.db_model import ProductInfoSchema
 from model.product_model import RequestFilterSchema
 from .utils import *
 from db.connection import get_db
@@ -17,11 +16,20 @@ product_router = APIRouter()
 @product_router.post("/get-category")
 async def get_filtered_item_list(
     page: int,
-    filter: Optional[RequestFilterSchema] = None,
-    db: AsyncSession = Depends(get_db),
+    filter: RequestFilterSchema,
 ):
     """리스트 불러오기"""
-    return await get_category(db, page, filter)
+
+    print("------get_filtered_item_list--------")
+    print("filter category 시작")
+    print("page", page)
+    print("request_filter", filter.model_dump(exclude_none=True))
+
+    v = await get_category(**filter.model_dump(exclude_none=True), page=page)
+
+    # print("get-category-cache-hit", get_category.cache_info())
+
+    return v
 
 
 @product_router.get("/get-product/{sku}")

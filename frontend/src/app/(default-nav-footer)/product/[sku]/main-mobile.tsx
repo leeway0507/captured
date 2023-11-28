@@ -5,6 +5,7 @@ import RelatedProducts from "./component/recent-view-products";
 import { productCardProps } from "@/app/type";
 import SizeBoxMobile from "./component/size-box-mobile";
 import ShipType from "./component/ship-type";
+import Cart from "./component/cart";
 
 export default async function MainMobile({
     product,
@@ -14,13 +15,18 @@ export default async function MainMobile({
     defaultSizeArr: string[];
 }) {
     return (
-        <div className="flex flex-col justify-between w-full gap-2 pb-16">
-            <Thumbnail {...product} />
-            <ProductInfo {...product} />
-            <SizeBoxMobile data={product} defaultSizeArr={defaultSizeArr} />
-            <ShipType intl={product.intl} />
-            <Infos />
-            <RelatedProducts />
-        </div>
+        <>
+            <Cart />
+            <div className="flex flex-col justify-between w-full gap-2 pb-24">
+                <Thumbnail {...product} />
+                <div className="px-2 flex flex-col gap-2">
+                    <ProductInfo {...product} />
+                    <SizeBoxMobile data={product} defaultSizeArr={defaultSizeArr} />
+                    <ShipType intl={product.intl} />
+                    <Infos />
+                    <RelatedProducts />
+                </div>
+            </div>
+        </>
     );
 }

@@ -1,11 +1,6 @@
-"use client";
-
 import { NavPcTop } from "@/app/components/nav-footer/component/nav-pc-top";
 import Footer from "@/app/components/nav-footer/component/footer";
 import Main from "./main";
-import NavMobile from "@/app/components/nav-footer/component/nav-mobile";
-import PageLoading from "@/app/components/loading/page-loading";
-import useMobile from "@/app/components/hook/use-mobile";
 
 function NavPcTopForAboutUs() {
     return (
@@ -17,13 +12,13 @@ function NavPcTopForAboutUs() {
     );
 }
 
-export default function Page() {
-    const { isMobile } = useMobile();
-    if (isMobile === undefined) return <PageLoading />;
+export default async function Page() {
     return (
         <>
             <div className="main-container">
-                {isMobile ? <NavMobile /> : <NavPcTopForAboutUs />}
+                <div className="hidden tb:display">
+                    <NavPcTopForAboutUs />
+                </div>
                 <div className="grow flex-col flex justify-between">
                     <Main />
                     <Footer />

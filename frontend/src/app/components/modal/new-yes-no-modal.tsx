@@ -2,7 +2,7 @@
 import { PopUpModal } from "./new-modal";
 import { useShoppingCart } from "../context/shopping-cart-context";
 
-const ConfirmForm = (title: string, content: string, callBack: CallableFunction) => {
+const ConfirmForm = (title: string, content: string | JSX.Element, callBack: CallableFunction) => {
     const { setModalOpen } = useShoppingCart();
 
     const ConfirmHandler = () => {
@@ -34,10 +34,6 @@ const ConfirmForm = (title: string, content: string, callBack: CallableFunction)
     );
 };
 
-export const ConfirmPopUpModal = (title: string, content: string, callBack: CallableFunction) => {
+export const ConfirmPopUpModal = (title: string, content: string | JSX.Element, callBack: CallableFunction) => {
     return PopUpModal(ConfirmForm(title, content, callBack));
-};
-
-export const ConfirmButtonModal = () => {
-    return <div></div>;
 };

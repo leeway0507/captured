@@ -22,6 +22,13 @@
             "@/*": ["./src/*"]
         }
     },
-    "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/not-found.js"],
+    "include": [
+        "next-env.d.ts",
+        "**/*.ts",
+        "**/*.tsx",
+        ".next/types/**/*.ts",
+        "src/app/not-found.js",
+        "src/app/(default-nav-footer)/category/[...pageType]/component/filter/options-array.-selectedtsx"
+    ],
     "exclude": ["node_modules"]
 }

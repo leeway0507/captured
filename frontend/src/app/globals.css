@@ -68,10 +68,10 @@
         @apply mt-0 h-10 block w-full px-0.5 border-0 border-b focus:ring-0 placeholder-sub-black tracking-[0.1rem] focus:border-main-black caret-main-black
         }
     .custom-input-class {
-        @apply mt-0 h-10 block w-full px-0.5 border-0 border-b border-gray-200 text-xs focus:ring-0 focus:border-main-black placeholder-transparent focus:placeholder:text-sm;
+        @apply mt-0 h-10 block w-full px-0.5 border-0 border-b border-gray-200 text-sm focus:ring-0 focus:border-main-black placeholder-transparent focus:placeholder:text-sm;
     }
     .custom-label-class {
-        @apply absolute -top-4 left-0 text-xs text-sub-black peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-300 peer-placeholder-shown:top-2 transition-all
+        @apply absolute -top-4 left-0 text-xs text-sub-black peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 transition-all
         peer-focus:-top-4 peer-focus:text-xs peer-focus:text-sub-black;
     }
     .custom-input-disabled {
@@ -82,7 +82,7 @@
 /* For Firefox */
 * {
     scrollbar-width: none;
-    scrollbar-color: transparent red;
+    scrollbar-color: transparent;
 }
 
 /* For webkit-based browsers (Chrome, Safari) */
@@ -284,3 +284,8 @@ input[id="nav"]:checked + div {
 .min-h-s-screen {
     min-height: 100svh;
 }
+
+.container {
+    position: relative;
+    width: 100%;
+  }

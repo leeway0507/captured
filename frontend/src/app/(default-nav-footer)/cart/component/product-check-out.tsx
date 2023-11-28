@@ -24,18 +24,18 @@ export default function ProductCheckOut({ arr }: { arr: cartProductCardProps[] }
         <div className="flex flex-col border-sub-black justify-between text-sm">
             <div className="flex flex-col ">
                 <div className="flex justify-between pb-1">
-                    <div>주문금액</div>
+                    <div>물품가격</div>
                     <div>{numToKorWon(orderPrice)}</div>
                 </div>
 
                 <div className="flex flex-col pb-2">
                     <div className="flex justify-between">
-                        <div className="flex-center">총 배송비</div>
+                        <div className="flex-center">배송비</div>
                         <div>{numToKorWon(totalShippingFee)}</div>
                     </div>
 
                     {intlShippingFee > 0 ? (
-                        <div className="flex justify-between text-xs text-gray-400 ps-1">
+                        <div className="flex justify-between text-xs text-gray-400 pt-1">
                             <div>해외배송</div>
                             <div>{numToKorWon(intlShippingFee)}</div>
                         </div>
@@ -43,7 +43,7 @@ export default function ProductCheckOut({ arr }: { arr: cartProductCardProps[] }
                         ""
                     )}
                     {domesticShippingFee > 0 ? (
-                        <div className="flex justify-between text-xs text-gray-400 ps-1 ">
+                        <div className="flex justify-between text-xs text-gray-400 pt-1">
                             <div>국내배송</div>
                             <div>{numToKorWon(domesticShippingFee)}</div>
                         </div>

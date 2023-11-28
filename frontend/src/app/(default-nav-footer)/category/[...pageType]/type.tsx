@@ -53,20 +53,20 @@ export interface initFilterMetaProps {
 }
 
 export interface filterMetaProps {
-    sortBy: string[];
-    brand: string[];
-    category: string[];
-    categorySpec: string[];
-    sizeArray: string[];
-    intl: string[];
-    price: number[];
+    sortBy?: string[];
+    brand?: string[];
+    category?: string[];
+    categorySpec?: string[];
+    sizeArray?: string[];
+    intl?: string[];
+    price?: number[];
 }
 
 export interface filterRequestProps {
-    sortBy: string;
+    sortBy?: string;
     brand?: string;
     category?: string;
-    intl: string;
-    price: string;
-    sizeArray: string;
+    intl?: string;
+    price?: string;
+    sizeArray?: string;
 }

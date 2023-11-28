@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { initFilterMetaProps, filterMetaProps } from "../../../type";
-import OptionArraySelected from "../options-array";
+import OptionArraySelected from "../options-array-selected";
 import OptionArraySortBy from "../options-array-sort-by";
 import OptionArrayWithoutBox from "../options-array-without-box";
 import Slider from "../options-array-range-slider";
@@ -30,10 +30,14 @@ const selectFilterType = (initFilterMeta: initFilterMetaProps, pageType: string)
     }
 };
 
-const useProductFilter = (initFilterMeta: initFilterMetaProps, pageType: string) => {
+const useProductFilter = (
+    initFilterMeta: initFilterMetaProps,
+    pageType: string,
+    filterValue: filterMetaProps | undefined
+) => {
     const { productType, sizeArray } = selectFilterType(initFilterMeta, pageType);
     const router = useRouter();
-    const emptyMeta = {
+    const Meta = {
         sortBy: [],
         brand: [],
         category: [],
@@ -42,7 +46,7 @@ const useProductFilter = (initFilterMeta: initFilterMetaProps, pageType: string)
         intl: [],
         price: [],
     };
-    const [queryMeta, setQueryMeta] = useState<filterMetaProps>(() => emptyMeta);
+    const [queryMeta, setQueryMeta] = useState<filterMetaProps>(() => filterValue || Meta);
 
     const setSortBy = (v: string) => {
         setQueryMeta((queryMeta) => ({ ...queryMeta, sortBy: [v] }));
@@ -64,27 +68,27 @@ const useProductFilter = (initFilterMeta: initFilterMetaProps, pageType: string)
     };
 
     useEffect(() => {
-        const filterEmpty = JSON.stringify(queryMeta) == JSON.stringify(emptyMeta);
         const adooptFilter = (queryMeta: filterMetaProps) => {
-            const query = new URLSearchParams(queryMeta as any).toString();
-            router.push(`\?${query}&refresh=true`);
+            const queryParams = Object.entries(queryMeta).filter((obj, idx) => obj[1].length > 0);
+            const query = new URLSearchParams(queryParams as any).toString();
+            router.push(`\?${query}&isNewFilter=true`);
         };
 
-        filterEmpty
-            ? window.location.search.includes("sortBy") && router.push(window.location.pathname)
-            : adooptFilter(queryMeta);
+        adooptFilter(queryMeta);
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [queryMeta]);
 
-    return {
-        sortBy: OptionArraySortBy(initFilterMeta.sortBy, setSortBy),
-        brand: OptionArrayWithoutBox(initFilterMeta.brand, setBrand),
-        category: OptionArraySelected(productType, setCategory),
-        size: OptionArraySelected(sizeArray, setSizeArray),
-        intl: OptionArrayWithoutBox(initFilterMeta.intl, setIntl),
-        price: Slider(initFilterMeta.price, setPrice),
+    const result: useProductFilterProps = {
+        sortBy: OptionArraySortBy(queryMeta.sortBy, setSortBy),
+        brand: OptionArrayWithoutBox(queryMeta.brand, initFilterMeta.brand, setBrand),
+        category: OptionArraySelected(queryMeta.categorySpec, productType, setCategory),
+        size: OptionArraySelected(queryMeta.sizeArray, sizeArray, setSizeArray),
+        intl: OptionArrayWithoutBox(queryMeta.intl, initFilterMeta.intl, setIntl),
+        price: Slider(queryMeta.price, initFilterMeta.price, setPrice),
     };
+
+    return result;
 };
 
 export default useProductFilter;

@@ -115,7 +115,7 @@ export default function AddressForm(props: addAddressFromProps) {
                         <div className="grow me-2 flex-left">
                             <div className="py-2 border-b border-light-gray grow text-main-black">
                                 {krAddress === "" ? (
-                                    <div className="text-sm text-gray-300">한글 도로명 주소 입력</div>
+                                    <div className="text-sm text-gray-400">한글 도로명 주소 입력</div>
                                 ) : (
                                     krAddress
                                 )}
@@ -148,7 +148,7 @@ export default function AddressForm(props: addAddressFromProps) {
                         <div className="grow me-2 flex-left">
                             <div className="py-2 border-b border-light-gray grow text-main-black">
                                 {enAddress === "" ? (
-                                    <div className="text-sm text-gray-300">영문 도로명 주소 입력</div>
+                                    <div className="text-sm text-gray-400">영문 도로명 주소 입력</div>
                                 ) : (
                                     enAddress
                                 )}

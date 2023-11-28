@@ -7,7 +7,7 @@ export async function setPaymentVerification(
     arr: orderRowRequestProps[],
     accessToken: string
 ) {
-    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/order/save-order-info-before-payment`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/order/save-order-info-before-payment`, {
         method: "POST",
         headers: {
             Authorization: `bearer ${accessToken}`,
@@ -20,6 +20,8 @@ export async function setPaymentVerification(
             orderRows: arr,
         }),
     });
+
+    return { status: res.status, data: await res.json() };
 }
 
 export async function getPaymentVerification(OrderId: string, accessToken: string) {
@@ -33,9 +35,7 @@ export async function getPaymentVerification(OrderId: string, accessToken: strin
         }
     );
 
-    const data = await response.json();
-
-    return data;
+    return { status: response.status, data: await response.json() };
 }
 
 export async function confirmPayment(secretKey: string, paymentKey: string, amount: string, orderId: string) {

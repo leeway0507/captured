@@ -4,16 +4,28 @@ import Link from "next/link";
 import { productCardProps } from "@/app/type";
 import { useState } from "react";
 
-export default function ProductCard(props: productCardProps) {
+export default function ProductCard({
+    props,
+    isIntl = true,
+    idx = 3,
+    prorityNumber = 3,
+}: {
+    props: productCardProps;
+    isIntl?: boolean;
+    idx?: number;
+    prorityNumber?: number;
+}) {
     const { sku, brand, productName, price, productId, intl } = props;
 
     const [isLoaded, setIsLoaded] = useState(true);
 
     const productImgUrl = `${process.env.NEXT_PUBLIC_MOBILE_IMAGE_URL}/product/${brand}/${productName} ${productId}/thumbnail.png`;
+    const shotenProductName = productName.length > 25 ? productName.slice(0, 25) + "..." : productName;
     return (
         <Link href={`/product/${sku}`} className=" text-sub-black text-xs font-light pb-6 z-1 " key={sku}>
             <div className="flex flex-col">
-                <div className="max-w-[300px] max-h-[300px] relative">
+                <div className="relative">
+                    {/* <div className="h-[200px] aspect-square flex-center text-2xl">{sku}</div> */}
                     {isLoaded ? (
                         <Image
                             src={productImgUrl}
@@ -22,6 +34,7 @@ export default function ProductCard(props: productCardProps) {
                             height="300"
                             className="rounded-lg"
                             onError={() => setIsLoaded(false)}
+                            priority={idx < prorityNumber ? true : false}
                         />
                     ) : (
                         <Image
@@ -34,12 +47,9 @@ export default function ProductCard(props: productCardProps) {
                     )}
                 </div>
                 <div className="flex flex-col text-sub-black">
-                    <div className="flex justify-between">
-                        {/* <div className="uppercase text-sub-black">{brand}</div> */}
-                    </div>
-                    <div className="h-[40px]">{`${brand} ${productName} | ${productId.toUpperCase()}`}</div>
+                    <div className="h-[50px]">{`${brand} ${shotenProductName} | ${productId.toUpperCase()}`}</div>
                     <div className="py-2 font-bold">
-                        <div className="inline-block font-bold">{intl ? "해외배송" : "국내배송"}</div> | ₩{" "}
+                        {isIntl && <div className="inline-block font-bold">{intl ? "해외배송" : "국내배송"} | </div>} ₩{" "}
                         {price.toLocaleString()}
                     </div>
                 </div>

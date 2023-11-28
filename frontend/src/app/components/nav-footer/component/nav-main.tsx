@@ -7,7 +7,7 @@ import Link from "next/link";
 export default function NavMain() {
     const Logo = () => (
         <>
-            <div className="px-4 flex justify-between h-[50px] w-full bg-white border-b">
+            <div className="px-4 flex justify-between h-[50px] w-full bg-white w-screen">
                 <Link
                     href="/"
                     className="flex-left font-test text-xl py-3 text-rose-600 tracking-[0.2rem] "
