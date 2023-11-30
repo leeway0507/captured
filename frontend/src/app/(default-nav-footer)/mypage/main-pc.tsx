@@ -7,14 +7,15 @@ import { useState, useEffect } from "react";
 import { signOut } from "next-auth/react";
 import { ConfirmPopUpModal } from "../../components/modal/new-yes-no-modal";
 
+const selectedClass = "mx-4 bg-main-black text-white rounded-lg";
+
 function classNames(...classes: any[]) {
     return classes.filter(Boolean).join(" ");
 }
 
 export const LogOutButton = () => {
-    const url = window.location.origin;
     const callback = () => {
-        signOut({ callbackUrl: url });
+        signOut({ callbackUrl: "/" });
     };
 
     const handler = ConfirmPopUpModal("로그아웃", <div className="py-4">로그아웃 하시겠습니까?</div>, callback);
@@ -39,17 +40,17 @@ export default function MainPc({ signUpType, orderHistory }: { signUpType: strin
     }, [pageIdx]);
 
     return (
-        <div className="flex grow max-w-5xl mx-auto justify-between">
+        <div className="flex grow max-w-5xl justify-between">
             <Tab.Group vertical selectedIndex={selectedIndex} onChange={setSelectedIndex}>
-                <Tab.List className="basis-1/3 border-e max-w-[300px] my-4">
-                    <Tab.List className={"flex flex-col min-h-[600px] text-xl sticky top-0 py-2"}>
+                <Tab.List className="basis-1/3 max-w-[300px] min-h-[600px] text-xl">
+                    <Tab.List className={"sticky top-[70px] flex flex-col w-full"}>
                         <Tab
                             onClick={() => router.push("/mypage?pageindex=0")}
                             key="order"
                             className={({ selected }) =>
                                 classNames(
                                     "py-4 tracking-[0.1em] cursor-pointer focus:outline-none",
-                                    selected ? "bg-main-black text-white" : ""
+                                    selected && selectedClass
                                 )
                             }>
                             주문배송
@@ -60,7 +61,7 @@ export default function MainPc({ signUpType, orderHistory }: { signUpType: strin
                             className={({ selected }) =>
                                 classNames(
                                     "py-4 tracking-[0.1em] cursor-pointer focus:outline-none",
-                                    selected ? "bg-main-black text-white" : ""
+                                    selected && selectedClass
                                 )
                             }>
                             주소 추가 및 변경
@@ -72,7 +73,7 @@ export default function MainPc({ signUpType, orderHistory }: { signUpType: strin
                                 className={({ selected }) =>
                                     classNames(
                                         "py-4 tracking-[0.1em] cursor-pointer focus:outline-none",
-                                        selected ? "bg-main-black text-white" : ""
+                                        selected && selectedClass
                                     )
                                 }>
                                 비밀번호 변경

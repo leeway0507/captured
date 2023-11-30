@@ -45,7 +45,6 @@ export default function MainMobile({ arr }: { arr: cartProductCardProps[] }) {
                     주문하기
                 </Link>
             </div>
-            <BottomNavBar nav="cart" />
         </>
     );
 }

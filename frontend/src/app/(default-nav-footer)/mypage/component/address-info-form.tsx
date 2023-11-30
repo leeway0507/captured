@@ -1,7 +1,7 @@
 import { userAddressProps } from "@/app/type";
 import { phoneNumberAutoFormat } from "@/app/components/custom-input/check-policy";
 import Link from "next/link";
-import { deleteAddress } from "./fetch";
+import { deleteAddressProxy } from "./fetch";
 import { ConfirmPopUpModal } from "@/app/components/modal/new-yes-no-modal";
 
 export interface addressInfoFormProps extends userAddressProps {
@@ -15,10 +15,14 @@ export const AddressForm = (props: addressInfoFormProps) => {
 
     const DeleteButton = () => {
         const callback = () => {
-            deleteAddress(address, accessToken).then(() => location.reload());
+            deleteAddressProxy(address, accessToken).then(() => location.reload());
         };
 
-        const handler = ConfirmPopUpModal("주소 삭제", "해당 주소를 삭제하시겠습니까?", callback);
+        const handler = ConfirmPopUpModal(
+            "주소 삭제",
+            <div className="py-4">해당 주소를 삭제하시겠습니까?</div>,
+            callback
+        );
         return (
             <button onClick={handler} className="active:text-deep-gray">
                 삭제

@@ -4,11 +4,15 @@ import * as api from "./fetch-server";
 import OrderTable from "./order-table";
 import OrderDetail from "./order-detail";
 import { orderHistoryProps } from "@/app/type";
+import { signOut } from "next-auth/react";
 
 const OrderHistory = async ({ searchParams }: { searchParams: { [key: string]: string | undefined } }) => {
     const session = await getServerSession(options);
     const orderId = searchParams.orderId;
-    const orderHistoryArray = await api.getOrderHistory(session?.user.accessToken!);
+    const orderHistoryArrayResPonse = await api.getOrderHistory(session?.user.accessToken!);
+
+    if (orderHistoryArrayResPonse.status === 401) return signOut({ callbackUrl: "/" });
+    const orderHistoryArray = orderHistoryArrayResPonse.data;
 
     if (orderId) {
         const targetOrder = orderHistoryArray.find((order: orderHistoryProps) => order.orderId === orderId);

@@ -1,34 +1,33 @@
 import { userAddressProps } from "@/app/type";
 
-export const createAddress = async (address: userAddressProps, access_token: string | undefined) => {
-    if (access_token == undefined) {
+export const createAddressProxy = async (address: userAddressProps, accessToken: string | undefined) => {
+    if (accessToken == undefined) {
         return;
     }
-
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/mypage/create-address`, {
+    const dynamicUrl = typeof window !== "undefined" ? window.location.origin : "http://127.0.0.1:3000";
+    const res = await fetch(`${dynamicUrl}/api/mypage/create-address`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${access_token}`,
         },
-        body: JSON.stringify(address),
+        body: JSON.stringify({ address, accessToken }),
     });
     const data = await res.json();
     return data;
 };
 
-export const updateAddress = async (address: userAddressProps, access_token: string | undefined) => {
-    if (access_token == undefined) {
+export const updateAddressProxy = async (address: userAddressProps, accessToken: string | undefined) => {
+    if (accessToken == undefined) {
         return;
     }
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/mypage/update-address`, {
+    const dynamicUrl = typeof window !== "undefined" ? window.location.origin : "http://127.0.0.1:3000";
+    const res = await fetch(`${dynamicUrl}/api/mypage/update-address`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${access_token}`,
         },
-        body: JSON.stringify(address),
+        body: JSON.stringify({ address, accessToken }),
     });
     const data = await res.json();
     return data;

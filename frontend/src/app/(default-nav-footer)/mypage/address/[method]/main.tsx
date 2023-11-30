@@ -4,7 +4,7 @@ import { useState } from "react";
 import { userAddressProps } from "@/app/type";
 import { useRouter } from "next/navigation";
 import AddressForm, { addAddressFromProps } from "./component/address-form";
-import { updateAddress, createAddress } from "./component/fetch";
+import { updateAddressProxy, createAddressProxy } from "./component/fetch";
 import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
 import { ConfirmPopUpModal } from "@/app/components/modal/new-yes-no-modal";
@@ -59,7 +59,7 @@ const Main = (props: userAddressProps) => {
 
     const AddButton = () => {
         const callback = () =>
-            createAddress(address, session?.user.accessToken).then(router.back).catch(failureHandler);
+            createAddressProxy(address, session?.user.accessToken).then(router.back).catch(failureHandler);
 
         const handler = ConfirmPopUpModal(
             "주소 추가",
@@ -76,7 +76,7 @@ const Main = (props: userAddressProps) => {
 
     const ModificationButton = () => {
         const callback = () =>
-            updateAddress(address, session?.user.accessToken).then(router.back).catch(failureHandler);
+            updateAddressProxy(address, session?.user.accessToken).then(router.back).catch(failureHandler);
 
         const handler = ConfirmPopUpModal(
             "주소 수정",

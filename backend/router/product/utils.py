@@ -21,6 +21,7 @@ from db.connection import session_local
 
 from sqlalchemy.ext.asyncio import AsyncSession
 from custom_alru import alru_cache
+from functools import lru_cache
 
 error_log = make_logger("logs/db/product.log", "product_router")
 
@@ -38,13 +39,14 @@ async def get_product(sku: int, db: AsyncSession) -> ProductInfoSchema | None:
     return ProductInfoSchema(**result[0][0].to_dict(), size=result[0][1])
 
 
+@lru_cache()
 def get_init_meta_data():
     with open("./json/init_meta.json", "r") as f:
         init_meta = json.load(f)
     return FilterMetaSchema(**init_meta).model_dump(by_alias=True)
 
 
-# @alru_cache()
+@alru_cache()
 async def get_category(
     sort_by: str = "최신순",
     category: Optional[str] = None,

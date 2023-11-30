@@ -20,7 +20,7 @@ cleanup
 
 
 cd /Users/yangwoolee/repo/captured/main/frontend
-yarn dev &
+npm run dev &
 
 cd /Users/yangwoolee/repo/captured/main/backend
 pyenv activate py310 

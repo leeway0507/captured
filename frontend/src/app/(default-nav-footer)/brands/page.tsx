@@ -10,7 +10,6 @@ export default async function Brands() {
     });
 
     const brandsComponent = (brandName: string) => {
-        const brandNameBar = brandName.replaceAll(" ", "-");
         return (
             <Link href={`category/brand?brand=${brandName}`} className="link-animation" key={brandName}>
                 <div className="uppercase text-base">{brandName}</div>

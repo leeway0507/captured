@@ -1,7 +1,7 @@
 "use client";
 import CustomInput from "@/app/components/custom-input/cusotm-input";
 import { checkPasswordPolicy, checkPasswordAgain } from "@/app/components/custom-input/check-policy";
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import { useSession } from "next-auth/react";
 import { resetPasswordProxy } from "./fetch";
 
