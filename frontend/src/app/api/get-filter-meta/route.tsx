@@ -1,11 +1,10 @@
 import { initFilterMetaProps } from "@/app/(default-nav-footer)/category/[...pageType]/type";
-import { NextResponse } from "next/server";
-export const dynamic = "force-dynamic";
+
+export const dynamic = "force-static";
 
 const getFilterMeta = async () => {
-    const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/product/get-filter-meta`);
-    const result: initFilterMetaProps = await req.json();
-    return NextResponse.json(result);
+    const jsonData: initFilterMetaProps = require("./init_meta.json");
+    return Response.json(jsonData);
 };
 
 export { getFilterMeta as GET };

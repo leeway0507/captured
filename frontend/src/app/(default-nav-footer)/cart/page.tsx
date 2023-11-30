@@ -4,6 +4,7 @@ import MainMobile from "./main-mobile";
 import MainPC from "./main-pc";
 import PageLoading from "../../components/loading/page-loading";
 import Footer from "@/app/components/nav-footer/component/footer";
+import { BottomNavBar } from "@/app/components/nav-footer/component/bottom-nav-bar";
 
 export default function Cart() {
     const { cartItems } = useShoppingCart();
@@ -13,6 +14,7 @@ export default function Cart() {
         <>
             <>
                 <MainMobile arr={cartItems} />
+                <BottomNavBar nav="cart" />
             </>
             <div className="hidden tb:block px-2">
                 <MainPC arr={cartItems} />

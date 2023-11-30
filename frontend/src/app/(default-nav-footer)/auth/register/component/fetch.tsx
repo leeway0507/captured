@@ -5,10 +5,11 @@ interface register {
     addressData: userAddressProps;
 }
 
-export const register = async (props: register) => {
+export const registerProxy = async (props: register) => {
     const { userData, addressData } = props;
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/register`, {
+    const dynamicUrl = typeof window !== "undefined" ? window.location.origin : "http://127.0.0.1:3000";
+    const res = await fetch(`${dynamicUrl}/api/register`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -16,13 +17,23 @@ export const register = async (props: register) => {
         body: JSON.stringify({ user_registration: userData, address: addressData }),
     });
 
-    console.log("res.ok", res.ok);
-
-    return res.ok ? true : false;
+    return await res.json();
 };
 
-export const checkEmailDuplication = async (email: string) => {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/email-check?email=${email}`);
-    const data = await res.json();
-    return data.isUnique;
+export const checkEmailDuplicationProxy = async (email: string) => {
+    const dynamicUrl = typeof window !== "undefined" ? window.location.origin : "http://127.0.0.1:3000";
+    const res = await fetch(`${dynamicUrl}/api/email-check?email=${email}`);
+    return await res.json();
+};
+
+export const verifyEmailCodeProxy = async (email: string, code: string) => {
+    const dynamicUrl = typeof window !== "undefined" ? window.location.origin : "http://127.0.0.1:3000";
+    const res = await fetch(`${dynamicUrl}/api/verify-email-code?email=${email}&code=${code}`);
+    return await res.json();
+};
+
+export const reSendCodeToEmailProxy = async (email: string) => {
+    const dynamicUrl = typeof window !== "undefined" ? window.location.origin : "http://127.0.0.1:3000";
+    const res = await fetch(`${dynamicUrl}/api/resend-code-to-email?email=${email}`);
+    return await res.json();
 };

@@ -3,14 +3,13 @@ import { cartProductCardProps } from "../../type";
 import ProductCheckOut from "../../(default-nav-footer)/cart/component/product-check-out";
 import { useState } from "react";
 import { userAddressProps } from "../../type";
-import { redirect, useRouter } from "next/navigation";
-import { IntlShipment } from "../../components/notification/shipment-info";
-import { GrFormClose } from "react-icons/gr";
+import { useRouter } from "next/navigation";
 import CalculateOrderPrice from "./component/total-price";
 import { DefaultAddressModule, SubAddressModule } from "./component/address-info";
 import Logo from "../../components/nav-footer/component/logo";
 import TossPaymentsWidgetPc from "./component/tosspayments/toss-payments-widget-pc";
 import { User } from "@/app/type";
+import Image from "next/image";
 
 const MainPC = ({
     arr,
@@ -86,7 +85,14 @@ const MainPC = ({
                             <div className="basis-1/4"></div>
                             <div className="basis-1/2 flex-center font-bold">배송지 변경</div>
                             <div className="basis-1/4 link-animation flex-right text-2xl" onClick={openAddressToggle}>
-                                <GrFormClose />
+                                <Image
+                                    src={"/icons/x-mark.svg"}
+                                    alt="x-mark"
+                                    width="20"
+                                    height="20"
+                                    className="m-2 me-6"
+                                    priority
+                                />
                             </div>
                         </div>
                         <SubAddressModule

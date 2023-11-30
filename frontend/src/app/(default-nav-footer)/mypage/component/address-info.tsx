@@ -22,8 +22,6 @@ export default function AddressInfo() {
         });
     }, [session]);
 
-    const modalHandler = () => alert("최대 3개의 주소만 등록할 수 있습니다.");
-
     if (addressArray === undefined) return <AddressSkeleton />;
 
     if (addressArray.length === 0) {
@@ -45,7 +43,9 @@ export default function AddressInfo() {
                 </Link>
             ) : (
                 <div className="w-full flex-right">
-                    <button onClick={modalHandler} className={`${addressInfoClass}`}>
+                    <button
+                        onClick={() => alert("최대 3개의 주소만 등록할 수 있습니다.")}
+                        className={`${addressInfoClass}`}>
                         + 신규 주소 추가
                     </button>
                 </div>

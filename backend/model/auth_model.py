@@ -3,7 +3,7 @@
 from pydantic import BaseModel, EmailStr, ConfigDict
 from model.db_model import UserSchema
 from pydantic.alias_generators import to_camel
-from typing import Optional
+from typing import Optional, List
 
 
 class LoginSchema(BaseModel):
@@ -33,3 +33,9 @@ class LoginResponseSchema(Token):
     kr_name: str
     email_verification: bool
     sign_up_type: str
+
+
+class EmailSchema(BaseModel):
+    """email Schema"""
+
+    email: List[EmailStr]

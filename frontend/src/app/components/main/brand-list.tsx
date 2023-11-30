@@ -7,7 +7,7 @@ const ImageClass = "scale-[100%] tb:scale-[100%] ";
 const evenLogoCard = (brandName: string, idx: number) => {
     const brandNameBar = brandName.replaceAll(" ", "-").toLowerCase();
     return (
-        <Link key={idx} href={`/category/brand/${brandNameBar}`} className={`${linkClass} bg-main-black flex-center`}>
+        <Link key={idx} href={`category/brand?brand=${brandName}`} className={`${linkClass} bg-main-black flex-center`}>
             <div className={`${divClass}`}>
                 <Image
                     src={`/brands/white/${brandNameBar}-white-logo.png`}
@@ -23,7 +23,7 @@ const evenLogoCard = (brandName: string, idx: number) => {
 const oddLogoCard = (brandName: string, idx: number) => {
     const brandNameBar = brandName.replaceAll(" ", "-").toLowerCase();
     return (
-        <Link key={idx} href={`/category/brand/${brandNameBar}`} className={`${linkClass} bg-gray-300 flex-center`}>
+        <Link key={idx} href={`category/brand?brand=${brandName}`} className={`${linkClass} bg-gray-300 flex-center`}>
             <div className={`${divClass}`}>
                 <Image
                     src={`/brands/black/${brandNameBar}-logo.png`}

@@ -7,7 +7,7 @@ export const getOrderHistory = async (accessToken: string) => {
         },
     });
 
-    return await res.json();
+    return { status: res.status, data: await res.json() };
 };
 
 export const getUserAddressInfo = async (addressId: string, accessToken: string) => {

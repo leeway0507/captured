@@ -1,6 +1,6 @@
 """인증과 관련된 함수 정의"""
 
-from typing import Dict
+from typing import Dict, Any
 from datetime import datetime, timedelta
 from uuid import uuid1
 import os
@@ -15,9 +15,14 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, func, and_, update
 
 
-from model.db_model import UserSchema, UserAddressSchema, UserIndDBSchema, UserAddressInDBSchema
+from model.db_model import (
+    UserSchema,
+    UserAddressSchema,
+    UserIndDBSchema,
+    UserAddressInDBSchema,
+)
 from model.registration_model import EmailRegistrationSchema, RegistrationOauthSchema
-from model.auth_model import LoginSchema, TokenData, Token
+from model.auth_model import LoginSchema, TokenData, Token, EmailSchema
 from logs.make_log import make_logger
 from db.tables import UserTable, UserAddressTable
 from db.connection import commit
@@ -36,7 +41,9 @@ ACCESS_TOKEN_EXPIRE_MINUTES = config("ACCESS_TOKEN_EXPIRE_MINUTES", cast=int)
 
 assert isinstance(JWT_ALGORITHM, str), "JWT_ALGORITHM is not 'str' type"
 assert isinstance(JWT_SECRET, str), "JWT_SECRET is not 'str' type"
-assert isinstance(ACCESS_TOKEN_EXPIRE_MINUTES, int), "ACCESS_TOKEN_EXPIRE_MINUTES is not 'int' type"
+assert isinstance(
+    ACCESS_TOKEN_EXPIRE_MINUTES, int
+), "ACCESS_TOKEN_EXPIRE_MINUTES is not 'int' type"
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="api/auth/signin")
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -143,21 +150,6 @@ def get_current_user(token: str = Depends(oauth2_scheme)) -> TokenData:
     return token_data
 
 
-# async def get_verfied_user(
-#     current_user: UserSchema = Depends(get_current_user),
-# ) -> UserSchema | Dict[str, str]:
-#     """
-#     해당 사용자가 email 인증을 완료했는지 체크
-#     - args : userSchema
-#     - return : UserSchema
-#     """
-
-#     if current_user.email_verification is False:
-#         raise HTTPException(status_code=401, detail="이메일 인증이 필요합니다.")
-
-#     return current_user
-
-
 async def register_auth_user(
     auth_user_registration: RegistrationOauthSchema, db: AsyncSession
 ) -> UserSchema | None:
@@ -175,7 +167,9 @@ async def register_auth_user(
 
 
 async def register_user_and_address(
-    db: AsyncSession, user_registration: EmailRegistrationSchema, address: UserAddressSchema
+    db: AsyncSession,
+    user_registration: EmailRegistrationSchema,
+    address: UserAddressSchema,
 ) -> UserSchema | None:
     """
     회원가입 시 user, address 정보를 DB에 저장 | 성공 & 실패 여부에 따라 UserSchema 반환
@@ -264,11 +258,15 @@ async def update_user_password(db: AsyncSession, password: str, user_id: str) ->
     return await commit(db, query, error_log)
 
 
-async def get_user_by_email_and_name(db: AsyncSession, name: str, email: str) -> UserSchema | None:
+async def get_user_by_email_and_name(
+    db: AsyncSession, name: str, email: str
+) -> UserSchema | None:
     """이름과 이메일을 통해 user정보 획득"""
 
     result = await db.execute(
-        select(UserTable).filter(and_(UserTable.kr_name == name, UserTable.email == email))
+        select(UserTable).filter(
+            and_(UserTable.kr_name == name, UserTable.email == email)
+        )
     )
     result = result.scalar()
 
@@ -278,3 +276,70 @@ async def get_user_by_email_and_name(db: AsyncSession, name: str, email: str) ->
     result = result.to_dict()
     result.pop("password")
     return UserSchema(**result)
+
+
+#### EMAIL VERIFICATION ####
+
+from random import randint
+from fastapi_mail import ConnectionConfig, FastMail, MessageSchema, MessageType
+from pathlib import Path
+
+
+password = config.get("GMAIL_APP_PASSWORD")
+sending_email = config.get("SENDING_EMAIL")
+assert isinstance(password, str), "password is not str"
+assert isinstance(sending_email, str), "password is not str"
+
+print(Path(__file__).parent / "templates")
+
+conf = ConnectionConfig(
+    MAIL_USERNAME=sending_email,
+    MAIL_PASSWORD=password,
+    MAIL_FROM=sending_email,
+    MAIL_PORT=465,
+    MAIL_SERVER="smtp.gmail.com",
+    MAIL_STARTTLS=False,
+    MAIL_SSL_TLS=True,
+    USE_CREDENTIALS=True,
+    VALIDATE_CERTS=True,
+    TEMPLATE_FOLDER=Path(__file__).parent / "templates",
+)
+
+
+def generate_code(email: str) -> Dict[str, Dict[str, Any]]:
+    """6자리의 숫자로 이루어진 code 생성"""
+    code = str(randint(100000, 999999))
+    return {
+        email: {
+            "code": code,
+            "expire": datetime.now() + timedelta(minutes=3),
+        }
+    }
+
+
+async def send_code(user_code: Dict[str, Dict[str, Any]]):
+    email = list(user_code.keys())
+    code = user_code[email[0]]["code"]
+    recipients = EmailSchema(email=email).email
+
+    message = MessageSchema(
+        subject="[Captured] 이메일 인증번호",
+        recipients=recipients,
+        template_body={"code": code},
+        subtype=MessageType.html,
+    )
+
+    fm = FastMail(conf)
+    return await fm.send_message(message, template_name="email_verification.html")
+
+
+def verification_code(server_code: Dict[str, Any], request_code: str):
+    """code 인증"""
+
+    if server_code["expire"] < datetime.now():
+        return {"result": False, "message": "expired"}
+
+    if request_code != server_code["code"]:
+        return {"result": False, "message": "not matched"}
+
+    return {"result": True, "message": "success"}

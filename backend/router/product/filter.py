@@ -7,7 +7,7 @@ from custom_alru import alru_cache
 from functools import lru_cache
 
 
-# @alru_cache()
+@alru_cache()
 async def get_page_idx(
     limit: int,
     sort_by: str = "최신순",

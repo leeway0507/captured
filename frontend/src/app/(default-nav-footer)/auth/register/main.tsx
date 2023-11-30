@@ -15,6 +15,8 @@ import { userAddressProps, userProps } from "@/app/type";
 import * as api from "./component/fetch";
 import Policy from "./component/policy";
 import { AlertPopUpModal } from "@/app/components/modal/new-alert-modal";
+import EmailVerification from "./component/email-verification";
+import { handleCredentials } from "../signin/component/sign-in-providers";
 
 export default function CreateAccount() {
     const router = useRouter();
@@ -28,23 +30,43 @@ export default function CreateAccount() {
     const [password2, setPassword2] = useState("");
     const [name, setName] = useState("");
 
-    //email_duplication_check
+    // email verification
     const [isUnique, setIsUnique] = useState(false);
+    const [isverified, setIsVerified] = useState(false);
 
     const failureHandler = AlertPopUpModal(
-        "이메일 중복",
-        <div className="py-4">이미 가입된 이메일입니다.</div>,
+        "가입된 이메일",
+        <div className="py-4">이미 가입된 메일입니다.</div>,
         "black-bar bg-rose-700 w-full",
         () => {}
     );
+
     const successHandler = AlertPopUpModal(
-        "사용 가능한 이메일",
-        <div className="py-4">사용 가능한 이메일입니다.</div>,
-        "black-bar bg-green-700 w-full",
-        () => {
-            setIsUnique(true);
-        }
+        "인증메일 발송",
+        <div className="py-4">인증 메일을 보냈습니다.</div>,
+        "black-bar w-full",
+        () => setIsUnique(true)
     );
+    const registerFailureHandler = AlertPopUpModal(
+        "요청 실패",
+        <div className="py-4">
+            요청에 실패하였습니다. <br /> 다시 시도해주세요.
+        </div>,
+        "black-bar bg-rose-700 w-full",
+        () => {}
+    );
+
+    const emailCheckHandler = () => {
+        api.checkEmailDuplicationProxy(email)
+            .then((res) => {
+                if (res.status == 200) {
+                    successHandler();
+                } else {
+                    failureHandler();
+                }
+            })
+            .catch(registerFailureHandler);
+    };
 
     //openAddressForm
     const [isOpen, setIsOpen] = useState(false);
@@ -62,10 +84,6 @@ export default function CreateAccount() {
     useEffect(() => {
         setKrNameProps(name);
     }, [name]);
-
-    useEffect(() => {
-        localStorage.setItem("email", email);
-    }, [email]);
 
     const reqData: { userData: userProps; addressData: userAddressProps } = {
         userData: {
@@ -88,16 +106,15 @@ export default function CreateAccount() {
 
     const trueButton = () => {
         const callback = () =>
-            api.register(reqData).then((res) => {
+            api.registerProxy(reqData).then((res) => {
                 if (res) {
-                    console.log(res);
-                    router.push("/auth/verification");
+                    handleCredentials(email, password1, () => {});
                 } else {
-                    alert("회원가입에 실패하였습니다.");
+                    registerFailureHandler();
                 }
             });
 
-        const handler = ConfirmPopUpModal("회원가입", "회원가입하시겠습니까", callback);
+        const handler = ConfirmPopUpModal("회원가입", <div className="py-4">가입을 진행 하시겠습니까?</div>, callback);
         return (
             <button onClick={handler} className="black-bar w-full">
                 가입하기
@@ -112,7 +129,7 @@ export default function CreateAccount() {
                     type="button"
                     disabled
                     className="black-bar bg-light-gray text-main-black w-full cursor-not-allowed">
-                    개인통관고유부호를 확인해주세요.
+                    필수 항목을 입력해 주세요.
                 </button>
             </div>
         );
@@ -122,7 +139,7 @@ export default function CreateAccount() {
         <div className="flex flex-col text-main-black px-5 max-w-md w-full mx-auto py-8 relative">
             <div className={`block ${isOpen && "hidden"}`}>
                 <div className="flex-center text-2xl pb-8">회원정보 입력</div>
-                <form className="flex flex-col gap-2">
+                <div className="flex flex-col gap-2">
                     <div className="flex justify-between">
                         <div className="grow me-2">
                             <CustomInput
@@ -143,19 +160,16 @@ export default function CreateAccount() {
                                 type="button"
                                 className="border p-2 bg-light-gray rounded active:bg-deep-gray text-xs whitespace-nowrap"
                                 disabled={email === "" || !checkEmail(email) || isUnique}
-                                onClick={() => {
-                                    api.checkEmailDuplication(email).then((res) => {
-                                        if (res) {
-                                            successHandler();
-                                        } else {
-                                            failureHandler();
-                                        }
-                                    });
-                                }}>
-                                {isUnique ? "이메일 확인 완료" : "이메일 중복 확인"}
+                                onClick={emailCheckHandler}>
+                                {isverified ? "이메일 인증완료" : "이메일 인증하기"}
                             </button>
                         </div>
                     </div>
+
+                    {isUnique && (
+                        <EmailVerification email={email} isVerfied={isverified} setIsVerfied={setIsVerified} />
+                    )}
+
                     <div>
                         <CustomInput
                             label="성 명"
@@ -198,19 +212,15 @@ export default function CreateAccount() {
                     </div>
                     <Policy checkAllSelect={setCheckAllSelect} />
                     {checkDefaultInputValidation(email, name, password1, password2) ? (
-                        <button
-                            type="button"
-                            className="black-bar w-full"
-                            onClick={() => setIsOpen(true)}
-                            disabled={!checkAllSelect}>
+                        <button className="black-bar w-full" onClick={() => setIsOpen(true)} disabled={!checkAllSelect}>
                             다 음
                         </button>
                     ) : (
-                        <button type="button" className="disabled-bar w-full my-2" disabled>
-                            {isUnique ? "필수 항목을 입력해주세요." : "이메일 중복 여부를 확인해주세요."}
+                        <button className="disabled-bar w-full" disabled>
+                            {isUnique ? "필수 항목을 입력해주세요." : "이메일 인증이 필요합니다."}
                         </button>
                     )}
-                </form>
+                </div>
             </div>
             <div className={`flex flex-col ${isOpen ? "block" : "hidden"}`}>
                 <div className="relative pb-4">
