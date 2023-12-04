@@ -1,7 +1,6 @@
 from pydantic import BaseModel, validator, ConfigDict, EmailStr
 from pydantic.alias_generators import to_camel
 from typing import List, Optional, Dict
-from model.db_model import ProductInfoSchema
 
 ## filter model
 
@@ -25,11 +24,12 @@ class FilterMetaSchema(BaseModel):
     brand: List[str]
     intl: List[str]
     price: List[int]
+    index: Dict[str, List[str]]
 
 
 class RequestFilterSchema(BaseModel):
     model_config = ConfigDict(alias_generator=to_camel, populate_by_name=True)
-    sort_by: Optional[str] = None
+    sort_by: str = "최신순"
     category: Optional[str] = None
     category_spec: Optional[str] = None
     brand: Optional[str] = None

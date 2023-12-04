@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback, ReactNode } from "react";
 import useEmblaCarousel, { EmblaCarouselType } from "embla-carousel-react";
 import { DotButton } from "./EmblaDot";
 import Autoplay from "embla-carousel-autoplay";
-import "./carousel.css";
+import styles from "./styles.module.css";
 
 interface EmblaCarouselProps {
     autoPlay: boolean;
@@ -43,17 +43,17 @@ const EmblaCarousel = ({ autoPlay, children }: EmblaCarouselProps) => {
 
     return (
         <div className="flex flex-col">
-            <div className="embla">
-                <div className="embla__viewport" ref={emblaRef}>
-                    <div className="embla__container">{children}</div>
+            <div className={styles.embla}>
+                <div className={styles.embla__viewport} ref={emblaRef}>
+                    <div className={styles.embla__container}>{children}</div>
                 </div>
             </div>
-            <div className="embla__dots">
+            <div className={styles.embla__dots}>
                 {scrollSnaps.map((_, index) => (
                     <DotButton
                         key={index}
                         onClick={() => scrollTo(index)}
-                        className={"embla__dot".concat(index === selectedIndex ? " embla__dot--selected" : "")}
+                        className={`${styles.embla__dot} ${index === selectedIndex ? styles.embla__dot__selected : ""}`}
                     />
                 ))}
             </div>

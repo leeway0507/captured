@@ -10,6 +10,9 @@ export interface productCardProps {
     size: string;
     category: string;
     color: string;
+    categorySpec: string;
+    price_desc_cursor?: number;
+    price_asc_cursor?: number;
 }
 export interface userAddressProps {
     addressId: string;
@@ -45,21 +48,37 @@ export interface orderHistoryProps {
     userOrderNumber: string;
     orderedAt: string;
     orderStatus: string;
-    orderTotalPrice: string;
+    orderTotalPrice: number;
     addressId: string;
     paymentMethod: string;
     paymentStatus: string;
 }
 
+export interface orderHistoryRequestProps {
+    paymentKey: string;
+    orderId: string;
+    orderedAt: Date;
+    orderTotalPrice: Number;
+    paymentMethod: String;
+    paymentInfo: String;
+}
+
 export interface orderRowProps {
     orderNum: number;
-    order_id: string;
+    orderId: string;
     sku: number;
     size: string;
     quantity: number;
     deliveryStatus: string;
     deliveryNumber: string;
     deliveryCompany: string;
+}
+
+export interface orderRowRequestProps {
+    orderId: string;
+    sku: number;
+    size: string;
+    quantity: number;
 }
 
 export interface orderDetailProductCardProps extends cartProductCardProps, orderRowProps {}
@@ -71,10 +90,14 @@ export interface OrderDetailProps extends orderHistoryProps {
 export interface cartProductCardProps extends productCardProps {
     quantity: number;
     size: string;
+    selected: boolean;
 }
 
-export interface cartItemProps {
-    sku: number;
-    quantity: number;
-    size: string;
+export interface User {
+    userId: string;
+    email: string;
+    krName: string;
+    emailVerification: boolean;
+    accessToken: string;
+    signUpType: string;
 }

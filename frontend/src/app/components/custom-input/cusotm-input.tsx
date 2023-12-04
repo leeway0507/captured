@@ -1,4 +1,3 @@
-import "./custom-input.css";
 import React from "react";
 
 interface customInputProps {

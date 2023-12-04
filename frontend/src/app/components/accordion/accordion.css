@@ -7,6 +7,7 @@ input[id*="accordion"] + label {
     display: block;
     position: relative;
     cursor: pointer;
+    
 }
 
 input[id*="accordion"] + label em {
@@ -19,32 +20,28 @@ input[id*="accordion"] + label em {
     display: inline-block;
 }
 
-/* input[id*="accordion"] + label + div {
-    transition: all 0.35s;
-    overflow: hidden;
-} */
+input[id*="accordion"] + label + div {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.2s ease-out;
 
-input[id*="accordion"]:checked + label {
-    border-bottom: 1px solid #e5e5e5;
 }
 
 input[id*="accordion"]:checked + label + div {
-    display: inline-block;
-    max-height: 250px;
+    grid-template-rows: 1fr;
     overflow: auto;
 }
 
 input[id*="accordion"]:checked + label em {
     transform: scaleY(-1);
+    transition: all 0.5s ease-out;
 }
 .arrodion {
     width: 100%;
 }
 
 /* select */
-.rotateArrow {
-    transform: scaleY(-1);
-}
+
 
 
 .scroll-bar {

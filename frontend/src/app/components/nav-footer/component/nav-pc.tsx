@@ -1,31 +1,53 @@
 "use client";
-
 import UserDropDown from "./user-dropdown";
 import CartBtn from "./cart-btn";
 import Logo from "./logo";
-import { SearchBar } from "./mobile-sidebar-components";
+import { useRouter } from "next/navigation";
+
 import { useEffect, useState } from "react";
 import { NavPcTop } from "./nav-pc-top";
 
+export function SearchBar({ search, setSearch }: { search: string; setSearch: (value: string) => void }) {
+    const router = useRouter();
+    const handleKeyDown = (e: any) => {
+        if (e.key !== "Enter") return;
+
+        const search = e.target.value;
+        search ? router.push(`/search/${search}`) : alert("검색어를 입력해 주세요.");
+    };
+
+    return (
+        <>
+            <input
+                type="text"
+                placeholder="검색"
+                onKeyDown={handleKeyDown}
+                className={`search-bar`}
+                autoFocus={false}
+            />
+        </>
+    );
+}
+
 export default function NavPc() {
     const [search, setSearch] = useState("");
+    const [checked, setChecked] = useState(true);
 
     useEffect(() => {
         const onScroll = () => {
             if (document.getElementById("nav") == null) return null;
-
-            const nav = document.getElementById("nav")!.classList;
-            if (window.scrollY > 30) {
-                nav.contains("nav-effect-back") && nav.remove("nav-effect-back");
-                document.getElementById("nav")!.classList.add("nav-effect");
-            } else {
-                nav.contains("nav-effect") && nav.remove("nav-effect");
-                document.getElementById("nav")!.classList.remove("nav-effect");
-                document.getElementById("nav")!.classList.add("nav-effect-back");
+            const scroll = window.scrollY;
+            if (scroll < 20) {
+                return setChecked(true);
+            }
+            if (scroll > 100) {
+                setChecked(false);
             }
         };
-        //add eventlistener to window
+
+        // add event listener to window
         window.addEventListener("scroll", onScroll, { passive: true });
+
         // remove event on unmount to prevent a memory leak with the cleanup
         return () => {
             window.removeEventListener("scroll", onScroll);
@@ -33,29 +55,28 @@ export default function NavPc() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    if (document.getElementById("nav")?.classList === null) return null;
-
     return (
         <>
             <header>
-                <div className="h-[150px] w-full m-auto z-50">
-                    <div className="flex h-full">
-                        <div className="flex flex-col w-full h-full ">
-                            <div className="h-[50px]  bg-white px-8 tb:px-12 xl:px-16 z-50">
-                                <NavPcTop />
-                            </div>
-                            <div
-                                className="h-[100px] flex justify-between px-8 tb:px-12 xl:px-16 pt-4 pb-8 bg-white z-0"
-                                id="nav">
-                                <div className="basis-3/12 flex-left ">
-                                    <SearchBar search={search} setSearch={setSearch} />
-                                </div>
-                                <div className="basis-6/12 flex-center ">
-                                    <Logo />
-                                </div>
-                                <div className="basis-3/12 flex-right ">
-                                    <UserDropDown />
-                                    <CartBtn />
+                <div className="min-h-[60px] max-h-[160px] w-full m-auto relative ">
+                    <div className="flex flex-col w-full h-full bg-white ">
+                        <div className="h-[60px] w-full flex-initial">
+                            <NavPcTop />
+                        </div>
+                        <div className="absolute top-[60px] w-full border-b shadow-sm">
+                            <input type="checkbox" id="nav" checked={checked} readOnly />
+                            <div className="do not remove this div">
+                                <div className="grid grid-cols-5 text-center w-full overflow-hidden bg-white px-12">
+                                    <div className="col-span-1 flex-center ">
+                                        <SearchBar search={search} setSearch={setSearch} />
+                                    </div>
+                                    <div className="col-span-3 flex-center h-[80px]">
+                                        <Logo />
+                                    </div>
+                                    <div className="col-span-1 flex-right ">
+                                        <UserDropDown />
+                                        <CartBtn />
+                                    </div>
                                 </div>
                             </div>
                         </div>

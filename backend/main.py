@@ -7,8 +7,7 @@ from router.auth import auth_router
 from router.mypage import mypage_router
 from router.product import product_router
 from router.order import order_router
-from router.admin import admin_router
-from fastapi_pagination import add_pagination
+
 
 app = FastAPI()
 
@@ -18,6 +17,7 @@ origins = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
     "http://127.0.0.1:3001",
+    "http://fastapi:3000",
 ]
 
 
@@ -34,7 +34,6 @@ app.include_router(auth_router, prefix="/api/auth", tags=["auth"])
 app.include_router(mypage_router, prefix="/api/mypage", tags=["mypage"])
 app.include_router(product_router, prefix="/api/product", tags=["product"])
 app.include_router(order_router, prefix="/api/order", tags=["order"])
-app.include_router(admin_router, prefix="/api/admin", tags=["admin"])
 
 
 # 422 error handler
