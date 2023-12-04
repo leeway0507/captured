@@ -5,6 +5,9 @@ export const checkPasswordPolicy = (password: string) => {
     if (password.length < 8) {
         return false;
     }
+    if (password.length > 20) {
+        return false;
+    }
     // Check if password contains at least one digit and one letter
     const hasDigit = /[0-9]/.test(password);
     const hasLetter = /[a-zA-Z]/.test(password);

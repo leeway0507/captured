@@ -1,10 +1,15 @@
 """pydantic Schemas"""
 
-from pydantic import BaseModel, validator, ConfigDict, EmailStr, Field
-from pydantic.alias_generators import to_camel
 
 from typing import Optional
 from datetime import datetime
+
+
+from pydantic import BaseModel, validator, ConfigDict, EmailStr, Field
+from pydantic.alias_generators import to_camel
+
+
+from model.order_model import OrderHistoryRequestSchema, OrderRowRequestchmea
 
 
 class ProductInfoSchema(BaseModel):
@@ -26,18 +31,13 @@ class ProductInfoSchema(BaseModel):
     category: str
     category_spec: str
     img_type: str
+    deploy: Optional[int] = 0
 
     # @validator("size", "color", pre=True)
     @validator("color", pre=True)
     def str_to_list(cls, v: str) -> str:
         """str to list to str"""
-        lst = eval(v)
-
-        # list empty or list[0] is str => return v
-        if not lst and isinstance(lst[0], str):
-            return v
-
-        return str([str(i) for i in eval(v)])
+        return v.replace(",", "/").upper()
 
 
 class ProductInfoDBSchema(ProductInfoSchema):
@@ -47,7 +47,9 @@ class ProductInfoDBSchema(ProductInfoSchema):
 
     ## productInfoSchema는 request, response로 사용 중임.
     ## 이때 size 항목이 포함되는데 productInfoTable은 size 컬럼이 없음. 따라서 exclude로 제거해야함.
-    size: str | None = Field(default=None, exclude=True)
+    size: Optional[str] = Field(default=None, exclude=True)
+    price_desc_cursor: str
+    price_asc_cursor: str
     search_info: str
 
 
@@ -58,6 +60,7 @@ class SizeSchema(BaseModel):
     sku: int
     size: str
     available: bool
+    updated_at: datetime
 
 
 class UserSchema(BaseModel):
@@ -102,68 +105,23 @@ class UserAddressInDBSchema(UserAddressSchema):
     permanent: bool = False
 
 
-class OrderHistoryRequestSchema(BaseModel):
-    """OrderHistoryTable Schema"""
-
-    model_config = ConfigDict(alias_generator=to_camel, populate_by_name=True)
-
-    user_id: str
-    address_id: str
-    order_total_price: int
-    payment_method: str
-    payment_info: str  # hash # 카드번호 & 계좌번호 등..
-
-
-class OrderHistoryResponseSchema(BaseModel):
-    model_config = ConfigDict(alias_generator=to_camel, populate_by_name=True)
-    order_id: str
-    user_order_number: int
-    ordered_at: datetime
-    order_status: str = "배송준비"  # 배송준비/배송중/배송완료/반품중/취소요청/환불완료
-    payment_status: str = "승인대기"  # 승인대기/승인완료/결제취소
-    address_id: str
-    order_total_price: int
-    payment_method: str
-
-
 class OrderHistoryInDBSchema(OrderHistoryRequestSchema):
     """OrderHistoryTable Schema"""
 
     model_config = ConfigDict(alias_generator=to_camel, populate_by_name=True)
-
-    order_id: str  # OH-[user_id]-[user_order_number]
+    address_id: str
+    user_id: str
     user_order_number: int
-    ordered_at: datetime
     order_status: str = "배송준비"  # 배송준비/배송중/배송완료/반품중/취소요청/환불완료
-    payment_status: str = "승인대기"  # 승인대기/승인완료/결제취소
-    payment_info: str  # hash # 카드번호 & 계좌번호 등..
+    payment_status: str = "승인완료"  # 승인대기/승인완료/결제취소
 
 
-class OrderRowSchmea(BaseModel):
-    """OrderRowTable Schema"""
-
-    model_config = ConfigDict(alias_generator=to_camel, populate_by_name=True)
-    sku: int
-    size: str
-    quantity: int
-
-
-class OrderRowResponseSchema(OrderRowSchmea):
-    brand: str
-    product_name: str
-    product_id: str
-    price: int
-    shipping_fee: int
-    intl: bool
-
-
-class OrderRowInDBSchmea(OrderRowSchmea):
+class OrderRowInDBSchmea(OrderRowRequestchmea):
     """OrderRowTable Schema"""
 
     model_config = ConfigDict(alias_generator=to_camel, populate_by_name=True)
 
-    order_row_id: Optional[int] = Field(default=None, primary_key=True)
-    order_id: str
-    delivery_status: str = ""
-    delivery_company: str = ""
-    delivery_number: str = ""
+    order_row_id: Optional[int] = Field(default=None)
+    delivery_status: Optional[str] = "배송준비"
+    delivery_company: Optional[str] = None
+    delivery_number: Optional[str] = None

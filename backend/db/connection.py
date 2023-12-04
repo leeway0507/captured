@@ -1,13 +1,17 @@
 """db connection"""
 
-from typing import Dict
+from typing import Dict, Callable, Optional
 
 from sqlalchemy.orm import sessionmaker, Session
-from sqlalchemy import create_engine
-from decouple import config
+from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
+from decouple import Config, RepositoryEnv
+import os
+from logging import Logger
 
 
-def connect_db(username: str, password: str, host: str, db_name: str, **_kwargs) -> Session:
+def connect_db(
+    username: str, password: str, host: str, db_name: str, **_kwargs
+) -> Session:
     """
     sseion 연결
 
@@ -31,15 +35,22 @@ def connect_db(username: str, password: str, host: str, db_name: str, **_kwargs)
 
 
 def conn_engine(username: str, password: str, host: str, db_name: str, **_kwargs):
-    db_url = f"mysql+pymysql://{username}:{password}@{host}:3306/{db_name}"
-    return create_engine(db_url)
+    db_url = f"mysql+aiomysql://{username}:{password}@{host}:3306/{db_name}"
+    return create_async_engine(db_url)
 
 
 def get_secret() -> Dict[str, str]:
-    username = config("DB_USER_NAME")
-    password = config("DB_PASSWORD")
-    host = config("DB_HOST")
-    db_name = config("DB_NAME")
+    if os.environ.get("ProductionLevel"):
+        print("production - level -db")
+        config = Config(RepositoryEnv(".env.production"))
+    else:
+        print("dev - level -db")
+        config = Config(RepositoryEnv(".env.dev"))
+
+    username = config.get("DB_USER_NAME")
+    password = config.get("DB_PASSWORD")
+    host = config.get("DB_HOST")
+    db_name = config.get("DB_NAME")
 
     assert isinstance(username, str), "username is not str"
     assert isinstance(password, str), "password is not str"
@@ -54,28 +65,28 @@ def get_secret() -> Dict[str, str]:
     }
 
 
-engine = conn_engine(**get_secret())
-session_local = sessionmaker(bind=engine)
+db_engine = conn_engine(**get_secret())
+session_local = sessionmaker(bind=db_engine, class_=AsyncSession)  # type: ignore
 
 
-def get_db():
+async def get_db():
     db = session_local()
     try:
         yield db
     finally:
-        db.close()
+        await db.close()  # type: ignore
 
 
-def commit(db: Session, query: callable, error_log: callable = None):
+async def commit(db: AsyncSession, query: Callable, error_log: Optional[Logger] = None):
     try:
         query
-        db.commit()
+        await db.commit()
         return True
     except Exception as e:
         if error_log:
             error_log.error(e)
         else:
             print(e)
-        db.rollback()
+        await db.rollback()
         print("커밋 실패 후 rollback")
         return False

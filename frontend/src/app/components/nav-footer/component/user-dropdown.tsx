@@ -5,7 +5,9 @@ import Link from "next/link";
 
 export default function UserDropDown() {
     const { data: session } = useSession();
-    const userIcon = <Image src="/icons/person.svg" alt="person" className="flex-right" width={28} height={28} />;
+    const userIcon = (
+        <Image src="/icons/person.svg" alt="person" className="flex-right" width={28} height={28} priority />
+    );
 
     return (
         <>
@@ -14,9 +16,9 @@ export default function UserDropDown() {
                     {userIcon}
                 </Link>
             ) : (
-                <div className="group relative flex-center">
-                    <button className=" flex px-4 py-2 ">{userIcon}</button>
-                    <div className="border hidden absolute top-full z-50 group-hover:block flex flex-col bg-white text-sm shadow-lg rounded-md">
+                <div className="group flex">
+                    <button className=" flex ps-6 pe-4 py-3 ">{userIcon}</button>
+                    <div className="absolute right-5 top-[75%]  border hidden group-hover:block flex flex-col bg-white text-sm shadow-lg rounded-md">
                         <div className="whitespace-nowrap py-3 px-4 border-b-2 border-light-gray">
                             {session?.user.krName}(
                             <span className="text-xs">
@@ -29,7 +31,7 @@ export default function UserDropDown() {
                             )
                         </div>
                         <Link href="/mypage" className="link-animation">
-                            <div className="whitespace-nowrap py-3 px-4 w-full hover:bg-slate-50">마이페이지</div>
+                            <div className="whitespace-nowrap py-3 px-4 w-full flex-left">마이페이지</div>
                         </Link>
                         <div className="link-animation hover:bg-slate-50 ">
                             <button

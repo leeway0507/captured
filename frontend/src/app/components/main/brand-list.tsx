@@ -1,104 +1,74 @@
 import Image from "next/image";
 import Link from "next/link";
 
-export default function BrandList() {
+const linkClass = "opacity-80 brand-box-black rounded-full tb:rounded-2xl aspect-square tb:aspect-[2/1]";
+const divClass = "relative h-[50px] tb:h-[100px] xl:h-[150px] aspect-square ";
+const ImageClass = "scale-[100%] tb:scale-[100%] ";
+const evenLogoCard = (brandName: string, idx: number) => {
+    const brandNameBar = brandName.replaceAll(" ", "-").toLowerCase();
     return (
-        <div className="flex flex-col w-full">
-            <Link href="/brands" className="mt-1 me-2 flex justify-end text-sub-black text-lg hover:text-sub-black">
-                브랜드 더보기
-            </Link>
-            <div className="flex flex-row ">
-                <Link href="." className="brand-box bg-main-black">
-                    <Image
-                        src="/brands/adidas-originals-logo.png"
-                        alt="test-img"
-                        width={1000}
-                        height={1000}
-                        className="img-hover"
-                    />
-                </Link>
-                <Link href="." className="brand-box">
-                    <Image
-                        src="/brands/arcteryx-logo.png"
-                        width={1000}
-                        height={1000}
-                        alt="Arcteryx-logo"
-                        className="img-hover"
-                    />
-                </Link>
-                <Link href="." className="brand-box bg-main-black">
-                    <Image
-                        src="/brands/adidas-originals-logo.png"
-                        alt="test-img"
-                        width={1000}
-                        height={1000}
-                        className="img-hover"
-                    />
-                </Link>
-                <Link href="." className="brand-box">
-                    <Image
-                        src="/brands/arcteryx-logo.png"
-                        width={1000}
-                        height={1000}
-                        alt="Arcteryx-logo"
-                        className="img-hover"
-                    />
-                </Link>
-                <Link href="." className="brand-box bg-main-black">
-                    <Image
-                        src="/brands/adidas-originals-logo.png"
-                        alt="test-img"
-                        width={1000}
-                        height={1000}
-                        className="img-hover"
-                    />
-                </Link>
+        <Link key={idx} href={`category/brand?brand=${brandName}`} className={`${linkClass} bg-main-black flex-center`}>
+            <div className={`${divClass}`}>
+                <Image
+                    src={`/brands/white/${brandNameBar}-white-logo.png`}
+                    alt={`${brandNameBar}-logo`}
+                    fill
+                    sizes="(min-width: 1280px) 150px, (min-width: 780px) 100px, 50px"
+                    className={ImageClass}
+                />
             </div>
-            <div className="flex flex-row w-full">
-                <Link href="." className="brand-box">
-                    <Image
-                        src="/brands/arcteryx-logo.png"
-                        width={1000}
-                        height={1000}
-                        alt="Arcteryx-logo"
-                        className="img-hover"
-                    />
-                </Link>
-                <Link href="." className="brand-box bg-main-black">
-                    <Image
-                        src="/brands/adidas-originals-logo.png"
-                        alt="test-img"
-                        width={1000}
-                        height={1000}
-                        className="img-hover"
-                    />
-                </Link>
-                <Link href="." className="brand-box">
-                    <Image
-                        src="/brands/arcteryx-logo.png"
-                        width={1000}
-                        height={1000}
-                        alt="Arcteryx-logo"
-                        className="img-hover"
-                    />
-                </Link>
-                <Link href="." className="brand-box bg-main-black">
-                    <Image
-                        src="/brands/adidas-originals-logo.png"
-                        alt="test-img"
-                        width={1000}
-                        height={1000}
-                        className="img-hover"
-                    />
-                </Link>
-                <Link href="." className="brand-box">
-                    <Image
-                        src="/brands/arcteryx-logo.png"
-                        width={1000}
-                        height={1000}
-                        alt="Arcteryx-logo"
-                        className="img-hover"
-                    />
+        </Link>
+    );
+};
+const oddLogoCard = (brandName: string, idx: number) => {
+    const brandNameBar = brandName.replaceAll(" ", "-").toLowerCase();
+    return (
+        <Link key={idx} href={`category/brand?brand=${brandName}`} className={`${linkClass} bg-gray-300 flex-center`}>
+            <div className={`${divClass}`}>
+                <Image
+                    src={`/brands/black/${brandNameBar}-logo.png`}
+                    alt={`${brandNameBar}-logo`}
+                    fill
+                    sizes="(min-width: 1280px) 150px, (min-width: 780px) 100px, 50px"
+                    className={ImageClass}
+                />
+            </div>
+        </Link>
+    );
+};
+
+const LogoBox = ({ logoArr }: { logoArr: string[] }) => {
+    return logoArr.map((brandName: string, idx: number) => {
+        if (idx % 2 === 0) {
+            return evenLogoCard(brandName, idx);
+        } else {
+            return oddLogoCard(brandName, idx);
+        }
+    });
+};
+
+export default async function BrandList() {
+    const logoArr = [
+        "adidas originals",
+        "arc'teryx",
+        "asics",
+        "polo",
+        "nike",
+        "stone island",
+        "the north face",
+        "patagonia",
+        "human made",
+    ];
+
+    return (
+        <div className="tb:px-4">
+            <div className="text-xl font-bold px-2 pb-4">인기 브랜드</div>
+            <div className="grid grid-cols-5 gap-2 tb:gap-3 px-2">
+                <LogoBox logoArr={logoArr!} />
+                <Link
+                    href={"/brands"}
+                    className={`opacity-80 brand-box-black rounded-full tb:rounded-2xl h-full bg-gray-300`}>
+                    <div className="flex-center h-full font-bold tb:text-lg xl:text-xl">더보기</div>
                 </Link>
             </div>
         </div>

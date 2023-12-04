@@ -21,8 +21,8 @@
     .disabled-bar-xl {
         @apply disabled-bar tracking-[0.3rem] text-base;
     }
-    .custom-container {
-        @apply flex flex-col relative m-auto h-full;
+    .main-container {
+        @apply flex flex-col w-full h-full min-h-screen relative 
     }
     .flex-center {
         @apply flex items-center justify-center;
@@ -36,8 +36,11 @@
         @apply flex items-center justify-end;
     }
 
+    .brand-box-black {
+        @apply cursor-pointer opacity-80 hover:opacity-100 ease-in-out duration-300 ;
+    }
     .brand-box {
-        @apply opacity-70 grow basis-1/5;
+        @apply cursor-pointer opacity-50 hover:opacity-100 ease-in-out duration-300;
     }
     .text-xs-sm {
         @apply text-xs tb:text-sm;
@@ -64,18 +67,32 @@
     .search-bar {
         @apply mt-0 h-10 block w-full px-0.5 border-0 border-b focus:ring-0 placeholder-sub-black tracking-[0.1rem] focus:border-main-black caret-main-black
         }
+    .custom-input-class {
+        @apply mt-0 h-10 block w-full px-0.5 border-0 border-b border-gray-200 text-sm focus:ring-0 focus:border-main-black placeholder-transparent focus:placeholder:text-sm;
+    }
+    .custom-label-class {
+        @apply absolute -top-4 left-0 text-xs text-sub-black peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 transition-all
+        peer-focus:-top-4 peer-focus:text-xs peer-focus:text-sub-black;
+    }
+    .custom-input-disabled {
+        @apply mt-1 block w-full px-3 py-2 bg-white border border-light-gray rounded-md text-sm shadow-sm     
+        disabled:bg-gray-200 disabled:text-blue-black disabled:border-light-gray;
+    }
 }
 /* For Firefox */
 * {
     scrollbar-width: none;
-    scrollbar-color: transparent red;
+    scrollbar-color: transparent;
 }
 
 /* For webkit-based browsers (Chrome, Safari) */
+
 *::-webkit-scrollbar {
     width: 0px;
-    background: transparent; /* make scrollbar transparent */
+    height: 0px;
+    background: transparent; 
 }
+
 .triangle-right {
     width: 0;
     height: 0;
@@ -108,18 +125,13 @@
 }
 
 
-
 body {
-    /* max-width: 1024px; */
     max-width: 1440px;
     height: 100%;
     margin: 0 auto;
     border: 1px, solid var(--light-gray);
     color: var(--main-black);
     position: relative;
-}
-.mondaL {
-    font-family: var(--Monda-L);
 }
 
 .main-black {
@@ -199,17 +211,81 @@ button:disabled > button:active {
 }
 
 
-.nav-effect {
-    transition: all 0.2s ease-in-out;
-    translate: 0px -100%;
-    opacity: 0;
-    visibility: hidden;
-}
-.nav-effect:after{
+input[id="nav"] {
     display: none;
 }
-.nav-effect-back {
-    transition: all 0.2s ease-out;
-    translate: 0px 0%;
-    opacity: 100;
+
+input[id="nav"] + div{
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.2s ease-in-out;
+    opacity: 100%;
+    overflow: auto;
+
 }
+
+input[id="nav"]:checked + div {
+    grid-template-rows: 1fr;
+    opacity: 100%
+    
+}
+
+
+
+/* scroll-bar */
+
+.scroll-bar {
+    overflow-x: hidden;
+    overflow-y: auto;
+
+}
+
+.scroll-bar-x {
+    overflow-x: auto;
+    overflow-y: hidden
+}
+
+/* 스크롤바의 폭 너비 */
+.scroll-bar::-webkit-scrollbar {
+    width: 8px;  
+}
+
+.scroll-bar::-webkit-scrollbar-thumb {
+    background: var(--main-black); 
+    border-radius: 10px; /* 스크롤바 둥근 테두리 */
+}
+
+.scroll-bar::-webkit-scrollbar-track {
+    background: var(--light-gray)  /*스크롤바 뒷 배경 색상*/
+}
+
+.grid-square-container {
+    display: grid;
+    grid-gap: 5px;
+  }
+  .grid-square-container div {
+    background-color: red;
+    aspect-ratio: 1;
+  }
+
+
+  .Toastify__toast--info {
+    /* background: var(--light-gray) !important; */
+    color: var(--main-black) !important;
+
+  }
+
+  .Toastify__progress-bar--info {
+    background: var(--main-black) !important;
+  }
+
+
+/* for mobile viewport  */
+.min-h-s-screen {
+    min-height: 100svh;
+}
+
+.container {
+    position: relative;
+    width: 100%;
+  }
