@@ -1,6 +1,6 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Monda, Carter_One } from "next/font/google";
+import { Monda, Carter_One, Fugaz_One } from "next/font/google";
 import { ToastContainer, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -12,9 +12,7 @@ export const metadata: Metadata = {
     viewport: "width=device-width, maximum-scale=1, user-scalable=0",
 };
 
-const carterOne = Carter_One({ weight: ["400"], subsets: ["latin"], variable: "--test" });
-
-// rowides Archivo_Black Black_Ops_One, Dela_Gothic_One Righteous,Carter_One
+const carterOne = Fugaz_One({ weight: ["400"], subsets: ["latin"], variable: "--test" });
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
@@ -23,7 +21,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 {children}
                 <ToastContainer
                     position="top-right"
-                    autoClose={3000}
+                    autoClose={1000}
                     hideProgressBar={false}
                     newestOnTop={false}
                     transition={Flip}

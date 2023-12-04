@@ -7,7 +7,7 @@ from custom_alru import alru_cache
 from functools import lru_cache
 
 
-@alru_cache()
+# @alru_cache()
 async def get_page_idx(
     limit: int,
     sort_by: str = "최신순",
@@ -52,7 +52,7 @@ async def get_page_idx(
     return page_idx
 
 
-@lru_cache()
+# @lru_cache()
 def create_filter_query_dict(
     category: Optional[str] = None,
     category_spec: Optional[str] = None,

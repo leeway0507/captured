@@ -1,15 +1,20 @@
 "use client";
 import CartProductCardArr from "./component/cart-product-array";
 import ProductCheckOut from "./component/product-check-out";
-import { cartProductCardProps } from "../../type";
 import { useShoppingCart } from "@/app/components/context/shopping-cart-context";
 import CartEmptyGuide from "./component/cart-empty-guide";
-import Link from "next/link";
 import { IntlShipment } from "../../components/notification/shipment-info";
+import CartOrderButton from "./component/cart-order-button";
+import PageLoading from "@/app/components/loading/page-loading";
 
-export default function MainPC({ arr }: { arr: cartProductCardProps[] }) {
-    const { cartQuantity } = useShoppingCart();
-    const intlIncluded = arr.some((item) => item.intl === true);
+export default function MainPC() {
+    const { cartQuantity, changeAllSelectedItems, changeNotAllSelectedItems, cartItems } = useShoppingCart();
+
+    const intlIncluded = cartItems?.some((item) => item.intl === true);
+    const checkOutItems = cartItems?.filter((item) => item.selected === true);
+
+    if (cartItems === undefined) return <PageLoading />;
+
     return cartQuantity === 0 ? (
         <div className="hidden tb:block">
             <CartEmptyGuide fontSize="3xl" />
@@ -19,15 +24,21 @@ export default function MainPC({ arr }: { arr: cartProductCardProps[] }) {
             <div className="flex relative mb-10 h-full gap-8 justify-evenly">
                 <div className="basis-[60%] overflow-auto">
                     <div className="me-4">
-                        <CartProductCardArr arr={arr} />
+                        <div className="flex gap-4 w-full border-b pb-2 text-sm">
+                            <button className="link-animation" onClick={changeAllSelectedItems}>
+                                전체 선택
+                            </button>
+                            <button className="link-animation" onClick={changeNotAllSelectedItems}>
+                                선택 해제
+                            </button>
+                        </div>
+                        <CartProductCardArr arr={cartItems} />
                     </div>
                 </div>
                 <div className="basis-[40%] max-w-[380px]">
                     <div className="sticky top-[80px]">
-                        <ProductCheckOut arr={arr} />
-                        <Link href="/order" className="black-bar-xl m-3 tracking-[0.2em]">
-                            주문하기
-                        </Link>
+                        <ProductCheckOut arr={checkOutItems!} />
+                        <CartOrderButton />
                         <div className="py-4">
                             {intlIncluded && (
                                 <IntlShipment

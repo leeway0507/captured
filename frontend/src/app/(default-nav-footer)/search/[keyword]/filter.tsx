@@ -1,24 +1,26 @@
 "use client";
-import PcFilter from "./component/filter/pc-filter";
-import MobileFilter from "./component/filter/mobile-filter";
-import { initFilterMetaProps, filterMetaProps } from "./type";
-import useProductFilter, { useProductFilterProps } from "./component/filter/hook/use-product-filter";
+import { MobileFilterPage } from "../../category/[...pageType]/component/filter/mobile-filter";
+import PcFilter from "../../category/[...pageType]/component/filter/pc-filter";
+import { initFilterMetaProps, filterMetaProps } from "../../category/[...pageType]/type";
+import useProductFilter, {
+    useProductFilterProps,
+} from "../../category/[...pageType]/component/filter/hook/use-product-filter";
 
-function FilterPage({
+const FilterPage = ({
     initFilterMeta,
     pageType,
     filterValue,
 }: {
     initFilterMeta: initFilterMetaProps;
-    pageType: string; // "shoes" | "clothing" | "accessory" | "all"
+    pageType: string;
     filterValue: filterMetaProps;
-}) {
-    // const productFilter = useProductFilter(initFilterMeta, pageType, filterDict);
+}) => {
     const productFilter: useProductFilterProps | null = useProductFilter(initFilterMeta, pageType, filterValue);
-    if (productFilter === null) return <></>;
     return (
         <>
-            <MobileFilter productFilter={productFilter} pageType={pageType} />
+            <div className={`h-[50px] bg-light-gray tb:hidden `}>
+                <MobileFilterPage productFilter={productFilter} pageType={pageType} />
+            </div>
             <div className="hidden tb:block tb:sticky tb:top-[80px] tb:z-10">
                 <PcFilter
                     initFilterMeta={initFilterMeta}
@@ -29,24 +31,25 @@ function FilterPage({
             </div>
         </>
     );
-}
+};
 
-export default function CateogryFilter({
+export default function SearchFilter({
     children,
-    filterValue,
     initFilterMeta,
     pageType,
+    filterValue,
 }: {
     children: React.ReactNode;
-    filterValue: filterMetaProps;
     initFilterMeta: initFilterMetaProps;
-    pageType: string[];
+    pageType: string;
+    filterValue: filterMetaProps;
 }) {
     return (
         <div className="flex flex-col tb:flex-row justify-between w-full px-2 tb:gap-8 tb:px-4 ">
             <div className="tb:basis-1/3 lg:basis-1/4 sticky top-[50px] tb:mb-4 tb:top-[80px] bg-white z-10 tb:z-0">
-                <FilterPage initFilterMeta={initFilterMeta} pageType={pageType[0]} filterValue={filterValue} />
+                <FilterPage initFilterMeta={initFilterMeta} pageType={pageType} filterValue={filterValue} />
             </div>
+
             <div className={`w-full flex-grow tb:block tb:basis-2/3 lg:basis-3/4`}>{children}</div>
         </div>
     );

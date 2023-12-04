@@ -41,7 +41,7 @@ const Main = () => {
 
         const search = inputRef.current?.value;
         search ? saveSearchResult(search) : alert("검색어를 입력해 주세요.");
-        router.push(`/search?value=${search}`);
+        router.push(`/search/${search}`);
     };
 
     const SearchBar = () => (
@@ -117,7 +117,7 @@ const Main = () => {
                         {isMobile === undefined && <SearchResultSkeleton />}
                         {searchResult.map((search, idx) => (
                             <Link
-                                href={`search?value=${search}`}
+                                href={`search/${search}`}
                                 key={idx}
                                 className="flex-none bg-white py-2 px-4 rounded-2xl border text-sm">
                                 <div className="h-5">{search}</div>

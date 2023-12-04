@@ -45,6 +45,15 @@ async def get_a_single_product(
     return result.model_dump(by_alias=True)
 
 
-@product_router.get("/get-filter-meta")
-def get_init_meta():
-    return get_init_meta_data()
+@product_router.get("/search")
+async def search_product(
+    keyword: str, limit: int = 50, db: AsyncSession = Depends(get_db)
+):
+    """제품 정보 불러오기"""
+    result = await searchProductInDB(keyword=keyword, limit=limit, db=db)
+    return result
+
+
+# @product_router.get("/get-filter-meta")
+# def get_init_meta():
+#     return get_init_meta_data()

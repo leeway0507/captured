@@ -37,8 +37,11 @@ const MainPC = ({
     };
 
     //orer price
+
     const { totalPrice, ...rest } = CalculateOrderPrice(arr);
     const totalPriceNumber = parseInt(totalPrice.replace(/[^0-9]/g, ""));
+
+    if (arr === undefined) return;
 
     return (
         <>

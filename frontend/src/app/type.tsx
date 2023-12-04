@@ -10,6 +10,9 @@ export interface productCardProps {
     size: string;
     category: string;
     color: string;
+    categorySpec: string;
+    price_desc_cursor?: number;
+    price_asc_cursor?: number;
 }
 export interface userAddressProps {
     addressId: string;
@@ -87,6 +90,7 @@ export interface OrderDetailProps extends orderHistoryProps {
 export interface cartProductCardProps extends productCardProps {
     quantity: number;
     size: string;
+    selected: boolean;
 }
 
 export interface User {

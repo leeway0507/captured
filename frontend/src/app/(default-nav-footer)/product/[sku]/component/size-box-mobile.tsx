@@ -19,7 +19,8 @@ const SizeBoxMobile = ({ data, defaultSizeArr }: { data: productCardProps; defau
     const isSize = availableSize.length > 0;
 
     const handleModal = () => {
-        increaseCartQuantity(sku, selectedItem, { ...data });
+        // sku: number, size: string, selected: boolean
+        increaseCartQuantity(sku, selectedItem, true, { ...data });
         toast.info("장바구니에 담았습니다.", {
             icon: false,
             style: {

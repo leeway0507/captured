@@ -22,6 +22,7 @@ const OrderDetailProductCardArray = ({ orderItemList }: { orderItemList: orderDe
                         props={cartProductCardForm}
                         onDelete={false}
                         countEnable={false}
+                        selectEnable={false}
                     />
                 </div>
             </div>

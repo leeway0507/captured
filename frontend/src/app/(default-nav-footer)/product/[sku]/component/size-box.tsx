@@ -8,8 +8,7 @@ import { toast } from "react-toastify";
 const SizeBox = ({ data, defaultSizeArr }: { data: productCardProps; defaultSizeArr: string[] }) => {
     const { sku, size, category } = data;
 
-    const { sizeType, availableSize } = {
-        sizeType: category,
+    const { availableSize } = {
         availableSize: size.split(","),
     };
 
@@ -19,7 +18,8 @@ const SizeBox = ({ data, defaultSizeArr }: { data: productCardProps; defaultSize
     const isSize = availableSize.length > 0;
 
     const handleModal = () => {
-        increaseCartQuantity(sku, selectedItem, { ...data });
+        // sku: number, size: string, selected: boolean
+        increaseCartQuantity(sku, selectedItem, true, { ...data });
         toast.info("장바구니에 담았습니다.", {
             icon: false,
         });
@@ -28,7 +28,7 @@ const SizeBox = ({ data, defaultSizeArr }: { data: productCardProps; defaultSize
     return (
         <>
             <ProductSizeTable
-                sizeType={sizeType}
+                sizeType={category}
                 availableSize={availableSize}
                 selectedItem={selectedItem}
                 setSelectedItem={setSelectedItem}

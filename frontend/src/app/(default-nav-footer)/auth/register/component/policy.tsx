@@ -100,8 +100,7 @@ const Policy = ({ checkAllSelect }: { checkAllSelect: (e: boolean) => void }) =>
                         <input
                             id="agree-all"
                             type="checkbox"
-                            value=""
-                            className="w-4 h-4 text-sub-black bg-gray-100 border-gray-300 rounded focus:ring-main-black bg-white focus:ring-2"
+                            className="accent-main-black w-3.5"
                             onChange={changeHandler}
                             checked={checkState.every((item) => item.checked)}
                         />
@@ -113,7 +112,7 @@ const Policy = ({ checkAllSelect }: { checkAllSelect: (e: boolean) => void }) =>
                     <input
                         type="checkbox"
                         id="show-terms"
-                        className="peer absolute top-0 left-[14rem]  text-sm py-2 px-4 border-transparent checked:rotate-90 focus:ring-0 checked:ring-0 checked:bg-transparent "
+                        className="peer  appearance-none absolute top-0 left-[14rem]  text-sm py-2 px-4 border-transparent checked:rotate-90 focus:ring-0 checked:ring-0 checked:bg-transparent "
                     />
                     <label
                         htmlFor="show-terms"
@@ -127,7 +126,7 @@ const Policy = ({ checkAllSelect }: { checkAllSelect: (e: boolean) => void }) =>
                                 id="privacy-policy"
                                 type="checkbox"
                                 value=""
-                                className="w-4 h-4 text-sub-black bg-gray-100 border-gray-300 rounded focus:ring-main-black bg-white focus:ring-2"
+                                className="accent-main-black w-3.5"
                                 onChange={changeHandler}
                                 checked={checkState[0].checked}
                             />
@@ -147,7 +146,7 @@ const Policy = ({ checkAllSelect }: { checkAllSelect: (e: boolean) => void }) =>
                                 id="service-policy"
                                 type="checkbox"
                                 value=""
-                                className="w-4 h-4 text-sub-black bg-gray-100 border-gray-300 rounded focus:ring-main-black bg-white focus:ring-2"
+                                className="accent-main-black w-3.5"
                                 onChange={changeHandler}
                                 checked={checkState[1].checked}
                             />
@@ -167,7 +166,7 @@ const Policy = ({ checkAllSelect }: { checkAllSelect: (e: boolean) => void }) =>
                                 id="third-party-policy"
                                 type="checkbox"
                                 value=""
-                                className="w-4 h-4 text-sub-black bg-gray-100 border-gray-300 rounded focus:ring-main-black bg-white focus:ring-2"
+                                className="accent-main-black w-3.5"
                                 onChange={changeHandler}
                                 checked={checkState[2].checked}
                             />
@@ -188,7 +187,7 @@ const Policy = ({ checkAllSelect }: { checkAllSelect: (e: boolean) => void }) =>
                             id="age"
                             type="checkbox"
                             value=""
-                            className="w-4 h-4 text-sub-black bg-gray-100 border-gray-300 rounded focus:ring-main-black bg-white focus:ring-2"
+                            className="accent-main-black w-3.5"
                             onChange={changeHandler}
                             checked={checkState[3].checked}
                         />
