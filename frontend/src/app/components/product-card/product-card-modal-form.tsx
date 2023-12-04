@@ -2,8 +2,8 @@ import Image from "next/image";
 import { cartProductCardProps } from "@/app/type";
 
 export const ProductCardModal = (props: cartProductCardProps) => {
-    const { brand, productName, productId, size, intl, ...rest } = props;
-    const productImgUrl = `${process.env.NEXT_PUBLIC_MOBILE_IMAGE_URL}/product/${brand}/${productName} ${productId}/thumbnail.png`;
+    const { sku, brand, productName, productId, size, intl, ...rest } = props;
+    const productImgUrl = `${process.env.NEXT_PUBLIC_MOBILE_IMAGE_URL}/product/${sku}/thumbnail.webp`;
     return (
         <div className="flex flex-col py-2">
             <div className="flex text-xs">

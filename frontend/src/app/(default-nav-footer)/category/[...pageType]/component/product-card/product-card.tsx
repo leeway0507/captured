@@ -19,13 +19,12 @@ export default function ProductCard({
 
     const [isLoaded, setIsLoaded] = useState(true);
 
-    const productImgUrl = `${process.env.NEXT_PUBLIC_MOBILE_IMAGE_URL}/product/${brand}/${productName} ${productId}/thumbnail.png`;
-    const shotenProductName = productName.length > 25 ? productName.slice(0, 25) + "..." : productName;
+    const productImgUrl = `${process.env.NEXT_PUBLIC_MOBILE_IMAGE_URL}/product/${sku}/thumbnail.webp`;
+    const shotenProductName = productName.length > 40 ? productName.slice(0, 40) + "..." : productName;
     return (
         <Link href={`/product/${sku}`} className=" text-sub-black text-xs font-light pb-6 z-1 " key={sku}>
             <div className="flex flex-col">
                 <div className="relative">
-                    {/* <div className="h-[200px] aspect-square flex-center text-2xl">{sku}</div> */}
                     {isLoaded ? (
                         <Image
                             src={productImgUrl}

@@ -1,20 +1,19 @@
 "use client";
 import CartProductCardArr from "./component/cart-product-array";
 import ProductCheckOut from "./component/product-check-out";
-import { cartProductCardProps } from "../../type";
 import { useShoppingCart } from "@/app/components/context/shopping-cart-context";
 import CartEmptyGuide from "./component/cart-empty-guide";
-import Link from "next/link";
-import useSizeDetect from "@/app/components/hook/use-size-detect-hook";
 import { IntlShipment } from "../../components/notification/shipment-info";
-import { BottomNavBar } from "@/app/components/nav-footer/component/bottom-nav-bar";
+import CartOrderButton from "./component/cart-order-button";
 
-export default function MainMobile({ arr }: { arr: cartProductCardProps[] }) {
-    const { cartQuantity } = useShoppingCart();
-    const { innerHeight, maxHeight } = useSizeDetect();
-    const intlIncluded = arr.some((item) => item.intl === true);
+export default function MainMobile() {
+    const { cartQuantity, changeAllSelectedItems, changeNotAllSelectedItems, cartItems } = useShoppingCart();
 
-    if (cartQuantity === undefined) return null;
+    const intlIncluded = cartItems?.some((item) => item.intl === true);
+    const checkOutItems = cartItems?.filter((item) => item.selected === true);
+
+    if (cartItems === undefined) return null;
+
     return cartQuantity === 0 ? (
         <div className="tb:hidden">
             <CartEmptyGuide fontSize="xl" />
@@ -22,8 +21,16 @@ export default function MainMobile({ arr }: { arr: cartProductCardProps[] }) {
     ) : (
         <>
             <div className="tb:hidden flex flex-col grow pb-[280px]">
+                <div className="pt-6 ps-2 flex gap-4 w-full border-b pb-2 text-sm">
+                    <button className="link-animation" onClick={changeAllSelectedItems}>
+                        전체 선택
+                    </button>
+                    <button className="link-animation" onClick={changeNotAllSelectedItems}>
+                        선택 해제
+                    </button>
+                </div>
                 <div className="mx-2 h-full flex flex-col grow">
-                    <CartProductCardArr arr={arr} />
+                    <CartProductCardArr arr={cartItems} />
                 </div>
                 <div className="rounded-xl">
                     {intlIncluded && (
@@ -36,14 +43,9 @@ export default function MainMobile({ arr }: { arr: cartProductCardProps[] }) {
                 </div>
             </div>
             <div
-                className={`${
-                    maxHeight > 0 && maxHeight == innerHeight && "pb-[20px]"
-                } h-[250px] fixed bottom-0 w-full bg-gray-50 px-4 pt-6 border-t shadow-inner tb:hidden`}>
-                <ProductCheckOut arr={arr} />
-
-                <Link href="/order" className="black-bar-xl m-3 tracking-[0.2em]">
-                    주문하기
-                </Link>
+                className={`h-[230px] fixed bottom-0 w-full bg-gray-50 px-4 my-2 py-2 border-t shadow-inner tb:hidden z-10`}>
+                <ProductCheckOut arr={checkOutItems!} />
+                <CartOrderButton />
             </div>
         </>
     );

@@ -78,7 +78,7 @@
                 "300"
             ]
         },
-        "기타": { "productType": ["악세서리", "지갑", "모자", "가방", "기타"], "sizeArray": ["one size"] },
+        "기타": { "productType": ["악세서리", "지갑", "모자", "가방", "기타"], "sizeArray": ["ONE SIZE"] },
         "전체": {
             "productType": [
                 "가디건",

@@ -1,7 +1,7 @@
 from typing import Tuple, Dict, Optional
 import json
 
-from sqlalchemy import and_, func, select
+from sqlalchemy import and_, func, select, text
 
 from logs.make_log import make_logger
 from db.tables import ProductInfoTable, SizeTable
@@ -39,14 +39,14 @@ async def get_product(sku: int, db: AsyncSession) -> ProductInfoSchema | None:
     return ProductInfoSchema(**result[0][0].to_dict(), size=result[0][1])
 
 
-@lru_cache()
+# @lru_cache()
 def get_init_meta_data():
     with open("./json/init_meta.json", "r") as f:
         init_meta = json.load(f)
     return FilterMetaSchema(**init_meta).model_dump(by_alias=True)
 
 
-@alru_cache()
+# @alru_cache()
 async def get_category(
     sort_by: str = "최신순",
     category: Optional[str] = None,
@@ -133,3 +133,21 @@ async def get_page_cursor(
 
 ####### FILTER METHOD ##########
 ####### FILTER METHOD ##########
+
+
+async def searchProductInDB(keyword: str, limit: int, db: AsyncSession):
+    stmt = (
+        select(ProductInfoTable, func.group_concat(SizeTable.size).label("size"))
+        .join(SizeTable, ProductInfoTable.sku == SizeTable.sku)
+        .where(text(f"MATCH(search_info) AGAINST (:keyword)").params(keyword=keyword))
+        .group_by(SizeTable.sku)
+        .limit(limit)
+    )
+
+    result = await db.execute(stmt)
+    result = result.all()
+    print(result)
+    return [
+        ProductInfoSchema(**row[0].to_dict(), size=row[1]).model_dump(by_alias=True)
+        for row in result
+    ]

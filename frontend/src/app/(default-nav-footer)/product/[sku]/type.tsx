@@ -1,5 +1,5 @@
 export interface ThumbnailProps {
-    brand: string;
+    sku: number;
     productName: string;
     productId: string;
     imgType: string;

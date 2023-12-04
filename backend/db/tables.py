@@ -1,5 +1,5 @@
 from sqlalchemy.dialects.mysql import VARCHAR, INTEGER, BOOLEAN, DATETIME
-from sqlalchemy import Column, ForeignKey, UniqueConstraint
+from sqlalchemy import Column, ForeignKey, UniqueConstraint, Index
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -33,7 +33,15 @@ class ProductInfoTable(MyBase):
     price_asc_cursor = Column(VARCHAR(100), index=True)
     deploy = Column(INTEGER, index=True)
 
-    __table_args__ = (UniqueConstraint("product_id", name="_product_id_uc"),)
+    __table_args__ = (
+        UniqueConstraint("product_id", name="_product_id_uc"),
+        Index(
+            "idx_search_info",
+            "search_info",
+            mysql_length=255,
+            mysql_prefix="FULLTEXT",
+        ),
+    )
 
     class Config:
         orm_mode = str

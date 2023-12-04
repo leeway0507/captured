@@ -94,13 +94,20 @@ const FilterOptions = ({ productFilter, filterType }: { productFilter: useProduc
     return (
         filterType &&
         FilterElement && (
-            <div className="bg-white border-b py-4 px-4 borde min-h-[100px] max-h-[300px] overflow-auto scroll-bar ">
+            <div className="bg-white border-b py-4 px-4 borde min-h-[100px] max-h-[300px] overflow-auto scroll-bar">
                 {FilterElement[1]}
             </div>
         )
     );
 };
-const MobileFilterPage = ({ productFilter, pageType }: { productFilter: useProductFilterProps; pageType: string }) => {
+
+export const MobileFilterPage = ({
+    productFilter,
+    pageType,
+}: {
+    productFilter: useProductFilterProps;
+    pageType: string;
+}) => {
     const [data, setData] = useState<string>("");
     const pill = "rounded-lg mx-1 h-[36px] px-4 text-sm flex-center cursor-pointer ";
     const selected = "bg-main-black text-white";

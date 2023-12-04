@@ -34,6 +34,9 @@ const ItemBox = ({ size, selectedItem, setSelectedItem, exist }: itemBoxProps) =
 const ProductSizeTable = (sizeInfo: sizeInfo) => {
     const { sizeType, availableSize, selectedItem, setSelectedItem, defaultSizeArr } = sizeInfo;
 
+    console.log("availableSize, defaultSizeArr");
+    console.log(availableSize, defaultSizeArr);
+
     return (
         <div className="flex flex-wrap gap-2 py-3">
             {defaultSizeArr.map((defaultSize: string) => {

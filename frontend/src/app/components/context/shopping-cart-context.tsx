@@ -6,7 +6,7 @@ import assert from "assert";
 
 interface ShoppingCartContext {
     getItemquantity: (sku: number, size: string) => number;
-    increaseCartQuantity: (sku: number, size: string, productInfo: productCardProps) => void;
+    increaseCartQuantity: (sku: number, size: string, selected: boolean, productInfo: productCardProps) => void;
     decreaseCartQuantity: (sku: number, size: string) => void;
     removeFromCart: (sku: number, size: string) => void;
     initCart: () => void;
@@ -16,6 +16,9 @@ interface ShoppingCartContext {
     setModalOpen: (isOpen: boolean) => void;
     modalContent: string | JSX.Element;
     setModalContent: (content: string | JSX.Element) => void;
+    toggleSelectedItem: (sku: number, size: string) => void;
+    changeAllSelectedItems: () => void;
+    changeNotAllSelectedItems: () => void;
 }
 
 export const ShoppingCartContext = createContext({} as ShoppingCartContext);
@@ -44,12 +47,12 @@ export function ShoppingCartProvider({ children }: { children: React.ReactNode }
         return cartItems?.find((item) => item.sku === sku && item.size === size)?.quantity || 0;
     };
 
-    const increaseCartQuantity = (sku: number, size: string, productInfo: productCardProps) => {
+    const increaseCartQuantity = (sku: number, size: string, selected: boolean, productInfo: productCardProps) => {
         setCartItems((currItems) => {
             if (currItems!.find((item) => item.sku === sku && item.size === size) == null) {
                 // productInfo에 사이즈 변경, quantity 추가 후 cartItems에 저장
                 productInfo.size = size;
-                return [...currItems!, { ...productInfo, quantity: 1 }];
+                return [...currItems!, { ...productInfo, quantity: 1, selected }];
             } else {
                 return currItems!.map((item) => {
                     if (item.sku === sku && item.size === size) {
@@ -77,11 +80,36 @@ export function ShoppingCartProvider({ children }: { children: React.ReactNode }
             }
         });
     };
+    const toggleSelectedItem = (sku: number, size: string) => {
+        setCartItems((currItems) => {
+            return currItems!.map((item) => {
+                if (item.sku === sku && item.size === size) {
+                    return { ...item, selected: !item.selected };
+                } else {
+                    return item;
+                }
+            });
+        });
+    };
+
+    const changeAllSelectedItems = () => {
+        setCartItems((currItems) => {
+            return currItems!.map((item) => {
+                return { ...item, selected: true };
+            });
+        });
+    };
+    const changeNotAllSelectedItems = () => {
+        setCartItems((currItems) => {
+            return currItems!.map((item) => {
+                return { ...item, selected: false };
+            });
+        });
+    };
 
     const removeFromCart = (sku: number, size: string) => {
         setCartItems((currItems) => {
-            assert(currItems, "cartItems is undefined currItems should be cartItemProps[]");
-            return currItems.filter((item) => !(item.sku === sku && item.size === size));
+            return currItems!.filter((item) => !(item.sku === sku && item.size === size));
         });
     };
     const initCart = () => {
@@ -105,6 +133,9 @@ export function ShoppingCartProvider({ children }: { children: React.ReactNode }
                 setModalOpen,
                 modalContent,
                 setModalContent,
+                toggleSelectedItem,
+                changeAllSelectedItems,
+                changeNotAllSelectedItems,
             }}>
             {children}
         </ShoppingCartContext.Provider>

@@ -10,6 +10,7 @@ const CartproductCardArr = ({ arr }: { arr: cartProductCardProps[] }) => {
                 props={cartProductCardForm}
                 onDelete={false}
                 countEnable={false}
+                selectEnable={false}
             />
         );
     });
