@@ -67,7 +67,6 @@ export default function ResetPassword() {
     const checkEmailAndNameHandler = () => {
         CheckEmailAndNameProxy(email, name)
             .then((res) => {
-                console.log(res);
                 if (res.status == 200) {
                     setToken(res.data.token);
                     verificationSuccessHandler();

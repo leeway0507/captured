@@ -24,12 +24,12 @@ const Infos = () => {
                     <div>배송 및 반품 안내</div>
                     <div>❯</div>
                 </button>
-                <button
+                {/* <button
                     className="text-main-black ps-1 pe-4 flex justify-between w-full text-xl font-bold link-animation"
                     onClick={() => setIsSizeOpen(true)}>
                     <div>제품 사이즈 안내 </div>
                     <div>❯</div>
-                </button>
+                </button> */}
             </div>
             <SideBar
                 content={<DeliveryInfo closeModal={closeDeliveryModal} />}

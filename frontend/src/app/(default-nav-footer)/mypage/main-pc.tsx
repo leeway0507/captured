@@ -30,14 +30,8 @@ export default function MainPc({ signUpType, orderHistory }: { signUpType: strin
     const router = useRouter();
     const searchParams = useSearchParams();
 
-    const [selectedIndex, setSelectedIndex] = useState(0);
-
-    const pageIdx = searchParams?.get("pageindex");
-    useEffect(() => {
-        if (pageIdx) {
-            setSelectedIndex(parseInt(pageIdx));
-        }
-    }, [pageIdx]);
+    const key = searchParams?.get("key");
+    const [selectedIndex, setSelectedIndex] = useState(Number(key));
 
     return (
         <div className="flex grow max-w-5xl justify-between">
@@ -45,7 +39,7 @@ export default function MainPc({ signUpType, orderHistory }: { signUpType: strin
                 <Tab.List className="basis-1/3 max-w-[300px] min-h-[600px] text-xl">
                     <Tab.List className={"sticky top-[70px] flex flex-col w-full"}>
                         <Tab
-                            onClick={() => router.push("/mypage?pageindex=0")}
+                            onClick={(e) => router.replace("/mypage?key=0")}
                             key="order"
                             className={({ selected }) =>
                                 classNames(
@@ -56,7 +50,7 @@ export default function MainPc({ signUpType, orderHistory }: { signUpType: strin
                             주문배송
                         </Tab>
                         <Tab
-                            onClick={() => router.push("/mypage?pageindex=1")}
+                            onClick={() => router.replace("/mypage?key=1")}
                             key="setAddress"
                             className={({ selected }) =>
                                 classNames(
@@ -68,7 +62,7 @@ export default function MainPc({ signUpType, orderHistory }: { signUpType: strin
                         </Tab>
                         {signUpType === "email" && (
                             <Tab
-                                onClick={() => router.push("/mypage?pageindex=2")}
+                                onClick={() => router.replace("/mypage?key=2")}
                                 key="resetPassword"
                                 className={({ selected }) =>
                                     classNames(

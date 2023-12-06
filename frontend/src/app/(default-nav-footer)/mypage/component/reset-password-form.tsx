@@ -14,7 +14,7 @@ export default function ResetPasswordFrom() {
         <div className="py-4">비밀번호가 변경되었습니다.</div>,
         "black-bar bg-green-700 w-full",
         () => {
-            router.push("/mypage?pageindex=0");
+            router.push("/mypage");
         }
     );
     const failureHandler = AlertPopUpModal(

@@ -27,12 +27,9 @@ export const registerOauthUser = async (account: Account, profile: any, user: Us
 };
 
 export const getOauthUser = async (account: Account) => {
-    const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/auth/sign-in-sns?id=${account!.providerAccountId}`,
-        {
-            cache: "no-store",
-        }
-    );
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/signin-sns?id=${account!.providerAccountId}`, {
+        cache: "no-store",
+    });
 
     return { status: res.status, user: await res.json() };
 };

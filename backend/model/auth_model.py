@@ -31,7 +31,6 @@ class LoginResponseSchema(Token):
     user_id: str
     email: Optional[EmailStr] = None
     kr_name: str
-    email_verification: bool
     sign_up_type: str
 
 

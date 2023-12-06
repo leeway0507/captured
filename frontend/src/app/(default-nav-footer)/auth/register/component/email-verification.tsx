@@ -83,7 +83,7 @@ export default function EmailVerification({
                     <label htmlFor={"verification-code"} className="custom-label-class">
                         인증코드 입력
                     </label>
-                    <div className={`text-xs  ${isError ? "text-white" : "text-orange-600"}`}>{errorMessage}</div>
+                    <div className={`text-xs  ${isError ? "text-orange-600" : "text-white"}`}>{errorMessage}</div>
                 </div>
                 <div className="cursor-pointer whitespace-nowrap flex-center pb-3">
                     <button
