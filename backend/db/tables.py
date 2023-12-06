@@ -72,8 +72,8 @@ class UserTable(MyBase):
     email = Column(VARCHAR(255), nullable=True, unique=True)
     password = Column(VARCHAR(255), nullable=True)
     kr_name = Column(VARCHAR(30), nullable=False)
-    email_verification = Column(BOOLEAN, nullable=False, default=False)
     register_at = Column(DATETIME, nullable=False)
+    last_login = Column(DATETIME, nullable=False)
     sign_up_type = Column(VARCHAR(20), nullable=False)
 
     class Config:

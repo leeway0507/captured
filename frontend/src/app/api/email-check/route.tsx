@@ -7,8 +7,6 @@ const checkEmailDuplication = async (request: NextRequest) => {
 
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/email-check?email=${email}`);
 
-    console.log(res.status);
-
     return NextResponse.json({ status: res.status, data: await res.json() });
 };
 

@@ -16,7 +16,7 @@ const SizeBoxMobile = ({ data, defaultSizeArr }: { data: productCardProps; defau
 
     const [selectedItem, setSelectedItem] = useState<string>(availableSize[0] || "");
     const { increaseCartQuantity } = useShoppingCart();
-    const isSize = availableSize.length > 0;
+    const isSize = availableSize[0] !== "-";
 
     const handleModal = () => {
         // sku: number, size: string, selected: boolean

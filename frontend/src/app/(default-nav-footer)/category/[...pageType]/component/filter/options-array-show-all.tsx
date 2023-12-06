@@ -86,7 +86,6 @@ const OptionArrayShowAll = ({ contentList, setContentList, showTitle = true }: I
                     return obj;
                 }
             });
-            console.log("newContentList", newContentList);
             setContentList(newContentList);
         };
         // API call을 위한 사이즈 업데이트

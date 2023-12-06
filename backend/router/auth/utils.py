@@ -12,7 +12,7 @@ from passlib.context import CryptContext
 from fastapi.security import OAuth2PasswordBearer
 from fastapi import Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, func, and_, update
+from sqlalchemy import select, func, and_, update, insert
 
 
 from model.db_model import (
@@ -155,15 +155,17 @@ async def register_auth_user(
 ) -> UserSchema | None:
     """네이버 카카오 회원가입 시 user 정보를 DB에 저장"""
 
-    auth_user_registration.user_id = create_user_id()
     auth_user_registration.register_at = datetime.now()
+    auth_user_registration.last_login = datetime.now()
 
-    query = db.add(UserTable(**auth_user_registration.model_dump()))  # type: ignore
-    result = await commit(db, query, error_log)
-
-    if result:
+    try:
+        stmt = insert(UserTable).values(**auth_user_registration.model_dump())
+        await db.execute(stmt)
+        await db.commit()
         return await get_user_by_user_id(db, auth_user_registration.user_id)
-    return None
+    except Exception as e:
+        error_log.error(e)
+        return None
 
 
 async def register_user_and_address(
@@ -181,6 +183,8 @@ async def register_user_and_address(
     user_registration.user_id = create_user_id()
     user_registration.password = get_password_hash(user_registration.password)
     user_registration.register_at = datetime.now()
+    user_registration.last_login = datetime.now()
+
     query = db.add(UserTable(**user_registration.model_dump()))  # type: ignore
     result = await commit(db, query, error_log)
 
@@ -286,14 +290,16 @@ from pathlib import Path
 
 
 password = config.get("GMAIL_APP_PASSWORD")
+gmail_id = config.get("GMAIL_ID")
 sending_email = config.get("SENDING_EMAIL")
 assert isinstance(password, str), "password is not str"
 assert isinstance(sending_email, str), "password is not str"
+assert isinstance(gmail_id, str), "password is not str"
 
 print(Path(__file__).parent / "templates")
 
 conf = ConnectionConfig(
-    MAIL_USERNAME=sending_email,
+    MAIL_USERNAME=gmail_id,
     MAIL_PASSWORD=password,
     MAIL_FROM=sending_email,
     MAIL_PORT=465,
@@ -343,3 +349,14 @@ def verification_code(server_code: Dict[str, Any], request_code: str):
         return {"result": False, "message": "not matched"}
 
     return {"result": True, "message": "success"}
+
+
+async def update_last_login(user_id, db: AsyncSession):
+    stmt = (
+        update(UserTable)
+        .filter(UserTable.user_id == user_id)
+        .values({"last_login": datetime.now()})
+    )
+    await db.execute(stmt)
+    await db.commit()
+    return True
