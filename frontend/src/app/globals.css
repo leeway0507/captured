@@ -65,10 +65,11 @@
 
     }
     .search-bar {
-        @apply mt-0 h-10 block w-full px-0.5 border-0 border-b focus:ring-0 placeholder-sub-black tracking-[0.1rem] focus:border-main-black caret-main-black
+        @apply mt-0 h-10 block w-full px-0.5 border-0 border-b focus:ring-0 placeholder-gray-400 tracking-[0.1rem] focus:border-main-black caret-main-black focus:outline-none
         }
     .custom-input-class {
-        @apply mt-0 h-10 block w-full px-0.5 border-0 border-b border-gray-200 text-sm focus:ring-0 focus:border-main-black placeholder-transparent focus:placeholder:text-sm;
+        @apply mt-0 h-10 block w-full px-0.5 border-0 border-b border-gray-200 text-xs focus:ring-0 focus:border-main-black placeholder-transparent focus:placeholder:text-sm focus:outline-none;
+        /* @apply appearance-none block mt-0 h-10 w-full px-0 border-b border-red-500 text-xs */
     }
     .custom-label-class {
         @apply absolute -top-4 left-0 text-xs text-sub-black peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 transition-all

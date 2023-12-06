@@ -4,9 +4,9 @@ const nextConfig = {
         remotePatterns: [
             {
                 protocol: "https",
-                hostname: "d3hoea0p4wjde8.cloudfront.net",
+                hostname: "we-captured.kr",
                 port: "",
-                pathname: "/product/**",
+                pathname: "/cdn-images/product/**",
             },
         ],
     },

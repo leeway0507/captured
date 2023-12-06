@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import ProductCard from "./product-card";
 import { productCardProps } from "@/app/type";
 import { useRouter } from "next/navigation";
@@ -18,7 +18,6 @@ const ProductCardArrary = ({
     isNewFilter: boolean;
 }) => {
     const router = useRouter();
-    const ref = useRef(null);
 
     const [localData, setLocalData] = useState<{ [key: number]: productCardProps[] }>({ [currentPage]: data });
 
@@ -76,23 +75,22 @@ const ProductCardArrary = ({
                             <div className={`grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 page-container`}>
                                 {item[1].map((data) => {
                                     return (
-                                        <div key={data.sku} className={`relative ${data.size === "" && "opacity-60"}`}>
-                                            {data.size === "" && (
-                                                <div className="absolute top-[5%] left-0 text-main-black">SoldOut</div>
-                                            )}
+                                        <div key={data.sku}>
                                             <ProductCard props={data} />
                                         </div>
                                     );
                                 })}
                             </div>
                             <div
-                                className="page-observer h-[50px] w-full"
+                                className={`${
+                                    nextPage < lastPage + 1 ? "block" : "hidden"
+                                } page-observer h-[50px] w-full`}
                                 data-next={`${currentPage + 1 <= lastPage ? currentPage + 1 : lastPage}`}></div>
                         </div>
                     );
                 })}
             </div>
-            <Link ref={ref} href={`?${nextPage}`} className={`${nextPage < lastPage + 1 ? "block" : "hidden"}`}>
+            <Link href={`?${nextPage}`} className={`${nextPage < lastPage + 1 ? "block" : "hidden"}`}>
                 <Spinner />
             </Link>
         </>

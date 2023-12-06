@@ -57,9 +57,6 @@ export default async function Page({
     );
 
     if (historyStatus !== 200) {
-        console.log("---orderHistoryResult.message---");
-        console.log(historyStatus);
-        console.log(historyData);
         return redirect("/order/fail?code=FAIL_TO_SAVE_INFO&message=결제정보 저장에 실패했습니다.");
     }
 

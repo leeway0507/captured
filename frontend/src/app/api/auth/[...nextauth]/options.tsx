@@ -65,16 +65,18 @@ export const options: NextAuthOptions = {
                     return true;
                 }
                 if (account!.type === "oauth") {
+                    console.log(account);
                     const user_check = await api.getOauthUser(account!);
 
-                    // console.log("---------signIn---------");
-                    // console.log(user_check);
+                    console.log("---------signIn---------");
+                    console.log(user_check);
 
                     //register user when user is not existed
                     const userInfo =
                         user_check.status == 404 ? await api.registerOauthUser(account!, profile, user) : user_check;
 
                     if (userInfo.status == 406) throw new Error("406 error");
+                    if (userInfo.status == 422) throw new Error("422 error");
 
                     //update user when user is existed
                     // Swagger에서는 accessToken을 인식 못하므로 signin result에 대해서는 snake_case를 사용

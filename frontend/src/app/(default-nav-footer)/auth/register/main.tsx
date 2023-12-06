@@ -109,6 +109,7 @@ export default function CreateAccount() {
             api.registerProxy(reqData).then((res) => {
                 if (res) {
                     handleCredentials(email, password1, () => {});
+                    router.push("/mypage");
                 } else {
                     registerFailureHandler();
                 }
@@ -158,7 +159,7 @@ export default function CreateAccount() {
                         <div className="cursor-pointer whitespace-nowrap flex-center pb-3">
                             <button
                                 type="button"
-                                className="border p-2 bg-light-gray rounded active:bg-deep-gray text-xs whitespace-nowrap"
+                                className="border p-2 bg-main-black text-white rounded active:bg-deep-gray text-xs whitespace-nowrap"
                                 disabled={email === "" || !checkEmail(email) || isUnique}
                                 onClick={emailCheckHandler}>
                                 {isverified ? "이메일 인증완료" : "이메일 인증하기"}
@@ -180,6 +181,7 @@ export default function CreateAccount() {
                             setValue={setName}
                             id="username"
                             checkPolicy={checkName}
+                            입
                             autoComplete="username"
                             maxLength={10}
                         />

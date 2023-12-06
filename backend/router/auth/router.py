@@ -27,7 +27,9 @@ email_verification_code = ExpiringDict(max_len=100, max_age_seconds=60 * 3)
 
 @auth_router.post("/signin", response_model=LoginResponseSchema)
 async def login(
-    form_data: OAuth2PasswordRequestForm = Depends(), db: AsyncSession = Depends(get_db)
+    background_tasks: BackgroundTasks,
+    form_data: OAuth2PasswordRequestForm = Depends(),
+    db: AsyncSession = Depends(get_db),
 ):
     """로그인 수행"""
 
@@ -39,18 +41,23 @@ async def login(
         status_code=status.HTTP_404_NOT_FOUND, detail="user is not UserSchema"
     )
 
+    # update last_login
+    background_tasks.add_task(update_last_login, id, db)
+
     return {
         **user.model_dump(),
         **create_access_token_form(user.user_id).model_dump(by_alias=False),
     }
 
 
-@auth_router.get("/sign-in-sns", response_model=LoginResponseSchema)
-async def user_check(id: str, db: AsyncSession = Depends(get_db)) -> dict[str, bool]:
+@auth_router.get("/signin-sns", response_model=LoginResponseSchema)
+async def user_check(
+    id: str, background_tasks: BackgroundTasks, db: AsyncSession = Depends(get_db)
+) -> dict[str, bool]:
     """유저 존재 여부 체크"""
     user = await get_user_by_user_id(db, id)
 
-    if user == 404:
+    if user == None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="email not found",
@@ -60,14 +67,10 @@ async def user_check(id: str, db: AsyncSession = Depends(get_db)) -> dict[str, b
         status_code=status.HTTP_404_NOT_FOUND, detail="user is not UserSchema"
     )
 
+    # update last_login
+    background_tasks.add_task(update_last_login, id, db)
+
     return {**user.model_dump(), **create_access_token_form(user.user_id).model_dump()}
-
-
-# @auth_router.get("/user-check")
-# async def user_check(id: str, db: AsyncSession = Depends(get_db)) -> dict[str, bool]:
-#     """유저 존재 여부 체크"""
-#     user_info = get_user_by_user_id(db, id)
-#     return {"is_existed": user_info is not None}
 
 
 @auth_router.post("/register", status_code=201, response_model=LoginResponseSchema)

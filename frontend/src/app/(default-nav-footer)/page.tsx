@@ -9,13 +9,13 @@ export default async function page() {
     const thumbnailInfos = [
         {
             src: "/banner/new_balance.jpg",
-            linkName: "jacquemus force black",
-            href: "/product/3",
+            linkName: "new balance",
+            href: "/category/brand?brand=adidas%20originals",
         },
         {
             src: "/banner/main1.jpeg",
-            linkName: "jacquemus force black",
-            href: "/product/3",
+            linkName: "spezial",
+            href: "/category/brand?brand=adidas%20originals",
         },
     ];
 
