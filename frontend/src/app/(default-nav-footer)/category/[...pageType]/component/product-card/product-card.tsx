@@ -4,6 +4,12 @@ import Link from "next/link";
 import { productCardProps } from "@/app/type";
 import { useState } from "react";
 
+const SoldOutLogo = () => (
+    <div className="-rotate-[20deg] border border-4 border-rose-600 font-test text-3xl text-rose-600 tracking-[0.05rem] py-1 px-2 rounded">
+        CAPTURED
+    </div>
+);
+
 export default function ProductCard({
     props,
     isIntl = true,
@@ -26,16 +32,24 @@ export default function ProductCard({
             <div className="flex flex-col">
                 <div className="relative">
                     {isLoaded ? (
-                        <Image
-                            src={productImgUrl}
-                            alt={String(sku)}
-                            width={300}
-                            height={300}
-                            sizes="(min-width: 1520px) 329px, (min-width: 780px) 22.36vw, calc(50vw - 13px)"
-                            className="rounded-lg"
-                            onError={() => setIsLoaded(false)}
-                            priority={idx < prorityNumber ? true : false}
-                        />
+                        <>
+                            {props.size === "-" && (
+                                <div className="flex-center bg-white/30 inset-0 absolute text-main-black">
+                                    <SoldOutLogo />
+                                </div>
+                            )}
+
+                            <Image
+                                src={productImgUrl}
+                                alt={String(sku)}
+                                width={300}
+                                height={300}
+                                sizes="(min-width: 1520px) 329px, (min-width: 780px) 22.36vw, calc(50vw - 13px)"
+                                className="rounded-lg "
+                                onError={() => setIsLoaded(false)}
+                                priority={idx < prorityNumber ? true : false}
+                            />
+                        </>
                     ) : (
                         <Image
                             src={"/icons/skeleton.png"}

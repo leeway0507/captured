@@ -2,6 +2,7 @@
 import { AlertPopUpModal } from "@/app/components/modal/new-alert-modal";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 
 export default function Page() {
     const searchParams = useSearchParams();
@@ -21,6 +22,10 @@ export default function Page() {
     const failureHandler = AlertPopUpModal("로그인 실패", content, "black-bar bg-rose-700 w-full", () =>
         router.push("/auth/signin")
     );
+    useEffect(() => {
+        failureHandler();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
-    return failureHandler();
+    return null;
 }

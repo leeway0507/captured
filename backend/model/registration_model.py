@@ -13,13 +13,14 @@ class EmailRegistrationSchema(BaseModel):
     kr_name: str
     sign_up_type: str = "email"
     register_at: Optional[datetime] = None
+    last_login: Optional[datetime] = None
 
 
 class RegistrationOauthSchema(BaseModel):
     model_config = ConfigDict(alias_generator=to_camel, populate_by_name=True)
     """Registration Email Schema"""
-    user_id: Optional[str] = None
+    user_id: str
     kr_name: str
     sign_up_type: str
-    email_verification: bool = True
     register_at: Optional[datetime] = None
+    last_login: Optional[datetime] = None

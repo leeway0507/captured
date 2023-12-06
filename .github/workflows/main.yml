@@ -23,7 +23,7 @@ jobs:
              ${{ env.DOCKER_LOCAL }} push
       - name: SERVER push
         run: |
-              ssh -i ~/.ssh/dodo-instance.pem ubuntu@13.124.238.182 "cd captured
+              ssh -i ~/.ssh/captured.pem ubuntu@52.78.75.104 "cd captured
               ${{ env.DOCKER_SERVER }} down
               ${{ env.DOCKER_SERVER }} pull
               ${{ env.DOCKER_SERVER }} up -d"

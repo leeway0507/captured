@@ -9,7 +9,7 @@ export default function Thumbnail({ sku, productName, productId, imgType }: Thum
 
     const handleImageError = (error: any) => {
         const parentDiv = error.target.parentNode;
-        return (parentDiv.className = "hidden");
+        return (parentDiv.className = "none");
     };
 
     return (
@@ -23,7 +23,8 @@ export default function Thumbnail({ sku, productName, productId, imgType }: Thum
                         height={400}
                         sizes="50vw"
                         className={style.embla__slide__img}
-                        priority={imageName === "main" ? true : false}
+                        // priority={imageName === "main" ? true : false}
+                        priority
                         onError={handleImageError}
                     />
                 </div>
