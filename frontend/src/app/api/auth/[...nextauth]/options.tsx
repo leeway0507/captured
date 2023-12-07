@@ -65,11 +65,12 @@ export const options: NextAuthOptions = {
                     return true;
                 }
                 if (account!.type === "oauth") {
-                    console.log(account);
                     const user_check = await api.getOauthUser(account!);
 
-                    console.log("---------signIn---------");
-                    console.log(user_check);
+                    // console.log("---------signIn---------");
+                    // console.log(user_check);
+                    // console.log("---------oauth---------");
+                    // console.log(account);
 
                     //register user when user is not existed
                     const userInfo =

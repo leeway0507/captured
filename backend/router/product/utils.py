@@ -7,11 +7,7 @@ from logs.make_log import make_logger
 from db.tables import ProductInfoTable, SizeTable
 
 from model.db_model import ProductInfoSchema
-from model.product_model import (
-    FilterMetaSchema,
-    ProductResponseSchema,
-    RequestFilterSchema,
-)
+from model.product_model import ProductResponseSchema
 from .filter import (
     create_order_by_filter,
     create_filter_query_dict,
@@ -30,20 +26,13 @@ async def get_product(sku: int, db: AsyncSession) -> ProductInfoSchema | None:
     result = await db.execute(
         select(ProductInfoTable, func.group_concat(SizeTable.size).label("size"))
         .join(SizeTable, ProductInfoTable.sku == SizeTable.sku)
-        .where(and_(SizeTable.sku == sku, ProductInfoTable.deploy == 1))
+        .where(and_(SizeTable.sku == sku))
         .group_by(SizeTable.sku)
     )
     result = result.all()
     if result == []:
         return None
     return ProductInfoSchema(**result[0][0].to_dict(), size=result[0][1])
-
-
-# @lru_cache()
-def get_init_meta_data():
-    with open("./json/init_meta.json", "r") as f:
-        init_meta = json.load(f)
-    return FilterMetaSchema(**init_meta).model_dump(by_alias=True)
 
 
 # @alru_cache()

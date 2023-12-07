@@ -20,8 +20,8 @@ export default function MainPC() {
             <CartEmptyGuide fontSize="3xl" />
         </div>
     ) : (
-        <div className="flex-col max-w-5xl w-full pt-12 mx-auto">
-            <div className="flex relative mb-10 h-full gap-8 justify-evenly">
+        <div className="max-w-5xl w-full pt-12 mx-auto">
+            <div className="flex relative mb-10 gap-8 justify-evenly">
                 <div className="basis-[60%] overflow-auto">
                     <div className="me-4">
                         <div className="flex gap-4 w-full border-b pb-2 text-sm">

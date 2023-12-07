@@ -13,6 +13,7 @@ export interface productCardProps {
     categorySpec: string;
     price_desc_cursor?: number;
     price_asc_cursor?: number;
+    deploy?: number;
 }
 export interface userAddressProps {
     addressId: string;
