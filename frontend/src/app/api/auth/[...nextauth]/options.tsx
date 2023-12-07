@@ -94,6 +94,12 @@ export const options: NextAuthOptions = {
                 return `/auth/login-fail?error=${err}`;
             }
         },
+        async redirect(params) {
+            // Custom logic to redirect the user after signing in
+            const { url, baseUrl } = params;
+            // Custom logic to redirect the user after signing in
+            return url.startsWith(baseUrl) ? url : baseUrl;
+        },
 
         async jwt({ token, user, account, profile }) {
             // console.log("---------jwt---------");
