@@ -22,7 +22,8 @@ const ThumbNailCard = ({ src, linkName, href }: ThumbnailInfo) => {
                     fill
                     sizes="(min-width: 1500px) 1404px, calc(92.03vw + 42px)"
                     style={{ objectFit: "cover" }}
-                    className="z-10 mx-auto border-y border-gray-400 "
+                    className="z-10 mx-auto border-y border-gray-400"
+                    priority
                 />
             </div>
             <div className="absolute bottom-0 left-0 right-0 w-full flex-center z-20 flex-cetner w-[90%] py-6">

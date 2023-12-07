@@ -10,6 +10,12 @@ const SoldOutLogo = () => (
     </div>
 );
 
+const ProductCardSkeleton = () => (
+    <div className="rounded-lg bg-light-gray aspect-square">
+        <div className="w-full h-full flex-center text-3xl font-test text-rose-600/50">CAPTURED</div>
+    </div>
+);
+
 export default function ProductCard({
     props,
     isIntl = true,
@@ -51,14 +57,7 @@ export default function ProductCard({
                             />
                         </>
                     ) : (
-                        <Image
-                            src={"/icons/skeleton.png"}
-                            alt="default"
-                            width={300}
-                            height={300}
-                            sizes="(min-width: 1520px) 329px, (min-width: 780px) 22.36vw, calc(50vw - 13px)"
-                            className="rounded-lg"
-                        />
+                        <ProductCardSkeleton />
                     )}
                 </div>
                 <div className="flex flex-col text-sub-black">
