@@ -5,7 +5,7 @@ import { productCardProps } from "@/app/type";
 import { getCategoryProxy } from "./fetch";
 
 const ItemList = ({ data }: { data: productCardProps[] }) => {
-    return data.slice(0, 12).map((item) => (
+    return data.slice(0, 10).map((item) => (
         <div key={item.sku} className="flex-none basis-[45%] tb:basis-[20%]">
             <ProductCard idx={item.sku} props={item} />
         </div>
@@ -34,7 +34,7 @@ const NewestItem = async () => {
     return (
         <div className="tb:px-4">
             <div className="text-xl font-bold px-2">신규 아이템</div>
-            <div className="flex w-full overflow-auto gap-2 px-2 py-2 tb:gap-4 tb:py-4">
+            <div className="flex w-full overflow-auto gap-2 px-2 py-2 tb:gap-4 tb:py-4 tb:grid tb:grid-cols-5">
                 {data.length === 0 ? <ItemListSkeleton /> : <ItemList data={data} />}
             </div>
             <div className="flex-center py-2 ">
