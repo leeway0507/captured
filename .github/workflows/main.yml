@@ -26,4 +26,5 @@ jobs:
               ssh -i ~/.ssh/captured.pem ubuntu@52.78.75.104 "cd captured
               ${{ env.DOCKER_SERVER }} down
               ${{ env.DOCKER_SERVER }} pull
-              ${{ env.DOCKER_SERVER }} up -d"
+              ${{ env.DOCKER_SERVER }} up -d
+              aws cloudfront create-invalidation --distribution-id E393WLG8S9AADP  --paths '/*'"

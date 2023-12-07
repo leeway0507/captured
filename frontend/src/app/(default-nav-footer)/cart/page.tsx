@@ -19,7 +19,7 @@ export default function Cart() {
                     <BottomNavBar nav="cart" />
                 </>
             ) : (
-                <div className="hidden tb:block px-2">
+                <div className="hidden px-2 grow tb:flex flex-col justify-between">
                     <MainPC />
                     <Footer />
                 </div>
