@@ -23,6 +23,16 @@ export default function Page() {
         () => {}
     );
 
+    const snsFailureHandler = AlertPopUpModal(
+        "로그인 실패",
+        <div className="py-4">
+            <div>로그인에 실패하였습니다.</div>
+            <div>다시 시도해주세요.</div>
+        </div>,
+        "black-bar bg-rose-700 w-full",
+        () => {}
+    );
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const { data, status } = useSession();
@@ -100,7 +110,7 @@ export default function Page() {
                     <div
                         className={`${oauthClass}`}
                         style={{ backgroundColor: "#03C75A" }}
-                        onClick={() => handleNaver()}>
+                        onClick={() => handleNaver(snsFailureHandler)}>
                         <div className="absolute left-3 top-0 bottom-0 flex-center">
                             <Image src="/icons/naver.png" alt="naver oauth" width={28} height={28} priority />
                         </div>
@@ -109,7 +119,7 @@ export default function Page() {
                     <div
                         className={`${oauthClass}`}
                         style={{ backgroundColor: "#FEE500" }}
-                        onClick={() => handleKakao()}>
+                        onClick={() => handleKakao(snsFailureHandler)}>
                         <div className="absolute left-4 top-0 bottom-0 flex-center">
                             <Image src="/icons/kakao.png" alt="kakao oauth" width={22} height={22} priority />
                         </div>
