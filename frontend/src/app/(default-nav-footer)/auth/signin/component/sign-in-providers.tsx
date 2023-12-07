@@ -11,15 +11,17 @@ export const handleCredentials = async (email: string, password: string, openMod
     });
 };
 
-export const handleKakao = async () => {
+export const handleKakao = async (openModalToggle: () => void) => {
     await signIn("kakao", {
-        redirect: true,
-        callbackUrl: "/",
+        redirect: false,
+    }).then((res) => {
+        res!.error && openModalToggle();
     });
 };
-export const handleNaver = async () => {
+export const handleNaver = async (openModalToggle: () => void) => {
     await signIn("naver", {
-        redirect: true,
-        callbackUrl: "/",
+        redirect: false,
+    }).then((res) => {
+        res!.error && openModalToggle();
     });
 };
