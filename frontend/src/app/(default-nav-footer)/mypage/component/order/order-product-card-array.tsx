@@ -7,7 +7,7 @@ const OrderDetailProductCardArray = ({ orderItemList }: { orderItemList: orderDe
         const cartProductCardForm = { ...item, countEnable: false };
         return (
             <div key={idx} className="relative py-2">
-                <div className="absolute top-2 left-[150px] px-2  text-xs underline ">
+                <div className="absolute top-1 left-[130px] px-2  text-xs underline ">
                     {item.deliveryNumber == undefined ? (
                         <div>배송 준비 중</div>
                     ) : (

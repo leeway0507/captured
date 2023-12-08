@@ -31,22 +31,20 @@ order_cache = ExpiringDict(max_len=100, max_age_seconds=60 * 10)
 
 @order_router.get("/get-order-history")
 async def get_order_history(
-    db: AsyncSession = Depends(get_db),
     user: TokenData = Depends(get_current_user),
 ):
     """주문 내역 조회"""
-    order_history = await get_order_history_from_db(db, user.user_id)
+    order_history = await get_order_history_from_db(user.user_id)
+
     return order_history
 
 
 @order_router.get("/get-order-row")
 async def get_order_row(
     order_id: str,
-    db: AsyncSession = Depends(get_db),
-    user: TokenData = Depends(get_current_user),
 ):
     """주문 상세내역 조회"""
-    order_row = await get_order_row_from_db(db, order_id)
+    order_row = await get_order_row_from_db(order_id)
     return order_row
 
 

@@ -5,7 +5,7 @@ import { productCardProps } from "@/app/type";
 import { useState } from "react";
 
 const SoldOutLogo = () => (
-    <div className="-rotate-[20deg] border border-4 border-rose-600 font-test text-3xl text-rose-600 tracking-[0.05rem] py-1 px-2 rounded">
+    <div className="-rotate-[20deg] border border-4 border-rose-600 font-test text-xl tb:text-3xl text-rose-600 tracking-[0.05rem] py-1 px-2 rounded">
         CAPTURED
     </div>
 );

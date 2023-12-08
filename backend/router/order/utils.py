@@ -6,7 +6,7 @@ from sqlalchemy.dialects.mysql import insert
 
 from logs.make_log import make_logger
 from db.tables import OrderHistoryTable, OrderRowTable, ProductInfoTable
-from db.connection import commit
+from db.connection import commit, session_local
 from model.db_model import OrderHistoryInDBSchema, OrderRowInDBSchmea
 from model.order_model import (
     OrderRowResponseSchema,
@@ -14,6 +14,7 @@ from model.order_model import (
 )
 
 from passlib.context import CryptContext
+from custom_alru import alru_cache
 
 error_log = make_logger("logs/db/product.log", "product_router")
 payment_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -30,7 +31,9 @@ def verify_payment_info(plain_payment_info, hashed_payment_info) -> bool:
 
 
 async def get_user_order_count(db: AsyncSession):
-    last_number = await db.execute(select([func.count()]).select_from(OrderHistoryTable))
+    last_number = await db.execute(
+        select([func.count()]).select_from(OrderHistoryTable)
+    )
     last_number = last_number.scalar()
 
     if last_number is None:
@@ -39,21 +42,32 @@ async def get_user_order_count(db: AsyncSession):
     return last_number + 1
 
 
-async def create_order_history_into_db(order_history: OrderHistoryInDBSchema, db: AsyncSession):
-    query = db.add(OrderHistoryTable(**order_history.model_dump()))
-    return await commit(db, query, error_log)
+async def create_order_history_into_db(
+    order_history: OrderHistoryInDBSchema, db: AsyncSession
+):
+    stmt = insert(OrderHistoryTable).values([order_history.model_dump()])
+    await db.execute(stmt)
+    await commit(db, stmt, error_log)
+    get_order_history_from_db.cache_invalidate(order_history.user_id)
+    return True
 
 
-async def create_order_row_into_db(order_rows: List[OrderRowInDBSchmea], db: AsyncSession):
-    stmt = insert(OrderRowTable).values([order_row.model_dump() for order_row in order_rows])
+async def create_order_row_into_db(
+    order_rows: List[OrderRowInDBSchmea], db: AsyncSession
+):
+    stmt = insert(OrderRowTable).values(
+        [order_row.model_dump() for order_row in order_rows]
+    )
 
     query = await db.execute(stmt)
 
     return await commit(db, query, error_log)
 
 
-async def get_order_history_from_db(db: AsyncSession, user_id: str):
+@alru_cache
+async def get_order_history_from_db(user_id: str):
     """주문 내역 조회"""
+    db = session_local()
     result = await db.execute(
         select(OrderHistoryTable)
         .filter(OrderHistoryTable.user_id == user_id)
@@ -61,13 +75,17 @@ async def get_order_history_from_db(db: AsyncSession, user_id: str):
         .limit(20)
     )
     result = result.all()
+    await db.close()  # type: ignore
     return [
-        OrderHistoryResponseSchema(**row[0].to_dict()).model_dump(by_alias=True) for row in result
+        OrderHistoryResponseSchema(**row[0].to_dict()).model_dump(by_alias=True)
+        for row in result
     ]
 
 
-async def get_order_row_from_db(db: AsyncSession, order_id: str):
+@alru_cache
+async def get_order_row_from_db(order_id: str):
     """주문 상세 내역 조회"""
+    db = session_local()
     result = await db.execute(
         select(
             OrderRowTable,
@@ -82,6 +100,7 @@ async def get_order_row_from_db(db: AsyncSession, order_id: str):
         .filter(OrderRowTable.order_id == order_id)
     )
     result = result.all()
+    await db.close()  # type: ignore
 
     return [
         OrderRowResponseSchema(

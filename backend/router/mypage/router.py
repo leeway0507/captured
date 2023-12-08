@@ -15,18 +15,17 @@ mypage_router = APIRouter()
 
 
 @mypage_router.get("/get-address")
-async def get_address(
-    user: TokenData = Depends(get_current_user), db: AsyncSession = Depends(get_db)
-) -> List[Dict]:
-    result = await get_user_address(db, user)
+async def get_address(user: TokenData = Depends(get_current_user)) -> List[Dict]:
+    result = await get_user_address(user.user_id)
+    # print(get_user_address.cache_info())
     return [row.model_dump(by_alias=True) for row in result]
 
 
 @mypage_router.get("/get-address-info")
 async def get_address_info_by_id(
-    address_id: str, user: TokenData = Depends(get_current_user), db: AsyncSession = Depends(get_db)
+    address_id: str,
 ) -> Dict:
-    result = await get_user_address_info(db, address_id)
+    result = await get_user_address_info_by_addres_id(address_id)
     return result.model_dump(by_alias=True)
 
 
@@ -54,7 +53,9 @@ async def update_address(
 ):
     """주소 수정"""
 
-    user_address_db = UserAddressInDBSchema(user_id=user.user_id, **address.model_dump())
+    user_address_db = UserAddressInDBSchema(
+        user_id=user.user_id, **address.model_dump()
+    )
     if await update_user_address(db, user_address_db):
         return {"message": "success"}
     else:
@@ -81,7 +82,9 @@ async def delete_address(
 
 @mypage_router.post("/resset-password")
 async def reset_password(
-    request: dict, user: TokenData = Depends(get_current_user), db: AsyncSession = Depends(get_db)
+    request: dict,
+    user: TokenData = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
 ):
     """비밀번호 변경"""
 
