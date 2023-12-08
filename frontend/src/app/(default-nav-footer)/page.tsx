@@ -8,14 +8,19 @@ import CategoryList from "../components/main/category-list";
 export default async function page() {
     const thumbnailInfos = [
         {
-            src: "/banner/new_balance.jpg",
-            linkName: "new balance",
+            src: "/banner/adidas_originals.png",
+            linkName: "spezial",
             href: "/category/brand?brand=adidas%20originals",
         },
         {
-            src: "/banner/main1.jpeg",
+            src: "/banner/arcteryx.png",
+            linkName: "new balance",
+            href: "/category/brand?brand=arc%27teryx",
+        },
+        {
+            src: "/banner/patagonia.png",
             linkName: "spezial",
-            href: "/category/brand?brand=adidas%20originals",
+            href: "/category/brand?brand=patagonia",
         },
     ];
 
