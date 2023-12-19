@@ -7,7 +7,6 @@ interface sizeInfo {
 }
 
 interface itemBoxProps {
-    type: string;
     size: string;
     selectedItem: string | undefined;
     setSelectedItem: (v: string) => void;
@@ -33,18 +32,28 @@ const ItemBox = ({ size, selectedItem, setSelectedItem, exist }: itemBoxProps) =
 
 const ProductSizeTable = (sizeInfo: sizeInfo) => {
     const { sizeType, availableSize, selectedItem, setSelectedItem, defaultSizeArr } = sizeInfo;
+    // TODO: 특수 사이즈 표시를 위해 임시로 availablesize를 defaultSizeArr로 대체하고 있음. 사이즈 로직 수정이 필요
+    const defaultStyleSize = availableSize.some((size) => defaultSizeArr.includes(size));
 
     return (
         <div className="flex flex-wrap gap-2 py-3">
-            {defaultSizeArr.map((defaultSize: string) => {
-                return ItemBox({
-                    type: sizeType,
-                    size: defaultSize,
-                    selectedItem: selectedItem,
-                    setSelectedItem: setSelectedItem,
-                    exist: availableSize.includes(defaultSize),
-                });
-            })}
+            {defaultStyleSize
+                ? defaultSizeArr.map((defaultSize: string) => {
+                      return ItemBox({
+                          size: defaultSize,
+                          selectedItem: selectedItem,
+                          setSelectedItem: setSelectedItem,
+                          exist: availableSize.includes(defaultSize),
+                      });
+                  })
+                : availableSize.map((size: string) => {
+                      return ItemBox({
+                          size: size,
+                          selectedItem: selectedItem,
+                          setSelectedItem: setSelectedItem,
+                          exist: availableSize.includes(size),
+                      });
+                  })}
         </div>
     );
 };

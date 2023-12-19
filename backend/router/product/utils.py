@@ -22,16 +22,36 @@ from functools import lru_cache
 error_log = make_logger("logs/db/product.log", "product_router")
 
 
+async def get_all_product_sku(db: AsyncSession) -> list[int]:
+    result = await db.execute(
+        select(ProductInfoTable.sku).where(ProductInfoTable.deploy == 1)
+    )
+    result = result.all()
+    return [row[0] for row in result]
+
+
 async def get_product(sku: int, db: AsyncSession) -> ProductInfoSchema | None:
     result = await db.execute(
         select(ProductInfoTable, func.group_concat(SizeTable.size).label("size"))
-        .join(SizeTable, ProductInfoTable.sku == SizeTable.sku)
-        .where(and_(SizeTable.sku == sku))
+        .join(
+            SizeTable,
+            ProductInfoTable.sku == SizeTable.sku,
+        )
+        .where(
+            SizeTable.available == 1,
+            SizeTable.sku == sku,
+        )
         .group_by(SizeTable.sku)
     )
     result = result.all()
     if result == []:
-        return None
+        stmt = select(ProductInfoTable).where(ProductInfoTable.sku == sku)
+        result = await db.execute(stmt)
+        result = result.all()
+        if result == []:
+            return None
+        return ProductInfoSchema(**result[0][0].to_dict())
+
     return ProductInfoSchema(**result[0][0].to_dict(), size=result[0][1])
 
 
@@ -88,7 +108,12 @@ async def get_category(
     result = await db.execute(
         select(ProductInfoTable, func.group_concat(SizeTable.size).label("size"))
         .join(SizeTable, ProductInfoTable.sku == SizeTable.sku)
-        .where(*filter.values(), column < current_cursor, ProductInfoTable.deploy == 1)
+        .where(
+            *filter.values(),
+            column < current_cursor,
+            ProductInfoTable.deploy == 1,
+            SizeTable.available == 1,
+        )
         .group_by(group_by)
         .order_by(*order_by)
         .limit(limit)

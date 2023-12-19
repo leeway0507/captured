@@ -18,9 +18,11 @@ const FooterNavBar = () => (
 const CompanyInfo = () => (
     <>
         <div className="flex flex-col tb-1">
-            <div>스톡헌터스 | 대표자 이양우 | 0502-1935-3403 | {process.env.NEXT_PUBLIC_CUSTOMER_EMAIL} </div>
+            <div className="font-bold">스톡헌터스</div>
+            <div>사업자등록번호 372-55-00754 | 대표자 이양우 </div>
+            <div>0502-1935-3403 | {process.env.NEXT_PUBLIC_CUSTOMER_EMAIL} </div>
             <div>
-                사업자등록번호 372-55-00754{" "}
+                {" "}
                 {/* <Link href={""} className="font-bold opacity-70">
                     사업자정보 확인
                 </Link> */}
@@ -47,7 +49,7 @@ const Policy = () => (
 
 export default function Footer() {
     return (
-        <div className="h-[200px] flex flex-col gap-4 text-xs tb:text-sm px-2 tb:px-4 pt-4 bg-footer-gray mb-[40px] tb:mb-[10px]">
+        <div className="h-full pt-4 pb-8 flex flex-col gap-4 text-xs tb:text-sm px-2 tb:px-4 bg-footer-gray mb-[40px] tb:mb-[10px]">
             <FooterNavBar />
             <CompanyInfo />
             <Policy />

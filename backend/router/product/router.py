@@ -54,6 +54,13 @@ async def search_product(
     return result
 
 
+@product_router.get("/get-all-product-sku")
+async def get_all_product_sku_api(db: AsyncSession = Depends(get_db)):
+    """제품 정보 불러오기"""
+    result = await get_all_product_sku(db=db)
+    return result
+
+
 # @product_router.get("/get-filter-meta")
 # def get_init_meta():
 #     return get_init_meta_data()
