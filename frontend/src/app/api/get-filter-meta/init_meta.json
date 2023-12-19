@@ -9,6 +9,7 @@
         "asics",
         "barbour",
         "c.p. company",
+        "clarks originals",
         "comme des garcons",
         "human made",
         "keen",
@@ -29,7 +30,7 @@
     "index": {
         "A": ["acne studios", "adidas originals", "ami", "a.p.c", "arc'teryx", "asics"],
         "B": ["Barbour"],
-        "C": ["c.p. company", "comme des garcons"],
+        "C": ["c.p. company", "clarks originals", "comme des garcons"],
         "H": ["human made"],
         "K": ["keen"],
         "M": ["maison kitsune"],

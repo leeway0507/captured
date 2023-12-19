@@ -8,15 +8,13 @@ import useSizeDetect from "@/app/components/hook/use-size-detect-hook";
 
 const SizeBoxMobile = ({ data, defaultSizeArr }: { data: productCardProps; defaultSizeArr: string[] }) => {
     const { maxHeight, innerHeight } = useSizeDetect();
-    const { sku, size, category } = data;
-    const { sizeType, availableSize } = {
-        sizeType: category,
-        availableSize: size.split(","),
-    };
+    const { sku, size, category: sizeType } = data;
+
+    const availableSize = size ? size.split(",") : ["-"];
+    const isSize = availableSize[0] !== "-";
 
     const [selectedItem, setSelectedItem] = useState<string>(availableSize[0] || "");
     const { increaseCartQuantity } = useShoppingCart();
-    const isSize = availableSize[0] !== "-";
 
     const handleModal = () => {
         // sku: number, size: string, selected: boolean
