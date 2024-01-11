@@ -2,7 +2,7 @@
 import { productCardProps } from "@/app/type";
 import { useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
-import ProductCard from "../../category/[...pageType]/component/product-card/product-card";
+import ProductCard from "../../category/[...pageType]/component/infinite-scroll/product-card";
 import SearchFilter from "./filter";
 
 function createFilterValue(filterParams: any) {

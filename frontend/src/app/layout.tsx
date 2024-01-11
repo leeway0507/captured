@@ -9,8 +9,8 @@ const monda = Monda({ weight: ["400", "700"], subsets: ["latin"] });
 const FugazeOne = Fugaz_One({ weight: ["400"], subsets: ["latin"], variable: "--test" });
 
 export const metadata: Metadata = {
-    title: "Captured",
-    description: "We capture reasonalble products around the world.",
+    title: "CAPTURED",
+    description: "전세계 숨은 재고를 검거하는 CAPTURED!",
     viewport: "width=device-width, maximum-scale=1, user-scalable=0",
 };
 

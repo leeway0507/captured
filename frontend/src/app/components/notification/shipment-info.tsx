@@ -16,6 +16,10 @@ export function IntlShipment({ title, content }: ShipmentProps) {
                     <div className="flex flex-col px-2 my-3 py-2 border-s-2 border-sub-black">
                         <div className="mx-1 text-lg my-1 font-bold">{title}</div>
                         <div className="mx-1 tracking-[0.2rem] text-sm text-justify  tracking-tight">{content}</div>
+                        <div>
+                            <div className="font-bold pt-4">해당 상품이 정품임을 보증합니다.</div>
+                            <div className="text-sm">구매 상품이 가품일 경우, 구매가의 2배를 보상합니다.</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -34,6 +38,10 @@ export function DomeShipment({ title, content }: ShipmentProps) {
                     <div className="flex flex-col px-2 my-3 py-2 border-s-2 border-sub-black">
                         <div className="mx-1 text-lg font-bold">{title}</div>
                         <div className="mx-1 tracking-[0.2rem] text-sm text-justify  tracking-tight">{content}</div>
+                        <div>
+                            <div className="font-bold pt-4">해당 상품이 정품임을 보증합니다.</div>
+                            <div className="text-sm">구매 상품이 가품일 경우, 구매가의 2배를 보상합니다.</div>
+                        </div>
                     </div>
                 </div>
             </div>

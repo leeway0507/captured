@@ -24,9 +24,13 @@ from .utils import (
     create_order_history_into_db,
     create_order_row_into_db,
 )
+from components.messanger.subscriber import EventHandler
+from components.env import env
+
 
 order_router = APIRouter()
 order_cache = ExpiringDict(max_len=100, max_age_seconds=60 * 10)
+event_hanlder = EventHandler(env.SLACK_CHANNEL)
 
 
 @order_router.get("/get-order-history")
@@ -79,6 +83,7 @@ async def create_order_history(
             OrderRowInDBSchmea(**order_row.model_dump()) for order_row in order_rows
         ]
         if await create_order_row_into_db(order_rows_in_db, db):
+            event_hanlder.order(order_history_in_db, order_rows_in_db)
             return {"message": "success"}
 
     else:
