@@ -1,4 +1,4 @@
-import ProductCard from "@/app/(default-nav-footer)/category/[...pageType]/component/product-card/product-card";
+import ProductCard from "@/app/(default-nav-footer)/category/[...pageType]/component/infinite-scroll/product-card";
 
 import Link from "next/link";
 import { productCardProps } from "@/app/type";

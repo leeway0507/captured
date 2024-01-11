@@ -55,7 +55,6 @@ async def get_product(sku: int, db: AsyncSession) -> ProductInfoSchema | None:
     return ProductInfoSchema(**result[0][0].to_dict(), size=result[0][1])
 
 
-# @alru_cache()
 async def get_category(
     sort_by: str = "최신순",
     category: Optional[str] = None,
@@ -65,7 +64,7 @@ async def get_category(
     price: Optional[str] = None,
     size_array: Optional[str] = None,
     page: int = 1,
-    limit: int = 24,
+    limit: int = 8,
 ) -> ProductResponseSchema:
     request_filter = {
         "sort_by": sort_by,
@@ -88,21 +87,10 @@ async def get_category(
     filter = create_filter_query_dict(**request_filter)
     sort_type, column, order_by = create_order_by_filter(request_filter.get("sort_by"))
 
-    # print("-------get_category--------")
-    # print("page_idx_cache_hit : ", get_page_idx.cache_info())
-    # print("filter_cache_hit : ", create_filter_query_dict.cache_info())
-
     # group_by
     group_by = SizeTable.sku
     if "size_array" in filter.keys():
         group_by = ProductInfoTable.sku
-
-    # # sort_type
-    # print(sort_type, column, current_cursor)
-    # if sort_type == "높은 가격 순":
-    #     cursor_filter = column < current_cursor
-    # else:
-    #     cursor_filter = column < current_cursor
 
     db = session_local()
     result = await db.execute(

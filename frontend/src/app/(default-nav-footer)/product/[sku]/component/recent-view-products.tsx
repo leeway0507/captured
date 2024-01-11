@@ -1,7 +1,7 @@
 "use client";
 import type { productCardProps } from "@/app/type";
 import EmblaCarouselMultiProducts from "@/app/components/carousel/EmblaCarouselMultiProducts";
-import ProductCard from "@/app/(default-nav-footer)/category/[...pageType]/component/product-card/product-card";
+import ProductCard from "@/app/(default-nav-footer)/category/[...pageType]/component/infinite-scroll/product-card";
 import { useEffect, useState } from "react";
 import { RelatedProductsSkeleton } from "@/app/(default-nav-footer)/search/skeleton";
 import styles from "@/app/components/carousel/styles.module.css";
