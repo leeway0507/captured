@@ -9,6 +9,7 @@ with open(mock_json_path, "r") as f:
 def get_category_mock(page: int, limit=8):
     last_page = (len(mock_items) // limit) + 1
     slice_page = page - 1
-    data = mock_items[slice_page * limit : page * limit]
+    data = mock_items[79:80]
+    # data = mock_items[slice_page * limit : page * limit]
 
     return ProductResponseSchema(data=data, currentPage=page, lastPage=last_page)

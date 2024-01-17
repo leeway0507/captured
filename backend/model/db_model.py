@@ -8,7 +8,6 @@ from datetime import datetime
 from pydantic import BaseModel, validator, ConfigDict, EmailStr, Field
 from pydantic.alias_generators import to_camel
 
-
 from model.order_model import OrderHistoryRequestSchema, OrderRowRequestchmea
 
 
@@ -21,7 +20,9 @@ class ProductInfoSchema(BaseModel):
     )
     sku: Optional[int] = None
     brand: str
+    kor_brand: str
     product_name: str
+    kor_product_name: str
     product_id: str
     size: Optional[str] = None
     price: int

@@ -1,7 +1,9 @@
 export interface productCardProps {
     sku: number;
     brand: string;
+    korBrand: string;
     productName: string;
+    korProductName: string;
     productId: string;
     price: number;
     shippingFee: number;

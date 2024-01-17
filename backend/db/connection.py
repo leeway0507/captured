@@ -40,7 +40,7 @@ def conn_engine(username: str, password: str, host: str, db_name: str, **_kwargs
 
 
 def get_secret() -> Dict[str, str]:
-    if os.environ.get("ProductionLevel"):
+    if os.environ.get("ProductionLevel") == "production":
         print("production - level -db")
         config = Config(RepositoryEnv(".env.production"))
     else:
@@ -51,6 +51,9 @@ def get_secret() -> Dict[str, str]:
     password = config.get("DB_PASSWORD")
     host = config.get("DB_HOST")
     db_name = config.get("DB_NAME")
+
+    print(f"host : {host}")
+    print(f"db_name : {db_name}")
 
     assert isinstance(username, str), "username is not str"
     assert isinstance(password, str), "password is not str"

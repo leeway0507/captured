@@ -148,7 +148,6 @@ async def searchProductInDB(keyword: str, limit: int, db: AsyncSession):
 
     result = await db.execute(stmt)
     result = result.all()
-    print(result)
     return [
         ProductInfoSchema(**row[0].to_dict(), size=row[1]).model_dump(by_alias=True)
         for row in result

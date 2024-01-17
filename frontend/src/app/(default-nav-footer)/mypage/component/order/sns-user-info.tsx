@@ -15,9 +15,6 @@ const SnsUserInfo = () => {
                 <label htmlFor="name">성 명</label>
                 <input type="text" value={session?.user.krName} disabled className="custom-input-disabled" />
             </div>
-            <button className="black-bar-xl w-full mt-8" onClick={() => router.back()}>
-                돌아가기{" "}
-            </button>
         </div>
     );
 };

@@ -22,7 +22,8 @@ export default function AddressInfo() {
         });
     }, [session]);
 
-    if (addressArray === undefined) return <AddressSkeleton />;
+    // if (addressArray === undefined) return <AddressSkeleton />;
+    if (addressArray === undefined) return <></>;
 
     if (addressArray.length === 0) {
         return (

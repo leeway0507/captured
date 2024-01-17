@@ -19,13 +19,12 @@ from db.connection import get_db
 from sqlalchemy.ext.asyncio import AsyncSession
 from expirng_dict import ExpiringDict
 from .utils import *
-from components.messanger.subscriber import EventHandler
+from components.messanger.subscriber import event_handler
 from components.env import env
 
 
 auth_router = APIRouter()
 email_verification_code = ExpiringDict(max_len=100, max_age_seconds=60 * 3)
-event_hanlder = EventHandler(env.SLACK_CHANNEL)
 
 
 @auth_router.post("/signin", response_model=LoginResponseSchema)
@@ -95,7 +94,7 @@ async def register(
         status_code=status.HTTP_404_NOT_FOUND, detail="user is not UserSchema"
     )
 
-    event_hanlder.user_registered(user)
+    event_handler.user_registered(user)
 
     return {**user.model_dump(), **create_access_token_form(user.user_id).model_dump()}
 

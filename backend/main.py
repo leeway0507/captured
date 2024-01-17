@@ -1,6 +1,6 @@
 "fastapi app"
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, APIRouter
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from router.auth import auth_router
@@ -29,7 +29,15 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+main_router = APIRouter()
 
+
+@main_router.get("/health-check")
+def healthcheck():
+    return "200"
+
+
+app.include_router(main_router)
 app.include_router(auth_router, prefix="/api/auth", tags=["auth"])
 app.include_router(mypage_router, prefix="/api/mypage", tags=["mypage"])
 app.include_router(product_router, prefix="/api/product", tags=["product"])

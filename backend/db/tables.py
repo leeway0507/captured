@@ -19,7 +19,9 @@ class ProductInfoTable(MyBase):
 
     sku = Column(INTEGER, primary_key=True)
     brand = Column(VARCHAR(50))
+    kor_brand = Column(VARCHAR(50))
     product_name = Column(VARCHAR(255))
+    kor_product_name = Column(VARCHAR(255))
     product_id = Column(VARCHAR(255))
     shipping_fee = Column(INTEGER)
     price = Column(INTEGER)

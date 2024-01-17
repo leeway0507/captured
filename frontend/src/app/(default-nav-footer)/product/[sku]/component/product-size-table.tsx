@@ -1,3 +1,16 @@
+const sizeWeight: { [key: string]: number } = {
+    XXXS: 1,
+    XXS: 2,
+    XS: 3,
+    S: 4,
+    M: 5,
+    L: 6,
+    XL: 7,
+    XXL: 8,
+    XXXL: 9,
+    XXXXL: 10,
+};
+
 interface sizeInfo {
     sizeType: string;
     availableSize: string[];
@@ -35,27 +48,40 @@ const ProductSizeTable = (sizeInfo: sizeInfo) => {
     // TODO: 특수 사이즈 표시를 위해 임시로 availablesize를 defaultSizeArr로 대체하고 있음. 사이즈 로직 수정이 필요
     const defaultStyleSize = availableSize.some((size) => defaultSizeArr.includes(size));
 
+    const sortedSize = availableSize.sort((a, b) => sizeWeight[a] - sizeWeight[b]);
+
+    console.log(sizeWeight["xxxs"]);
+
     return (
         <div className="flex flex-wrap gap-2 py-3">
-            {defaultStyleSize
-                ? defaultSizeArr.map((defaultSize: string) => {
-                      return ItemBox({
-                          size: defaultSize,
-                          selectedItem: selectedItem,
-                          setSelectedItem: setSelectedItem,
-                          exist: availableSize.includes(defaultSize),
-                      });
-                  })
-                : availableSize.map((size: string) => {
-                      return ItemBox({
-                          size: size,
-                          selectedItem: selectedItem,
-                          setSelectedItem: setSelectedItem,
-                          exist: availableSize.includes(size),
-                      });
-                  })}
+            {sortedSize.map((size: string) => {
+                return ItemBox({
+                    size: size,
+                    selectedItem: selectedItem,
+                    setSelectedItem: setSelectedItem,
+                    exist: availableSize.includes(size),
+                });
+            })}
         </div>
     );
 };
 
 export default ProductSizeTable;
+
+// {defaultStyleSize
+//     ? defaultSizeArr.map((defaultSize: string) => {
+//           return ItemBox({
+//               size: defaultSize,
+//               selectedItem: selectedItem,
+//               setSelectedItem: setSelectedItem,
+//               exist: availableSize.includes(defaultSize),
+//           });
+//       })
+//     : availableSize.map((size: string) => {
+//           return ItemBox({
+//               size: size,
+//               selectedItem: selectedItem,
+//               setSelectedItem: setSelectedItem,
+//               exist: availableSize.includes(size),
+//           });
+//       })}
