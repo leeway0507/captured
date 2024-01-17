@@ -8,7 +8,8 @@ export interface responseProps {
 }
 
 export const getCategory = async (filter: filterRequestProps | undefined, page: string | number) => {
-    const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/product/get-category?page=${page}`, {
+    const dynamicUrl = typeof window !== "undefined" ? window.location.origin : "http://127.0.0.1:3000";
+    const req = await fetch(`${dynamicUrl}/api/get-category?page=${page}`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

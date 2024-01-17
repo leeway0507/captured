@@ -329,7 +329,7 @@ async def send_code(user_code: Dict[str, Dict[str, Any]]):
     recipients = EmailSchema(email=email).email
 
     message = MessageSchema(
-        subject="[Captured] 이메일 인증번호",
+        subject="[CAPTURED] 이메일 인증번호",
         recipients=recipients,
         template_body={"code": code},
         subtype=MessageType.html,

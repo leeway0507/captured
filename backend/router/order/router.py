@@ -30,7 +30,7 @@ from components.env import env
 
 order_router = APIRouter()
 order_cache = ExpiringDict(max_len=100, max_age_seconds=60 * 10)
-event_hanlder = EventHandler(env.SLACK_CHANNEL)
+event_hanlder = EventHandler()
 
 
 @order_router.get("/get-order-history")

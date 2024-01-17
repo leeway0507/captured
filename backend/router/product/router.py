@@ -28,11 +28,8 @@ async def get_filtered_item_list(
     print("request_filter", filter.model_dump(exclude_none=True))
 
     v = await utils.get_category(
-        **filter.model_dump(exclude_none=True), page=page, limit=36
+        **filter.model_dump(exclude_none=True), page=page, limit=48
     )
-
-    # print("get-category-cache-hit", get_category.cache_info())
-    print(v)
     return v
 
 

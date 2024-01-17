@@ -18,8 +18,18 @@ def handle_non_serializable(obj):
 
 
 class SlackEvent:
+    _instance = None
+
     def __init__(self, channel_id) -> None:
         self.channel_id = channel_id
+
+    def __new__(cls, channel_id: str):
+        """싱글톤 패턴 적용"""
+        print("slack channel Init")
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+            cls._instance.__init__(channel_id)
+            return cls._instance
 
     def user_registered(self, user: UserSchema):
         text = f"""🥳🥳🥳🥳🥳🥳🥳🥳🥳\n\n-----신규 회원 등록 ----- \n\n 가입자명 : {user.kr_name} \n 가입방식 : {user.sign_up_type}"""

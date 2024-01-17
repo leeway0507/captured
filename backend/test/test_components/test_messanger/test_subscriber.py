@@ -1,13 +1,13 @@
 import pytest
-from components.messanger.subscriber import EventHandler
+from components.messanger.subscriber import event_handler, EventHandler
 from model.db_model import UserSchema, OrderHistoryInDBSchema, OrderRowInDBSchmea
 from datetime import datetime
+from components.env import env
 
 
 @pytest.fixture(scope="module")
 def EventHandlerImpl():
-    slack_channel_id = "C06D5UGUL6R"
-    yield EventHandler(slack_channel_id)
+    yield event_handler
 
 
 def test_user_register(EventHandlerImpl: EventHandler):
@@ -17,10 +17,9 @@ def test_user_register(EventHandlerImpl: EventHandler):
     EventHandlerImpl.user_registered(user)
 
 
-def test_EventHandler_is_singleton():
-    slack_channel_id = "C06D5UGUL6R"
-    a = EventHandler(slack_channel_id)
-    b = EventHandler(slack_channel_id)
+def test_EventHandler_is_singleton(EventHandlerImpl: EventHandler):
+    a = EventHandlerImpl
+    b = EventHandler()
 
     assert a == b
 

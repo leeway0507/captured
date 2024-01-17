@@ -4,9 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { responseProps } from "../../component/fetch";
 import { productCardProps } from "@/app/type";
 import ProductCard from "./product-card";
-import MockCard from "./mock-card";
 import { useRouter } from "next/navigation";
-import Spinner from "@/app/components/spinner/spinner";
 import { filterRequestProps } from "../../type";
 import { useSearchParams, useParams } from "next/navigation";
 
@@ -28,7 +26,10 @@ const InfiniteCardArrary = () => {
     const [hasMore, setHasMore] = useState(true);
     const [page, setPage] = useState(1);
     const [filter, setFilter] = useState({});
+    const [noResult, setNoResult] = useState(false);
     const elementRef = useRef(null);
+
+    console.log(hasMore);
 
     // searchParams Setting
     const searchParams = new URLSearchParams(useSearchParams());
@@ -63,65 +64,73 @@ const InfiniteCardArrary = () => {
             if (cardLoadObserver) cardLoadObserver.disconnect();
             if (pageParamObserver) pageParamObserver.disconnect();
         };
-    }, [localData]);
 
-    function onPageParamsIntersection(entries: IntersectionObserverEntry[]) {
-        entries.map((entry: IntersectionObserverEntry) => {
-            if (entry.isIntersecting) {
-                const nextPageNum = entry.target.getAttribute("data-page");
-                var params = new URLSearchParams(window.location.search);
-                nextPageNum && params.set("page", nextPageNum);
-                router.replace(`\?${params.toString()}`, { scroll: false });
+        function onPageParamsIntersection(entries: IntersectionObserverEntry[]) {
+            entries.map((entry: IntersectionObserverEntry) => {
+                if (entry.isIntersecting) {
+                    const nextPageNum = entry.target.getAttribute("data-page");
+                    var params = new URLSearchParams(window.location.search);
+                    nextPageNum && params.set("page", nextPageNum);
+                    router.replace(`\?${params.toString()}`, { scroll: false });
+                }
+            });
+        }
+        function onCardLoadInsersection(entries: any) {
+            const firstEntry = entries[0];
+            if (firstEntry.isIntersecting && hasMore) {
+                fetchMoreItems(queryParamsObject);
             }
-        });
-    }
-    function onCardLoadInsersection(entries: any) {
-        const firstEntry = entries[0];
-        if (firstEntry.isIntersecting && hasMore) {
-            fetchMoreItems(queryParamsObject);
         }
-    }
 
-    async function fetchMoreItems(filterDict: filterRequestProps) {
-        const res: responseProps = await api.getCategory(filterDict, page);
+        async function fetchMoreItems(filterDict: filterRequestProps) {
+            const res: responseProps = await api.getCategory(filterDict, page);
 
-        if (res.data.length == 0) {
-            setHasMore(false);
-        } else {
-            setLocalData((localData) => ({ ...localData, [page + 1]: res.data }));
-            setPage((prevPage) => prevPage + 1);
+            if (res.lastPage === 0) return setNoResult(true), setHasMore(false);
+
+            if (res.data.length == 0) {
+                setHasMore(false);
+            } else {
+                setNoResult(false);
+                setLocalData((localData) => ({ ...localData, [page + 1]: res.data }));
+                setPage((prevPage) => prevPage + 1);
+            }
         }
-    }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [localData]);
 
     return (
         <>
-            {Object.entries(localData).map((item, idx) => {
-                return (
-                    <div key={item[0]}>
-                        <div
-                            key={idx}
-                            className={`grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 page-container`}
-                            data-page={Number(item[0]) - 1}>
-                            {item[1].map((data) => {
-                                return (
-                                    <div key={data.sku}>
-                                        <ProductCard props={data} />
-                                    </div>
-                                );
-                            })}
-                        </div>
-                        {/* intersection 겹침 방지를 위해 의도적으로 Gap 만듬 */}
-                        <div className="h-[100px] Gap" />
-                    </div>
-                );
-            })}
-            <div ref={elementRef} className={hasMore ? "block" : "hidden"} />
+            {noResult ? (
+                <div className="flex flex-col mx-auto h-full tb:p-16 ">
+                    <div className="text-xl tb:text-3xl pb-2 m-auto">요청 결과가 존재하지 않습니다.</div>
+                </div>
+            ) : (
+                <>
+                    {Object.entries(localData).map((item, idx) => {
+                        return (
+                            <div key={item[0]}>
+                                <div
+                                    key={idx}
+                                    className={`grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 page-container`}
+                                    data-page={Number(item[0]) - 1}>
+                                    {item[1].map((data) => {
+                                        return (
+                                            <div key={data.sku}>
+                                                <ProductCard props={data} />
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                                {/* intersection 겹침 방지를 위해 의도적으로 Gap 만듬 */}
+                                <div className="h-[70px] Gap" />
+                            </div>
+                        );
+                    })}
+                </>
+            )}
+            <div ref={elementRef} className={hasMore ? "block " : "hidden"} />
         </>
     );
 };
-export default InfiniteCardArrary;
 
-// {res.lastPage === 0 ? (
-//     <div className="flex flex-col mx-auto h-full tb:p-16 ">
-//         <div className="text-xl tb:text-3xl pb-2 m-auto">요청 결과가 존재하지 않습니다.</div>
-//     </div>
+export default InfiniteCardArrary;

@@ -1,22 +1,23 @@
 from typing import List
 from .slack import SlackEvent
 from model.db_model import UserSchema, OrderRowInDBSchmea, OrderHistoryInDBSchema
+from components.env import env
 
 
 class EventHandler:
-    _subscriber = []
     _instance = None
+    _subscriber = []
 
-    def __init__(self, slack_channel_id: str) -> None:
-        self._subscriber.append(SlackEvent(slack_channel_id))
-
-    def __new__(cls, slack_channel_id: str):
+    def __new__(cls):
         """싱글톤 패턴 적용"""
         if cls._instance is None:
             cls._instance = super().__new__(cls)
-            cls._instance.__init__(slack_channel_id)
 
         return cls._instance
+
+    def subscribe(self, subscribefn):
+        print(f"subscribefn : {subscribefn}")
+        self._subscriber.append(subscribefn)
 
     def user_registered(self, user: UserSchema):
         for concrete_subscriber in self._subscriber:
@@ -29,3 +30,8 @@ class EventHandler:
     ):
         for concrete_subscriber in self._subscriber:
             getattr(concrete_subscriber, "order")(order, order_item)
+
+
+event_handler = EventHandler()
+slack = SlackEvent(env.SLACK_CHANNEL)
+event_handler.subscribe(slack)
