@@ -92,26 +92,22 @@ export const RefundAndExchange = (
                 <span className="underline text-blue-500 ">{process.env.NEXT_PUBLIC_CUSTOMER_EMAIL}</span>
                 )로 보내주시면 관련 내용 안내드리겠습니다.{" "}
             </div>
-            <div className="border rounded-md py-3 my-2">
-                <div className=" grid grid-rows-2 gap-1 ms-2">
-                    <div className="grid grid-cols-5">
-                        <div className="font-bold">주문자 성명</div>
-                        <div className="col-span-4">주문 시 기입한 성명</div>
-                    </div>
-                    <div className="grid grid-cols-5">
-                        <div className="font-bold">결제코드</div>
-                        <div className="col-span-4">
-                            마이페이지 → 주문배송 → 상세주문정보 항목에서 결제코드 확인 가능
-                        </div>
-                    </div>
-                    <div className="grid grid-cols-5">
-                        <div className="font-bold">환불 방식</div>
-                        <div className="col-span-4">희망 환불 절차(반품 또는 취소) 기입</div>
-                    </div>
-                    <div className="grid grid-cols-5">
-                        <div className="font-bold">상세 내용</div>
-                        <div className="col-span-4">반품 및 취소 사유 및 이미지 등 상세 내용 작성</div>
-                    </div>
+            <div className="border rounded-md py-3 my-2 text-sm pe-2">
+                <div className="grid grid-cols-7 py-1">
+                    <div className="font-bold col-span-2">주문자 성명</div>
+                    <div className="col-span-5">주문 시 기입한 성명</div>
+                </div>
+                <div className="grid grid-cols-7 py-1">
+                    <div className="font-bold col-span-2">결제코드</div>
+                    <div className="col-span-5">마이페이지 → 주문배송 → 상세주문정보 항목에서 결제코드 확인 가능</div>
+                </div>
+                <div className="grid grid-cols-7 py-1">
+                    <div className="font-bold col-span-2">환불 방식</div>
+                    <div className="col-span-5">희망 환불 절차(반품 또는 취소) 기입</div>
+                </div>
+                <div className="grid grid-cols-7 py-1">
+                    <div className="font-bold col-span-2">상세 내용</div>
+                    <div className="col-span-5">반품 및 취소 사유 및 이미지 등 상세 내용 작성</div>
                 </div>
             </div>
         </div>

@@ -6,12 +6,12 @@ import { DotButton } from "./EmblaDot";
 import Autoplay from "embla-carousel-autoplay";
 import styles from "./styles.module.css";
 
-interface EmblaCarouselProps {
+type EmblaCarouselProps = {
     autoPlay: boolean;
     children: ReactNode;
-}
+};
 
-const EmblaCarousel = ({ autoPlay, children }: EmblaCarouselProps) => {
+const EmblaCarousel = ({ autoPlay = false, children }: EmblaCarouselProps) => {
     const autoplayOptions = {
         delay: 4000,
         playOnInit: autoPlay,

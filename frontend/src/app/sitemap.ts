@@ -1,17 +1,22 @@
+import { getCategory } from './(default-nav-footer)/category/[...pageType]/component/fetch'
+
+
+
 export default async function sitemap() {
     const site = process.env.NEXT_PUBLIC_FRONTEND_URL
-    // const allSkus = await fetch(`${site}/api/get-all-product-sku`).then(res => res.json())
-    // const productPages = allSkus.data.map((sku:number) => {
-    //     return {
-    //         url: `${site}/product/${sku}`,
-    //         changeFrequency: 'daily',
-    //         priority: 0.7,
-    //         lastModified: new Date(),
-    //     }
-    // }
-    // ) 
+    const allSkus = await fetch(`${site}/api/get-all-product-sku`).then(res => res.json())
+    const productPages = allSkus.data.map((sku:number) => {
+        return {
+            url: `${site}/product/${sku}`,
+            changeFrequency: 'daily',
+            priority: 0.7,
+            lastModified: new Date(),
+        }
+    }
+    ) 
 
     return [
+        ...productPages,
         {
             url: `${site}/`,
             changeFrequency: 'weekly',

@@ -29,8 +29,6 @@ const InfiniteCardArrary = () => {
     const [noResult, setNoResult] = useState(false);
     const elementRef = useRef(null);
 
-    console.log(hasMore);
-
     // searchParams Setting
     const searchParams = new URLSearchParams(useSearchParams());
     const { pageType } = useParams();

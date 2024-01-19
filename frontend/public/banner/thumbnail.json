@@ -1,0 +1,38 @@
+{
+    "pc": [
+        {
+            "fileName": "1.jpg",
+            "href": "/category/brand?brand=adidas%20originals"
+        },
+        {
+            "fileName": "2.jpg",
+            "href": "/category/brand?brand=needles"
+        },
+        {
+            "fileName": "3.png",
+            "href": "/category/brand?brand=arc%27teryx"
+        },
+        {
+            "fileName": "4.png",
+            "href": "/category/brand?brand=patagonia"
+        }
+    ],
+    "mobile": [
+        {
+            "fileName": "1.jpg",
+            "href": "/category/brand?brand=adidas%20originals"
+        },
+        {
+            "fileName": "2.jpg",
+            "href": "/category/brand?brand=needles"
+        },
+        {
+            "fileName": "3.png",
+            "href": "/category/brand?brand=arc%27teryx"
+        },
+        {
+            "fileName": "4.png",
+            "href": "/category/brand?brand=patagonia"
+        }
+    ]
+}
