@@ -23,7 +23,6 @@ export default function Thumbnail({ sku, productName, productId, imgType }: Thum
                         height={400}
                         sizes="50vw"
                         className={style.embla__slide__img}
-                        // priority={imageName === "main" ? true : false}
                         priority
                         onError={handleImageError}
                     />

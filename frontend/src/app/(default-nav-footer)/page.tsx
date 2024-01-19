@@ -4,30 +4,15 @@ import NewestItem from "../components/main/newest-item";
 import Footer from "../components/nav-footer/component/footer";
 import { BottomNavBar } from "../components/nav-footer/component/bottom-nav-bar";
 import CategoryList from "../components/main/category-list";
+import { pc, mobile } from "../../../public/banner/thumbnail.json";
 
 export default async function page() {
-    const thumbnailInfos = [
-        {
-            src: "/banner/adidas_originals.png",
-            linkName: "spezial",
-            href: "/category/brand?brand=adidas%20originals",
-        },
-        {
-            src: "/banner/arcteryx.png",
-            linkName: "new balance",
-            href: "/category/brand?brand=arc%27teryx",
-        },
-        {
-            src: "/banner/patagonia.png",
-            linkName: "spezial",
-            href: "/category/brand?brand=patagonia",
-        },
-    ];
-
+    const data = process.env.NEXT_PUBLIC_THUMBNAIL_URL?.includes("banner")
+        ? { pc, mobile }
+        : await fetch(`${process.env.NEXT_PUBLIC_THUMBNAIL_URL}/thumbnail.json`).then((res) => res.json());
     return (
         <>
-            <Banner thumbnailInfos={thumbnailInfos} />
-            <div className="pt-16"></div>
+            <Banner pc={data.pc} mobile={data.mobile} />
             <NewestItem />
             <div className="pt-16"></div>
             <BrandList />
