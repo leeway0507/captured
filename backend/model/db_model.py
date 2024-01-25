@@ -20,7 +20,7 @@ class ProductInfoSchema(BaseModel):
     )
     sku: Optional[int] = None
     brand: str
-    kor_brand: str
+    kor_brand: Optional[str] = None
     product_name: str
     kor_product_name: str
     product_id: str

@@ -13,7 +13,9 @@ export default function NavFooter({ children }: NavFooterProps) {
                 <div className="sticky top-0 z-50">
                     <NavMain />
                 </div>
-                <div className="grow flex flex-col justify-between w-full tb:pt-[80px]" id="main-body">
+                <div
+                    className="mx-auto grow flex flex-col justify-between w-full tb:pt-[80px] max-w-[1440px]"
+                    id="main-body">
                     {children}
                 </div>
                 <BaseModal />

@@ -11,7 +11,7 @@ const FugazeOne = Fugaz_One({ weight: ["400"], subsets: ["latin"], variable: "--
 
 export const metadata: Metadata = {
     title: "캡쳐드",
-    description: "전세계 재고를 찾아 검거하는 캡쳐드! 내가 원하는 그 제품, 캡쳐드에서 먼저 찾아보세요.",
+    description: "전세계 숨은 재고를 검거하는 캡쳐드! 내가 원하는 그 제품, 캡쳐드에서 먼저 찾아보세요.",
     viewport: "width=device-width, maximum-scale=1, user-scalable=0",
 };
 

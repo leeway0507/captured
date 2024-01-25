@@ -18,7 +18,7 @@ else
     exit 1
 fi
 
-ssh -i ~/.ssh/captured.pem ubuntu@52.78.75.104 "cd captured && \
+ssh -i ~/.ssh/captured.pem ubuntu@43.201.98.25 "cd captured && \
 docker system prune -f && \
 $DOCKER_SERVER down && \
 $DOCKER_SERVER pull && \
