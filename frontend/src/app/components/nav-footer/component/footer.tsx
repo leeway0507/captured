@@ -1,6 +1,18 @@
 import Image from "next/image";
 import Link from "next/link";
 
+export default function Footer() {
+    return (
+        <div className="bg-footer-gray w-full px-2 tb:px-4 mb-[50px] tb:mb-[0px] pt-4 pb-8">
+            <div className="flex flex-col gap-4 text-xs tb:text-sm max-w-[1440px] mx-auto">
+                <FooterNavBar />
+                <CompanyInfo />
+                <Policy />
+            </div>
+        </div>
+    );
+}
+
 const FooterNavBar = () => (
     <div className="flex gap-3 font-bold">
         <Link href="/aboutus">사이트 소개</Link>
@@ -46,13 +58,3 @@ const Policy = () => (
         </Link>
     </div>
 );
-
-export default function Footer() {
-    return (
-        <div className="h-full pt-4 pb-8 flex flex-col gap-4 text-xs tb:text-sm px-2 tb:px-4 bg-footer-gray mb-[40px] tb:mb-[10px]">
-            <FooterNavBar />
-            <CompanyInfo />
-            <Policy />
-        </div>
-    );
-}

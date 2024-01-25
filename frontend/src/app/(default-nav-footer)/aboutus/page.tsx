@@ -15,7 +15,7 @@ function NavPcTopForAboutUs() {
 export default async function Page() {
     return (
         <>
-            <div className="main-container">
+            <div className="main-frame">
                 <div className="hidden tb:display">
                     <NavPcTopForAboutUs />
                 </div>

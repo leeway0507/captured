@@ -17,7 +17,7 @@ export default async function MainPc({
     defaultSizeArr: string[];
 }) {
     return (
-        <div className="w-full flex-col">
+        <div className="main-frame">
             <div className="flex justify-evenly">
                 <div className="flex-grow max-w-3xl">
                     <Thumbnail {...product} />

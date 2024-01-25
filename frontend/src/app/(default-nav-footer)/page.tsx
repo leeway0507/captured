@@ -13,12 +13,14 @@ export default async function page() {
     return (
         <>
             <Banner meta={meta} />
-            <NewestItem />
-            <div className="pt-16" />
-            <BrandList />
-            <div className="pt-16" />
-            <CategoryList />
-            <div className="pt-16" />
+            <div className="main-frame">
+                <NewestItem />
+                <div className="pt-16" />
+                <BrandList />
+                <div className="pt-16" />
+                <CategoryList />
+                <div className="pt-16" />
+            </div>
             <Footer />
             <BottomNavBar nav="home" />
         </>

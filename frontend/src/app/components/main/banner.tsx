@@ -16,7 +16,7 @@ export default function Thumbnail({
     isMobile: boolean | undefined;
 }) {
     return (
-        <div className="w-full aspect-[1/1.2] tb:aspect-[2/1]">
+        <div className="w-full aspect-[1/1.2] tb:aspect-[2.3/1]">
             <Carousel autoPlay={false}>
                 {thumbnailInfos == undefined ? (
                     <DefaultSlider />
@@ -56,7 +56,7 @@ const CardSlider = ({ thumbnailInfos, device }: { thumbnailInfos: thumbnailInfo[
 const Card = ({ thumbnailInfo, device }: { thumbnailInfo: thumbnailInfo; device: string }) => {
     return (
         <>
-            <div className="w-full aspect-square tb:aspect-[2.5/1] relative">
+            <div className="w-full aspect-square tb:aspect-[2.3/1] relative">
                 <Image
                     src={`${process.env.NEXT_PUBLIC_THUMBNAIL_URL}/${device}/${thumbnailInfo.fileName}`}
                     alt={thumbnailInfo.fileName.split(".")[0]}
@@ -67,11 +67,9 @@ const Card = ({ thumbnailInfo, device }: { thumbnailInfo: thumbnailInfo; device:
                     priority={thumbnailInfo.fileName.includes("1")}
                 />
             </div>
-            <div className="absolute bottom-0 left-0 right-0 w-full flex-center z-20 flex-cetner w-[90%] py-10">
+            <div className="absolute bottom-0 left-0 right-0 w-full flex-center z-20 flex-cetner w-[90%] py-2">
                 <Link href={thumbnailInfo.href} className="flex-center ">
-                    <div className="w-72 tb:w-96 text-center tb:text-xl border rounded-lg shadow-lg py-3 bg-black/50 text-white font-bold">
-                        SHOP NOW
-                    </div>
+                    <div className="w-72 tb:w-96 text-center tb:text-xl text-white font-bold">SHOP NOW</div>
                 </Link>
             </div>
         </>
