@@ -9,15 +9,16 @@ export default function Thumbnail({ sku, productName, productId, imgType }: Thum
         return (parentDiv.className = "hidden");
     };
     return (
-        <div className="h-full overflow-auto pt-4 pe-5 w-full">
+        <div className="h-full overflow-auto pt-6 w-full">
             {imageNameArray.map((imageName) => (
-                <div key={imageName} className="relative max-w-[800px] max-h-[800px] w-full aspect-square mb-8">
+                <div key={imageName} className="relative max-w-[800px] w-full aspect-square">
                     <Image
                         src={`${process.env.NEXT_PUBLIC_MOBILE_IMAGE_URL}/product/${sku}/${imageName}.${imgType}`}
                         alt={`${productName} ${productId}`}
                         fill
                         sizes="(min-width: 1220px) 734px, calc(93.33vw - 386px)"
-                        className="rounded-md mb-2 object-cover"
+                        className="rounded-sm object-cover"
+                        quality={95}
                         onError={handleImageError}
                     />
                 </div>

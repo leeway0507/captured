@@ -18,8 +18,8 @@ export default async function MainPc({
 }) {
     return (
         <div className="w-full flex-col">
-            <div className="flex justify-evenly gap-4">
-                <div className="flex-grow max-w-2xl">
+            <div className="flex justify-evenly">
+                <div className="flex-grow max-w-3xl">
                     <Thumbnail {...product} />
                 </div>
                 <div className="flex flex-col justify-between ">

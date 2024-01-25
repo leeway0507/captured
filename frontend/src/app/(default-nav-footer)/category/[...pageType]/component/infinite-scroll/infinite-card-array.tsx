@@ -30,10 +30,12 @@ const InfiniteCardArrary = () => {
     const elementRef = useRef(null);
 
     // searchParams Setting
-    const searchParams = new URLSearchParams(useSearchParams());
     const { pageType } = useParams();
+
+    const searchParams = new URLSearchParams(useSearchParams());
     searchParams.delete("page");
     const queryParamsObject = Object.fromEntries(searchParams.entries());
+
     addCategoryFilterToFilterDict(pageType as string[], queryParamsObject);
 
     const getNewFilteredItems = () => {
@@ -50,7 +52,7 @@ const InfiniteCardArrary = () => {
         if (cardLoadObserver && elementRef.current) {
             cardLoadObserver.observe(elementRef.current);
         }
-        const pageParamObserver = new IntersectionObserver(onPageParamsIntersection, { threshold: 0.9 });
+        const pageParamObserver = new IntersectionObserver(onPageParamsIntersection);
         if (pageParamObserver) {
             const triggers = document.querySelectorAll(".page-container");
             triggers.forEach((tirgger) => {

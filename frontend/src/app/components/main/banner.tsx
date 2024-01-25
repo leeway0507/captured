@@ -16,7 +16,7 @@ export default function Thumbnail({
     isMobile: boolean | undefined;
 }) {
     return (
-        <div className="w-full aspect-[1/1.2] tb:aspect-[2/1.1]">
+        <div className="w-full aspect-[1/1.2] tb:aspect-[2/1]">
             <Carousel autoPlay={false}>
                 {thumbnailInfos == undefined ? (
                     <DefaultSlider />
@@ -56,7 +56,7 @@ const CardSlider = ({ thumbnailInfos, device }: { thumbnailInfos: thumbnailInfo[
 const Card = ({ thumbnailInfo, device }: { thumbnailInfo: thumbnailInfo; device: string }) => {
     return (
         <>
-            <div className="w-full aspect-square tb:aspect-[2/1] relative">
+            <div className="w-full aspect-square tb:aspect-[2.5/1] relative">
                 <Image
                     src={`${process.env.NEXT_PUBLIC_THUMBNAIL_URL}/${device}/${thumbnailInfo.fileName}`}
                     alt={thumbnailInfo.fileName.split(".")[0]}
