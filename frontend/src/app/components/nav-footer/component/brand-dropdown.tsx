@@ -30,7 +30,7 @@ export default function BrandDropDown() {
     }
 
     return (
-        <div className="hidden group-hover:block w-full right-0 top-[60px] absolute z-50">
+        <div className="hidden group-hover:block w-full right-0 top-[60px] absolute z-50 ">
             <div className="h-full w-full my-2 text-main-black bg-white shadow-xl ">
                 <div className="grid grid-cols-5 lg:grid-cols-6 pt-4 pb-8 gap-2 px-8">
                     {brandArray.map((brandName: string, idx: number) => {

@@ -5,6 +5,7 @@ import { productCardProps } from "@/app/type";
 import { getProduct } from "./component/fetch";
 import { getFilterMetaProxy } from "@/app/(default-nav-footer)/category/[...pageType]/component/fetch";
 import { categorySpec } from "@/app/(default-nav-footer)/category/[...pageType]/type";
+import Footer from "@/app/components/nav-footer/component/footer";
 
 export async function generateMetadata({
     params,
@@ -71,6 +72,7 @@ export default async function Product({
                 Pc={<MainPc product={product} defaultSizeArr={defaultSizeArr} />}
                 data={product}
             />
+            <Footer />
         </>
     );
 }

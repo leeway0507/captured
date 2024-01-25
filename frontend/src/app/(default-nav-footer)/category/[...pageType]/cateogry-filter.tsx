@@ -43,7 +43,7 @@ export default function CateogryFilter({
     pageType: string[];
 }) {
     return (
-        <div className="flex flex-col tb:flex-row justify-between w-full px-2 tb:gap-8 tb:px-4 ">
+        <div className="main-frame tb:flex-row justify-between px-2 tb:gap-8 tb:px-4 ">
             <div className="tb:basis-1/3 lg:basis-1/4 sticky top-[50px] tb:mb-4 tb:top-[80px] bg-white z-10 tb:z-0">
                 <FilterPage initFilterMeta={initFilterMeta} pageType={pageType[0]} filterValue={filterValue} />
             </div>

@@ -21,8 +21,8 @@
     .disabled-bar-xl {
         @apply disabled-bar tracking-[0.3rem] text-base;
     }
-    .main-container {
-        @apply flex flex-col w-full h-full min-h-screen relative 
+    .main-frame {
+        @apply flex flex-col w-full h-full min-h-screen relative max-w-[1440px] mx-auto
     }
     .flex-center {
         @apply flex items-center justify-center;
@@ -65,7 +65,7 @@
 
     }
     .search-bar {
-        @apply mt-0 h-10 block w-full px-0.5 border-0 border-b focus:ring-0 placeholder-gray-400 tracking-[0.1rem] focus:border-main-black caret-main-black focus:outline-none
+        @apply mt-0 h-10 block w-[90%] px-0.5 border-0 border-b focus:ring-0 placeholder-gray-500 tracking-[0.1rem] focus:border-main-black caret-main-black focus:outline-none
         }
     .custom-input-class {
         @apply mt-0 h-10 block w-full px-0.5 border-0 border-b border-gray-200 text-xs focus:ring-0 focus:border-main-black placeholder-transparent focus:placeholder:text-sm focus:outline-none;

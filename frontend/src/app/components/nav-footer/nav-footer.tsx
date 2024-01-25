@@ -9,13 +9,11 @@ interface NavFooterProps {
 export default function NavFooter({ children }: NavFooterProps) {
     return (
         <ContextWrapper>
-            <main className="main-container min-h-s-screen">
+            <main className="min-h-screen flex flex-col">
                 <div className="sticky top-0 z-50">
                     <NavMain />
                 </div>
-                <div
-                    className="mx-auto grow flex flex-col justify-between w-full tb:pt-[80px] max-w-[1440px]"
-                    id="main-body">
+                <div className="flex flex-col h-full grow tb:pt-[80px] justify-between" id="main-body">
                     {children}
                 </div>
                 <BaseModal />

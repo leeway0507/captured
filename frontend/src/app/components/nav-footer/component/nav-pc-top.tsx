@@ -3,7 +3,7 @@ import BrandDropDown from "./brand-dropdown";
 
 export function NavPcTop() {
     return (
-        <div className="grid grid-cols-10 text-center px-12 h-full">
+        <div className="grid grid-cols-10 text-center px-12 h-full mx-auto max-w-[1440px]">
             <div className="flex-left mx-2 group ">
                 <Link href="/brands">BRAND</Link>
                 <BrandDropDown />

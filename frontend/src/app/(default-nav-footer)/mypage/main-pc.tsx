@@ -35,7 +35,7 @@ export default function MainPc({ signUpType, orderHistory }: { signUpType: strin
     const [selectedIndex, setSelectedIndex] = useState(Number(key));
 
     return (
-        <div className="flex grow max-w-5xl justify-between">
+        <div className="mx-auto flex grow max-w-[1440px] justify-between">
             <Tab.Group vertical selectedIndex={selectedIndex} onChange={setSelectedIndex}>
                 <Tab.List className="basis-1/3 max-w-[300px] min-h-[600px] text-xl">
                     <Tab.List className={"sticky top-[70px] flex flex-col w-full"}>
