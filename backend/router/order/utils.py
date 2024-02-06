@@ -5,12 +5,13 @@ from sqlalchemy import select, func
 from sqlalchemy.dialects.mysql import insert
 
 from logs.make_log import make_logger
-from db.tables import OrderHistoryTable, OrderRowTable, ProductInfoTable
+from db.tables import OrderHistoryTable, OrderRowTable, ProductInfoTable, SizeTable
 from db.connection import commit, session_local
 from model.db_model import OrderHistoryInDBSchema, OrderRowInDBSchmea
 from model.order_model import (
     OrderRowResponseSchema,
     OrderHistoryResponseSchema,
+    checkSize,
 )
 
 from passlib.context import CryptContext
@@ -110,7 +111,33 @@ async def get_order_row_from_db(order_id: str):
             product_id=row[3],
             price=row[4],
             shipping_fee=row[5],
-            intl=row[6]
+            intl=row[6],
         ).model_dump(by_alias=True)
         for row in result
     ]
+
+
+
+
+async def check_size(size_form: checkSize):
+    db = session_local()
+    result = await db.execute(
+        select(SizeTable.sku, SizeTable.size).where(SizeTable.sku.in_(size_form.sku))
+    )
+    result = result.all()
+    await db.close()  # type: ignore
+
+    sku_size_set = set()
+    for row in result:
+        sku_size_set.add(f"{row[0]}-{row[1]}")
+
+    form = {}
+    for s in size_form.form:
+        size_available = False
+
+        if s in sku_size_set:
+            size_available = True
+
+        form.update({s: size_available})
+
+    return form

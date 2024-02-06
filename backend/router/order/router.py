@@ -12,7 +12,7 @@ from model.db_model import (
     OrderHistoryInDBSchema,
     OrderRowInDBSchmea,
 )
-from model.order_model import OrderInfoBeforePaymentSchema
+from model.order_model import OrderInfoBeforePaymentSchema, checkSize
 
 from router.auth import get_current_user
 from router.mypage import *
@@ -23,9 +23,10 @@ from .utils import (
     get_order_row_from_db,
     create_order_history_into_db,
     create_order_row_into_db,
+    check_size,
 )
 from components.messanger.subscriber import EventHandler
-from components.env import env
+from pydantic import BaseModel
 
 
 order_router = APIRouter()
@@ -62,15 +63,17 @@ async def create_order_history(
     주문 내역 생성
     // 결제 플로우 확인 : captured/keynote/flow
     """
-    order_count = await get_user_order_count(db)
+
     order_info: OrderInfoBeforePaymentSchema = order_cache.get(order_history.order_id)  # type: ignore
 
     if order_info == None:
         raise HTTPException(status_code=400, detail="일치하는 주문정보가 없습니다.")
 
     address_id = order_info.address_id
-    assert address_id != None, HTTPException(status_code=400, detail="주소지를 선택해주세요")
-
+    assert address_id != None, HTTPException(
+        status_code=400, detail="주소지를 선택해주세요"
+    )
+    order_count = await get_user_order_count(db)
     order_history_in_db = OrderHistoryInDBSchema(
         **order_history.model_dump(),
         user_id=user.user_id,
@@ -117,3 +120,8 @@ def get_order_info(orderId: str):
     print(info.order_total_price)
 
     return {"orderTotalPrice": info.order_total_price}
+
+
+@order_router.post("/check-size")
+async def check_order_is_available(size_form: checkSize):
+    return await check_size(size_form)

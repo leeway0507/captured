@@ -15,39 +15,39 @@ import (
 type ProductInfo struct {
 	config `json:"-"`
 	// ID of the ent.
-	ID int32 `json:"id,omitempty"`
+	ID int32 `json:"sku,omitempty"`
 	// Brand holds the value of the "brand" field.
 	Brand string `json:"brand,omitempty"`
-	// ProductName holds the value of the "product_name" field.
-	ProductName string `json:"product_name,omitempty"`
-	// ProductID holds the value of the "product_id" field.
-	ProductID string `json:"product_id,omitempty"`
-	// ShippingFee holds the value of the "shipping_fee" field.
-	ShippingFee int32 `json:"shipping_fee,omitempty"`
+	// ProductName holds the value of the "productName" field.
+	ProductName string `json:"productName,omitempty"`
+	// ProductID holds the value of the "productId" field.
+	ProductID string `json:"productId,omitempty"`
+	// ShippingFee holds the value of the "shippingFee" field.
+	ShippingFee int32 `json:"shippingFee,omitempty"`
 	// Price holds the value of the "price" field.
 	Price int32 `json:"price,omitempty"`
 	// Intl holds the value of the "intl" field.
 	Intl bool `json:"intl,omitempty"`
-	// SearchInfo holds the value of the "search_info" field.
-	SearchInfo string `json:"search_info,omitempty"`
+	// SearchInfo holds the value of the "searchInfo" field.
+	SearchInfo string `json:"searchInfo,omitempty"`
 	// Color holds the value of the "color" field.
 	Color string `json:"color,omitempty"`
 	// Category holds the value of the "category" field.
 	Category string `json:"category,omitempty"`
-	// CategorySpec holds the value of the "category_spec" field.
-	CategorySpec string `json:"category_spec,omitempty"`
-	// ImgType holds the value of the "img_type" field.
-	ImgType string `json:"img_type,omitempty"`
-	// PriceDescCursor holds the value of the "price_desc_cursor" field.
-	PriceDescCursor string `json:"price_desc_cursor,omitempty"`
-	// PriceAscCursor holds the value of the "price_asc_cursor" field.
-	PriceAscCursor string `json:"price_asc_cursor,omitempty"`
+	// CategorySpec holds the value of the "categorySpec" field.
+	CategorySpec string `json:"categorySpec,omitempty"`
+	// ImgType holds the value of the "imgType" field.
+	ImgType string `json:"imgType,omitempty"`
+	// PriceDescCursor holds the value of the "priceDescCursor" field.
+	PriceDescCursor string `json:"priceDescCursor,omitempty"`
+	// PriceAscCursor holds the value of the "priceAscCursor" field.
+	PriceAscCursor string `json:"priceAscCursor,omitempty"`
 	// Deploy holds the value of the "deploy" field.
 	Deploy int32 `json:"deploy,omitempty"`
-	// KorProductName holds the value of the "kor_product_name" field.
-	KorProductName string `json:"kor_product_name,omitempty"`
-	// KorBrand holds the value of the "kor_brand" field.
-	KorBrand string `json:"kor_brand,omitempty"`
+	// KorProductName holds the value of the "korProductName" field.
+	KorProductName string `json:"korProductName,omitempty"`
+	// KorBrand holds the value of the "korBrand" field.
+	KorBrand string `json:"korBrand,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the ProductInfoQuery when eager-loading is set.
 	Edges        ProductInfoEdges `json:"edges"`
@@ -112,7 +112,7 @@ func (pi *ProductInfo) assignValues(columns []string, values []any) error {
 		case productinfo.FieldID:
 			value, ok := values[i].(*sql.NullInt64)
 			if !ok {
-				return fmt.Errorf("unexpected type %T for field id", value)
+				return fmt.Errorf("unexpected type %T for field sku", value)
 			}
 			pi.ID = int32(value.Int64)
 		case productinfo.FieldBrand:
@@ -123,19 +123,19 @@ func (pi *ProductInfo) assignValues(columns []string, values []any) error {
 			}
 		case productinfo.FieldProductName:
 			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field product_name", values[i])
+				return fmt.Errorf("unexpected type %T for field productName", values[i])
 			} else if value.Valid {
 				pi.ProductName = value.String
 			}
 		case productinfo.FieldProductID:
 			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field product_id", values[i])
+				return fmt.Errorf("unexpected type %T for field productId", values[i])
 			} else if value.Valid {
 				pi.ProductID = value.String
 			}
 		case productinfo.FieldShippingFee:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field shipping_fee", values[i])
+				return fmt.Errorf("unexpected type %T for field shippingFee", values[i])
 			} else if value.Valid {
 				pi.ShippingFee = int32(value.Int64)
 			}
@@ -153,7 +153,7 @@ func (pi *ProductInfo) assignValues(columns []string, values []any) error {
 			}
 		case productinfo.FieldSearchInfo:
 			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field search_info", values[i])
+				return fmt.Errorf("unexpected type %T for field searchInfo", values[i])
 			} else if value.Valid {
 				pi.SearchInfo = value.String
 			}
@@ -171,25 +171,25 @@ func (pi *ProductInfo) assignValues(columns []string, values []any) error {
 			}
 		case productinfo.FieldCategorySpec:
 			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field category_spec", values[i])
+				return fmt.Errorf("unexpected type %T for field categorySpec", values[i])
 			} else if value.Valid {
 				pi.CategorySpec = value.String
 			}
 		case productinfo.FieldImgType:
 			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field img_type", values[i])
+				return fmt.Errorf("unexpected type %T for field imgType", values[i])
 			} else if value.Valid {
 				pi.ImgType = value.String
 			}
 		case productinfo.FieldPriceDescCursor:
 			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field price_desc_cursor", values[i])
+				return fmt.Errorf("unexpected type %T for field priceDescCursor", values[i])
 			} else if value.Valid {
 				pi.PriceDescCursor = value.String
 			}
 		case productinfo.FieldPriceAscCursor:
 			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field price_asc_cursor", values[i])
+				return fmt.Errorf("unexpected type %T for field priceAscCursor", values[i])
 			} else if value.Valid {
 				pi.PriceAscCursor = value.String
 			}
@@ -201,13 +201,13 @@ func (pi *ProductInfo) assignValues(columns []string, values []any) error {
 			}
 		case productinfo.FieldKorProductName:
 			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field kor_product_name", values[i])
+				return fmt.Errorf("unexpected type %T for field korProductName", values[i])
 			} else if value.Valid {
 				pi.KorProductName = value.String
 			}
 		case productinfo.FieldKorBrand:
 			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field kor_brand", values[i])
+				return fmt.Errorf("unexpected type %T for field korBrand", values[i])
 			} else if value.Valid {
 				pi.KorBrand = value.String
 			}
@@ -256,17 +256,17 @@ func (pi *ProductInfo) Unwrap() *ProductInfo {
 func (pi *ProductInfo) String() string {
 	var builder strings.Builder
 	builder.WriteString("ProductInfo(")
-	builder.WriteString(fmt.Sprintf("id=%v, ", pi.ID))
+	builder.WriteString(fmt.Sprintf("sku=%v, ", pi.ID))
 	builder.WriteString("brand=")
 	builder.WriteString(pi.Brand)
 	builder.WriteString(", ")
-	builder.WriteString("product_name=")
+	builder.WriteString("productName=")
 	builder.WriteString(pi.ProductName)
 	builder.WriteString(", ")
-	builder.WriteString("product_id=")
+	builder.WriteString("productId=")
 	builder.WriteString(pi.ProductID)
 	builder.WriteString(", ")
-	builder.WriteString("shipping_fee=")
+	builder.WriteString("shippingFee=")
 	builder.WriteString(fmt.Sprintf("%v", pi.ShippingFee))
 	builder.WriteString(", ")
 	builder.WriteString("price=")
@@ -275,7 +275,7 @@ func (pi *ProductInfo) String() string {
 	builder.WriteString("intl=")
 	builder.WriteString(fmt.Sprintf("%v", pi.Intl))
 	builder.WriteString(", ")
-	builder.WriteString("search_info=")
+	builder.WriteString("searchInfo=")
 	builder.WriteString(pi.SearchInfo)
 	builder.WriteString(", ")
 	builder.WriteString("color=")
@@ -284,25 +284,25 @@ func (pi *ProductInfo) String() string {
 	builder.WriteString("category=")
 	builder.WriteString(pi.Category)
 	builder.WriteString(", ")
-	builder.WriteString("category_spec=")
+	builder.WriteString("categorySpec=")
 	builder.WriteString(pi.CategorySpec)
 	builder.WriteString(", ")
-	builder.WriteString("img_type=")
+	builder.WriteString("imgType=")
 	builder.WriteString(pi.ImgType)
 	builder.WriteString(", ")
-	builder.WriteString("price_desc_cursor=")
+	builder.WriteString("priceDescCursor=")
 	builder.WriteString(pi.PriceDescCursor)
 	builder.WriteString(", ")
-	builder.WriteString("price_asc_cursor=")
+	builder.WriteString("priceAscCursor=")
 	builder.WriteString(pi.PriceAscCursor)
 	builder.WriteString(", ")
 	builder.WriteString("deploy=")
 	builder.WriteString(fmt.Sprintf("%v", pi.Deploy))
 	builder.WriteString(", ")
-	builder.WriteString("kor_product_name=")
+	builder.WriteString("korProductName=")
 	builder.WriteString(pi.KorProductName)
 	builder.WriteString(", ")
-	builder.WriteString("kor_brand=")
+	builder.WriteString("korBrand=")
 	builder.WriteString(pi.KorBrand)
 	builder.WriteByte(')')
 	return builder.String()

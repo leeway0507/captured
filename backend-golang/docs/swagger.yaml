@@ -330,7 +330,7 @@ definitions:
       sortBy:
         type: string
     type: object
-host: localhost:8001
+host: localhost:8100
 info:
   contact:
     email: fiber@swagger.io
@@ -343,11 +343,16 @@ info:
   title: CAPTURED BACKEND
   version: "1.0"
 paths:
-  /api/filter:
+  /api/product/category:
     post:
       consumes:
       - application/json
       parameters:
+      - description: Page number
+        in: query
+        name: page
+        required: true
+        type: integer
       - description: Filter Body
         in: body
         name: filter
@@ -377,5 +382,5 @@ paths:
           description: Internal Server Error
           schema:
             type: int
-      summary: Filter
+      summary: category
 swagger: "2.0"

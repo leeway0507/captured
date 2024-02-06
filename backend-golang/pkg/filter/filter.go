@@ -2,57 +2,74 @@ package filter
 
 import (
 	"backend/ent"
-	"backend/ent/predicate"
 	"backend/ent/productinfo"
 	"backend/ent/size"
 	"backend/pkg/entities"
 	"context"
 	"log"
+	"strings"
 	"time"
 
-	"entgo.io/ent/dialect"
-	_ "github.com/go-sql-driver/mysql"
 	"github.com/hashicorp/golang-lru/v2/expirable"
 )
 
-type ProductFilter struct {
-	DbUrl string
-	Limit int
-	Ctx   context.Context
-}
-type pageBook map[int]CardArr
-type CardArr []*ent.ProductInfo
-
-type FilterQuery struct {
-	Where []predicate.ProductInfo
-	// Order *productinfo.OrderOption
-}
-
 var (
-	cache = expirable.NewLRU[entities.Filter, pageBook](5, nil, time.Second*100)
+	cache = expirable.NewLRU[entities.Filter, entities.PageBook](5, nil, time.Second*100)
 )
 
-func (pf *ProductFilter) DbConnection() *ent.Client {
-	client, err := ent.Open(dialect.MySQL, pf.DbUrl)
-
-	if err != nil {
-		log.Fatalf("failed opening connection to mysql: %v", err)
-	}
-	return client
+type ProductFilter struct {
+	Session *ent.Client
+	Limit   int
 }
 
-func (pf *ProductFilter) FilterDataTwo(filter *entities.Filter) (CardArr, error) {
-	client := pf.DbConnection()
-	defer client.Close()
+func (pf *ProductFilter) Filter(ctx context.Context, filter *entities.Filter, page int) entities.FilterResopnse {
+
+	cachedPageBox, ok := cache.Get(*filter)
+
+	if ok {
+		return entities.FilterResopnse{
+			Data:        cachedPageBox[page],
+			CurrentPage: page,
+			LastPage:    len(cachedPageBox),
+			FromCahce:   true,
+			Err:         nil,
+		}
+	}
+
+	prod, err := pf.FilterData(ctx, filter)
+
+	if err != nil {
+		return entities.FilterResopnse{
+			Data:        entities.CardArr{},
+			CurrentPage: 1,
+			LastPage:    0,
+			FromCahce:   false,
+			Err:         err,
+		}
+	}
+
+	newPageBox, _ := pf.SplitData(prod)
+	cache.Add(*filter, newPageBox)
+
+	return entities.FilterResopnse{
+		Data:        newPageBox[page],
+		CurrentPage: page,
+		LastPage:    len(newPageBox),
+		FromCahce:   false,
+		Err:         nil,
+	}
+}
+
+func (pf *ProductFilter) FilterData(ctx context.Context, filter *entities.Filter) (entities.CardArr, error) {
 
 	// Default
-	productsQuery := client.ProductInfo.
+	productsQuery := pf.Session.ProductInfo.
 		Query().
 		Where(productinfo.Deploy(1), productinfo.HasSizesWith(size.Available(true)))
 
 	// Category
 	if filter.Category != nil && len(*filter.Category) > 0 {
-		productsQuery = productsQuery.Where(productinfo.CategoryIn(*filter.Category...))
+		productsQuery = productsQuery.Where(productinfo.CategoryIn(*filter.Category))
 	}
 
 	// CategorySpec
@@ -62,7 +79,8 @@ func (pf *ProductFilter) FilterDataTwo(filter *entities.Filter) (CardArr, error)
 
 	// Brand
 	if filter.Brand != nil && len(*filter.Brand) > 0 {
-		productsQuery = productsQuery.Where(productinfo.BrandIn(*filter.Brand...))
+		brandArr := strings.Split(*filter.Brand, ",")
+		productsQuery = productsQuery.Where(productinfo.BrandIn(brandArr...))
 	}
 
 	// Intl
@@ -71,6 +89,8 @@ func (pf *ProductFilter) FilterDataTwo(filter *entities.Filter) (CardArr, error)
 		productsQuery = productsQuery.Where(productinfo.Intl(true))
 	case "f":
 		productsQuery = productsQuery.Where(productinfo.Intl(false))
+	default:
+
 	}
 
 	// Price
@@ -87,16 +107,18 @@ func (pf *ProductFilter) FilterDataTwo(filter *entities.Filter) (CardArr, error)
 
 	// SortBy
 	switch filter.SortBy {
-	case "최신순":
-		productsQuery = productsQuery.Order(productinfo.ByID())
+
 	case "높은 가격 순":
 		productsQuery = productsQuery.Order(productinfo.ByPriceAscCursor())
 	case "낮은 가격 순":
 		productsQuery = productsQuery.Order(productinfo.ByPriceDescCursor())
+	default:
+		productsQuery = productsQuery.Order(ent.Desc(productinfo.FieldID))
+
 	}
 
 	// Execute
-	products, err := productsQuery.All(pf.Ctx)
+	products, err := productsQuery.All(ctx)
 
 	if err != nil {
 		log.Fatalf("failed to query products: %v", err)
@@ -106,46 +128,7 @@ func (pf *ProductFilter) FilterDataTwo(filter *entities.Filter) (CardArr, error)
 
 }
 
-func (pf *ProductFilter) NoFilter(page int) (CardArr, bool, error) {
-
-	defaultFilter := entities.Filter{SortBy: "최신순"}
-
-	r, ok := cache.Get(defaultFilter)
-
-	if ok {
-		return r[page], true, nil
-	}
-
-	prod, err := pf.NoFilterData()
-
-	if err != nil {
-		return nil, false, err
-	}
-	pageBox, err := pf.SplitData(prod)
-	cache.Add(defaultFilter, pageBox)
-
-	return pageBox[page], false, err
-}
-
-func (pf *ProductFilter) NoFilterData() (CardArr, error) {
-	client := pf.DbConnection()
-	defer client.Close()
-	products, err := client.ProductInfo.
-		Query().
-		Where(
-			productinfo.Deploy(1),
-			productinfo.HasSizesWith(size.Available(true)),
-		).
-		All(pf.Ctx)
-
-	if err != nil {
-		log.Fatalf("failed to query products: %v", err)
-	}
-
-	return products, err
-}
-
-func (pf *ProductFilter) SplitData(data CardArr) (pageBook, error) {
+func (pf *ProductFilter) SplitData(data entities.CardArr) (entities.PageBook, error) {
 	lenData := len(data)
 	q, r := lenData/pf.Limit, lenData%pf.Limit
 
@@ -153,7 +136,7 @@ func (pf *ProductFilter) SplitData(data CardArr) (pageBook, error) {
 		q++
 	}
 
-	PageBook := make(map[int]CardArr)
+	PageBook := make(map[int]entities.CardArr)
 
 	for i := 0; i < q; i++ {
 		start, end := i*pf.Limit, (i+1)*pf.Limit
