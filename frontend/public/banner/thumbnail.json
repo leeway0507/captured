@@ -2,37 +2,37 @@
     "pc": [
         {
             "fileName": "1.jpg",
-            "href": "/category/brand?brand=adidas%20originals"
+            "href": "/category/brand/adidas%20originals"
         },
         {
             "fileName": "2.jpg",
-            "href": "/category/brand?brand=needles"
+            "href": "/category/brand/needles"
         },
         {
             "fileName": "3.png",
-            "href": "/category/brand?brand=arc%27teryx"
+            "href": "/category/brand/arc%27teryx"
         },
         {
             "fileName": "4.png",
-            "href": "/category/brand?brand=patagonia"
+            "href": "/category/brand/patagonia"
         }
     ],
     "mobile": [
         {
             "fileName": "1.jpg",
-            "href": "/category/brand?brand=adidas%20originals"
+            "href": "/category/brand/adidas%20originals"
         },
         {
             "fileName": "2.jpg",
-            "href": "/category/brand?brand=needles"
+            "href": "/category/brand/needles"
         },
         {
             "fileName": "3.png",
-            "href": "/category/brand?brand=arc%27teryx"
+            "href": "/category/brand/arc%27teryx"
         },
         {
             "fileName": "4.png",
-            "href": "/category/brand?brand=patagonia"
+            "href": "/category/brand/patagonia"
         }
     ]
 }

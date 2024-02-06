@@ -11,7 +11,7 @@ export default async function Brands() {
 
     const brandsComponent = (brandName: string) => {
         return (
-            <Link href={`category/brand?brand=${brandName}`} className="link-animation" key={brandName}>
+            <Link href={`category/brand/${brandName}`} className="link-animation" key={brandName}>
                 <div className="uppercase text-base">{brandName}</div>
             </Link>
         );

@@ -64,6 +64,7 @@ const Card = ({ thumbnailInfo, device }: { thumbnailInfo: thumbnailInfo; device:
                     sizes="(min-width: 1500px) 1404px, calc(92.03vw + 42px)"
                     style={{ objectFit: "cover" }}
                     className="z-10 mx-auto border-y border-gray-400"
+                    quality={95}
                     priority={thumbnailInfo.fileName.includes("1")}
                 />
             </div>

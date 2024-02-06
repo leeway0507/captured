@@ -10,7 +10,7 @@ const SizeBoxMobile = ({ data, defaultSizeArr }: { data: productCardProps; defau
     const { maxHeight, innerHeight } = useSizeDetect();
     const { sku, size, category: sizeType } = data;
 
-    const availableSize = size ? size.split(",") : ["-"];
+    const availableSize = size ? size : ["-"];
     const isSize = availableSize[0] !== "-";
 
     const [selectedItem, setSelectedItem] = useState<string>(availableSize[0] || "");

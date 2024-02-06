@@ -60,3 +60,8 @@ class OrderRowResponseSchema(OrderRowRequestchmea):
     price: int
     shipping_fee: int
     intl: bool
+
+
+class checkSize(BaseModel):
+    form: List[str]
+    sku: List[int]

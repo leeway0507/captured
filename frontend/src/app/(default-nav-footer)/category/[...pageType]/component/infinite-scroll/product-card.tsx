@@ -38,24 +38,17 @@ export default function ProductCard({
             <div className="flex flex-col">
                 <div className="relative">
                     {isLoaded ? (
-                        <>
-                            {props.size === "-" && (
-                                <div className="flex-center bg-white/30 inset-0 absolute text-main-black">
-                                    <SoldOutLogo />
-                                </div>
-                            )}
-
-                            <Image
-                                src={productImgUrl}
-                                alt={String(sku)}
-                                width={300}
-                                height={300}
-                                sizes="(min-width: 1520px) 329px, (min-width: 780px) 22.36vw, calc(50vw - 13px)"
-                                className="rounded-lg "
-                                onError={() => setIsLoaded(false)}
-                                priority={idx < prorityNumber ? true : false}
-                            />
-                        </>
+                        <Image
+                            src={productImgUrl}
+                            alt={String(sku)}
+                            width={300}
+                            height={300}
+                            sizes="600px"
+                            quality={95}
+                            className="rounded-lg "
+                            onError={() => setIsLoaded(false)}
+                            priority={true}
+                        />
                     ) : (
                         <ProductCardSkeleton />
                     )}

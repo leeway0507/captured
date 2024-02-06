@@ -8,7 +8,7 @@ const getCategory = async (request: Request) => {
     const searchParams = new URLSearchParams(request.url.split("?")[1]);
     const page = searchParams.get("page");
 
-    const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/product/get-category?page=${page}`, {
+    const req = await fetch(`${process.env.NEXT_PUBLIC_GOLANG_API_URL}/api/product/category?page=${page}`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

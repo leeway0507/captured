@@ -3,9 +3,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { cartProductCardProps } from "@/app/type";
 import { useShoppingCart } from "@/app/components/context/shopping-cart-context";
-import { ConfirmPopUpModal } from "../modal/new-yes-no-modal";
-import { ProductCardModal } from "./product-card-modal-form";
-import { memo } from "react";
+import { ConfirmPopUpModal } from "@/app/components/modal/new-yes-no-modal";
+import { ProductCardModal } from "@/app/components/product-card/product-card-modal-form";
+
 interface cartProductCardFormProps extends cartProductCardProps {}
 
 export default function CartProductCardForm({
@@ -77,7 +77,7 @@ export default function CartProductCardForm({
             <div className="m-auto grow">
                 <div className="flex flex-col ps-2 text-blue-black">
                     <div className="flex justify-between">
-                        <Link href={`category/${brand}`} className="text-sub-black link-animation">
+                        <Link href={`category/brand/${brand}`} className="text-sub-black link-animation">
                             {brand.toUpperCase()}
                         </Link>
                         {onDelete && (

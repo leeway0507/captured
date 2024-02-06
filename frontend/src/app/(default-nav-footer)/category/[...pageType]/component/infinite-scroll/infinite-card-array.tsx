@@ -16,15 +16,18 @@ function addCategoryFilterToFilterDict(pageType: string[], filterMeta: filterReq
             return (filterMeta.category = "신발");
         case "accessory":
             return (filterMeta.category = "기타");
+        case "brand":
+            return (filterMeta.brand = pageType[1].replace("%20", " "));
     }
 }
 
 const InfiniteCardArrary = () => {
     const router = useRouter();
+    const searchParams = new URLSearchParams(useSearchParams());
 
     const [localData, setLocalData] = useState<{ [key: number]: productCardProps[] }>({});
     const [hasMore, setHasMore] = useState(true);
-    const [page, setPage] = useState(1);
+    const [page, setPage] = useState<number>(1);
     const [filter, setFilter] = useState({});
     const [noResult, setNoResult] = useState(false);
     const elementRef = useRef(null);
@@ -32,7 +35,6 @@ const InfiniteCardArrary = () => {
     // searchParams Setting
     const { pageType } = useParams();
 
-    const searchParams = new URLSearchParams(useSearchParams());
     searchParams.delete("page");
     const queryParamsObject = Object.fromEntries(searchParams.entries());
 
@@ -43,7 +45,13 @@ const InfiniteCardArrary = () => {
         setLocalData({});
         setPage(1);
         setHasMore(true);
+        localStorage.setItem("category", "{}");
     };
+
+    useEffect(() => {
+        const localCatData = JSON.parse(localStorage.getItem("category") ?? "{}");
+        setLocalData(localCatData);
+    }, []);
 
     !(JSON.stringify(queryParamsObject) == JSON.stringify(filter)) && getNewFilteredItems();
 
@@ -58,6 +66,14 @@ const InfiniteCardArrary = () => {
             triggers.forEach((tirgger) => {
                 pageParamObserver.observe(tirgger);
             });
+        }
+        localStorage.setItem("category", JSON.stringify(localData));
+
+        if (sessionStorage.getItem("scrollPosition")) {
+            window.scrollTo(0, Number(sessionStorage.getItem("scrollPosition")));
+            setTimeout(() => {
+                sessionStorage.removeItem("scrollPosition");
+            }, 500); // Adjust the delay as needed
         }
 
         return () => {
@@ -87,16 +103,23 @@ const InfiniteCardArrary = () => {
 
             if (res.lastPage === 0) return setNoResult(true), setHasMore(false);
 
-            if (res.data.length == 0) {
+            if (res.currentPage > res.lastPage) {
                 setHasMore(false);
             } else {
                 setNoResult(false);
                 setLocalData((localData) => ({ ...localData, [page + 1]: res.data }));
+                const localCatData = JSON.parse(localStorage.getItem("category")!);
+                localStorage.setItem("category", { ...localCatData, [page + 1]: res.data });
                 setPage((prevPage) => prevPage + 1);
             }
         }
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [localData]);
+
+    const handleRouteChange = () => {
+        sessionStorage.setItem("scrollPosition", window.scrollY.toString());
+    };
 
     return (
         <>
@@ -106,26 +129,30 @@ const InfiniteCardArrary = () => {
                 </div>
             ) : (
                 <>
-                    {Object.entries(localData).map((item, idx) => {
-                        return (
-                            <div key={item[0]}>
-                                <div
-                                    key={idx}
-                                    className={`grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 page-container`}
-                                    data-page={Number(item[0]) - 1}>
-                                    {item[1].map((data) => {
-                                        return (
-                                            <div key={data.sku}>
-                                                <ProductCard props={data} />
-                                            </div>
-                                        );
-                                    })}
+                    {Object.entries(localData).length > 0 ? (
+                        Object.entries(localData).map((item, idx) => {
+                            return (
+                                <div key={item[0]}>
+                                    <div
+                                        key={idx}
+                                        className={`grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 page-container`}
+                                        data-page={Number(item[0]) - 1}>
+                                        {item[1].map((data) => {
+                                            return (
+                                                <div key={data.sku} onClick={handleRouteChange}>
+                                                    <ProductCard props={data} />
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+                                    {/* intersection 겹침 방지를 위해 의도적으로 Gap 만듬 */}
+                                    <div className="h-[70px] Gap" />
                                 </div>
-                                {/* intersection 겹침 방지를 위해 의도적으로 Gap 만듬 */}
-                                <div className="h-[70px] Gap" />
-                            </div>
-                        );
-                    })}
+                            );
+                        })
+                    ) : (
+                        <div className="page-container h-[60vh] w-full"></div>
+                    )}
                 </>
             )}
             <div ref={elementRef} className={hasMore ? "block " : "hidden"} />

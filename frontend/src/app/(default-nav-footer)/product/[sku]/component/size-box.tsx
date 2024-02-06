@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 const SizeBox = ({ data, defaultSizeArr }: { data: productCardProps; defaultSizeArr: string[] }) => {
     const { sku, size, category, deploy } = data;
 
-    const availableSize = size ? size.split(",") : ["-"];
+    const availableSize = size ? size : ["-"];
 
     const [selectedItem, setSelectedItem] = useState<string>(availableSize[0] || "");
     const { increaseCartQuantity } = useShoppingCart();

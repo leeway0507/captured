@@ -15,7 +15,25 @@ type ProductInfo struct {
 }
 
 func (ProductInfo) Fields() []ent.Field {
-	return []ent.Field{field.Int32("id").StorageKey("sku"), field.String("brand").Optional(), field.String("product_name").Optional(), field.String("product_id").Optional(), field.Int32("shipping_fee").Optional(), field.Int32("price").Optional(), field.Bool("intl").Optional(), field.String("search_info").Optional(), field.String("color").Optional(), field.String("category").Optional(), field.String("category_spec").Optional(), field.String("img_type").Optional(), field.String("price_desc_cursor").Optional(), field.String("price_asc_cursor").Optional(), field.Int32("deploy").Optional(), field.String("kor_product_name").Optional(), field.String("kor_brand").Optional()}
+	return []ent.Field{
+		field.Int32("id").StorageKey("sku"), 
+		field.String("brand").Optional(), 
+		field.String("product_name").Optional(), 
+		field.String("product_id").Optional(), 
+		field.Int32("shipping_fee").Optional(), 
+		field.Int32("price").Optional(), 
+		field.Bool("intl").Optional(), 
+		field.String("search_info").Optional(), 
+		field.String("color").Optional(), 
+		field.String("category").Optional(), 
+		field.String("category_spec").Optional(), 
+		field.String("img_type").Optional(), 
+		field.String("price_desc_cursor").Optional(), 
+		field.String("price_asc_cursor").Optional(), 
+		field.Int32("deploy").Optional(), 
+		field.String("kor_product_name").Optional(), 
+		field.String("kor_brand").Optional(),
+	}
 }
 func (ProductInfo) Edges() []ent.Edge {
 	return []ent.Edge{edge.To("order_rows", OrderRow.Type), edge.To("sizes", Size.Type)}

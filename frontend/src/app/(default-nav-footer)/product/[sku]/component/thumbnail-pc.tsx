@@ -16,7 +16,7 @@ export default function Thumbnail({ sku, productName, productId, imgType }: Thum
                         src={`${process.env.NEXT_PUBLIC_MOBILE_IMAGE_URL}/product/${sku}/${imageName}.${imgType}`}
                         alt={`${productName} ${productId}`}
                         fill
-                        sizes="(min-width: 1220px) 734px, calc(93.33vw - 386px)"
+                        sizes="1000px"
                         className="rounded-sm object-cover"
                         quality={95}
                         onError={handleImageError}

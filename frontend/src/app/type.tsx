@@ -9,7 +9,7 @@ export interface productCardProps {
     shippingFee: number;
     intl: boolean;
     imgType: string;
-    size: string;
+    size: string[];
     category: string;
     color: string;
     categorySpec: string;

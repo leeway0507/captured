@@ -15,7 +15,13 @@ type Size struct {
 }
 
 func (Size) Fields() []ent.Field {
-	return []ent.Field{field.Int32("id").StorageKey("size_id"), field.Int32("sku").Optional(), field.String("size"), field.Bool("available"), field.Time("updated_at")}
+	return []ent.Field{
+		field.Int32("id").StorageKey("size_id"), 
+		field.Int32("sku").Optional(), 
+		field.String("size"), 
+		field.Bool("available"), 
+		field.Time("updated_at"),
+		}
 }
 func (Size) Edges() []ent.Edge {
 	return []ent.Edge{edge.From("product_info", ProductInfo.Type).Ref("sizes").Unique().Field("sku")}

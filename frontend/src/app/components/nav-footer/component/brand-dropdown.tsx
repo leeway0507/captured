@@ -37,7 +37,7 @@ export default function BrandDropDown() {
                         const brandNameBar = brandName.replaceAll(" ", "-");
                         return (
                             <Link
-                                href={`/category/brand?brand=${brandName}`}
+                                href={`/category/brand/${brandName}`}
                                 key={idx}
                                 className={`flex hover:bg-main-black hover:text-white py-1 hover:rounded-md transition-all duration-300 ease-in`}
                                 onMouseEnter={() => handleMouseEnter(idx)}

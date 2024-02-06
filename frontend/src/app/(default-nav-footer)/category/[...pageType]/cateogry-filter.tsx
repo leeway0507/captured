@@ -4,6 +4,27 @@ import MobileFilter from "./component/filter/mobile-filter";
 import { initFilterMetaProps, filterMetaProps } from "./type";
 import useProductFilter, { useProductFilterProps } from "./component/filter/hook/use-product-filter";
 
+export default function CateogryFilter({
+    children,
+    filterValue,
+    initFilterMeta,
+    pageType,
+}: {
+    children: React.ReactNode;
+    filterValue: filterMetaProps;
+    initFilterMeta: initFilterMetaProps;
+    pageType: string[];
+}) {
+    return (
+        <div className="main-frame tb:flex-row justify-between px-2 tb:gap-8 tb:px-4 ">
+            <div className="tb:basis-1/3 lg:basis-1/4 sticky top-[50px] tb:mb-4 tb:top-[80px] bg-white z-10 tb:z-0">
+                <FilterPage initFilterMeta={initFilterMeta} pageType={pageType[0]} filterValue={filterValue} />
+            </div>
+            <div className={`w-full flex-grow tb:block tb:basis-2/3 lg:basis-3/4`}>{children}</div>
+        </div>
+    );
+}
+
 function FilterPage({
     initFilterMeta,
     pageType,
@@ -28,26 +49,5 @@ function FilterPage({
                 />
             </div>
         </>
-    );
-}
-
-export default function CateogryFilter({
-    children,
-    filterValue,
-    initFilterMeta,
-    pageType,
-}: {
-    children: React.ReactNode;
-    filterValue: filterMetaProps;
-    initFilterMeta: initFilterMetaProps;
-    pageType: string[];
-}) {
-    return (
-        <div className="main-frame tb:flex-row justify-between px-2 tb:gap-8 tb:px-4 ">
-            <div className="tb:basis-1/3 lg:basis-1/4 sticky top-[50px] tb:mb-4 tb:top-[80px] bg-white z-10 tb:z-0">
-                <FilterPage initFilterMeta={initFilterMeta} pageType={pageType[0]} filterValue={filterValue} />
-            </div>
-            <div className={`w-full flex-grow tb:block tb:basis-2/3 lg:basis-3/4`}>{children}</div>
-        </div>
     );
 }
