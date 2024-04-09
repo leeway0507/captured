@@ -11,7 +11,7 @@ type EmblaCarouselProps = {
     children: ReactNode;
 };
 
-const EmblaCarousel = ({ autoPlay = false, children }: EmblaCarouselProps) => {
+const EmblaCarousel = ({ autoPlay, children }: EmblaCarouselProps) => {
     const autoplayOptions = {
         delay: 4000,
         playOnInit: autoPlay,

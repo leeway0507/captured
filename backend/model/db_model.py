@@ -1,6 +1,5 @@
 """pydantic Schemas"""
 
-
 from typing import Optional
 from datetime import datetime
 
@@ -22,7 +21,7 @@ class ProductInfoSchema(BaseModel):
     brand: str
     kor_brand: Optional[str] = None
     product_name: str
-    kor_product_name: str
+    kor_product_name: Optional[str] = None
     product_id: str
     size: Optional[str] = None
     price: int
@@ -65,7 +64,6 @@ class SizeSchema(BaseModel):
 
 
 class UserSchema(BaseModel):
-
     """User Schema"""
 
     model_config = ConfigDict(alias_generator=to_camel, populate_by_name=True)

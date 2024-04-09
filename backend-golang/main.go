@@ -20,7 +20,7 @@ import (
 // @contact.email fiber@swagger.io
 // @license.name Apache 2.0
 // @license.url http://www.apache.org/licenses/LICENSE-2.0.html
-// @host localhost:8100
+// @host localhost:8080
 // @BasePath /
 
 func main() {
@@ -37,5 +37,5 @@ func main() {
 	})
 	app.Get("/docs/*", swagger.HandlerDefault) // default
 	routes.ProductRouter(app.Group("/api/product"), session)
-	log.Fatal(app.Listen(":8100"))
+	log.Fatal(app.Listen(":8080"))
 }

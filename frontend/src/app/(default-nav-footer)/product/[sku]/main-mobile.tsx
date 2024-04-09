@@ -22,8 +22,8 @@ export default async function MainMobile({
                 <div className="px-2 flex flex-col gap-2">
                     <ProductInfo {...product} />
                     <SizeBoxMobile data={product} defaultSizeArr={defaultSizeArr} />
-                    <ShipType intl={product.intl} />
                     <Infos />
+                    <ShipType intl={product.intl} />
                     <RelatedProducts />
                 </div>
             </div>

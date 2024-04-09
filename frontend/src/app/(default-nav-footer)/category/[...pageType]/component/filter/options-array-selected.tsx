@@ -20,42 +20,46 @@ const ItemBoxSelected = ({ content, checked, setChecked }: ItemBoxSelectedProps)
 export const OptionArraySelected = (
     filterValue: string[] | undefined,
     contentList: string[],
-    setFilter: (v: string[]) => void
+    setSizeQueryString: (v: string[]) => void
 ) => {
     // create Array for ItemBoxSelected
-    const itemBoxArray = contentList.map((content) => {
-        return { content: content, checked: false };
+    const InitBox = contentList.map((content) => {
+        return filterValue?.includes(content)
+            ? { content: content, checked: true }
+            : { content: content, checked: false };
     });
 
     // create useState for ItemBoxSelected
-    const [itemBoxSelectedArray, setItemBoxSelectedArray] =
-        useState<Array<{ content: string; checked: boolean }>>(itemBoxArray);
+    const [itemBoxArr, setitemBoxArr] = useState<Array<{ content: string; checked: boolean }>>(InitBox);
 
     // 내부 아이템 변동사항 보존용, initMeta는 건드려서는 안되고, set Filter로 내부 아이템을 건드리는 것은 한계가 있음.
-    // 따라서 변동사항 보존용 state를 통해 이를 보존하고, 이를 setFilter로 넘겨주는 방식으로 구현함.
-    const [selectedItems, setSelectedItems] = useState<string[]>(filterValue || []);
+    // 따라서 변동사항 보존용 state를 통해 이를 보존하고, 이를 setSizeQueryString로 넘겨주는 방식으로 구현함.
+    const [localSizeQuery, setLocalSizeQuery] = useState<string[]>(filterValue ?? []);
 
     // create Toggle
     const selectToggle = (value: string) => {
-        const newContentList = selectedItems.includes(value)
-            ? selectedItems.filter((c) => c !== value)
-            : [...selectedItems, value];
-        setSelectedItems(newContentList);
-        setFilter(newContentList);
+        // queryString 세팅
+        const newContentList = localSizeQuery.includes(value)
+            ? localSizeQuery.filter((c) => c !== value)
+            : [...localSizeQuery, value];
+        setLocalSizeQuery(newContentList);
+        setSizeQueryString(newContentList);
 
-        const newObject = itemBoxSelectedArray.map((obj) => {
+
+        // itemBox 세팅
+        const newItemBoxArr = itemBoxArr.map((obj) => {
             if (obj["content"] === value) {
                 return { ...obj, checked: !obj["checked"] };
             } else {
                 return obj;
             }
         });
-        setItemBoxSelectedArray(newObject);
+        setitemBoxArr(newItemBoxArr);
     };
 
     return (
         <div className="flex flex-wrap w-full">
-            {itemBoxSelectedArray.map((content, idx) => {
+            {itemBoxArr.map((content, idx) => {
                 return (
                     <div key={idx}>
                         <ItemBoxSelected
