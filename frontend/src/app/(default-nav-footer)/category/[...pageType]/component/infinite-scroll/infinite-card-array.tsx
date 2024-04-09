@@ -16,6 +16,8 @@ function addCategoryFilterToFilterDict(pageType: string[], filterMeta: filterReq
             return (filterMeta.category = "신발");
         case "accessory":
             return (filterMeta.category = "기타");
+        case "latest":
+            return (filterMeta.category = "");
         case "brand":
             return (filterMeta.brand = pageType[1].replace("%20", " "));
     }
@@ -38,22 +40,29 @@ const InfiniteCardArrary = () => {
     searchParams.delete("page");
     const queryParamsObject = Object.fromEntries(searchParams.entries());
 
+    // console.log("Main");
+    // console.log("hasMore:", hasMore);
+    // console.log("page:", page);
+
     addCategoryFilterToFilterDict(pageType as string[], queryParamsObject);
 
-    const getNewFilteredItems = () => {
-        setFilter(queryParamsObject);
-        setLocalData({});
-        setPage(1);
-        setHasMore(true);
-        localStorage.setItem("category", "{}");
-    };
-
     useEffect(() => {
-        const localCatData = JSON.parse(localStorage.getItem("category") ?? "{}");
-        setLocalData(localCatData);
-    }, []);
+        const getNewFilteredItems = () => {
+            setFilter(queryParamsObject);
+            setLocalData({});
+            setPage(1);
+            setHasMore(true);
+            localStorage.setItem("category", "{}");
+        };
 
-    !(JSON.stringify(queryParamsObject) == JSON.stringify(filter)) && getNewFilteredItems();
+        if (!(JSON.stringify(queryParamsObject) == JSON.stringify(filter))) {
+            getNewFilteredItems();
+        } else {
+            const localData = localStorage.getItem("category");
+            const localCatData = JSON.parse(localData ?? "{}");
+            setLocalData(localCatData);
+        }
+    }, []);
 
     useEffect(() => {
         const cardLoadObserver = new IntersectionObserver(onCardLoadInsersection);
@@ -67,23 +76,31 @@ const InfiniteCardArrary = () => {
                 pageParamObserver.observe(tirgger);
             });
         }
-        localStorage.setItem("category", JSON.stringify(localData));
 
-        if (sessionStorage.getItem("scrollPosition")) {
-            window.scrollTo(0, Number(sessionStorage.getItem("scrollPosition")));
-            setTimeout(() => {
-                sessionStorage.removeItem("scrollPosition");
-            }, 500); // Adjust the delay as needed
-        }
+        const timeoutId = initScrollRestoration();
+        // console.log("useEffect LocalData Update");
 
         return () => {
             if (cardLoadObserver) cardLoadObserver.disconnect();
             if (pageParamObserver) pageParamObserver.disconnect();
+            clearTimeout(timeoutId);
         };
+
+        function initScrollRestoration() {
+            var scrollPosition = sessionStorage.getItem("scrollPosition");
+            if (scrollPosition) {
+                window.scrollTo(0, Number(scrollPosition));
+
+                return setTimeout(() => {
+                    sessionStorage.removeItem("scrollPosition");
+                }, 1000); // Adjust the delay as needed
+            }
+        }
 
         function onPageParamsIntersection(entries: IntersectionObserverEntry[]) {
             entries.map((entry: IntersectionObserverEntry) => {
                 if (entry.isIntersecting) {
+                    // console.log("onPageParamsIntersection");
                     const nextPageNum = entry.target.getAttribute("data-page");
                     var params = new URLSearchParams(window.location.search);
                     nextPageNum && params.set("page", nextPageNum);
@@ -93,14 +110,17 @@ const InfiniteCardArrary = () => {
         }
         function onCardLoadInsersection(entries: any) {
             const firstEntry = entries[0];
+            // console.log("onCardLoadInsersection");
             if (firstEntry.isIntersecting && hasMore) {
                 fetchMoreItems(queryParamsObject);
             }
         }
 
         async function fetchMoreItems(filterDict: filterRequestProps) {
-            const res: responseProps = await api.getCategory(filterDict, page);
+            // if (Object.keys(localData).includes((page + 1).toString())) return;
 
+            // console.log("fetchMoreItems : ", page);
+            const res: responseProps = await api.getCategory(filterDict, page);
             if (res.lastPage === 0) return setNoResult(true), setHasMore(false);
 
             if (res.currentPage > res.lastPage) {
@@ -109,15 +129,15 @@ const InfiniteCardArrary = () => {
                 setNoResult(false);
                 setLocalData((localData) => ({ ...localData, [page + 1]: res.data }));
                 const localCatData = JSON.parse(localStorage.getItem("category")!);
-                localStorage.setItem("category", { ...localCatData, [page + 1]: res.data });
+                localStorage.setItem("category", JSON.stringify({ ...localCatData, [page + 1]: res.data }));
                 setPage((prevPage) => prevPage + 1);
             }
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [localData]);
+    }, [page, filter]);
 
-    const handleRouteChange = () => {
+    const setScrollPosition = () => {
         sessionStorage.setItem("scrollPosition", window.scrollY.toString());
     };
 
@@ -139,7 +159,7 @@ const InfiniteCardArrary = () => {
                                         data-page={Number(item[0]) - 1}>
                                         {item[1].map((data) => {
                                             return (
-                                                <div key={data.sku} onClick={handleRouteChange}>
+                                                <div key={data.sku} onClick={setScrollPosition}>
                                                     <ProductCard props={data} />
                                                 </div>
                                             );

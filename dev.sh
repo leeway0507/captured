@@ -25,7 +25,11 @@ npm run dev &
 cd /Users/yangwoolee/repo/captured/main/backend
 pyenv activate py310 
 
-python main.py
+python main.py &
+
+cd /Users/yangwoolee/repo/captured/main/backend-golang
+
+go run main.go
 
 
 

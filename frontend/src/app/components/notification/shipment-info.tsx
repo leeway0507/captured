@@ -7,7 +7,7 @@ interface ShipmentProps {
 
 export function IntlShipment({ title, content }: ShipmentProps) {
     return (
-        <div className="bg-light-gray text-sub-black tracking-tightest rounded	">
+        <div className=" text-sub-black tracking-tightest rounded	">
             <div className="flex">
                 <div className="flex-center basis-1/5">
                     <Image src="/icons/intl-shipment.svg" width={32} height={32} alt="intl-shipment" />
@@ -29,7 +29,7 @@ export function IntlShipment({ title, content }: ShipmentProps) {
 
 export function DomeShipment({ title, content }: ShipmentProps) {
     return (
-        <div className="bg-light-gray text-sub-black tracking-tightest rounded-lg  ">
+        <div className=" text-sub-black tracking-tightest rounded-lg  ">
             <div className="flex">
                 <div className="flex-center basis-1/5">
                     <Image src="/icons/dome-shippment.svg" width={28} height={28} alt="dome-shipment" />

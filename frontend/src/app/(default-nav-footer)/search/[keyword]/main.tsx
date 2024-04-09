@@ -66,10 +66,8 @@ const SearchResult = ({
                 <div className={`grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 page-container`}>
                     {searchResult.map((data) => {
                         return (
-                            <div key={data.sku} className={`relative ${data.size === "" && "opacity-60"}`}>
-                                {data.size === "" && (
-                                    <div className="absolute top-[5%] left-0 text-main-black">SoldOut</div>
-                                )}
+                            <div key={data.sku} className={`relative ${!data.size && "opacity-60"}`}>
+                                {!data.size && <div className="absolute top-[5%] left-0 text-main-black">SoldOut</div>}
                                 <ProductCard props={data} />
                             </div>
                         );

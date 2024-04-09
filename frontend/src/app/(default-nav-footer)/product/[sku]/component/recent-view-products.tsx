@@ -23,8 +23,8 @@ export default function RelatedProducts() {
     if (productInfos === undefined) return <RelatedProductsSkeleton />;
 
     return (
-        <div className="grow flex flex-col">
-            <div className="text-xl-2xl pb-2 font-bold">최근 본 아이템</div>
+        <div className="grow flex flex-col pt-10">
+            <div className="text-xl-2xl pb-6 font-bold">최근 본 아이템</div>
             <div>
                 <EmblaCarouselMultiProducts>
                     {productInfos.toReversed().map((props: productCardProps, idx: number) => {

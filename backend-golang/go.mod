@@ -11,6 +11,7 @@ require (
 	github.com/joho/godotenv v1.5.1
 	github.com/mattn/go-sqlite3 v1.14.16
 	github.com/swaggo/swag v1.16.2
+	golang.org/x/crypto v0.14.0
 )
 
 require (

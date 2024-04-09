@@ -1,16 +1,39 @@
 #!/bin/sh
 
-# 로컬 업데이트 사항을 빌드하여 도커에서 테스트하는 명령문
+# Find the PIDs of the SSH tunnel processes
+PIDS=($(ps aux | grep '[s]sh -fN' | awk '{print $2}'))
+
+if [ ${#PIDS[@]} -gt 0 ]; then
+    echo "SSH tunnel processes found with PIDs: ${PIDS[@]}. Terminating..."
+    # Terminate the SSH tunnel processes
+    for PID in "${PIDS[@]}"; do
+        kill "$PID"
+    done
+    echo "SSH tunnel processes terminated."
+else
+    echo "No SSH tunnel process found."
+fi
 
 
+### ssh DB 연결
+ssh -fNT -i ~/.ssh/captured.pem -o ServerAliveInterval=60 -o ServerAliveCountMax=60 ubuntu@43.201.98.25 -L 3336:db-captured.cheoqn0aa7xs.ap-northeast-2.rds.amazonaws.com:3306
 
-# cd /Users/yangwoolee/repo/captured/main/frontend
-# docker build -t nextjs_dev -f ../../docker/dev/nextjs_dev.Dockerfile .
-
-# cd /Users/yangwoolee/repo/captured/main/backend
-# docker build -t fastapi_dev -f ../../docker/dev/fastapi_dev.Dockerfile .
 
 echo "docker-compose -f docker_compose_dev.yml up"
 
 cd /Users/yangwoolee/repo/captured/docker/dev
 docker-compose -f docker_compose_dev.yml up --build
+
+
+PIDS=($(ps aux | grep '[s]sh -fN' | awk '{print $2}'))
+
+if [ ${#PIDS[@]} -gt 0 ]; then
+    echo "SSH tunnel processes found with PIDs: ${PIDS[@]}. Terminating..."
+    # Terminate the SSH tunnel processes
+    for PID in "${PIDS[@]}"; do
+        kill "$PID"
+    done
+    echo "SSH tunnel processes terminated."
+else
+    echo "No SSH tunnel process found."
+fi

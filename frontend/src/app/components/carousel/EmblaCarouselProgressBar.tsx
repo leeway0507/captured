@@ -1,20 +1,27 @@
-import useEmblaCarousel from "embla-carousel-react";
+"use client";
+
+import { useState, useEffect, useCallback, ReactNode } from "react";
+import useEmblaCarousel, { EmblaCarouselType } from "embla-carousel-react";
+import { DotButton } from "./EmblaDot";
+import Autoplay from "embla-carousel-autoplay";
 import styles from "./styles.module.css";
 
-type PropType = {
-    children: React.ReactNode;
+type EmblaCarouselProps = {
+    children: ReactNode;
 };
 
-const CarouselProgressBar: React.FC<PropType> = ({ children }) => {
-    const [emblaRef, emblaApi] = useEmblaCarousel({ dragFree: true });
+const EmblaCarousel = ({ children }: EmblaCarouselProps) => {
+    const [emblaRef] = useEmblaCarousel();
 
     return (
-        <div className={styles.embla}>
-            <div className={styles.embla__viewport} ref={emblaRef}>
-                <div className={styles.embla__container}>{children}</div>
+        <div className="flex flex-col">
+            <div className={styles.embla}>
+                <div className={styles.embla__viewport} ref={emblaRef}>
+                    <div className={styles.embla__container}>{children}</div>
+                </div>
             </div>
         </div>
     );
 };
 
-export default CarouselProgressBar;
+export default EmblaCarousel;

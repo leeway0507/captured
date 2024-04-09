@@ -89,7 +89,7 @@ const MainPC = ({
                             <div className="basis-1/2 flex-center font-bold">배송지 변경</div>
                             <div className="basis-1/4 link-animation flex-right text-2xl" onClick={openAddressToggle}>
                                 <Image
-                                    src={"/icons/x-mark.svg"}
+                                    src={"/icons/white/x-mark-white.svg"}
                                     alt="x-mark"
                                     width="20"
                                     height="20"

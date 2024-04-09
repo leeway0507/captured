@@ -5,8 +5,8 @@ import { productCardProps } from "@/app/type";
 import { getCategoryProxy } from "./fetch";
 
 const ItemList = ({ data }: { data: productCardProps[] }) => {
-    return data.slice(0, 10).map((item) => (
-        <div key={item.sku} className="flex-none basis-[45%] tb:basis-[20%]">
+    return data.slice(0, 20).map((item) => (
+        <div key={item.sku} className="flex-none basis-[45%] tb:basis-[22%]">
             <ProductCard idx={item.sku} props={item} />
         </div>
     ));
@@ -32,15 +32,15 @@ const NewestItem = async () => {
     });
 
     return (
-        <div className="tb:px-4">
-            <div className="text-xl font-bold px-2">신규 아이템</div>
-            <div className="flex w-full overflow-auto gap-2 px-2 py-2 tb:gap-4 tb:py-4 tb:grid tb:grid-cols-5">
+        <div className="tb:px-4 tb:mx-auto w-full max-w-[2048px] overflow-hidden">
+            <div className="tb:text-lg tb:text-xl px-2">추천 아이템</div>
+            <div className="flex w-full gap-2 p-2 tb:gap-4 tb:py-4 overflow-auto scroll-bar-x">
                 {data.length === 0 ? <ItemListSkeleton /> : <ItemList data={data} />}
             </div>
             <div className="flex-center py-2 ">
                 <Link
                     href="/category/latest"
-                    className="w-72 tb:w-96 border border-main-black py-2 text-lg rounded-md text-center px-4 my-2 cursor-pointer ">
+                    className="w-64 tb:w-96 border border-main-black text-lg rounded-full text-center py-2 px-4 my-2 cursor-pointer hover:bg-main-black hover:text-white">
                     더보기
                 </Link>
             </div>

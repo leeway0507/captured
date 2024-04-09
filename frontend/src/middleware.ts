@@ -12,8 +12,6 @@ export function middleware(request: NextRequest) {
       if (path === 'brand') {
         const brand = request.nextUrl.pathname.split('/')[3]
 
-        console.log(brand)
-
         if (brand === null) return  NextResponse.redirect(
           new URL('/page-not-found', request.url)
         )
