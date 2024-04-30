@@ -24,7 +24,7 @@ const AlertForm = (
             <div className="flex justify-between content-center">
                 <div className="text-md text-main-black">{title}</div>
                 <div className="flex items-end" onClick={CancelHandler}>
-                    <Image src={"/icons/x-mark.svg"} alt="x-mark" width="20" height="20" priority />
+                    <Image src={"/icons/white/x-mark-white.svg"} alt="x-mark" width="20" height="20" priority />
                 </div>
             </div>
             <div className="text-sub-black">{content}</div>

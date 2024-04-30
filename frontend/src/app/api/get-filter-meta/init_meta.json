@@ -9,6 +9,7 @@
         "asics",
         "barbour",
         "c.p. company",
+        "clarks originals",
         "comme des garcons",
         "human made",
         "keen",
@@ -29,7 +30,7 @@
     "index": {
         "A": ["acne studios", "adidas originals", "ami", "a.p.c", "arc'teryx", "asics"],
         "B": ["Barbour"],
-        "C": ["c.p. company", "comme des garcons"],
+        "C": ["c.p. company", "clarks originals", "comme des garcons"],
         "H": ["human made"],
         "K": ["keen"],
         "M": ["maison kitsune"],
@@ -44,15 +45,20 @@
         "의류": {
             "productType": [
                 "가디건",
+                "베스트",
                 "긴팔 티셔츠",
                 "니트",
                 "반팔 티셔츠",
                 "셔츠",
                 "스웨터",
                 "패딩",
+                "롱패딩",
+                "숏패딩",
+                "자켓",
                 "후드",
                 "바지",
-                "반바지"
+                "반바지",
+                "후리스"
             ],
             "sizeArray": ["XS", "S", "M", "L", "XL", "XXL", "XXXL"]
         },

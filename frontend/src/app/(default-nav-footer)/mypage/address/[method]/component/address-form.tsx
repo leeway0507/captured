@@ -95,13 +95,13 @@ export default function AddressForm(props: addAddressFromProps) {
                             <CustomInput
                                 label="개인통관고유부호"
                                 type="text"
-                                placeholder="p123456789"
+                                placeholder="p012345678912"
                                 info="통관부호 양식이 일치하지 않습니다."
                                 value={customId}
                                 setValue={setCustomId}
                                 id="customId"
                                 checkPolicy={checkCustomId}
-                                maxLength={10}
+                                maxLength={13}
                             />
                         </div>
                         <div className="cursor-pointer whitespace-nowrap flex-center pb-3"></div>

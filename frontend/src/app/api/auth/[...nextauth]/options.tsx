@@ -85,22 +85,15 @@ export const options: NextAuthOptions = {
                     user.krName = userInfo.user.kr_name;
                     user.signUpType = userInfo.user.sign_up_type;
                     user.emailVerification = userInfo.user.email_verification;
+                    user.userId = userInfo.user.user_id;
 
                     return true;
                 }
                 throw new Error("401 error");
             } catch (err) {
-                console.log(err);
                 return `/auth/login-fail?error=${err}`;
             }
         },
-        async redirect(params) {
-            // Custom logic to redirect the user after signing in
-            const { url, baseUrl } = params;
-            // Custom logic to redirect the user after signing in
-            return url.startsWith(baseUrl) ? url : baseUrl;
-        },
-
         async jwt({ token, user, account, profile }) {
             // console.log("---------jwt---------");
             // console.log("token : ", token);

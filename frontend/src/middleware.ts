@@ -10,10 +10,10 @@ export function middleware(request: NextRequest) {
       const path = request.nextUrl.pathname.split('/')[2]
 
       if (path === 'brand') {
-        const searchParams = new URLSearchParams(request.nextUrl.search) 
-        const brand = searchParams.get('brand')
+        const brand = request.nextUrl.pathname.split('/')[3]
 
-        if (brand === null) return  NextResponse.redirect(new URL('/page-not-found', request.url)
+        if (brand === null) return  NextResponse.redirect(
+          new URL('/page-not-found', request.url)
         )
       }
 

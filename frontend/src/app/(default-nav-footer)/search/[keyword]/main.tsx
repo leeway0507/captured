@@ -2,7 +2,7 @@
 import { productCardProps } from "@/app/type";
 import { useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
-import ProductCard from "../../category/[...pageType]/component/product-card/product-card";
+import ProductCard from "../../category/[...pageType]/component/infinite-scroll/product-card";
 import SearchFilter from "./filter";
 
 function createFilterValue(filterParams: any) {
@@ -66,10 +66,8 @@ const SearchResult = ({
                 <div className={`grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 page-container`}>
                     {searchResult.map((data) => {
                         return (
-                            <div key={data.sku} className={`relative ${data.size === "" && "opacity-60"}`}>
-                                {data.size === "" && (
-                                    <div className="absolute top-[5%] left-0 text-main-black">SoldOut</div>
-                                )}
+                            <div key={data.sku} className={`relative ${!data.size && "opacity-60"}`}>
+                                {!data.size && <div className="absolute top-[5%] left-0 text-main-black">SoldOut</div>}
                                 <ProductCard props={data} />
                             </div>
                         );

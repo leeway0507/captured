@@ -1,5 +1,5 @@
-import { responseProps } from "@/app/(default-nav-footer)/category/[...pageType]/component/fetch";
 import { NextResponse, NextRequest } from "next/server";
+import { ResponseProps } from "@/app/(default-nav-footer)/category/[...pageType]/component/fetch";
 
 export const dynamic = "force-dynamic";
 
@@ -11,7 +11,7 @@ const CheckEmailAndName = async (request: NextRequest) => {
     const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/api/auth/check-email-and-name?email=${email}&name=${name}`
     );
-    const result: responseProps = await res.json();
+    const result: ResponseProps = await res.json();
     return NextResponse.json({ status: res.status, data: result });
 };
 

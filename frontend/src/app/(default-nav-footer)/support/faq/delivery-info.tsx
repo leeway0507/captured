@@ -92,26 +92,22 @@ export const RefundAndExchange = (
                 <span className="underline text-blue-500 ">{process.env.NEXT_PUBLIC_CUSTOMER_EMAIL}</span>
                 )로 보내주시면 관련 내용 안내드리겠습니다.{" "}
             </div>
-            <div className="border rounded-md py-3 my-2">
-                <div className=" grid grid-rows-2 gap-1 ms-2">
-                    <div className="grid grid-cols-5">
-                        <div className="font-bold">주문자 성명</div>
-                        <div className="col-span-4">주문 시 기입한 성명</div>
-                    </div>
-                    <div className="grid grid-cols-5">
-                        <div className="font-bold">결제코드</div>
-                        <div className="col-span-4">
-                            마이페이지 → 주문배송 → 상세주문정보 항목에서 결제코드 확인 가능
-                        </div>
-                    </div>
-                    <div className="grid grid-cols-5">
-                        <div className="font-bold">환불 방식</div>
-                        <div className="col-span-4">희망 환불 절차(반품 또는 취소) 기입</div>
-                    </div>
-                    <div className="grid grid-cols-5">
-                        <div className="font-bold">상세 내용</div>
-                        <div className="col-span-4">반품 및 취소 사유 및 이미지 등 상세 내용 작성</div>
-                    </div>
+            <div className="border rounded-md py-3 my-2 text-sm pe-2">
+                <div className="grid grid-cols-7 py-1">
+                    <div className="font-bold col-span-2">주문자 성명</div>
+                    <div className="col-span-5">주문 시 기입한 성명</div>
+                </div>
+                <div className="grid grid-cols-7 py-1">
+                    <div className="font-bold col-span-2">결제코드</div>
+                    <div className="col-span-5">마이페이지 → 주문배송 → 상세주문정보 항목에서 결제코드 확인 가능</div>
+                </div>
+                <div className="grid grid-cols-7 py-1">
+                    <div className="font-bold col-span-2">환불 방식</div>
+                    <div className="col-span-5">희망 환불 절차(반품 또는 취소) 기입</div>
+                </div>
+                <div className="grid grid-cols-7 py-1">
+                    <div className="font-bold col-span-2">상세 내용</div>
+                    <div className="col-span-5">반품 및 취소 사유 및 이미지 등 상세 내용 작성</div>
                 </div>
             </div>
         </div>
@@ -120,9 +116,25 @@ export const RefundAndExchange = (
 
 export const CustomFee = (
     <div className="flex flex-col gap-2 ">
-        <div className="pb-1"> 해외배송 상품 가격에는 관∙부가세를 포함하고 있습니다.</div>
+        <div className="pb-1"> 상품 가격에 관∙부가세를 포함하고 있습니다.</div>
     </div>
 );
+
+export const NotYetShipped = (
+    <div className="flex flex-col gap-2 ">
+        <div className="pb-1">
+            배송 정보는 <span className="font-bold">마이페이지 ❯ 주문배송 ❯ 상세 주문 내역</span>에서 확인하실 수
+            있습니다.{" "}
+        </div>
+        <div className="pb-1">
+            주문일이 15일 이상 경과한 경우 고객센터 메일(
+            <span className="underline text-blue-500 ">{process.env.NEXT_PUBLIC_CUSTOMER_EMAIL}</span>) 또는 채널
+            알림톡으로 문의주시면 확인 후 안내드리겠습니다.
+        </div>
+    </div>
+);
+
+export const Package = <div className="pb-1">묶음 배송은 불가능합니다. 각 상품의 배송일정에 따라 개별 배송됩니다.</div>;
 
 export default function DeliveryInfo() {
     return (
@@ -134,17 +146,34 @@ export default function DeliveryInfo() {
                 cat="process"
                 titleClassNames="text-base"
             />
-            <AccordionComponent title="배송비" content={ShippingFee} cat="shippingFee" titleClassNames="text-base" />
             <AccordionComponent
-                title="반품 및 취소"
-                content={RefundAndExchange}
-                cat="refundAndExchange"
+                title="배송비를 알고싶어요."
+                content={ShippingFee}
+                cat="shippingFee"
                 titleClassNames="text-base"
             />
             <AccordionComponent
-                title="관부가세 대납이 가능한가요?"
+                title="관부가세 대납 여부를 알고싶어요."
                 content={CustomFee}
                 cat="customFee"
+                titleClassNames="text-base"
+            />
+            <AccordionComponent
+                title="배송 상태를 알고 싶어요."
+                content={NotYetShipped}
+                cat="notYetShipped"
+                titleClassNames="text-base"
+            />
+            <AccordionComponent
+                title="해외 배송 시 묶음 배송이 가능한가요?"
+                content={Package}
+                cat="package"
+                titleClassNames="text-base"
+            />
+            <AccordionComponent
+                title="반품 및 취소 방법을 알고싶어요."
+                content={RefundAndExchange}
+                cat="refundAndExchange"
                 titleClassNames="text-base"
             />
         </>

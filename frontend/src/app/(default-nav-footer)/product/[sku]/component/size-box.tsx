@@ -5,16 +5,16 @@ import { useState } from "react";
 import ProductSizeTable from "./product-size-table";
 import { toast } from "react-toastify";
 
+const btnClass = "black-bar-xl rounded-full my-1 lg:text-lg w-full my-4";
+
 const SizeBox = ({ data, defaultSizeArr }: { data: productCardProps; defaultSizeArr: string[] }) => {
     const { sku, size, category, deploy } = data;
 
-    const { availableSize } = {
-        availableSize: size.split(","),
-    };
+    const availableSize = size ? size : ["-"];
 
     const [selectedItem, setSelectedItem] = useState<string>(availableSize[0] || "");
     const { increaseCartQuantity } = useShoppingCart();
-    const btnClass = "black-bar-xl my-1 lg:text-xl w-full my-4";
+
     const isSize = availableSize[0] !== "-" && deploy !== 0;
 
     const handleModal = () => {

@@ -30,7 +30,11 @@ async def get_page_idx(
         stmt = (
             select(column)
             .join(SizeTable, ProductInfoTable.sku == SizeTable.sku)
-            .where(*filter.values(), ProductInfoTable.deploy == 1)
+            .where(
+                *filter.values(),
+                ProductInfoTable.deploy == 1,
+                SizeTable.available == 1,
+            )
             .group_by(ProductInfoTable.sku)
             .order_by(*order_by)
         )

@@ -6,6 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import { signOut } from "next-auth/react";
 import { ConfirmPopUpModal } from "../../components/modal/new-yes-no-modal";
+import SnsUserInfo from "./component/order/sns-user-info";
 
 const selectedClass = "mx-4 bg-main-black text-white rounded-lg";
 
@@ -34,7 +35,7 @@ export default function MainPc({ signUpType, orderHistory }: { signUpType: strin
     const [selectedIndex, setSelectedIndex] = useState(Number(key));
 
     return (
-        <div className="flex grow max-w-5xl justify-between">
+        <div className="mx-auto flex grow max-w-[1440px] justify-between">
             <Tab.Group vertical selectedIndex={selectedIndex} onChange={setSelectedIndex}>
                 <Tab.List className="basis-1/3 max-w-[300px] min-h-[600px] text-xl">
                     <Tab.List className={"sticky top-[70px] flex flex-col w-full"}>
@@ -60,7 +61,7 @@ export default function MainPc({ signUpType, orderHistory }: { signUpType: strin
                             }>
                             주소 추가 및 변경
                         </Tab>
-                        {signUpType === "email" && (
+                        {signUpType === "email" ? (
                             <Tab
                                 onClick={() => router.replace("/mypage?key=2")}
                                 key="resetPassword"
@@ -71,6 +72,18 @@ export default function MainPc({ signUpType, orderHistory }: { signUpType: strin
                                     )
                                 }>
                                 비밀번호 변경
+                            </Tab>
+                        ) : (
+                            <Tab
+                                onClick={() => router.replace("/mypage?key=2")}
+                                key="resetPassword"
+                                className={({ selected }) =>
+                                    classNames(
+                                        "py-4 tracking-[0.1em] cursor-pointer focus:outline-none",
+                                        selected && selectedClass
+                                    )
+                                }>
+                                가입정보 확인
                             </Tab>
                         )}
                         <LogOutButton />
@@ -91,10 +104,10 @@ export default function MainPc({ signUpType, orderHistory }: { signUpType: strin
                     </Tab.Panel>
                     <Tab.Panel key="resetPassword" className="grow">
                         <div className="text-3xl flex-center h-[100px] bg-white z-30 tracking-[0.2rem]">
-                            비밀번호 변경
+                            가입정보 확인
                         </div>
                         <div className="py-2">
-                            <ResetPasswordFrom />
+                            <SnsUserInfo />
                         </div>
                     </Tab.Panel>
                     <Tab.Panel key="logout" className="grow">

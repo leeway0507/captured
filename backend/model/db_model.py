@@ -1,13 +1,11 @@
 """pydantic Schemas"""
 
-
 from typing import Optional
 from datetime import datetime
 
 
 from pydantic import BaseModel, validator, ConfigDict, EmailStr, Field
 from pydantic.alias_generators import to_camel
-
 
 from model.order_model import OrderHistoryRequestSchema, OrderRowRequestchmea
 
@@ -21,7 +19,9 @@ class ProductInfoSchema(BaseModel):
     )
     sku: Optional[int] = None
     brand: str
+    kor_brand: Optional[str] = None
     product_name: str
+    kor_product_name: Optional[str] = None
     product_id: str
     size: Optional[str] = None
     price: int
@@ -64,7 +64,6 @@ class SizeSchema(BaseModel):
 
 
 class UserSchema(BaseModel):
-
     """User Schema"""
 
     model_config = ConfigDict(alias_generator=to_camel, populate_by_name=True)

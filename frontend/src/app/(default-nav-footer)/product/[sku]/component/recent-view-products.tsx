@@ -1,7 +1,7 @@
 "use client";
 import type { productCardProps } from "@/app/type";
 import EmblaCarouselMultiProducts from "@/app/components/carousel/EmblaCarouselMultiProducts";
-import ProductCard from "@/app/(default-nav-footer)/category/[...pageType]/component/product-card/product-card";
+import ProductCard from "@/app/(default-nav-footer)/category/[...pageType]/component/infinite-scroll/product-card";
 import { useEffect, useState } from "react";
 import { RelatedProductsSkeleton } from "@/app/(default-nav-footer)/search/skeleton";
 import styles from "@/app/components/carousel/styles.module.css";
@@ -23,8 +23,8 @@ export default function RelatedProducts() {
     if (productInfos === undefined) return <RelatedProductsSkeleton />;
 
     return (
-        <div className="grow flex flex-col">
-            <div className="text-xl-2xl pb-2 font-bold">최근 본 아이템</div>
+        <div className="grow flex flex-col pt-10">
+            <div className="text-xl-2xl pb-6 font-bold">최근 본 아이템</div>
             <div>
                 <EmblaCarouselMultiProducts>
                     {productInfos.toReversed().map((props: productCardProps, idx: number) => {

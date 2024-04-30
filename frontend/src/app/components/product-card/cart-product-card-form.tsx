@@ -3,10 +3,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { cartProductCardProps } from "@/app/type";
 import { useShoppingCart } from "@/app/components/context/shopping-cart-context";
-import { ConfirmPopUpModal } from "../modal/new-yes-no-modal";
-import { ProductCardModal } from "./product-card-modal-form";
-import { memo } from "react";
-interface cartProductCardFormProps extends cartProductCardProps {}
+import { ConfirmPopUpModal } from "@/app/components/modal/new-yes-no-modal";
+import { ProductCardModal } from "@/app/components/product-card/product-card-modal-form";
 
 export default function CartProductCardForm({
     props,
@@ -14,7 +12,7 @@ export default function CartProductCardForm({
     countEnable,
     selectEnable,
 }: {
-    props: cartProductCardFormProps;
+    props: cartProductCardProps;
     onDelete: boolean;
     countEnable: boolean;
     selectEnable: boolean;
@@ -39,7 +37,7 @@ export default function CartProductCardForm({
     }
     const handleIncreaseCartQuantity = () => {
         // sku: number, size: string, selected: boolean
-        increaseCartQuantity(sku, size, true, props);
+        increaseCartQuantity(sku, size, true, props as cartProductCardProps);
     };
 
     const CountButton = () => (
@@ -56,7 +54,7 @@ export default function CartProductCardForm({
     );
     const CountPriceInfo = () => (
         <div className="flex w-full">
-            <div className="flex-center max-w-[130px] grow">
+            <div className="flex-center max-w-[180px] grow">
                 {countEnable ? <CountButton /> : <span> {`수량 : ${quantity}`}</span>}
             </div>
             <div className="text-sub-black flex-right grow text-base">₩ {totalPrice.toLocaleString()}</div>
@@ -70,14 +68,16 @@ export default function CartProductCardForm({
         <div className="flex mb-1 w-full">
             <Link
                 href={`product/${sku}`}
-                className="flex aspect-square h-[130px] relative text-blue-black hover:opacity-50 active:opacity-100">
-                <Image src={productImgUrl} fill sizes="200px" alt={productId} priority />
+                className="flex aspect-square h-[150px] tb:h-[180px] relative text-blue-black hover:opacity-50 active:opacity-100">
+                <div className="relative aspect-square h-[100px] tb:h-[130px] m-auto">
+                    <Image src={productImgUrl} fill sizes="200px" alt={productId} priority />
+                </div>
             </Link>
 
             <div className="m-auto grow">
                 <div className="flex flex-col ps-2 text-blue-black">
                     <div className="flex justify-between">
-                        <Link href={`category/${brand}`} className="text-sub-black link-animation">
+                        <Link href={`category/brand/${brand}`} className="text-sub-black link-animation">
                             {brand.toUpperCase()}
                         </Link>
                         {onDelete && (
@@ -90,7 +90,7 @@ export default function CartProductCardForm({
                     <div>{productName}</div>
                     <div className="text-xs">{productId.toUpperCase()}</div>
                     <div className="text-sm flex justify-between">
-                        <div>{size}</div>
+                        <div className="text-sub-black">{size}</div>
                         <div className="underline">{intl ? "해외배송" : "국내배송"}</div>
                     </div>
                 </div>
@@ -103,7 +103,7 @@ export default function CartProductCardForm({
             {selectEnable && (
                 <div className={`flex-center`}>
                     <input
-                        className="accent-main-black w-3.5"
+                        className="accent-main-black scale-[115%] w-4"
                         type="checkbox"
                         name="selected"
                         id={`${sku}-${size}-selected`}

@@ -1,34 +1,36 @@
+import React from 'react';
 import Banner from "../components/main/main-banner";
 import BrandList from "../components/main/brand-list";
 import NewestItem from "../components/main/newest-item";
 import Footer from "../components/nav-footer/component/footer";
 import { BottomNavBar } from "../components/nav-footer/component/bottom-nav-bar";
-import CategoryList from "../components/main/category-list";
+import BrandItemsLayOutTop from "../components/main/brand-items-layout-reverse";
+import metaJson from "../../../public/banner/thumbnail.json";
+import BrandItemsLayOut from "../components/main/brand-items-layout";
+import ThreeItemsLayOut from "../components/main/three-items-layout";
+import FourItemsLayout from "../components/main/four-items-layout";
 
 export default async function page() {
-    const thumbnailInfos = [
-        {
-            src: "/banner/new_balance.jpg",
-            linkName: "new balance",
-            href: "/category/brand?brand=adidas%20originals",
-        },
-        {
-            src: "/banner/main1.jpeg",
-            linkName: "spezial",
-            href: "/category/brand?brand=adidas%20originals",
-        },
-    ];
-
+    const meta = process.env.NEXT_PUBLIC_THUMBNAIL_URL?.includes("banner")
+        ? metaJson
+        : await fetch(`${process.env.NEXT_PUBLIC_THUMBNAIL_URL}/thumbnail.json`).then((res) => res.json());
     return (
         <>
-            <Banner thumbnailInfos={thumbnailInfos} />
-            <div className="pt-16"></div>
+            <Banner meta={meta} />
             <NewestItem />
-            <div className="pt-16"></div>
+            <div className="my-4 tb:my-16 border-b border-deep-gray " />
+            <FourItemsLayout />
+            <div className="my-4 tb:my-16 border-b border-deep-gray " />
+            <BrandItemsLayOut brandName="adidas originals" />
+            <div className="my-4 tb:my-16 border-b border-deep-gray " />
+            <ThreeItemsLayOut />
+            <div className="my-4 tb:my-16 border-b border-deep-gray " />
             <BrandList />
-            <div className="pt-16"></div>
-            <CategoryList />
-            <div className="pt-16"></div>
+            <div className="my-4 tb:my-16 border-b border-deep-gray " />
+            <BrandItemsLayOut brandName="vivienne westwood" />
+            <div className="my-4 tb:my-16 border-b border-deep-gray " />
+            <BrandItemsLayOutTop brandName="patagonia" />
+            <div className="my-4 tb:my-16 border-b border-deep-gray " />
             <Footer />
             <BottomNavBar nav="home" />
         </>
