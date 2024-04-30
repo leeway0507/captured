@@ -1,38 +1,30 @@
 {
     "pc": [
         {
-            "fileName": "1.jpg",
-            "href": "/category/brand/adidas%20originals"
+            "fileName": "1.webp",
+            "href": "/category/brand/human%20made"
         },
         {
-            "fileName": "2.jpg",
-            "href": "/category/brand/needles"
+            "fileName": "2.webp",
+            "href": "/category/brand/salomon"
         },
         {
-            "fileName": "3.png",
+            "fileName": "3.webp",
             "href": "/category/brand/arc%27teryx"
-        },
-        {
-            "fileName": "4.png",
-            "href": "/category/brand/patagonia"
         }
     ],
     "mobile": [
         {
-            "fileName": "1.jpg",
-            "href": "/category/brand/adidas%20originals"
+            "fileName": "1.webp",
+            "href": "/category/brand/human%20made"
         },
         {
-            "fileName": "2.jpg",
-            "href": "/category/brand/needles"
+            "fileName": "2.webp",
+            "href": "/category/brand/salomon"
         },
         {
-            "fileName": "3.png",
+            "fileName": "3.webp",
             "href": "/category/brand/arc%27teryx"
-        },
-        {
-            "fileName": "4.png",
-            "href": "/category/brand/patagonia"
         }
     ]
 }

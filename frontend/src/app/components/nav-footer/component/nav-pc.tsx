@@ -65,12 +65,12 @@ export default function NavPc() {
                         </div>
                         <div className="absolute top-[60px] w-full border-b shadow-sm">
                             <input type="checkbox" id="nav" checked={checked} readOnly />
-                            <div className="do not remove this div">
-                                <div className="grid grid-cols-5 text-center w-full overflow-hidden bg-white px-12 max-w-[2160px] mx-auto">
+                            <div className="do not remove this div bg-white">
+                                <div className="grid grid-cols-5 text-center w-full overflow-hidden bg-white px-12 max-w-[1440px] mx-auto">
                                     <div className="col-span-1 flex-center ">
                                         <SearchBar search={search} setSearch={setSearch} />
                                     </div>
-                                    <div className="col-span-3 flex-center h-[80px]">
+                                    <div className="col-span-3 flex-center h-[60px]">
                                         <Logo />
                                     </div>
                                     <div className="col-span-1 flex-right ">

@@ -248,8 +248,8 @@ const docTemplate = `{
                     "description": "Category holds the value of the \"category\" field.",
                     "type": "string"
                 },
-                "category_spec": {
-                    "description": "CategorySpec holds the value of the \"category_spec\" field.",
+                "categorySpec": {
+                    "description": "CategorySpec holds the value of the \"categorySpec\" field.",
                     "type": "string"
                 },
                 "color": {
@@ -268,52 +268,52 @@ const docTemplate = `{
                         }
                     ]
                 },
-                "id": {
-                    "description": "ID of the ent.",
-                    "type": "integer"
-                },
-                "img_type": {
-                    "description": "ImgType holds the value of the \"img_type\" field.",
+                "imgType": {
+                    "description": "ImgType holds the value of the \"imgType\" field.",
                     "type": "string"
                 },
                 "intl": {
                     "description": "Intl holds the value of the \"intl\" field.",
                     "type": "boolean"
                 },
-                "kor_brand": {
-                    "description": "KorBrand holds the value of the \"kor_brand\" field.",
+                "korBrand": {
+                    "description": "KorBrand holds the value of the \"korBrand\" field.",
                     "type": "string"
                 },
-                "kor_product_name": {
-                    "description": "KorProductName holds the value of the \"kor_product_name\" field.",
+                "korProductName": {
+                    "description": "KorProductName holds the value of the \"korProductName\" field.",
                     "type": "string"
                 },
                 "price": {
                     "description": "Price holds the value of the \"price\" field.",
                     "type": "integer"
                 },
-                "price_asc_cursor": {
-                    "description": "PriceAscCursor holds the value of the \"price_asc_cursor\" field.",
+                "priceAscCursor": {
+                    "description": "PriceAscCursor holds the value of the \"priceAscCursor\" field.",
                     "type": "string"
                 },
-                "price_desc_cursor": {
-                    "description": "PriceDescCursor holds the value of the \"price_desc_cursor\" field.",
+                "priceDescCursor": {
+                    "description": "PriceDescCursor holds the value of the \"priceDescCursor\" field.",
                     "type": "string"
                 },
-                "product_id": {
-                    "description": "ProductID holds the value of the \"product_id\" field.",
+                "productId": {
+                    "description": "ProductID holds the value of the \"productId\" field.",
                     "type": "string"
                 },
-                "product_name": {
-                    "description": "ProductName holds the value of the \"product_name\" field.",
+                "productName": {
+                    "description": "ProductName holds the value of the \"productName\" field.",
                     "type": "string"
                 },
-                "search_info": {
-                    "description": "SearchInfo holds the value of the \"search_info\" field.",
+                "searchInfo": {
+                    "description": "SearchInfo holds the value of the \"searchInfo\" field.",
                     "type": "string"
                 },
-                "shipping_fee": {
-                    "description": "ShippingFee holds the value of the \"shipping_fee\" field.",
+                "shippingFee": {
+                    "description": "ShippingFee holds the value of the \"shippingFee\" field.",
+                    "type": "integer"
+                },
+                "sku": {
+                    "description": "ID of the ent.",
                     "type": "integer"
                 }
             }
@@ -524,16 +524,10 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "brand": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
+                    "type": "string"
                 },
                 "category": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
+                    "type": "string"
                 },
                 "categorySpec": {
                     "type": "array",
@@ -550,11 +544,8 @@ const docTemplate = `{
                         "type": "integer"
                     }
                 },
-                "size": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
+                "sizeArray": {
+                    "type": "string"
                 },
                 "sortBy": {
                     "type": "string"
@@ -567,7 +558,7 @@ const docTemplate = `{
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
 	Version:          "1.0",
-	Host:             "localhost:8100",
+	Host:             "localhost:8080",
 	BasePath:         "/",
 	Schemes:          []string{},
 	Title:            "CAPTURED BACKEND",

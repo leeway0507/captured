@@ -27,10 +27,10 @@ interface itemBoxProps {
 }
 
 // css
-const itemBoxClass = "flex-center text-sm min-w-[55px] max-w-[150px] h-[30px] border rounded-sm";
-const checkedItem = "bg-main-black border-main-black cursor-pointer text-light-gray shadow-md";
-const notCheckedItem = "border-sub-black cursor-pointer text-sub-black border-1 shadow-md";
-const notSelctableItem = "border-deep-gray cursor-not-allowed line-through decoration-[2px] text-deep-gray shadow-md";
+const itemBoxClass = "flex-center text-sm w-full h-[35px] border rounded-full whitespace-nowrap px-1";
+const checkedItem = " border-main-black border-2 cursor-pointer shadow-sm";
+const notCheckedItem = "border-gray-300 cursor-pointer text-gray-500 border-1 ";
+const notSelctableItem = "border-deep-gray cursor-not-allowed line-through decoration-[2px] text-deep-gray ";
 
 // 아이템 박스 컴포넌트
 const ItemBox = ({ size, selectedItem, setSelectedItem, exist }: itemBoxProps) => {
@@ -38,7 +38,7 @@ const ItemBox = ({ size, selectedItem, setSelectedItem, exist }: itemBoxProps) =
 
     return (
         <div key={size} className={`${itemBoxClass} ${status}`} onClick={() => setSelectedItem(size)}>
-            <div className="px-2">{size.toUpperCase()}</div>
+            <div className="px-3">{size.toUpperCase()}</div>
         </div>
     );
 };
@@ -50,10 +50,10 @@ const ProductSizeTable = (sizeInfo: sizeInfo) => {
 
     const sortedSize = availableSize.sort((a, b) => sizeWeight[a] - sizeWeight[b]);
 
-    console.log(sizeWeight["xxxs"]);
-
     return (
-        <div className="flex flex-wrap gap-2 py-3">
+        <div
+            className="gap-2 grid grid-flow-dense"
+            style={{ gridTemplateColumns: "repeat(auto-fill, minmax(70px, auto))" }}>
             {sortedSize.map((size: string) => {
                 return ItemBox({
                     size: size,

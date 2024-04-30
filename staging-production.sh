@@ -4,9 +4,22 @@ STAGING_DOCKER_DIR="/Users/yangwoolee/repo/captured/docker/staging"
 DOCKER_LOCAL="docker-compose -f docker_compose_staging_build.yml"
 DOCKER_SERVER="docker-compose -f docker_compose_staging_server.yml"
 
+FIBER="/Users/yangwoolee/repo/captured/main/backend-golang"
+GO_COMPILE="CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o fiberGo ./main.go"
+
 echo "수동으로 captured-production Instance에 배포 중"
 
 # Attempt to build and push local Docker images
+
+cd "$FIBER" && eval "$GO_COMPILE"
+
+if [ $? -eq 0 ]; then
+    echo "fiber 컴파일 성공"
+else
+    echo "fiber 컴파일 실패"
+    exit 1
+fi
+
 cd "$STAGING_DOCKER_DIR" &&
 $DOCKER_LOCAL build &&
 $DOCKER_LOCAL push

@@ -53,6 +53,7 @@ func Cards(pf filter.ProductFilter) fiber.Handler {
 			return HandlerErr(c, body)
 
 		}
+		// fmt.Printf("current %v", filterRes.CurrentPage)
 		return c.JSON(fiber.Map{
 			"data":        filterRes.Data,
 			"currentPage": filterRes.CurrentPage,

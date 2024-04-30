@@ -141,13 +141,18 @@ async def searchProductInDB(keyword: str, limit: int, db: AsyncSession):
     stmt = (
         select(ProductInfoTable, func.group_concat(SizeTable.size).label("size"))
         .join(SizeTable, ProductInfoTable.sku == SizeTable.sku)
-        .where(text(f"MATCH(search_info) AGAINST (:keyword)").params(keyword=keyword))
+        .where(
+            text(f"MATCH(search_info) AGAINST (:keyword)").params(keyword=keyword),
+            SizeTable.available == True,
+            ProductInfoTable.deploy == True,
+        )
         .group_by(SizeTable.sku)
         .limit(limit)
     )
 
     result = await db.execute(stmt)
     result = result.all()
+
     return [
         ProductInfoSchema(**row[0].to_dict(), size=row[1]).model_dump(by_alias=True)
         for row in result

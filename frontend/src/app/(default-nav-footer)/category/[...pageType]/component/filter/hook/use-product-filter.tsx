@@ -8,12 +8,12 @@ import OptionArrayWithoutBox from "../options-array-without-box";
 import Slider from "../options-array-range-slider";
 
 export type useProductFilterProps = {
-    sortBy: JSX.Element;
-    brand: JSX.Element;
-    category: JSX.Element;
-    size: JSX.Element;
-    intl: JSX.Element;
-    price: JSX.Element;
+    sortByElement: JSX.Element;
+    brandElement: JSX.Element;
+    categoryElement: JSX.Element;
+    sizeElement: JSX.Element;
+    intlElement: JSX.Element;
+    priceElement: JSX.Element;
 };
 
 const selectFilterType = (initFilterMeta: initFilterMetaProps, pageType: string) => {
@@ -81,12 +81,12 @@ const useProductFilter = (
     }, [queryMeta]);
 
     const result: useProductFilterProps = {
-        sortBy: OptionArraySortBy(queryMeta.sortBy, setSortBy),
-        brand: OptionArrayWithoutBox(queryMeta.brand, initFilterMeta.brand, setBrand),
-        category: OptionArraySelected(queryMeta.categorySpec, productType, setCategory),
-        size: OptionArraySelected(queryMeta.sizeArray, sizeArray, setSizeArray),
-        intl: OptionArrayWithoutBox(queryMeta.intl, initFilterMeta.intl, setIntl),
-        price: Slider(queryMeta.price, initFilterMeta.price, setPrice),
+        sortByElement: OptionArraySortBy(queryMeta.sortBy, setSortBy),
+        brandElement: OptionArrayWithoutBox(queryMeta.brand, initFilterMeta.brand, setBrand),
+        categoryElement: OptionArraySelected(queryMeta.categorySpec, productType, setCategory),
+        sizeElement: OptionArraySelected(queryMeta.sizeArray, sizeArray, setSizeArray),
+        intlElement: OptionArrayWithoutBox(queryMeta.intl, initFilterMeta.intl, setIntl),
+        priceElement: Slider(queryMeta.price, initFilterMeta.price, setPrice),
     };
 
     return result;

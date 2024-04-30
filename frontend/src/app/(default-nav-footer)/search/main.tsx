@@ -77,7 +77,7 @@ const Main = () => {
                     fill
                     sizes="(min-width: 1560px) 150px, (min-width: 1280px) calc(6.92vw + 43px), (min-width: 780px) calc(14.38vw - 10px), calc(20vw - 4px)"
                     priority={idx < 5 ? true : false}
-                    className="scale-[80%]"
+                    className="object-contain scale-[60%]"
                 />
             </Link>
         );

@@ -22,7 +22,7 @@ const getMinMaxPrice = (data: productCardProps[]) => {
 
 const getUniqueSize = (data: productCardProps[]) => {
     const sizes = data.map((item) => item.size);
-    const sizeArray = sizes.map((item) => item.split(","));
+    const sizeArray = sizes;
     const sizeSet = new Set(sizeArray.flat());
     const sizeArrayUnique = Array.from(sizeSet);
 

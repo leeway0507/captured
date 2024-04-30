@@ -85,9 +85,9 @@ func (pf *ProductFilter) FilterData(ctx context.Context, filter *entities.Filter
 
 	// Intl
 	switch filter.Intl {
-	case "t":
+	case "해외배송":
 		productsQuery = productsQuery.Where(productinfo.Intl(true))
-	case "f":
+	case "국내배송":
 		productsQuery = productsQuery.Where(productinfo.Intl(false))
 	default:
 
@@ -100,9 +100,10 @@ func (pf *ProductFilter) FilterData(ctx context.Context, filter *entities.Filter
 	}
 
 	// Size
-	if filter.Size != nil && len(*filter.Size) > 0 {
+	if filter.SizeArray != nil && len(*filter.SizeArray) > 0 {
+		sizeArr := strings.Split(*filter.SizeArray, ",")
 		productsQuery = productsQuery.
-			Where(productinfo.HasSizesWith(size.SizeIn(*filter.Size...)))
+			Where(productinfo.HasSizesWith(size.SizeIn(sizeArr...)))
 	}
 
 	// SortBy

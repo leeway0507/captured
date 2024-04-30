@@ -31,7 +31,7 @@ const InfiniteCardArrary = ({
         // Obersever 생성 및 트리거 시 수행할 함수 작성(router.push로 page params 업데이트)
         const nextPageObserver = new IntersectionObserver(
             (entries, observer) => {
-                console.log("entry length", entries);
+                // console.log("entry length", entries);
                 entries.forEach((entry) => {
                     const nextPageNum = entry.target.getAttribute("data-next");
                     var params = new URLSearchParams(window.location.search);
@@ -51,7 +51,7 @@ const InfiniteCardArrary = ({
 
         // 트리거 대상 선정
         const triggers = document.querySelectorAll(".page-container");
-        console.log("trigger legnth", triggers.length);
+        // console.log("trigger legnth", triggers.length);
         // 트리거로 지정한 div들을 Observe 시작
         triggers.forEach((tirgger) => {
             nextPageObserver.observe(tirgger);
