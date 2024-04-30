@@ -15,7 +15,7 @@ export default function CartBtn() {
                     height={28}
                     priority
                 />
-                <div className="text-sm ps-1">{cartQuantity}</div>
+                <div className="text-sm ps-1 w-[20px]">{cartQuantity}</div>
             </Link>
         </>
     );

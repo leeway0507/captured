@@ -1,3 +1,16 @@
+const sizeWeight: { [key: string]: number } = {
+    XXXS: 1,
+    XXS: 2,
+    XS: 3,
+    S: 4,
+    M: 5,
+    L: 6,
+    XL: 7,
+    XXL: 8,
+    XXXL: 9,
+    XXXXL: 10,
+};
+
 interface sizeInfo {
     sizeType: string;
     availableSize: string[];
@@ -7,7 +20,6 @@ interface sizeInfo {
 }
 
 interface itemBoxProps {
-    type: string;
     size: string;
     selectedItem: string | undefined;
     setSelectedItem: (v: string) => void;
@@ -15,10 +27,10 @@ interface itemBoxProps {
 }
 
 // css
-const itemBoxClass = "flex-center text-sm min-w-[55px] max-w-[150px] h-[30px] border rounded-sm";
-const checkedItem = "bg-main-black border-main-black cursor-pointer text-light-gray shadow-md";
-const notCheckedItem = "border-sub-black cursor-pointer text-sub-black border-1 shadow-md";
-const notSelctableItem = "border-deep-gray cursor-not-allowed line-through decoration-[2px] text-deep-gray shadow-md";
+const itemBoxClass = "flex-center text-sm w-full h-[35px] border rounded-full whitespace-nowrap px-1";
+const checkedItem = " border-main-black border-2 cursor-pointer shadow-sm";
+const notCheckedItem = "border-gray-300 cursor-pointer text-gray-500 border-1 ";
+const notSelctableItem = "border-deep-gray cursor-not-allowed line-through decoration-[2px] text-deep-gray ";
 
 // 아이템 박스 컴포넌트
 const ItemBox = ({ size, selectedItem, setSelectedItem, exist }: itemBoxProps) => {
@@ -26,23 +38,28 @@ const ItemBox = ({ size, selectedItem, setSelectedItem, exist }: itemBoxProps) =
 
     return (
         <div key={size} className={`${itemBoxClass} ${status}`} onClick={() => setSelectedItem(size)}>
-            <div className="px-2">{size.toUpperCase()}</div>
+            <div className="px-3">{size.toUpperCase()}</div>
         </div>
     );
 };
 
 const ProductSizeTable = (sizeInfo: sizeInfo) => {
     const { sizeType, availableSize, selectedItem, setSelectedItem, defaultSizeArr } = sizeInfo;
+    // TODO: 특수 사이즈 표시를 위해 임시로 availablesize를 defaultSizeArr로 대체하고 있음. 사이즈 로직 수정이 필요
+    const defaultStyleSize = availableSize.some((size) => defaultSizeArr.includes(size));
+
+    const sortedSize = availableSize.sort((a, b) => sizeWeight[a] - sizeWeight[b]);
 
     return (
-        <div className="flex flex-wrap gap-2 py-3">
-            {defaultSizeArr.map((defaultSize: string) => {
+        <div
+            className="gap-2 grid grid-flow-dense"
+            style={{ gridTemplateColumns: "repeat(auto-fill, minmax(70px, auto))" }}>
+            {sortedSize.map((size: string) => {
                 return ItemBox({
-                    type: sizeType,
-                    size: defaultSize,
+                    size: size,
                     selectedItem: selectedItem,
                     setSelectedItem: setSelectedItem,
-                    exist: availableSize.includes(defaultSize),
+                    exist: availableSize.includes(size),
                 });
             })}
         </div>
@@ -50,3 +67,21 @@ const ProductSizeTable = (sizeInfo: sizeInfo) => {
 };
 
 export default ProductSizeTable;
+
+// {defaultStyleSize
+//     ? defaultSizeArr.map((defaultSize: string) => {
+//           return ItemBox({
+//               size: defaultSize,
+//               selectedItem: selectedItem,
+//               setSelectedItem: setSelectedItem,
+//               exist: availableSize.includes(defaultSize),
+//           });
+//       })
+//     : availableSize.map((size: string) => {
+//           return ItemBox({
+//               size: size,
+//               selectedItem: selectedItem,
+//               setSelectedItem: setSelectedItem,
+//               exist: availableSize.includes(size),
+//           });
+//       })}

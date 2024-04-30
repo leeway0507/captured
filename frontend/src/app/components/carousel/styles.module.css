@@ -3,6 +3,20 @@
     --slide-size: 100%;
     position: relative;
 }
+
+/* For Firefox */
+.embla__viewport {
+    scrollbar-width: none;
+    scrollbar-color: transparent;
+}
+
+/* For webkit-based browsers (Chrome, Safari) */
+
+.embla__viewport::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+    background: transparent; 
+}
 .embla__viewport {
     overflow: scroll;
 }
@@ -18,10 +32,13 @@
     padding-left: var(--slide-spacing);
     position: relative;
 }
+
+
+
 .embla__slide__img {
     display: block;
     width: 100%;
-    object-fit: cover;
+    object-fit: contain;
     aspect-ratio: 1;
 }
 
@@ -106,3 +123,36 @@
         --slide-size: 22%;
     }
 }
+
+/* embla yaxis */
+.embla_y_axis {
+    --slide-spacing: 1rem;
+    --slide-size: 100%;
+    --slide-height: 100vw;
+    padding: 0rem;
+  }
+.embla__viewport_y_axis {
+    overflow: hidden;
+}
+
+.embla__slide_y_axis {
+    flex: 0 0 var(--slide-size);
+    min-height: 0;
+    padding-top: var(--slide-spacing);
+    position: relative;
+  }
+
+  .embla__container_y_axis {
+    backface-visibility: hidden;
+    display: flex;
+    touch-action: pan-x;
+    margin-top: calc(var(--slide-spacing) * -1);
+    height: calc(var(--slide-spacing) + var(--slide-height));
+    flex-direction: column;
+  }
+  .embla__slide__img_y_axis {
+    display: block;
+    height: 120%;
+    width: 100%;
+    object-fit: cover;
+  }

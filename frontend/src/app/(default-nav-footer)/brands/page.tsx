@@ -11,17 +11,16 @@ export default async function Brands() {
 
     const brandsComponent = (brandName: string) => {
         return (
-            <Link href={`category/brand?brand=${brandName}`} className="link-animation" key={brandName}>
+            <Link href={`category/brand/${brandName}`} className="link-animation" key={brandName}>
                 <div className="uppercase text-base">{brandName}</div>
             </Link>
         );
     };
 
     return (
-        <div className="flex flex-col justify-between w-full mx-auto">
+        <>
             <div className="flex-center text-3xl tb:text-4xl py-4 tb:py-8 text-sub-black tracking-[.15em]">BRAND</div>
-
-            <div className="grid grid-cols-1 tb:grid-cols-4 py-4 tb:py-8 w-full gap-1 mx-auto max-w-4xl">
+            <div className="grid grid-cols-1 tb:grid-cols-4 py-4 tb:py-8 w-full gap-1 mx-auto max-w-5xl">
                 {Object.entries(index).map(([alphabet, brandList]) => {
                     return (
                         <div key={alphabet} className="mx-auto w-[80%]">
@@ -40,7 +39,8 @@ export default async function Brands() {
                 })}
             </div>
             <Footer />
+
             <BottomNavBar nav="brand" />
-        </div>
+        </>
     );
 }

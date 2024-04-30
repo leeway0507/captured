@@ -9,59 +9,47 @@ import os
 from logging import Logger
 
 
-def connect_db(
-    username: str, password: str, host: str, db_name: str, **_kwargs
-) -> Session:
-    """
-    sseion 연결
-
-    Args:
-        username (str): db username
-        password (str): db password
-        host (str): db host
-        db_name (str): db name
-
-    Returns:
-        sessionmaker : 연결된 db ssesion
-
-    """
-
-    ###############
-    # DB Session using Sqlalchemy.orm
-
-    engine = conn_engine(username, password, host, db_name)
-    session_local = sessionmaker(bind=engine)
-    return session_local()
-
-
-def conn_engine(username: str, password: str, host: str, db_name: str, **_kwargs):
-    db_url = f"mysql+aiomysql://{username}:{password}@{host}:3306/{db_name}"
+def conn_engine(
+    username: str, password: str, host: str, port: str, db_name: str, **_kwargs
+):
+    db_url = f"mysql+aiomysql://{username}:{password}@{host}:{port}/{db_name}"
     return create_async_engine(db_url)
 
 
 def get_secret() -> Dict[str, str]:
-    if os.environ.get("ProductionLevel"):
-        print("production - level -db")
-        config = Config(RepositoryEnv(".env.production"))
-    else:
-        print("dev - level -db")
-        config = Config(RepositoryEnv(".env.dev"))
+    level = os.environ.get("ProductionLevel")
+    match level:
+        case "production":
+            print("production - level -db")
+            config = Config(RepositoryEnv(".env.production"))
+        case "local_test":
+            print("local_test - level -db")
+            config = Config(RepositoryEnv(".env.local"))
+        case _:
+            print("dev - level -db")
+            config = Config(RepositoryEnv(".env.dev"))
 
     username = config.get("DB_USER_NAME")
     password = config.get("DB_PASSWORD")
     host = config.get("DB_HOST")
     db_name = config.get("DB_NAME")
+    db_port = config.get("DB_PORT")
+
+    print(f"host : {host}")
+    print(f"db_name : {db_name}")
 
     assert isinstance(username, str), "username is not str"
     assert isinstance(password, str), "password is not str"
     assert isinstance(host, str), "host is not str"
     assert isinstance(db_name, str), "db_name is not str"
+    assert isinstance(db_port, str), "db_port is not str"
 
     return {
         "username": username,
         "password": password,
         "host": host,
         "db_name": db_name,
+        "port": db_port,
     }
 
 

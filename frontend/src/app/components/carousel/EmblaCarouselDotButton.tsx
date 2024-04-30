@@ -6,10 +6,10 @@ import { DotButton } from "./EmblaDot";
 import Autoplay from "embla-carousel-autoplay";
 import styles from "./styles.module.css";
 
-interface EmblaCarouselProps {
+type EmblaCarouselProps = {
     autoPlay: boolean;
     children: ReactNode;
-}
+};
 
 const EmblaCarousel = ({ autoPlay, children }: EmblaCarouselProps) => {
     const autoplayOptions = {

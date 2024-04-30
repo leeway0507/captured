@@ -8,15 +8,13 @@ import useSizeDetect from "@/app/components/hook/use-size-detect-hook";
 
 const SizeBoxMobile = ({ data, defaultSizeArr }: { data: productCardProps; defaultSizeArr: string[] }) => {
     const { maxHeight, innerHeight } = useSizeDetect();
-    const { sku, size, category } = data;
-    const { sizeType, availableSize } = {
-        sizeType: category,
-        availableSize: size.split(","),
-    };
+    const { sku, size, category: sizeType } = data;
+
+    const availableSize = size ? size : ["-"];
+    const isSize = availableSize[0] !== "-";
 
     const [selectedItem, setSelectedItem] = useState<string>(availableSize[0] || "");
     const { increaseCartQuantity } = useShoppingCart();
-    const isSize = availableSize[0] !== "-";
 
     const handleModal = () => {
         // sku: number, size: string, selected: boolean
@@ -32,23 +30,24 @@ const SizeBoxMobile = ({ data, defaultSizeArr }: { data: productCardProps; defau
 
     return (
         <>
-            <ProductSizeTable
-                sizeType={sizeType}
-                availableSize={availableSize}
-                selectedItem={selectedItem}
-                setSelectedItem={setSelectedItem}
-                defaultSizeArr={defaultSizeArr}
-            />
+            <div className="pt-2 pb-6 ">
+                <ProductSizeTable
+                    sizeType={sizeType}
+                    availableSize={availableSize}
+                    selectedItem={selectedItem}
+                    setSelectedItem={setSelectedItem}
+                    defaultSizeArr={defaultSizeArr}
+                />
+            </div>
             <div
                 className={`${
-                    maxHeight > 0 && maxHeight == innerHeight ? "h-[110px] pb-[30px]" : "h-[80px]"
+                    maxHeight > 0 && maxHeight == innerHeight ? "h-[100px] pb-[20px]" : "h-[80px]"
                 }  bg-white fixed left-0 px-4 bottom-0 flex gap-4 w-full  border-t-2 items-center justify-between z-10`}>
                 <div className="flex flex-col basis-1/5">
-                    <div className=" text-left">결제금액</div>
                     <div>{"₩" + data.price.toLocaleString()}</div>
                 </div>
                 <button
-                    className="basis-1/2 rounded-lg bg-main-black text-white text-lg tracking-wider px-4 py-3 w-full"
+                    className="basis-1/2 rounded-lg bg-main-black text-white text-lg tracking-wider px-4 py-3 w-full "
                     disabled={!isSize}
                     onClick={handleModal}>
                     {isSize ? "장바구니 담기" : "품절"}

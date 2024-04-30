@@ -45,26 +45,19 @@ const Main = () => {
     };
 
     const SearchBar = () => (
-        <div className="fixed top-0 z-50 h-[80px] w-full flex items-center justify-between px-2 bg-white border-b-2">
-            <button onClick={() => router.back()}>
-                <Image src={"/icons/white/goback-white.svg"} width={30} height={30} alt="goBack" priority />
-            </button>
+        <div className="fixed top-0 z-50 h-[80px] w-full flex items-center justify-between px-1 bg-white border-b-2">
+            <div className="relative w-full px-1">
+                <button onClick={() => router.back()} className="absolute ms-1 top-0 bottom-0 opacity-50 my-auto">
+                    <Image src={"/icons/white/goback-white.svg"} width={24} height={24} alt="goBack" priority />
+                </button>
 
-            <div className="relative w-full px-4">
-                <Image
-                    src={"/icons/white/search-input-white.svg"}
-                    width={18}
-                    height={18}
-                    alt="search-input"
-                    className="absolute ms-2 top-0 bottom-0 opacity-50 my-auto"
-                    priority
-                />
                 <input
                     ref={inputRef}
                     type="text"
-                    className="w-full h-[40px]  bg-light-gray border-none text-main-black placeholder-blue-black caret-blue-black ps-8 text-sm rounded-lg focus:ring-gray-300 focus-border-gray-300" // placeholder
+                    className="w-full h-[50px] bg-light-gray border-none text-main-black placeholder-blue-black caret-blue-black ps-10 text-sm rounded-2xl focus:ring-gray-300 focus-border-main-black outline-none"
+                    // placeholder
                     onKeyDown={handleKeyDown}
-                    placeholder="제품명, 브랜드명 겸색"
+                    placeholder="제품명, 브랜드명 검색"
                     autoFocus
                     id="search-input"
                 />
@@ -84,7 +77,7 @@ const Main = () => {
                     fill
                     sizes="(min-width: 1560px) 150px, (min-width: 1280px) calc(6.92vw + 43px), (min-width: 780px) calc(14.38vw - 10px), calc(20vw - 4px)"
                     priority={idx < 5 ? true : false}
-                    className="scale-[80%]"
+                    className="object-contain scale-[60%]"
                 />
             </Link>
         );

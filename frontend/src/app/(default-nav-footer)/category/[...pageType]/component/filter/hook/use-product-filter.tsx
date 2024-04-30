@@ -7,14 +7,14 @@ import OptionArraySortBy from "../options-array-sort-by";
 import OptionArrayWithoutBox from "../options-array-without-box";
 import Slider from "../options-array-range-slider";
 
-export interface useProductFilterProps {
-    sortBy: JSX.Element;
-    brand: JSX.Element;
-    category: JSX.Element;
-    size: JSX.Element;
-    intl: JSX.Element;
-    price: JSX.Element;
-}
+export type useProductFilterProps = {
+    sortByElement: JSX.Element;
+    brandElement: JSX.Element;
+    categoryElement: JSX.Element;
+    sizeElement: JSX.Element;
+    intlElement: JSX.Element;
+    priceElement: JSX.Element;
+};
 
 const selectFilterType = (initFilterMeta: initFilterMetaProps, pageType: string) => {
     // 제품 분류에 따른 제품 상세 카테고리, 사이즈 리턴
@@ -72,7 +72,7 @@ const useProductFilter = (
         const adooptFilter = (queryMeta: filterMetaProps) => {
             const queryParams = Object.entries(queryMeta).filter((obj, idx) => obj[1].length > 0);
             const query = new URLSearchParams(queryParams as any).toString();
-            router.push(`\?${query}&isNewFilter=true`);
+            router.push(`\?${query}`);
         };
 
         filterUpdated && adooptFilter(queryMeta);
@@ -81,12 +81,12 @@ const useProductFilter = (
     }, [queryMeta]);
 
     const result: useProductFilterProps = {
-        sortBy: OptionArraySortBy(queryMeta.sortBy, setSortBy),
-        brand: OptionArrayWithoutBox(queryMeta.brand, initFilterMeta.brand, setBrand),
-        category: OptionArraySelected(queryMeta.categorySpec, productType, setCategory),
-        size: OptionArraySelected(queryMeta.sizeArray, sizeArray, setSizeArray),
-        intl: OptionArrayWithoutBox(queryMeta.intl, initFilterMeta.intl, setIntl),
-        price: Slider(queryMeta.price, initFilterMeta.price, setPrice),
+        sortByElement: OptionArraySortBy(queryMeta.sortBy, setSortBy),
+        brandElement: OptionArrayWithoutBox(queryMeta.brand, initFilterMeta.brand, setBrand),
+        categoryElement: OptionArraySelected(queryMeta.categorySpec, productType, setCategory),
+        sizeElement: OptionArraySelected(queryMeta.sizeArray, sizeArray, setSizeArray),
+        intlElement: OptionArrayWithoutBox(queryMeta.intl, initFilterMeta.intl, setIntl),
+        priceElement: Slider(queryMeta.price, initFilterMeta.price, setPrice),
     };
 
     return result;

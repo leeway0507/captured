@@ -6,7 +6,12 @@ import assert from "assert";
 
 interface ShoppingCartContext {
     getItemquantity: (sku: number, size: string) => number;
-    increaseCartQuantity: (sku: number, size: string, selected: boolean, productInfo: productCardProps) => void;
+    increaseCartQuantity: (
+        sku: number,
+        size: string,
+        selected: boolean,
+        productInfo: productCardProps | cartProductCardProps
+    ) => void;
     decreaseCartQuantity: (sku: number, size: string) => void;
     removeFromCart: (sku: number, size: string) => void;
     initCart: () => void;
@@ -47,12 +52,16 @@ export function ShoppingCartProvider({ children }: { children: React.ReactNode }
         return cartItems?.find((item) => item.sku === sku && item.size === size)?.quantity || 0;
     };
 
-    const increaseCartQuantity = (sku: number, size: string, selected: boolean, productInfo: productCardProps) => {
+    const increaseCartQuantity = (
+        sku: number,
+        size: string,
+        selected: boolean,
+        productInfo: productCardProps | cartProductCardProps
+    ) => {
         setCartItems((currItems) => {
             if (currItems!.find((item) => item.sku === sku && item.size === size) == null) {
                 // productInfo에 사이즈 변경, quantity 추가 후 cartItems에 저장
-                productInfo.size = size;
-                return [...currItems!, { ...productInfo, quantity: 1, selected }];
+                return [...currItems!, { ...productInfo, size: size, quantity: 1, selected }];
             } else {
                 return currItems!.map((item) => {
                     if (item.sku === sku && item.size === size) {

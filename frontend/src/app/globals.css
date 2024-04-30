@@ -7,22 +7,22 @@
         @apply cursor-pointer hover:opacity-70 active:text-deep-gray;
     }
     .black-bar {
-        @apply bg-main-black flex-center text-white py-3 rounded-lg active:text-main-black active:bg-light-gray cursor-pointer text-sm tracking-[0.1rem];
+        @apply bg-main-black flex-center text-white py-3 rounded-full active:text-main-black active:bg-light-gray cursor-pointer text-sm tracking-[0.1rem];
     }
     .black-bar-modal {
-        @apply bg-main-black flex-center text-white py-3 rounded-lg active:text-main-black active:bg-light-gray cursor-pointer text-sm tracking-[0.1rem];
+        @apply bg-main-black flex-center text-white py-3 rounded-full active:text-main-black active:bg-light-gray cursor-pointer text-sm tracking-[0.1rem];
     }
     .black-bar-xl {
         @apply black-bar tracking-[0.3rem] text-base;
     }
     .disabled-bar {
-        @apply bg-deep-gray flex-center text-white py-3 rounded-lg cursor-not-allowed text-sm;
+        @apply bg-deep-gray flex-center text-white py-3 rounded-full cursor-not-allowed text-sm;
     }
     .disabled-bar-xl {
         @apply disabled-bar tracking-[0.3rem] text-base;
     }
-    .main-container {
-        @apply flex flex-col w-full h-full min-h-screen relative 
+    .main-frame {
+        @apply flex flex-col w-full h-full min-h-screen relative max-w-[1440px] mx-auto
     }
     .flex-center {
         @apply flex items-center justify-center;
@@ -65,7 +65,7 @@
 
     }
     .search-bar {
-        @apply mt-0 h-10 block w-full px-0.5 border-0 border-b focus:ring-0 placeholder-gray-400 tracking-[0.1rem] focus:border-main-black caret-main-black focus:outline-none
+        @apply mt-0 h-10 block w-[90%] px-0.5 border-0 border-b focus:ring-0 placeholder-gray-500 tracking-[0.1rem] focus:border-main-black caret-main-black focus:outline-none
         }
     .custom-input-class {
         @apply mt-0 h-10 block w-full px-0.5 border-0 border-b border-gray-200 text-xs focus:ring-0 focus:border-main-black placeholder-transparent focus:placeholder:text-sm focus:outline-none;
@@ -79,19 +79,6 @@
         @apply mt-1 block w-full px-3 py-2 bg-white border border-light-gray rounded-md text-sm shadow-sm     
         disabled:bg-gray-200 disabled:text-blue-black disabled:border-light-gray;
     }
-}
-/* For Firefox */
-* {
-    scrollbar-width: none;
-    scrollbar-color: transparent;
-}
-
-/* For webkit-based browsers (Chrome, Safari) */
-
-*::-webkit-scrollbar {
-    width: 0px;
-    height: 0px;
-    background: transparent; 
 }
 
 .triangle-right {
@@ -127,7 +114,6 @@
 
 
 body {
-    max-width: 1440px;
     height: 100%;
     margin: 0 auto;
     border: 1px, solid var(--light-gray);
@@ -156,6 +142,9 @@ body {
     -webkit-text-stroke: 4px var(--main-black);
     color: var(--main-black);
 
+}
+.text-border {
+    text-shadow: 0 0 1px var(--sub-black), 0 0 1px var(--sub-black), 0 0 1px var(--sub-black), 0 0 1px var(--sub-black);
 }
 
 /* embla */
@@ -235,6 +224,7 @@ input[id="nav"]:checked + div {
 
 /* scroll-bar */
 
+
 .scroll-bar {
     overflow-x: hidden;
     overflow-y: auto;
@@ -247,17 +237,18 @@ input[id="nav"]:checked + div {
 }
 
 /* 스크롤바의 폭 너비 */
-.scroll-bar::-webkit-scrollbar {
-    width: 8px;  
+.scroll-bar-x::-webkit-scrollbar {
+    height: 8px;
 }
 
-.scroll-bar::-webkit-scrollbar-thumb {
-    background: var(--main-black); 
+.scroll-bar-x::-webkit-scrollbar-thumb {
+    background: var(--deep-gray); 
     border-radius: 10px; /* 스크롤바 둥근 테두리 */
 }
 
-.scroll-bar::-webkit-scrollbar-track {
-    background: var(--light-gray)  /*스크롤바 뒷 배경 색상*/
+.scroll-bar-x::-webkit-scrollbar-track {
+    background: var(--light-gray);  /*스크롤바 뒷 배경 색상*/
+
 }
 
 .grid-square-container {
@@ -289,4 +280,8 @@ input[id="nav"]:checked + div {
 .container {
     position: relative;
     width: 100%;
+  }
+
+  .vignette {
+    box-shadow: 0 0 200px rgba(0,0,0,0.1) inset;
   }

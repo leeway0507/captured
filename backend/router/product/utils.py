@@ -22,20 +22,39 @@ from functools import lru_cache
 error_log = make_logger("logs/db/product.log", "product_router")
 
 
+async def get_all_product_sku(db: AsyncSession) -> list[int]:
+    result = await db.execute(
+        select(ProductInfoTable.sku).where(ProductInfoTable.deploy == 1)
+    )
+    result = result.all()
+    return [row[0] for row in result]
+
+
 async def get_product(sku: int, db: AsyncSession) -> ProductInfoSchema | None:
     result = await db.execute(
         select(ProductInfoTable, func.group_concat(SizeTable.size).label("size"))
-        .join(SizeTable, ProductInfoTable.sku == SizeTable.sku)
-        .where(and_(SizeTable.sku == sku))
+        .join(
+            SizeTable,
+            ProductInfoTable.sku == SizeTable.sku,
+        )
+        .where(
+            SizeTable.available == 1,
+            SizeTable.sku == sku,
+        )
         .group_by(SizeTable.sku)
     )
     result = result.all()
     if result == []:
-        return None
+        stmt = select(ProductInfoTable).where(ProductInfoTable.sku == sku)
+        result = await db.execute(stmt)
+        result = result.all()
+        if result == []:
+            return None
+        return ProductInfoSchema(**result[0][0].to_dict())
+
     return ProductInfoSchema(**result[0][0].to_dict(), size=result[0][1])
 
 
-# @alru_cache()
 async def get_category(
     sort_by: str = "최신순",
     category: Optional[str] = None,
@@ -45,7 +64,7 @@ async def get_category(
     price: Optional[str] = None,
     size_array: Optional[str] = None,
     page: int = 1,
-    limit: int = 24,
+    limit: int = 8,
 ) -> ProductResponseSchema:
     request_filter = {
         "sort_by": sort_by,
@@ -68,27 +87,21 @@ async def get_category(
     filter = create_filter_query_dict(**request_filter)
     sort_type, column, order_by = create_order_by_filter(request_filter.get("sort_by"))
 
-    # print("-------get_category--------")
-    # print("page_idx_cache_hit : ", get_page_idx.cache_info())
-    # print("filter_cache_hit : ", create_filter_query_dict.cache_info())
-
     # group_by
     group_by = SizeTable.sku
     if "size_array" in filter.keys():
         group_by = ProductInfoTable.sku
 
-    # # sort_type
-    # print(sort_type, column, current_cursor)
-    # if sort_type == "높은 가격 순":
-    #     cursor_filter = column < current_cursor
-    # else:
-    #     cursor_filter = column < current_cursor
-
     db = session_local()
     result = await db.execute(
         select(ProductInfoTable, func.group_concat(SizeTable.size).label("size"))
         .join(SizeTable, ProductInfoTable.sku == SizeTable.sku)
-        .where(*filter.values(), column < current_cursor, ProductInfoTable.deploy == 1)
+        .where(
+            *filter.values(),
+            column < current_cursor,
+            ProductInfoTable.deploy == 1,
+            SizeTable.available == 1,
+        )
         .group_by(group_by)
         .order_by(*order_by)
         .limit(limit)
@@ -128,14 +141,18 @@ async def searchProductInDB(keyword: str, limit: int, db: AsyncSession):
     stmt = (
         select(ProductInfoTable, func.group_concat(SizeTable.size).label("size"))
         .join(SizeTable, ProductInfoTable.sku == SizeTable.sku)
-        .where(text(f"MATCH(search_info) AGAINST (:keyword)").params(keyword=keyword))
+        .where(
+            text(f"MATCH(search_info) AGAINST (:keyword)").params(keyword=keyword),
+            SizeTable.available == True,
+            ProductInfoTable.deploy == True,
+        )
         .group_by(SizeTable.sku)
         .limit(limit)
     )
 
     result = await db.execute(stmt)
     result = result.all()
-    print(result)
+
     return [
         ProductInfoSchema(**row[0].to_dict(), size=row[1]).model_dump(by_alias=True)
         for row in result
