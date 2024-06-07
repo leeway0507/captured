@@ -5,7 +5,7 @@ import AddressInfo from "./component/address-info";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import { signOut } from "next-auth/react";
-import { ConfirmPopUpModal } from "../../components/modal/new-yes-no-modal";
+import ConfirmPopUpModal from "../../components/modal/new-yes-no-modal";
 import SnsUserInfo from "./component/order/sns-user-info";
 
 const selectedClass = "mx-4 bg-main-black text-white rounded-lg";

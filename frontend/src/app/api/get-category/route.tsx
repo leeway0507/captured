@@ -1,4 +1,4 @@
-import { responseProps } from "@/app/(default-nav-footer)/category/[...pageType]/component/fetch";
+import { ResponseProps } from "@/app/(default-nav-footer)/category/[...pageType]/component/fetch";
 import { NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
@@ -15,7 +15,7 @@ const getCategory = async (request: Request) => {
         },
         body: JSON.stringify(filter),
     });
-    const result: responseProps = await req.json();
+    const result: ResponseProps = await req.json();
     return NextResponse.json(result);
 };
 

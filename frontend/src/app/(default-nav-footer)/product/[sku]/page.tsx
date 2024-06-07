@@ -57,7 +57,7 @@ export default async function Product({
             "@type": "Offer",
             price: `${product.price}`,
             priceCurrency: "KRW",
-            availability: product.size.length > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+            availability: product.size && product.size.length > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
         },
     };
 

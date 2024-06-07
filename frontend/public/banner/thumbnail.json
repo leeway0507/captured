@@ -3,28 +3,12 @@
         {
             "fileName": "1.webp",
             "href": "/category/brand/human%20made"
-        },
-        {
-            "fileName": "2.webp",
-            "href": "/category/brand/salomon"
-        },
-        {
-            "fileName": "3.webp",
-            "href": "/category/brand/arc%27teryx"
         }
     ],
     "mobile": [
         {
             "fileName": "1.webp",
             "href": "/category/brand/human%20made"
-        },
-        {
-            "fileName": "2.webp",
-            "href": "/category/brand/salomon"
-        },
-        {
-            "fileName": "3.webp",
-            "href": "/category/brand/arc%27teryx"
         }
     ]
 }

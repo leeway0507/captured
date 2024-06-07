@@ -1,5 +1,5 @@
 import React from 'react';
-import Banner from "../components/main/main-banner";
+import Banner from "../components/main/main-bannertwo";
 import BrandList from "../components/main/brand-list";
 import NewestItem from "../components/main/newest-item";
 import Footer from "../components/nav-footer/component/footer";
@@ -11,12 +11,9 @@ import ThreeItemsLayOut from "../components/main/three-items-layout";
 import FourItemsLayout from "../components/main/four-items-layout";
 
 export default async function page() {
-    const meta = process.env.NEXT_PUBLIC_THUMBNAIL_URL?.includes("banner")
-        ? metaJson
-        : await fetch(`${process.env.NEXT_PUBLIC_THUMBNAIL_URL}/thumbnail.json`).then((res) => res.json());
     return (
         <>
-            <Banner meta={meta} />
+            <Banner />
             <NewestItem />
             <div className="my-4 tb:my-16 border-b border-deep-gray " />
             <FourItemsLayout />

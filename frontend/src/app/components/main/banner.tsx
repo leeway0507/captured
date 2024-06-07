@@ -16,7 +16,7 @@ export default function Thumbnail({
     isMobile: boolean | undefined
 }) {
     return (
-        <div className="scroll-bar-hidden aspect-[1/1.2] w-full tb:aspect-[2.1/1]">
+        <div className="scroll-bar-hidden aspect-[1/1.2] w-full tb:aspect-[3.1/1]">
             <Carousel autoPlay={false}>
                 {thumbnailInfos == undefined ? (
                     <DefaultSlider />
@@ -36,10 +36,10 @@ const DefaultSlider = () => {
     return (
         <>
             <div className={styles.embla__slide} key={0}>
-                <div className="relative aspect-square w-full tb:aspect-[2/1] " />
+                <div className="relative aspect-square w-full tb:aspect-[3/1] " />
             </div>
             <div className={styles.embla__slide} key={1}>
-                <div className="relative aspect-square w-full tb:aspect-[2/1] " />
+                <div className="relative aspect-square w-full tb:aspect-[3/1] " />
             </div>
         </>
     )
@@ -71,21 +71,21 @@ const Card = ({
 }) => {
     return (
         <>
-            <div className="relative aspect-square w-full tb:aspect-[2.2/1]">
+            <div className="relative aspect-square w-full tb:aspect-[3/1]">
                 <Image
                     src={`${process.env.NEXT_PUBLIC_THUMBNAIL_URL}/${device}/${thumbnailInfo.fileName}`}
                     alt={thumbnailInfo.fileName.split('.')[0]}
                     fill
-                    sizes="(min-width: 1500px) 1404px, calc(92.03vw + 42px)"
+                    sizes="1024px"
                     style={{ objectFit: 'cover' }}
                     className="z-10 mx-auto border-y border-gray-400"
-                    unoptimized={true}
+                    unoptimized
                     priority
                 />
             </div>
-            <div className="flex-cetner absolute bottom-0 left-0 right-0 z-20 w-[90%] py-4">
+            <div className="w-full flex-cetner absolute bottom-0 left-0 right-0 z-20 py-4">
                 <Link href={thumbnailInfo.href} className="flex-center ">
-                    <div className="text-border w-72 text-center font-bold text-white tb:w-96 tb:text-2xl">
+                    <div className="text-border text-center font-bold text-white tb:text-2xl">
                         SHOP NOW
                     </div>
                 </Link>

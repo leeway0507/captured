@@ -1,7 +1,7 @@
 "use client";
 import * as api from "../fetch";
 import { useState, useEffect, useRef } from "react";
-import { responseProps } from "../../component/fetch";
+import { ResponseProps } from "../../component/fetch";
 import { productCardProps } from "@/app/type";
 import ProductCard from "./product-card";
 import { useRouter } from "next/navigation";
@@ -120,7 +120,7 @@ const InfiniteCardArrary = () => {
             // if (Object.keys(localData).includes((page + 1).toString())) return;
 
             // console.log("fetchMoreItems : ", page);
-            const res: responseProps = await api.getCategory(filterDict, page);
+            const res: ResponseProps = await api.getCategory(filterDict, page);
             if (res.lastPage === 0) return setNoResult(true), setHasMore(false);
 
             if (res.currentPage > res.lastPage) {

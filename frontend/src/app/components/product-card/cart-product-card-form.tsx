@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { cartProductCardProps } from "@/app/type";
 import { useShoppingCart } from "@/app/components/context/shopping-cart-context";
-import { ConfirmPopUpModal } from "@/app/components/modal/new-yes-no-modal";
+import ConfirmPopUpModal from "@/app/components/modal/new-yes-no-modal";
 import { ProductCardModal } from "@/app/components/product-card/product-card-modal-form";
 
 export default function CartProductCardForm({

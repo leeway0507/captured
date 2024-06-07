@@ -2,7 +2,7 @@
 
 STAGING_DOCKER_DIR="/Users/yangwoolee/repo/captured/docker/staging"
 DOCKER_LOCAL="docker-compose -f docker_compose_staging_build.yml"
-DOCKER_SERVER="docker-compose -f docker_compose_staging_server.yml"
+DOCKER_SERVER="sudo docker-compose -f docker_compose_staging_server.yml"
 
 FIBER="/Users/yangwoolee/repo/captured/main/backend-golang"
 GO_COMPILE="CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o fiberGo ./main.go"
@@ -31,8 +31,12 @@ else
     exit 1
 fi
 
-ssh -i ~/.ssh/captured.pem ubuntu@43.201.98.25 "cd captured && \
-docker system prune -f && \
+# 과거
+# ssh -i ~/.ssh/captured.pem ubuntu@43.201.98.25 "cd captured && \
+
+# 현재
+ssh -i ~/.ssh/EC2-captured-shop.pem ubuntu@54.180.152.81 "cd captured && \
+sudo docker system prune -f && \
 $DOCKER_SERVER down && \
 $DOCKER_SERVER pull && \
 $DOCKER_SERVER up -d

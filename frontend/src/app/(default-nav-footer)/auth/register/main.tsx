@@ -8,7 +8,7 @@ import {
     checkPasswordAgain,
     checkDefaultInputValidation,
 } from "@/app/components/custom-input/check-policy";
-import { ConfirmPopUpModal } from "@/app/components/modal/new-yes-no-modal";
+import ConfirmPopUpModal from "@/app/components/modal/new-yes-no-modal";
 import AddressForm from "@/app/(default-nav-footer)/mypage/address/[method]/component/address-form";
 import { useRouter } from "next/navigation";
 import { userAddressProps, userProps } from "@/app/type";

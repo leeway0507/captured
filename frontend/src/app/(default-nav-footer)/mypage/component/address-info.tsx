@@ -57,8 +57,9 @@ export default function AddressInfo() {
                         <AddressForm
                             {...item}
                             onDelete={true}
-                            accessToken={session?.user.accessToken}
+                            accessToken={session?.user.accessToken ?? ""}
                             key={item.addressId}
+                            address={item} // Add the 'address' property
                         />
                     );
                 })}

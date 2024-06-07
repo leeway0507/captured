@@ -7,7 +7,7 @@ import AddressForm, { addAddressFromProps } from "./component/address-form";
 import { updateAddressProxy, createAddressProxy } from "./component/fetch";
 import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
-import { ConfirmPopUpModal } from "@/app/components/modal/new-yes-no-modal";
+import ConfirmPopUpModal from "@/app/components/modal/new-yes-no-modal";
 import { AlertPopUpModal } from "@/app/components/modal/new-alert-modal";
 
 const Main = (props: userAddressProps) => {

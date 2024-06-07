@@ -1,7 +1,7 @@
 "use client";
 import * as api from "../fetch";
 import { useState, useEffect, useRef } from "react";
-import { responseProps } from "../../component/fetch";
+import { ResponseProps } from "../../component/fetch";
 import { productCardProps } from "@/app/type";
 import ProductCard from "./product-card";
 import MockCard from "./mock-card";
@@ -34,7 +34,7 @@ const InfiniteCardArrary = () => {
 
     async function fetchMoreItems() {
         var filterDict = {};
-        const res: responseProps = await api.getCategoryMock(filterDict, page || 1);
+        const res: ResponseProps = await api.getCategoryMock(filterDict, page || 1);
         if (res.lastPage == res.currentPage) {
             setHasMore(false);
         } else {
