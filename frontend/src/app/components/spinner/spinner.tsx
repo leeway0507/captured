@@ -1,4 +1,3 @@
-import React, { Ref } from "react";
 const Spinner = () => {
     return (
         <>

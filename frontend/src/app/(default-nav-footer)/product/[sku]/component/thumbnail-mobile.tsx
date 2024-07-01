@@ -1,5 +1,5 @@
 "use client";
-import CarouselProgressBar from "../../../../components/carousel/EmblaCarouselProgressBar";
+import CarouselProgressBar from "@/app/components/carousel/EmblaCarouselMultiProducts";
 import Image from "next/image";
 import style from "@/app/components/carousel/styles.module.css";
 import ImageZoom from "./thumbnail-zoom";

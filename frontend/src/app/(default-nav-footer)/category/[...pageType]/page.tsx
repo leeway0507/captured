@@ -1,6 +1,5 @@
 import * as api from "./component/fetch";
-import CategoryFilter from "./cateogry-filter";
-import InfiniteCardArray from "./component/infinite-scroll/infinite-card-array";
+import Main from "./main";
 import { BottomNavBar } from "@/app/components/nav-footer/component/bottom-nav-bar";
 import Footer from "@/app/components/nav-footer/component/footer";
 
@@ -13,26 +12,13 @@ export default async function page({ searchParams, params }: { params: { pageTyp
     const { page, ...filterParams } = searchParams;
     const { pageType } = params;
 
-    const filterValue: { [key: string]: string[] } = createFilterValue(filterParams);
+
 
     return (
         <>
-            <CategoryFilter initFilterMeta={initFilterMeta} pageType={pageType} filterValue={filterValue}>
-                <InfiniteCardArray />
-            </CategoryFilter>
+            <Main initFilterMeta={initFilterMeta} filterParams={filterParams} pageType={pageType} />
             <Footer />
             <BottomNavBar nav="shop" />
         </>
     );
-}
-
-function createFilterValue(filterParams: any) {
-    const filter = new URLSearchParams(filterParams);
-    const filterValue: { [key: string]: string[] } = {};
-
-    filter.forEach((value, key) => {
-        filterValue[key] = value.split(",");
-    });
-
-    return filterValue;
 }

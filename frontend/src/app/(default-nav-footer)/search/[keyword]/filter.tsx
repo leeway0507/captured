@@ -17,7 +17,7 @@ const FilterPage = ({
     const productFilter: useProductFilterProps | null = useProductFilter(initFilterMeta, pageType, filterValue);
     return (
         <>
-            <FilterLayOut productFilter={productFilter} pageType={pageType} />
+            <FilterLayOut productFilter={productFilter} pageType={pageType} setFilter={()=>{}} />
         </>
     );
 };

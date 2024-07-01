@@ -1,4 +1,5 @@
 "use client";
+
 import * as api from "../fetch";
 import { useState, useEffect, useRef } from "react";
 import { ResponseProps } from "../../component/fetch";
@@ -8,8 +9,8 @@ import { useRouter } from "next/navigation";
 import { filterRequestProps } from "../../type";
 import { useSearchParams, useParams } from "next/navigation";
 
-function addCategoryFilterToFilterDict(pageType: string[], filterMeta: filterRequestProps) {
-    switch (pageType[0]) {
+function addCategoryFilterToFilterDict(pageType: string, filterMeta: filterRequestProps) {
+    switch (pageType) {
         case "clothing":
             return (filterMeta.category = "의류");
         case "shoes":
@@ -23,46 +24,37 @@ function addCategoryFilterToFilterDict(pageType: string[], filterMeta: filterReq
     }
 }
 
-const InfiniteCardArrary = () => {
+const InfiniteCardArrary = ({filter,setFilter}:{filter:{},setFilter:({})=>void}) => {
     const router = useRouter();
     const searchParams = new URLSearchParams(useSearchParams());
-
     const [localData, setLocalData] = useState<{ [key: number]: productCardProps[] }>({});
     const [hasMore, setHasMore] = useState(true);
     const [page, setPage] = useState<number>(1);
-    const [filter, setFilter] = useState({});
     const [noResult, setNoResult] = useState(false);
     const elementRef = useRef(null);
-
     // searchParams Setting
     const { pageType } = useParams();
-
     searchParams.delete("page");
     const queryParamsObject = Object.fromEntries(searchParams.entries());
 
-    // console.log("Main");
-    // console.log("hasMore:", hasMore);
-    // console.log("page:", page);
-
-    addCategoryFilterToFilterDict(pageType as string[], queryParamsObject);
 
     useEffect(() => {
-        const getNewFilteredItems = () => {
+        addCategoryFilterToFilterDict(pageType[0], queryParamsObject);
+        const initFilteredItems = () => {
             setFilter(queryParamsObject);
             setLocalData({});
             setPage(1);
             setHasMore(true);
             localStorage.setItem("category", "{}");
         };
-
         if (!(JSON.stringify(queryParamsObject) == JSON.stringify(filter))) {
-            getNewFilteredItems();
-        } else {
-            const localData = localStorage.getItem("category");
-            const localCatData = JSON.parse(localData ?? "{}");
-            setLocalData(localCatData);
-        }
-    }, []);
+            return initFilteredItems();
+        } 
+        const localData = localStorage.getItem("category");
+        const localCatData = JSON.parse(localData ?? "{}");
+        setLocalData(localCatData);
+        
+    }, [filter]);
 
     useEffect(() => {
         const cardLoadObserver = new IntersectionObserver(onCardLoadInsersection);
@@ -121,6 +113,7 @@ const InfiniteCardArrary = () => {
 
             // console.log("fetchMoreItems : ", page);
             const res: ResponseProps = await api.getCategory(filterDict, page);
+            console.log(res)
             if (res.lastPage === 0) return setNoResult(true), setHasMore(false);
 
             if (res.currentPage > res.lastPage) {

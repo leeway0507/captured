@@ -35,7 +35,7 @@ fi
 # ssh -i ~/.ssh/captured.pem ubuntu@43.201.98.25 "cd captured && \
 
 # 현재
-ssh -i ~/.ssh/EC2-captured-shop.pem ubuntu@54.180.152.81 "cd captured && \
+ssh -i ~/.ssh/EC2-captured-shop.pem ubuntu@43.201.18.3 "cd captured && \
 sudo docker system prune -f && \
 $DOCKER_SERVER down && \
 $DOCKER_SERVER pull && \
