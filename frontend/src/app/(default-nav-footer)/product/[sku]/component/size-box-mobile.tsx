@@ -1,6 +1,6 @@
 "use client";
 import { productCardProps } from "@/app/type";
-import { useState, useEffect, useRef } from "react";
+import { useState, , useRef } from "react";
 import { useShoppingCart } from "@/app/components/context/shopping-cart-context";
 import { toast } from "react-toastify";
 import ProductSizeTable from "./product-size-table";

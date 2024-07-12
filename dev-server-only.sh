@@ -18,12 +18,12 @@ cleanup() {
 
 cleanup
 
-cd /Users/yangwoolee/repo/captured/main/backend
+cd /Users/yangwoolee/repo/captured/main/auth-server
 pyenv activate py310 
 
 python main.py &
 
-cd /Users/yangwoolee/repo/captured/main/backend-golang
+cd /Users/yangwoolee/repo/captured/main/product-server
 
 go run main.go
 

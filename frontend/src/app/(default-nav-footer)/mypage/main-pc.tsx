@@ -3,7 +3,7 @@ import { Tab } from "@headlessui/react";
 import ResetPasswordFrom from "./component/reset-password-form";
 import AddressInfo from "./component/address-info";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { signOut } from "next-auth/react";
 import ConfirmPopUpModal from "../../components/modal/new-yes-no-modal";
 import SnsUserInfo from "./component/order/sns-user-info";
