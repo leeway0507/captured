@@ -46,6 +46,8 @@ func Cards(pf filter.ProductFilter) fiber.Handler {
 		if err := c.QueryParser(page); err != nil {
 			return HandlerErr(c, err.Error())
 		}
+
+		// fmt.Printf("%+v\n", requestBody)
 		// get filter result
 		filterRes := pf.Filter(ctx, &requestBody, page.Page)
 		if filterRes.Err != nil {

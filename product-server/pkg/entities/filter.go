@@ -11,7 +11,7 @@ type Filter struct {
 	Brand        *string
 	Intl         string
 	Price        [2]int32
-	SizeArray    *string
+	Size         *string
 }
 
 type PageBook map[int]CardArr

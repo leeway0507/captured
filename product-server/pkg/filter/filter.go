@@ -101,8 +101,8 @@ func (pf *ProductFilter) FilterData(ctx context.Context, filter *entities.Filter
 	}
 
 	// Size
-	if filter.SizeArray != nil && len(*filter.SizeArray) > 0 {
-		sizeArr := strings.Split(*filter.SizeArray, ",")
+	if filter.Size != nil && len(*filter.Size) > 0 {
+		sizeArr := strings.Split(*filter.Size, ",")
 		productsQuery = productsQuery.
 			Where(productinfo.HasSizesWith(size.SizeIn(sizeArr...)))
 	}

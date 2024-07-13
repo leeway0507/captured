@@ -544,7 +544,7 @@ const docTemplate = `{
                         "type": "integer"
                     }
                 },
-                "sizeArray": {
+                "Size": {
                     "type": "string"
                 },
                 "sortBy": {

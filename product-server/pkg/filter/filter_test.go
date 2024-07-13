@@ -14,7 +14,8 @@ var (
 
 func TestFilter(t *testing.T) {
 	var ctx = context.Background()
-	defaultFilter := entities.Filter{Brand: &[]string{"patagonia"}}
+	brand := "patagonia"
+	defaultFilter := entities.Filter{Brand: &brand}
 
 	filterRes := pf.Filter(ctx, &defaultFilter, 1)
 

@@ -27,7 +27,8 @@ func Test_Product(t *testing.T) {
 		app.Post("/test", handlers.Cards(pf))
 
 		//Request
-		filter := entities.Filter{Brand: &[]string{"patagonia"}}
+		brand := "patagonia"
+		filter := entities.Filter{Brand: &brand}
 		jsonBody, err := json.Marshal(filter)
 		if err != nil {
 			t.Error("Error : Json Body ")
