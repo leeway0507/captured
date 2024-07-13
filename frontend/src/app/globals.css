@@ -1,287 +1,93 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import '~react-toastify/dist/ReactToastify.min.css';
 
-@layer components {
-    .link-animation {
-        @apply cursor-pointer hover:opacity-70 active:text-deep-gray;
+@tailwind base;
+  @tailwind components;
+  @tailwind utilities;
+
+  @layer base {
+    :root {
+      --background: 0 0% 100%;
+      --foreground: 222.2 84% 4.9%;
+
+      --card: 0 0% 100%;
+      --card-foreground: 222.2 84% 4.9%;
+
+      --popover: 0 0% 100%;
+      --popover-foreground: 222.2 84% 4.9%;
+
+      --primary: 222.2 47.4% 11.2%;
+      --primary-foreground: 210 40% 98%;
+
+      --secondary: 210 40% 96.1%;
+      --secondary-foreground: 222.2 47.4% 11.2%;
+
+      --muted: 210 40% 96.1%;
+      --muted-foreground: 215.4 16.3% 46.9%;
+
+      --accent: 210 40% 96.1%;
+      --accent-foreground: 222.2 47.4% 11.2%;
+
+      --destructive: 0 84.2% 60.2%;
+      --destructive-foreground: 210 40% 98%;
+
+      --border: 214.3 31.8% 91.4%;
+      --input: 214.3 31.8% 91.4%;
+      --ring: 222.2 84% 4.9%;
+
+      --radius: 0.5rem;
     }
-    .black-bar {
-        @apply bg-main-black flex-center text-white py-3 rounded-full active:text-main-black active:bg-light-gray cursor-pointer text-sm tracking-[0.1rem];
+
+    .dark {
+      --background: 222.2 84% 4.9%;
+      --foreground: 210 40% 98%;
+
+      --card: 222.2 84% 4.9%;
+      --card-foreground: 210 40% 98%;
+
+      --popover: 222.2 84% 4.9%;
+      --popover-foreground: 210 40% 98%;
+
+      --primary: 210 40% 98%;
+      --primary-foreground: 222.2 47.4% 11.2%;
+
+      --secondary: 217.2 32.6% 17.5%;
+      --secondary-foreground: 210 40% 98%;
+
+      --muted: 217.2 32.6% 17.5%;
+      --muted-foreground: 215 20.2% 65.1%;
+
+      --accent: 217.2 32.6% 17.5%;
+      --accent-foreground: 210 40% 98%;
+
+      --destructive: 0 62.8% 30.6%;
+      --destructive-foreground: 210 40% 98%;
+
+      --border: 217.2 32.6% 17.5%;
+      --input: 217.2 32.6% 17.5%;
+      --ring: 212.7 26.8% 83.9%;
     }
-    .black-bar-modal {
-        @apply bg-main-black flex-center text-white py-3 rounded-full active:text-main-black active:bg-light-gray cursor-pointer text-sm tracking-[0.1rem];
+  }
+    html {
+        overflow-y: scroll
     }
-    .black-bar-xl {
-        @apply black-bar tracking-[0.3rem] text-base;
+
+  @layer base {
+    * {
+      @apply border-border;
     }
-    .disabled-bar {
-        @apply bg-deep-gray flex-center text-white py-3 rounded-full cursor-not-allowed text-sm;
-    }
-    .disabled-bar-xl {
-        @apply disabled-bar tracking-[0.3rem] text-base;
-    }
-    .main-frame {
-        @apply flex flex-col w-full h-full min-h-screen relative max-w-[1440px] mx-auto
+    body {
+      @apply bg-background text-foreground min-h-lvh flex flex-col;
     }
     .flex-center {
-        @apply flex items-center justify-center;
+    @apply flex items-center justify-center;
+            }
+    .page-container {
+      @apply pt-[55px] md:pt-[130px]  pb-[75px] mx-auto grow w-full relative
     }
-
-    .flex-left {
-        @apply flex items-center justify-start;
+    .layout-max-frame{
+      @apply max-w-[1660px]
     }
-
-    .flex-right {
-        @apply flex items-center justify-end;
+    .page-max-frame{
+      @apply max-w-[1440px]
     }
-
-    .brand-box-black {
-        @apply cursor-pointer opacity-80 hover:opacity-100 ease-in-out duration-300 ;
-    }
-    .brand-box {
-        @apply cursor-pointer opacity-50 hover:opacity-100 ease-in-out duration-300;
-    }
-    .text-xs-sm {
-        @apply text-xs tb:text-sm;
-    }
-    .text-sm-base {
-        @apply text-sm tb:text-base;
-    }
-    .text-base-lg {
-        @apply text-base tb:text-lg;
-    }
-    .text-lg-xl {
-        @apply text-lg tb:text-xl;
-    }
-    .text-xl-2xl {
-        @apply text-xl tb:text-2xl;
-    }
-    .text-2xl-3xl {
-        @apply text-2xl tb:text-3xl;
-    }
-    .click-effect {
-        @apply cursor-pointer rounded-full hover:ring-2 hover:ring-deep-gray active:bg-light-gray;
-
-    }
-    .search-bar {
-        @apply mt-0 h-10 block w-[90%] px-0.5 border-0 border-b focus:ring-0 placeholder-gray-500 tracking-[0.1rem] focus:border-main-black caret-main-black focus:outline-none
-        }
-    .custom-input-class {
-        @apply mt-0 h-10 block w-full px-0.5 border-0 border-b border-gray-200 text-xs focus:ring-0 focus:border-main-black placeholder-transparent focus:placeholder:text-sm focus:outline-none;
-        /* @apply appearance-none block mt-0 h-10 w-full px-0 border-b border-red-500 text-xs */
-    }
-    .custom-label-class {
-        @apply absolute -top-4 left-0 text-xs text-sub-black peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 transition-all
-        peer-focus:-top-4 peer-focus:text-xs peer-focus:text-sub-black;
-    }
-    .custom-input-disabled {
-        @apply mt-1 block w-full px-3 py-2 bg-white border border-light-gray rounded-md text-sm shadow-sm     
-        disabled:bg-gray-200 disabled:text-blue-black disabled:border-light-gray;
-    }
-}
-
-.triangle-right {
-    width: 0;
-    height: 0;
-    border-top: var(--triangle-size) solid transparent;
-    border-left: 15px solid white;
-    border-bottom: var(--triangle-size) solid transparent;
-}
-.triangle-left {
-    width: 0;
-    height: 0;
-    border-top: var(--triangle-size) solid transparent;
-    border-right: 15px solid white;
-    border-bottom: var(--triangle-size) solid transparent;
-}
-
-:root {
-    --main-black: #323232;
-    --sub-black: #333d4b;
-    --blue-black: #6b7684;
-    --deep-gray: #d9d9d9;
-    --footer-gray: #f9fafb;
-    --light-gray: #f5f5f5;
-    --triangle-size: 60px;
-}
-
-@media (max-width: 768px) {
-    :root {
-        --triangle-size: 40px;
-    }
-}
-
-
-body {
-    height: 100%;
-    margin: 0 auto;
-    border: 1px, solid var(--light-gray);
-    color: var(--main-black);
-    position: relative;
-}
-
-.main-black {
-    color: var(--main-black);
-}
-
-.sub-black {
-    color: var(--sub-black);
-}
-
-.blue-black {
-    color: var(--blue-black);
-}
-
-.main-black-border {
-    border-color: var(--main-black);
-}
-
-.not-found-404{
-    /* text-shadow: -1px 0 var(--main-black), 0 1px var(--main-black), 1px 0 var(--main-black), 0 -1px var(--main-black); */
-    -webkit-text-stroke: 4px var(--main-black);
-    color: var(--main-black);
-
-}
-.text-border {
-    text-shadow: 0 0 1px var(--sub-black), 0 0 1px var(--sub-black), 0 0 1px var(--sub-black), 0 0 1px var(--sub-black);
-}
-
-/* embla */
-/* embla */
-
-.brand-box:hover {
-    opacity: 1;
-}
-.img-hover {
-    transition: transform 0.5s; /* Animation */
-}
-.img-hover:hover {
-    opacity: 1;
-    transform: scale(1.2);
-    z-index: 10;
-}
-
-.side-bar-visible {
-    visibility: visible;
-    transition: 0.3s;
-    opacity: 1;
-}
-.side-bar-hidden {
-    visibility: hidden;
-    transition: 0.3s;
-    opacity: 0;
-}
-
-.square {
-    width: 100%;
-    position: relative;
-}
-
-.square:after {
-    content: "";
-    display: block;
-    padding-bottom: 100%;
-}
-
-.inner {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-}
-
-button:disabled,
-button[disabled] {
-    background-color: var(--deep-gray);
-    color: #666666;
-    cursor: not-allowed;
-}
-button:disabled > button:active {
-    background-color: transparent !important;
-}
-
-
-input[id="nav"] {
-    display: none;
-}
-
-input[id="nav"] + div{
-    display: grid;
-    grid-template-rows: 0fr;
-    transition: grid-template-rows 0.2s ease-in-out;
-    opacity: 100%;
-    overflow: auto;
-
-}
-
-input[id="nav"]:checked + div {
-    grid-template-rows: 1fr;
-    opacity: 100%
-    
-}
-
-
-
-/* scroll-bar */
-
-
-.scroll-bar {
-    overflow-x: hidden;
-    overflow-y: auto;
-
-}
-
-.scroll-bar-x {
-    overflow-x: auto;
-    overflow-y: hidden
-}
-
-/* 스크롤바의 폭 너비 */
-.scroll-bar-x::-webkit-scrollbar {
-    height: 8px;
-}
-
-.scroll-bar-x::-webkit-scrollbar-thumb {
-    background: var(--deep-gray); 
-    border-radius: 10px; /* 스크롤바 둥근 테두리 */
-}
-
-.scroll-bar-x::-webkit-scrollbar-track {
-    background: var(--light-gray);  /*스크롤바 뒷 배경 색상*/
-
-}
-
-.grid-square-container {
-    display: grid;
-    grid-gap: 5px;
-  }
-  .grid-square-container div {
-    background-color: red;
-    aspect-ratio: 1;
-  }
-
-
-  .Toastify__toast--info {
-    /* background: var(--light-gray) !important; */
-    color: var(--main-black) !important;
-
-  }
-
-  .Toastify__progress-bar--info {
-    background: var(--main-black) !important;
-  }
-
-
-/* for mobile viewport  */
-.min-h-s-screen {
-    min-height: 100svh;
-}
-
-.container {
-    position: relative;
-    width: 100%;
-  }
-
-  .vignette {
-    box-shadow: 0 0 200px rgba(0,0,0,0.1) inset;
   }

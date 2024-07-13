@@ -1,6 +1,5 @@
 {
     "compilerOptions": {
-        "target": "es6",
         "lib": ["dom", "dom.iterable", "esnext"],
         "allowJs": true,
         "skipLibCheck": true,
@@ -22,13 +21,6 @@
             "@/*": ["./src/*"]
         }
     },
-    "include": [
-        "next-env.d.ts",
-        "**/*.ts",
-        "**/*.tsx",
-        ".next/types/**/*.ts",
-        "src/app/not-found.js",
-        "src/app/(default-nav-footer)/category/[...pageType]/component/filter/options-array.-selectedtsx"
-    ],
-    "exclude": ["node_modules"]
+    "include": [".eslintrc.cjs","next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/__tests__/hook/data/product-list-stores.test.tsx", "src/__tests__/interaction/scroll-direction.test.tsx"],
+    "exclude": ["node_modules","tailwind.config.ts","postcss.config.mjs"]
 }

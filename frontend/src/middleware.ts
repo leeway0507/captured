@@ -1,28 +1,20 @@
+import { auth } from './auth'
 
-import { NextRequest, NextResponse } from 'next/server'
+// eslint-disable-next-line consistent-return
+export default auth((req) => {
+    const { pathname, origin, href } = req.nextUrl
 
+    if (!req.auth && !pathname.startsWith('/auth')) {
+        const newUrl = new URL('/auth/signin', origin)
+        newUrl.searchParams.set('redirectTo', href.replace(origin, ''))
+        return Response.redirect(newUrl)
+    }
 
-
-export function middleware(request: NextRequest) {
-    if (request.nextUrl.pathname.startsWith('/category/')) {
-      const allowedKeywords = new Set(process.env.ALLOWRED_KEYWORDS_IN_CATEGORY!.split(','))
-      
-      const path = request.nextUrl.pathname.split('/')[2]
-
-      if (path === 'brand') {
-        const brand = request.nextUrl.pathname.split('/')[3]
-
-        if (brand === null) return  NextResponse.redirect(
-          new URL('/page-not-found', request.url)
-        )
-      }
-
-      else if (!allowedKeywords.has(path)) return  NextResponse.redirect(new URL('/page-not-found', request.url))
-    
-    
-  }
-}
-
+    if (req.auth && pathname.startsWith('/auth')) {
+        const newUrl = new URL('/mypage', origin)
+        return Response.redirect(newUrl.href)
+    }
+})
 export const config = {
-  matcher: ['/category/:path*'],
+    matcher: ['/mypage', '/order', '/auth/:path*'],
 }

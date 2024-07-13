@@ -1,9 +1,0 @@
-# *
-User-agent: *
-Allow: /
-
-# Host
-Host: https://we-captured.kr
-
-# Sitemaps
-Sitemap: https://we-captured.kr/sitemap.xml

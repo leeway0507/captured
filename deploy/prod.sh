@@ -9,11 +9,11 @@ handle_interrupt() {
 # Use trap to catch SIGINT (Ctrl+C) and EXIT signals
 trap handle_interrupt SIGINT EXIT
 
-GOLANG_PRODUCT_BACKEND="/Users/yangwoolee/repo/captured/main/product-server"
+GO_PRODUCT_SERVER="/Users/yangwoolee/repo/captured/main/product-server"
 GO_COMPILE="CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -ldflags='-s -w' -installsuffix cgo -o compiler/GO_DEPLOYMENT ./main.go"
 
 
-DOCKER_DIR="/Users/yangwoolee/repo/captured-refactoring/"
+DOCKER_DIR="/Users/yangwoolee/repo/captured/main/"
 DOCKER_DEPLOYMENT="docker-compose -f ./deploy/docker/docker_compose_build.deployment.yml"
 
 DOCKER_SERVER="docker-compose -f docker_compose_server.deployment.yml"
@@ -24,7 +24,7 @@ echo "제품 배포 중 ......"
 npm run build
 
 echo "Compiling Golang...."
-cd "$GOLANG_PRODUCT_BACKEND" && eval "$GO_COMPILE" &
+cd "$GO_PRODUCT_SERVER" && eval "$GO_COMPILE" &
 
 # Wait for all background jobs to finish
 wait
