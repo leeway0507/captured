@@ -1,5 +1,5 @@
-import { fetchProductList } from '../../actions/product'
-import CatchError from '../../utils/error/handle-fetch-error'
+import { fetchProductList } from '@/actions/product'
+import CatchError from '@/utils/error/handle-fetch-error'
 import { ProductCardCarousel, Container, ResponsiveCardTitle } from './_component'
 
 export default async function BrandItemsLayOutTop({ brandName }: { brandName: string }) {

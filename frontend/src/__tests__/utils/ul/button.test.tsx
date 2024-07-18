@@ -1,4 +1,4 @@
-import { getToggleStatus } from '../../../components/button'
+import { getToggleStatus } from '@/components/button'
 
 describe('General Component Logic', () => {
     it('should return "selected" status', () => {

@@ -1,5 +1,5 @@
-import { fetchProductList } from '../../actions/product'
-import CatchError from '../../utils/error/handle-fetch-error'
+import { fetchProductList } from '@/actions/product'
+import CatchError from '@/utils/error/handle-fetch-error'
 import { ProductCardCarousel, Container, MoreButton } from './_component'
 
 async function NewestItem() {

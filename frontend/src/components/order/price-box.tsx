@@ -2,8 +2,8 @@
 
 import { useState } from 'react'
 import { ChevronDown, ChevronRight } from 'lucide-react'
-import { KRW } from '../../utils/currency'
-import { ProductCartProps } from '../../types'
+import { KRW } from '@/utils/currency'
+import { ProductCartProps } from '@/types'
 import calcTotalPrice from './calculate-price'
 
 function DeliveryBox({

@@ -3,12 +3,12 @@ source ~/.zshrc
 
 
 DIR="/Users/yangwoolee/repo/captured/main/"
-DOCKER_LOCAL="docker-compose -f ./deploy/docker-local/docker_compose.local.yml up --build"
+DOCKER_LOCAL="docker-compose -f ./deploy/docker/docker_compose.local.yml up --build"
 
 
 # Run npm build and Go compile in parallel
 
-npm run build 
+npm run build --prefix frontend
 
 
 cd "$DIR" && eval $DOCKER_LOCAL

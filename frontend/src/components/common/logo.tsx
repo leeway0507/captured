@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { Fugaz_One } from 'next/font/google'
-import cn from '../../utils/cn'
+import cn from '@/utils/cn'
 
 const FugazeOne = Fugaz_One({ weight: ['400'], subsets: ['latin'], display: 'swap' })
 

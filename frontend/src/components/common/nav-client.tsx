@@ -13,10 +13,10 @@ import {
     ArrowLeft,
 } from 'lucide-react'
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
-import cn from '../../utils/cn'
-import useElementHide from '../../hooks/interaction/use-element-hide'
 import { Session } from 'next-auth'
 import { useState, useRef } from 'react'
+import cn from '@/utils/cn'
+import useElementHide from '@/hooks/interaction/use-element-hide'
 import Logo from './logo'
 
 export function NavMobileCard({

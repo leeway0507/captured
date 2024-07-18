@@ -1,13 +1,13 @@
 'use client'
 
-import { FormField } from '../form'
-import { ConfirmButton } from '../button'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
-import { Button } from '../shadcn-ui/button'
 import { useEffect, useTransition } from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { usePostcode } from '../../hooks/interaction/use-daum-post-code'
+import { usePostcode } from '@/hooks/interaction/use-daum-post-code'
+import { Button } from '../shadcn-ui/button'
+import { ConfirmButton } from '../button'
+import { FormField } from '../form'
 
 export function AddressFormCasting<T>({
     defaultValue,

@@ -3,7 +3,7 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module',
-    project: './frontend/tsconfig.json', // Add this line
+    project: './tsconfig.json', // Add this line
   },
   rules: {
     'class-methods-use-this': 'off',

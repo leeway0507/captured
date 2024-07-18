@@ -2,8 +2,8 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import cn from '../../utils/cn'
-import { ProductProps } from '../../types'
+import cn from '@/utils/cn'
+import { ProductProps } from '@/types'
 import EmblaCarousel from '../carousel/carousel'
 import styles from '../carousel/styles.module.css'
 import { ProductImage, Description } from '../product/product-card'

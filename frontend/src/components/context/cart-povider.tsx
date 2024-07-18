@@ -1,7 +1,7 @@
 'use client'
 
 import React, { createContext, useContext, ReactNode } from 'react'
-import useCart, { CartProps } from '../../hooks/data/use-cart' // Assuming useCart returns a type `Cart`
+import useCart, { CartProps } from '@/hooks/data/use-cart' // Assuming useCart returns a type `Cart`
 
 type CartContextType = CartProps
 

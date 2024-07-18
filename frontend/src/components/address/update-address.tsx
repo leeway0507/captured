@@ -1,6 +1,6 @@
-import { getAddressAll } from '../../actions/address'
 import Link from 'next/link'
-import CatchError from '../../utils/error/handle-fetch-error'
+import { getAddressAll } from '@/actions/address'
+import CatchError from '@/utils/error/handle-fetch-error'
 import { AddressForm } from './address-form'
 
 export function UpdateAddressButton({ addressId }: { addressId: string }) {

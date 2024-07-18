@@ -9,7 +9,7 @@ import SlideComponent from '@/components/slider/slider'
 import { useFilterParams, useCategoryType } from '@/hooks/data/use-filter'
 import { useSearchParams } from 'next/navigation'
 import cn from '@/utils/cn'
-import { filterMetaData } from '../../metadata'
+import { filterMetaData } from '@/metadata'
 
 export function MobileCategoryNav() {
     const params = useSearchParams()

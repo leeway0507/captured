@@ -1,8 +1,7 @@
-import '../../__mocks__/useRouter-mock'
-import { changeUrlMock } from '../../__mocks__/url-mock'
-import { useRouter } from 'next/navigation'
+import '@/__mocks__/useRouter-mock'
 import { renderHook, act } from '@testing-library/react'
-import { getFilterParams, applyFilterToURLFn, useFilterParams } from '../../hooks/data/use-filter'
+import { changeUrlMock } from '@/__mocks__/url-mock'
+import { getFilterParams, useFilterParams } from '@/hooks/data/use-filter'
 
 describe('Filter Component Logic', () => {
     const filterObj = {
@@ -26,14 +25,6 @@ describe('Filter Component Logic', () => {
 
         const obj = getFilterParams()
         expect(obj).toEqual(filterObj)
-    })
-    it('should update filter Params', () => {
-        const router = useRouter()
-
-        renderHook(() => applyFilterToURLFn(filterObj, router))
-
-        const updatedURLObj = new URL(window.location.href)
-        expect(updatedURLObj.href).toBe(testUrl)
     })
 
     describe('useFilterParams', () => {

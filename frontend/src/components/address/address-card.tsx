@@ -1,4 +1,4 @@
-import { AddressProps } from '../../types'
+import { AddressProps } from '@/types'
 import { ItemGroup, ItemRow } from '../item'
 
 function SkeletonAddressCard() {

@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import cn from '../../utils/cn'
+import cn from '@/utils/cn'
 import { Container } from './_component'
 import EmblaCarousel, { CarouselImage } from '../carousel/carousel'
 import styles from '../carousel/styles.module.css'

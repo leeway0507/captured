@@ -1,6 +1,6 @@
 import Link from 'next/link'
-import { auth } from '../../auth'
 import { Session } from 'next-auth'
+import { auth } from '@/auth'
 import { NavBottom, NavMobileCard, NavMobileTop } from './nav-client'
 
 function NavMobileBottom() {

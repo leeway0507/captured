@@ -4,7 +4,7 @@ import {
     ShippingFee,
     RefundAndExchange,
     CustomFee,
-} from '../../../static/support/faq/contents'
+} from '@/app/static/support/faq/contents'
 
 const intlContent = (
     <>

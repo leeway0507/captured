@@ -7,11 +7,11 @@ import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/navigation'
 import { zodResolver } from '@hookform/resolvers/zod'
 
-import { PasswordConfirmField, PasswordField } from '../form'
+import { fetchResetPassword } from '@/actions/auth'
+import { ResetDataProps } from '@/types'
+import CatchError from '@/utils/error/handle-fetch-error'
 import { ConfirmButton } from '../button'
-import { fetchResetPassword } from '../../actions/auth'
-import { ResetDataProps } from '../../types'
-import CatchError from '../../utils/error/handle-fetch-error'
+import { PasswordConfirmField, PasswordField } from '../form'
 
 export default function ResetPasswordForm({
     resetData,

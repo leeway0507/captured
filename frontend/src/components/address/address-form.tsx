@@ -1,8 +1,8 @@
 'use client'
 
 import { z } from 'zod'
-import { AddressFormProps } from '../../types'
-import { updateAddress, createAddress } from '../../actions/address'
+import { AddressFormProps } from '@/types'
+import { updateAddress, createAddress } from '@/actions/address'
 import { AddressFormCasting } from './address-form-casting'
 
 const FORM_TYPES = {

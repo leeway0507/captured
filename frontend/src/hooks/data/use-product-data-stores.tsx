@@ -1,8 +1,8 @@
 'use client'
 
-import { saveToLocal, loadFromLocal } from '../../utils/storage'
-import { simpleHash } from '../../utils/simple-hash'
-import { ProductDataStoreProps, ProductFetchResponseProps } from '../../types'
+import { saveToLocal, loadFromLocal } from '@/utils/storage'
+import { simpleHash } from '@/utils/simple-hash'
+import { ProductDataStoreProps, ProductFetchResponseProps } from '@/types'
 
 export const loadUpdatedProductDataStore = <T,>(
     searchKey: T,

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { ProductFilterParamsProps } from '../../types'
+import { ProductFilterParamsProps } from '@/types'
 
 export const getFilterParams = (): ProductFilterParamsProps | undefined => {
     if (typeof window !== 'undefined') {

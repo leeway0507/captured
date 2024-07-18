@@ -9,8 +9,7 @@ RUN adduser -S nextjs -u 1001
 COPY public ./public
 COPY --chown=nextjs:nodejs /.next/static ./.next/static
 COPY --chown=nextjs:nodejs /.next/standalone ./
-COPY --chown=nextjs:nodejs app.log ./
-
+RUN touch /app.log
 
 # RUN npm install sharp
 USER nextjs

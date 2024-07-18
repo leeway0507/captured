@@ -2,7 +2,7 @@
 
 import ReactSlider from 'react-slider'
 import './slider.css'
-import { KRW } from '../../utils/currency'
+import { KRW } from '@/utils/currency'
 
 export default function SlideComponent({
     defaultData,

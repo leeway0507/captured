@@ -1,5 +1,5 @@
-import productMock from '../../../__mocks__/product-data-api'
 import { renderHook, act } from '@testing-library/react'
+import productMock from '../../../__mocks__/product-data-api'
 import useCart, {
     addToCartFn,
     findProductIndex,

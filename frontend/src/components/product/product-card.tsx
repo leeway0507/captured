@@ -2,9 +2,9 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import cn from '../../utils/cn'
-import { KRW } from '../../utils/currency'
-import { ProductProps } from '../../types'
+import cn from '@/utils/cn'
+import { KRW } from '@/utils/currency'
+import { ProductProps } from '@/types'
 
 const handleImageError = (errorNode: React.SyntheticEvent<HTMLImageElement>) => {
     const targetElement = errorNode.target as HTMLElement

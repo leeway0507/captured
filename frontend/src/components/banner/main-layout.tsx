@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import cn from '../../utils/cn'
+import cn from '@/utils/cn'
 
 function MainBanner({ view, link }: { view: 'pc' | 'mobile'; link: string }) {
     const viewPort = view === 'mobile' ? 'block md:hidden' : 'hidden md:block'

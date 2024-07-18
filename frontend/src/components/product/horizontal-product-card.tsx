@@ -1,4 +1,4 @@
-import { KRW } from '../../utils/currency'
+import { KRW } from '@/utils/currency'
 import Link from 'next/link'
 import { ProductImage } from './product-card'
 

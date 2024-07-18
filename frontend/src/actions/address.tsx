@@ -1,12 +1,11 @@
 'use server'
 
+import { revalidatePath } from 'next/cache'
+import { redirect } from 'next/navigation'
 import { fetchWithAuth } from '../utils/custom-fetch'
 
 import { handleFetchError } from '../utils/error/handle-fetch-error'
 import { AddressFormProps, AddressProps } from '../types'
-
-import { revalidatePath } from 'next/cache'
-import { redirect } from 'next/navigation'
 
 export const getAddressAll = async () => {
     const url = `${process.env.AUTH_API_URL}/api/mypage/get-address`
