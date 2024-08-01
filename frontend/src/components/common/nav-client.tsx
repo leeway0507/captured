@@ -19,24 +19,25 @@ import cn from '@/utils/cn'
 import useElementHide from '@/hooks/interaction/use-element-hide'
 import Logo from './logo'
 
-export function NavMobileCard({
-    type,
-    link,
-}: {
-    type: 'home' | 'cart' | 'brand' | 'shop' | 'mypage'
-    link: string
-}) {
+type NavType = 'home' | 'cart' | 'brand' | 'shop' | 'mypage'
+
+const NAV_ICONS = {
+    home: Home,
+    brand: LucideBookMarked,
+    cart: ShoppingCart,
+    shop: Columns3,
+    mypage: CircleUser,
+}
+
+export function NavMobileCard({ type, link }: { type: NavType; link: string }) {
     const params = usePathname()
-    const icons = {
-        home: <Home strokeWidth={params === link ? 2 : 1} />,
-        brand: <LucideBookMarked strokeWidth={params === link ? 2 : 1} />,
-        cart: <ShoppingCart strokeWidth={params === link ? 2 : 1} />,
-        shop: <Columns3 strokeWidth={params === link ? 2 : 1} />,
-        mypage: <CircleUser strokeWidth={params === link ? 2 : 1} />,
-    }
+    const NavIcon = NAV_ICONS[type]
+    const boldIconSelected = params === link ? 2 : 1
     return (
         <Link href={link} className="flex-center flex-col">
-            <div>{icons[type]}</div>
+            <div>
+                <NavIcon strokeWidth={boldIconSelected} />
+            </div>
             <div className={cn('text-[11px] uppercase text-gray-500')}>{type}</div>
         </Link>
     )
@@ -138,7 +139,7 @@ export default function SearchInputMain() {
             <input
                 value={inputValue}
                 onChange={onChangeHandler}
-                className="placeholder h-full  text-gray-500 placeholder focus:outline-none focus-visible:outline-0 "
+                className="placeholder h-full text-gray-500 placeholder focus:outline-none focus-visible:outline-0 "
                 onKeyDown={onKeyDownHandler}
             />
         </div>
@@ -149,7 +150,7 @@ function Icons({ userName }: { userName?: string | undefined }) {
     return (
         <div className="flex gap-4">
             <Link href="/mypage" className="flex-center gap-1 ">
-                <div className=" font-medium">{userName && userName}</div>
+                <div className="font-medium">{userName && userName}</div>
                 <User className="text-black" fill="black" size="28px" />
             </Link>
             <Link href="/cart">

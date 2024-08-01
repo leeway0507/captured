@@ -22,16 +22,10 @@ async function ProductWrapper({ sku }: { sku: string }) {
 async function Page({ params }: { params: ParamsProps }) {
     const { sku } = params
     return (
-        <>
-            <Suspense>
-                <JsonLDComponent sku={sku} />
-            </Suspense>
-
-            <Suspense fallback={<Spinner />}>
-                <ProductWrapper sku={sku} />
-            </Suspense>
-        </>
+        <Suspense fallback={<Spinner />}>
+            <JsonLDComponent sku={sku} />
+            <ProductWrapper sku={sku} />
+        </Suspense>
     )
 }
-
 export default Page

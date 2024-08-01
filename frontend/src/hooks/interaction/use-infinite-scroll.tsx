@@ -15,7 +15,7 @@ export default function useIntersectionObserver(
     const ref = useRef<HTMLDivElement>(null)
     const router = useRouter()
     const scrollDirection = useScrollDirection()
-
+    
     useEffect(() => {
         const handleIntersect = ([entry]: IntersectionObserverEntry[]) => {
             if (entry.isIntersecting) {

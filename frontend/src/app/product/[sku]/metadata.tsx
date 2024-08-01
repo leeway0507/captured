@@ -4,6 +4,7 @@ import CatchError from '@/utils/error/handle-fetch-error'
 
 const generateTitle = (product: ProductProps) =>
     `${product.korBrand} ${product.korProductName} | ${product.productId}`
+
 const generateDescription = (product: ProductProps) =>
     `전세계 재고를 찾아 검거하는 캡쳐드! 내가 원하는 그 제품, 캡쳐드에서 먼저 찾아보세요. ${product.brand} ${product.productName} `
 
